@@ -12,7 +12,7 @@
         \includegraphics[width=4.5cm]{img/Java-Hutts2.png}
     }
 }
-\title{Tender: Company - Project Name}
+\title{Tender: COMPIAX - Split Bill}
 \date{May 2017}
 \begin{document}
 
@@ -40,9 +40,7 @@
 \newpage
 
 \section{Project Description}
-    \lipsum[1]
-    
-    \lipsum[2]
+The purpose of this project is to develop a mobile application that is able to split any restaurant bill amongst the people around the table. Users will use the application to take a photo of the bill, which will be interpreted by the application using OCR. Users will be able to add other people that are around the table by scanning their relevant QR codes if they have the app, otherwise users can still be added manually by those that have the app installed. An interface will be provided where users can select their items on the bill, thus providing them with their respective sub-totals and the ability to add a tip. This interaction will also live sync with users around the table to allow everyone to see what everyone else is selecting and how much they are paying. The app also incorporates machine learning to allow the application to interpret bills from different restaurants.
 
 \section{Execution}
     \subsection{Administrative Tasks}
@@ -58,12 +56,26 @@
     \subsection{Development}
         \subsubsection{Methodology}
         We plan on following the Agile Unified Methodology to implement this product. We will develop this product in iterations and strive to have a working prototype at all times. We feel that it is beneficial to adopt an iterative approach to our development rather than a sequential process like Waterfall. This will ensure that design issues and changes in requirements are identified early on, and will allow us to deliver a working system within our time constraints. We will have a brief planning phase in which we identify requirements, derive use cases and assign those use cases to iterations. Changes in requirements will be addressed during the requirements phase of each of the following iterations. We will have weekly team meetings and will have set meetings with the client after each iteration.
-        \subsubsection{Technologies Used}
-            \lipsum[1]
-            
-            \lipsum[2]
-            
-            \lipsum[3]
+        \subsubsection{Proposed technologies}
+        The following are the proposed technologies for the project:\newline
+        \textbf{Note:} These technologies are just proposals and are not final. All of it is up for discussion with the client at the first meeting.
+        \begin{itemize}
+        	\item The mobile application will be developed using IONIC instead of a native application. This will allow the app to run on multiple platforms.
+        	\item QR code scanning for adding users. This will be more feasible than a technology like NFC since QR codes are more widely supported.
+        	\item Tesseract API for Optical Character Recognition. After much research it was decided that this will be the best option for an OCR engine to interpret the bills. It also makes provision for training that could be useful in the Machine Learning module.
+        	\item SimpleCV for using computer vision to improve interpretation accuracy.
+        	\item Node.js server. The reason we would like to add a server to the project is to allow for live syncing (since we are not using NFC) and we would also like to have the machine learning happen server-side. This saves computational power on the mobile devices and also enables better learning. For example if one phone learns a new bill, all phones that have the app installed will be able to interpret that bill. This minimizes OCR failure since it will only fail once per restaurant. 
+        	        \item Python will be used for back-end programming. The main reason for this is that it will ensure rapid development and aid us in developing quick prototypes. There are also numerous resources to aid with the necessary OCR.
+        	\item MongoDB database server to save user account information and bill history.
+        	\item SQLite for local storage on the mobile device. This could be used to store unseen bills for later synchronization with the server.
+        	\item Docker and Docker swarm to deploy the server. 
+        \end{itemize}
+Following is the deployment diagram showing the different artifacts and technologies:\newline
+\begin{figure}[h]
+	\centering
+		\includegraphics[scale=0.7]{img/Compiax.png}
+		\caption{Deployment Diagram}	
+	\end{figure}
             
 \newpage
 \section{The Team}
