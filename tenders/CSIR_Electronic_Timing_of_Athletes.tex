@@ -56,13 +56,35 @@ How we understand your problem is that you would like an electronic version of t
     \subsection{Development}
         \subsubsection{Methodology}
         We plan on following the Agile Unified Methodology to implement this product. We will develop this product in iterations and strive to have a working prototype at all times. We feel that it is beneficial to adopt an iterative approach to our development rather than a sequential process like Waterfall. This will ensure that design issues and changes in requirements are identified early on, and will allow us to deliver a working system within our time constraints. We will have a brief planning phase in which we identify requirements, derive use cases and assign those use cases to iterations. Changes in requirements will be addressed during the requirements phase of each of the following iterations. We will have weekly team meetings and will have set meetings with the client after each iteration.
-        \subsubsection{Technologies Used}
-            \lipsum[1]
-            
-            \lipsum[2]
-            
-            \lipsum[3]
-            
+        \subsubsection{Proposed technologies}
+		The following are the proposed technologies for the project:\newline
+		\textbf{Note:} These technologies are just proposals and are not final. All of it is up for discussion with the client at the first meeting.
+         \begin{itemize}
+         	\item The registration and result portal will be designed for a web interface that is both desktop and mobile friendly and will adhere to HCI standards.
+         	\item It was decided that an Arduino board with several extensions will be used to communicate with the RFID scanner and provide an external display. The reason for use of Arduino instead of other technologies like Rasberry Pie is that Arduino board with added extensions worked out more cost-effective and provided more extensions that suited the project needs.\\
+			\\Race data will either be extracted by connecting the Arduino to a computer with USB and extracting the race data from the SD card and subsequently uploading the data through the result portal to the server or once a Wifi connection is established the data can upload automatically to the server.\\        	
+         	
+         	\textbf{The Following Arduino extension will be used:}
+         	\begin{itemize}
+         		\item \textbf{UNO R3 Development Board Microcontroller for Arduino}UNO R3 is the most popular Arduino microcontroller and is designed with extensive use in mind.
+         		\item \textbf{SD card Module.} The SD card module will enable us to store the runner's data in the situation where communication with a server is not possible. 
+				\item \textbf{Hengjiaan NFC RFID RC522 RF IC Card Sensor RFID Reader Modules.} The following reader has both NFC and RFID capabilities and will support all major RFID card types.
+				\item \textbf{S50 Card Keychain.} Although the RFID module will be able to communicate with multiple RFID cards S50 seems to be the most durable and lightweight options for runners to use.
+				\item \textbf{6F22 9V Battery Holder Case w/ DC Jack for Arduino - Black + Red} To allow for portability and use in remote locations an external battery module will be required.    		
+         		\item \textbf{16 * 2 Character LCD Display Module with Blue Backlight}.The screen module will allow for a detailed display of time and will be able to give the user the necessary feedback when the user taps/swipes the  RFID tag.
+         	\end{itemize}
+         	\item Due to the lightweight nature of the Arduino board, a lightweight operating system will be required. We decided on the FreeRTOS since it is widely supported platform and included specially designed capabilities for Arduino.
+         	\item Node.js will allow us to easily manage request from the Web Client and will allow for backend computation of the Statistical aspects of the product.
+         	\item MongoDB database will be used for storing user details and all the necessary data collected by the Arduino module
+         \end{itemize}
+         \newpage
+         \subsection{Deployment Diagram}
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/CSIR.png}
+		\caption{Deployment Diagram}	
+	\end{figure}
+	
 \newpage
 \section{The Team}
     \subsection{Marno Hermann}
