@@ -12,7 +12,7 @@
         \includegraphics[width=4.5cm]{img/Java-Hutts2.png}
     }
 }
-\title{Tender: Company - Project Name}
+\title{Tender: Quant Engineering Solutions - Electronic ID Verification}
 \date{May 2017}
 \begin{document}
 
@@ -40,9 +40,7 @@
 \newpage
 
 \section{Project Description}
-    \lipsum[1]
-    
-    \lipsum[2]
+    The project will be in the form of an API that can be run from the Python programming language. The user will be able to provide the API with data that usually appears on an ID or passport (such as a name, surname and ID number), a photo of the person whose data is provided and a scanned copy of the relevant ID/passport/driver's license. The software will then proceed to extract data from the provided identification documentation and compare it with the data that was provided. The software will then provide the user with a percentage value for each of the fields that was provided (including the picture) that indicates how much the provided data matches with the extracted data. The extraction process will make use of computer vision (such as OCR and face recognition technologies) in order to obtain usable data from the identification documentation.
 
 \section{Execution}
     \subsection{Administrative Tasks}
@@ -58,13 +56,32 @@
     \subsection{Development}
         \subsubsection{Methodology}
         We plan on following the Agile Unified Methodology to implement this product. We will develop this product in iterations and strive to have a working prototype at all times. We feel that it is beneficial to adopt an iterative approach to our development rather than a sequential process like Waterfall. This will ensure that design issues and changes in requirements are identified early on, and will allow us to deliver a working system within our time constraints. We will have a brief planning phase in which we identify requirements, derive use cases and assign those use cases to iterations. Changes in requirements will be addressed during the requirements phase of each of the following iterations. We will have weekly team meetings and will have set meetings with the client after each iteration.
-        \subsubsection{Technologies Used}
-            \lipsum[1]
-            
-            \lipsum[2]
-            
-            \lipsum[3]
-            
+
+        \subsubsection{Proposed technologies}
+        \textbf{NOTE:} The use of these technologies are not set in stone and may be negotiated with the client in order to obtain the best possible result.
+        As far as possible, we will try to use only open source or free-to-use technologies during the implementation of this project in order to minimize cost to the client.
+        \begin{itemize}
+            \item Docker for the deployment of the API.
+            \item Git and GitHub for source control.
+            \item Tesseract API for Optical Character Recognition. After much research has been conducted, we have established that this is the best API to use for OCR that is currently available based on preliminary tests.
+            \item jQuery Face Detection plugin. This plugin would be useful for extracting the face from the provided identification documentation on the front end of the application before sending it to the back end to be processed.
+            \item SimpleCV for face detection and comparison. This library was chosen because it integrates very easily with Python (which is used by the client) and it provides simplified access to the popular OpenCV library that is used for face detection and recognition.
+        \end{itemize}
+        
+        Following is the deployment diagram showing the different artifacts and technologies:\newline
+        \begin{figure}[h]
+        	\centering
+    		\includegraphics[scale=0.7]{img/Quant.png}
+    		\caption{Deployment Diagram}	
+    	\end{figure}
+        
+        \subsubsection{Proposed Design Patterns}
+        % At this stage, we propose that the following design patterns would prove useful during the implementation of the project:\newline
+        \begin{itemize}
+            \item Abstract Factory to create objects that can be compared to each other in order to determine similarity.
+            \item Strategy to swap the different algorithms that are used to compare objects of different types, such as text and images.
+            \item Prototype to reduce the overhead of creating new comparable objects by cloning them instead.
+        \end{itemize}
 \newpage
 \section{The Team}
     \subsection{Marno Hermann}
