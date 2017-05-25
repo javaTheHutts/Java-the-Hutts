@@ -1,0 +1,2 @@
+fancy.py sum pytester summation 4 5
+fancy.py sub pytester subtraction 4 5
