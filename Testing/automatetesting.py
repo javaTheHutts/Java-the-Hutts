@@ -8,6 +8,7 @@ class MyFiles:
 def readTest(file):
 	file = open(file, "r") 
 	counter2 = 0
+	aString = ""
 	for line2 in file:
 		counter = 0
 		params = ""
@@ -15,18 +16,22 @@ def readTest(file):
 		checkVal = "defVal"
 		assertVal = "True"
 		splitted = line2.split("#")
+		add = True
+		
 		line=splitted[0]
 		if(len(splitted)>1):
 			checkVal = splitted[1].split("?")[0]
 			assertVal = splitted[1].split("?")[1]
 		for word in line.split(" "):
-			if counter == 0:
+			if counter == 0 and word != '"':
+				add = False
 				testFile = "test_" + word
-			elif counter == 1:
+			elif counter == 1 and word != '"':
 				testFunction = word
-			elif counter == 2:
+				add = False
+			elif counter == 2 and word != '"':
 				toTestFile = word
-			elif counter == 3:
+			elif counter == 3 and word != '"':
 				toTestFunction = word
 			elif counter == 4:
 				params = word
@@ -37,6 +42,12 @@ def readTest(file):
 			list = [MyFiles(toTestFile,testFile)]
 			append = 'w'
 		else:
+			if add == False:
+				if aString != "":
+					test.write(aString)
+					test.write("\n")
+					aString = ""
+			test.close()
 			for m in list:
 				shouldAdd = True
 				if m.name == testFile:
@@ -50,19 +61,28 @@ def readTest(file):
 			if shouldAdd == True:
 				append = 'w'
 				list.append(MyFiles(toTestFile,testFile))
-		#if os.path.exists(testFile) and counter2 != 0:
-		#	append = 'a'
-		#else:
-			
+
 		test = open(testFile,append)
-		test.write("def test_"+testFunction+"():\n\t")
-	
-		test.write(checkVal+" = " + toTestFile + "." + toTestFunction + "(" +params.split("\n")[0]+")\n\t")
-		test.write("assert "+checkVal+" == "+assertVal+"\n")
+		if add == False:
+			test.write("def test_"+testFunction+"():\n\t")
+			test.write(checkVal+" = " + toTestFile + "." + toTestFunction + "(" +params.split("\n")[0]+")\n\t")
+			aString = aString + "assert "+checkVal+" == "+assertVal
+				#test.write("assert "+checkVal+" == "+assertVal+"\n")
 		
-		test.close()
-		counter2 =counter2 + 1
+		if add == True:
+			test.write(checkVal+" = " + toTestFile + "." + toTestFunction + "(" +params.split("\n")[0]+")\n\t")
+			if aString == "":
+				aString += "assert "+checkVal+" == "+assertVal
+			else:
+				aString = aString.split("\n")[0]
+				aString += " and "+checkVal+" == "+assertVal
+		
+		
+		counter2 = counter2 + 1
+	test.write(aString)
+	test.write("\n")
 	file.close()
+	test.close()
 	for k in list:
 		myp = open("temp"+k.name,'w')
 		for l in k.list:
