@@ -4,4 +4,6 @@
 
 [![Build Status](https://travis-ci.org/javaTheHutts/Java-the-Hutts.svg?branch=master)](https://travis-ci.org/javaTheHutts/Java-the-Hutts)
 
+[![PyPI](https://img.shields.io/pypi/l/Django.svg)]()
+
 Repository for the Java the Hutts team for COS301
