@@ -6,7 +6,7 @@ Using automatetesting.py:
 		each of the testing files.
 		For example let's say you want 3 test files with 3 1 2 functions 
 		respectively your command would be:
-		python --init automatetesting.py example.json 3 3 1 2
+		python automatetesting.py --init example.json 3 3 1 2
 	- Creating your testing file:
 		python automatetesting.py --create "filename.json"
 	-JSON file format:
