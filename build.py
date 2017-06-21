@@ -20,4 +20,5 @@ def init(project):
     project.get_property("pytest_extra_args").append("-x")
     # filename pattern to use for integration testing files
     project.set_property("integrationtest_file_glob", "itest_*")
-
+    # don't break the build if the coverage is below threshold
+    project.set_property("coverage_break_build", False)
