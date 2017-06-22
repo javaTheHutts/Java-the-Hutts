@@ -151,6 +151,81 @@
 		    
 		\end{enumerate}
 		
+		\subsubsection{Use cases}
+		\begin{figure}[h]
+			\includegraphics[scale=0.6]{img/UseCase.png}
+			\caption{Use Case Diagram for HuttsValidation}
+		\end{figure}
+		\begin{enumerate}
+			\item \underline{Validation Subsystem}
+			\begin{enumerate}
+				\item Validate ID
+				\begin{enumerate}
+					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against a photo of the patient as well as provided personal information.
+					\item \textbf{Precondition:} Two clear photos should be available
+					\item \textbf{Postcondition:} The system validates and returns a percentage match
+				\end{enumerate}
+				\item Validate Faces
+				\begin{enumerate}
+					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against a photo of the patient.
+					\item \textbf{Precondition:} Two clear photos should be available
+					\item \textbf{Postcondition:} The system validates and returns a percentage match
+				\end{enumerate}
+				\item Validate Personal Information
+				\begin{enumerate}
+					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against provided personal information of the patient.
+					\item \textbf{Precondition:} The patient must have the personal information needed
+					\item \textbf{Postcondition:} The system validates and returns a percentage match
+				\end{enumerate}
+			\end{enumerate}
+			\item \underline{Processing Subsystem}
+			\begin{enumerate}
+				\item Compare faces
+				\begin{enumerate}
+					\item \textbf{Description:} The system should be able to receive two images containing faces of the patient and compare them to return a percentage match.
+					\item \textbf{Precondition:} The faces should be extracted from the images
+					\item \textbf{Postcondition:} The system compares the faces and returns a percentage match
+				\end{enumerate}
+				\item Compare personal information
+				\begin{enumerate}
+					\item \textbf{Description:} The system should be able to receive text extracted from the ID and compare it with provided personal information of the patient.
+					\item \textbf{Precondition:} The information should be extracted from the photo of the ID.
+					\item \textbf{Postcondition:} The system compares the text and returns a percentage match
+				\end{enumerate}
+				\item Extract personal information
+				\begin{enumerate}
+					\item \textbf{Description:} The system should be able to extract the relevant personal information from a photo of the ID document.
+					\item \textbf{Precondition:} A clear photo of the ID should be provided.
+					\item \textbf{Postcondition:} The system returns the extracted text.
+				\end{enumerate}
+				\item Extract face
+				\begin{enumerate}
+					\item \textbf{Description:} The system should be able to detect and extract the face of the patient from the photo of the ID document.
+					\item \textbf{Precondition:} A clear photo of the ID should be provided.
+					\item \textbf{Postcondition:} The system returns the extracted face.
+				\end{enumerate}
+			\end{enumerate}
+		\end{enumerate}
+		\begin{table}[h]
+\centering
+\caption{Traceability Matrix}
+\label{my-label}
+\begin{tabular}{cc|c|c|c|c|c|l|l|l|l|l|l|l|l|l|l|l|}
+\cline{3-18}
+                                        &                   & \multicolumn{16}{c|}{\textbf{Functional Requirements}}                 \\ \hline
+\multicolumn{1}{|c|}{\textbf{Use Case}} & \textbf{Priority} & 1 & 2 & 3 & 4 & 5  & 6  & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\ \hline
+\multicolumn{1}{|c|}{1.1}               & 7                 & X &   &   &   &    &    &   &   &   &    &    &    &    &    &    &    \\ \hline
+\multicolumn{1}{|c|}{1.2}               & 5                 & X &   &   &   &    &    &   &   &   &    &    &    &    &    & X  &    \\ \hline
+\multicolumn{1}{|c|}{1.3}               & 6                 & X &   &   &   &    &    &   &   &   &    &    &    &    &    & X  &    \\ \hline
+\multicolumn{1}{|c|}{2.1}               & 3                 &   &   &   &   & X  & X  &   & X & X & X  &    &    &    &    &    &    \\ \hline
+\multicolumn{1}{|c|}{2.2}               & 4                 &   &   &   &   &    &    & X &   & X &    &    &    &    &    &    &    \\ \hline
+\multicolumn{1}{|c|}{2.3}               & 2                 & X & X &   &   &    &    &   &   &   &    & X  & X  & X  & X  &    &    \\ \hline
+\multicolumn{1}{|c|}{2.4}               & 1                 & X &   & X & X &    &    &   &   &   &    & X  & X  & X  & X  &    & X  \\ \hline
+\multicolumn{2}{|c|}{\textbf{Requirement Priority}}         & 1 & 5 & 4 & 6 & 10 & 11 & 8 & 7 & 3 & 12 & 2  & 14 & 15 & 16 & 9  & 13 \\ \hline
+\end{tabular}
+\end{table}
+		
+		
 		
 		\subsection{Performance Requirements}\label{subsec:specific-performance}
 		\begin{itemize}
