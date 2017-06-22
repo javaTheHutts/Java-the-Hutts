@@ -28,7 +28,14 @@ When you are finished developing in this environment, simply call `deactivate` i
 
 ## Building the project
 1. Execute `source venv/bin/activate` (you need only do this once in order to enter your virtual environment).
-2. Execute `pyb` in the root folder (the folder where `build.py` is located). This builds the project, runs the unit tests, runs the integration tests, lints the files and creates a portable distribution of the project ready for installation.
+2. Execute `make` in the root folder (the folder where `build.py` and `makefile` is located). This builds the project, runs the unit tests, runs the integration tests, lints the files and creates a portable distribution of the project ready for installation.
+
+### Extra tasks
+- If you only want to lint the project, run `make lint`.
+- If you only want to run the unit tests, run `make utest`.
+- For only integration testing, run `make itest`.
+- To run both sets of tests only, run `make test`.
+- To skip the linting, run `make build`. This will build and run the tests without linting the files.
 
 Once you are finished, execute the command `deactivate` in order to exit your virtual environment.
 
