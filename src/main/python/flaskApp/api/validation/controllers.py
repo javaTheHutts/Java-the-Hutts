@@ -9,6 +9,7 @@ Handles all requests relevant to the validation service of the API
 from flask import Blueprint, jsonify
 validate = Blueprint('validate', __name__)
 
+
 @validate.route('/validate', methods=['POST'])
 def validateId():
     """

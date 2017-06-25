@@ -9,6 +9,7 @@ Handles all requests relevant to the extraction service of the API
 from flask import Blueprint, jsonify
 extract = Blueprint('extract', __name__)
 
+
 @extract.route('/extract', methods=['POST'])
 def extractText():
     """
