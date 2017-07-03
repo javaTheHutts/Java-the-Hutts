@@ -63,3 +63,103 @@ main {
 .page-footer, .page-footer .footer-copyright  {
   background-color: #131515;
 }
+
+/* Materialize form colors */
+
+  /* icon prefix focus color */
+  .input-field .prefix.active {
+      color: #3f5e5a;
+  }
+
+  /* TYPE text */
+  /* label focus color */
+  .input-field input[type=text]:focus + label {
+      color: #3f5e5a;
+  }
+  /* label underline focus color */
+  .input-field input[type=text]:focus {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  /* valid color */
+  .input-field input[type=text].valid {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  /* invalid color */
+  /*.input-field input[type=text].invalid {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+    /* TYPE textarea */
+  /* label focus color */
+  textarea:focus + label {
+      color: #3f5e5a;
+  }
+  /* label underline focus color */
+  textarea:focus {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  /* valid color */
+  textarea.valid {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  /* invalid color */
+  textarea.invalid {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+
+ /* TYPE number */
+  /* label focus color */
+  .input-field input[type=number]:focus + label {
+      color: #3f5e5a;
+  }
+  /* label underline focus color */
+  .input-field input[type=number]:focus {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  /* valid color */
+  .input-field input[type=number].valid {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  /* invalid color */
+  /*.input-field input[type=number].invalid {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  
+ /* TYPE select */
+
+  /* valid color */
+  .ul.dropdown-content.select-dropdown {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }
+  /* invalid color */
+  /*.ul.dropdown-content.select-dropdown.invalid {
+      border-bottom: 1px solid #3f5e5a;
+      box-shadow: 0 1px 0 0 #3f5e5a;
+  }*/
+  ul.dropdown-content.select-dropdown li span { color: black; }
+  ul.dropdown-content.select-dropdown li.optgroup-option  span { color: black; }
+  ul.dropdown-content.select-dropdown li.optgroup span { color: grey; }
+  ul.dropdown-content.select-dropdown li.disabled span { color: grey; }
+
+.picker__weekday-display{
+    background-color: #3f5e5a;
+}
+.picker__date-display{
+    background-color: #3f5e5a;
+}
+    div.picker__day.picker__day--infocus.picker__day--selected.picker__day--highlighted {
+        background-color: #3f5e5a;
+    }
+    button.picker__today, button.picker__close {
+        color: #3f5e5a;
+    }
+    
