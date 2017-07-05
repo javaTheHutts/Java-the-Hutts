@@ -17,14 +17,14 @@ main {
 }
 
 .navbar > .fixed {
-  width: 5em;
+  width: 4em;
   background-color: #3f5e5a;
 }
 
 .navlogo {
   margin-top: 0.4em;
   margin-bottom: 4em;
-  padding: 0.6em;
+  padding: 0.4em;
   padding-bottom: 0;
 }
 
@@ -68,7 +68,8 @@ main {
 }
 
 .col.card-wrapper {
-  padding: 0;
+  padding: 0.4em;
+  margin-bottom: -20px;
 }
 
 .col.card1-wrapper {
