@@ -4,8 +4,11 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 
 /* global $ */
 $(document).ready(function() {
+  
+  // Initialise slider
+  $('.slider').slider();
 
-  //Materialize component initialization
+  // Materialise component initialization
   $('select').material_select();
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month

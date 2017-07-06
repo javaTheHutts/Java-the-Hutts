@@ -72,23 +72,19 @@ main {
   margin-bottom: -20px;
 }
 
-.col.card1-wrapper {
-  padding-right: 3em;
+.compare-card,
+.col.compare-button-wrapper {
+  min-height: 42em;
 }
 
-.col.card2-wrapper {
-  padding-left: 3em;
-}
-
-.compare-card {
-  min-height: 42.5em;
+.compare-button-wrapper {
+  padding: 0;
 }
 
 #compareBtn {
-  position: absolute;
-  top: 54%;
-  left: 50.5%;
-  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #2b2c28;
 }
 
