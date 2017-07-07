@@ -1,8 +1,11 @@
 /*
+--------------------------------------------------------------------------------
 Author(s): Nicolai van  Niekerk, Justin van  Tonder
-Colour scheme: https://coolors.co/131515-2b2c28-3f5e5a-20fc8f-fffafb
+Colour scheme: https://coolors.co/131515-2b2c28-5c8983-80cbc4-fffafb
+--------------------------------------------------------------------------------
 */
 
+/* General styling */
 body {
   padding: 0;
   margin: 0;
@@ -16,9 +19,15 @@ main {
   flex: 1 0 auto;
 }
 
+.btn,
+.navbar > .fixed, 
+.collapsible-header {
+  background-color: #5c8983;
+}
+
+/* Side navbar */
 .navbar > .fixed {
   width: 4em;
-  background-color: #3f5e5a;
 }
 
 .navlogo {
@@ -41,6 +50,7 @@ main {
   color: #131515;
 }
 
+/* Collapsibles */
 .expandable-body {
   margin: 5em;
   margin-left: 10em;
@@ -58,7 +68,6 @@ main {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: #3f5e5a;
   color: #fffafb;
 }
 
@@ -91,16 +100,22 @@ main {
 #compareBtn:hover,
 #compareBtn:focus,
 #compareBtn:active {
-  background-color: #388E3C;
+  background-color: #80cbc4;
 }
 
 #id_image {
   max-height: 28em;
 }
 
+/*Footer styling */
 .page-footer,
 .page-footer .footer-copyright {
   background-color: #131515;
+}
+
+.social {
+  width: 10em;
+  margin-bottom: 0.6em;
 }
 
 
