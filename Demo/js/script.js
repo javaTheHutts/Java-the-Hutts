@@ -18,9 +18,21 @@ $(document).ready(function() {
   // Change caret symbol when expanding collapsibles
   $('.collapsible-header').on('click', function() {
     $(this).hasClass('active')?
-    $(this).children('.carets').text('►'):
-    $(this).children('.carets').text('▼');
+    $(this).children('.carets').text('expand_more'):
+    $(this).children('.carets').text('chevron_right');
   });
+  
+  // Click event to scroll to top
+	$('.scroll-top').on('click', function() {
+		$('html, body').animate({scrollTop: 0}, 800);
+		return false;
+	});
+	
+	// Click event to scroll to bottom
+	$('.scroll-bottom').on('click', function() {
+		$('html, body').animate({scrollTop: $('body').height()}, 800);
+		return false;
+	});
 
 });
 

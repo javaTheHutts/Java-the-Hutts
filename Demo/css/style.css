@@ -26,20 +26,25 @@ main {
 }
 
 /* Side navbar */
-.navbar > .fixed {
+.navbar > .fixed,
+.nav-options {
   width: 4em;
 }
 
 .navlogo {
   margin-top: 0.4em;
-  margin-bottom: 4em;
   padding: 0.4em;
-  padding-bottom: 0;
 }
 
 .navlogo > img {
   max-width: 100%;
   max-height: 100%;
+}
+
+.nav-options {
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -60%);
 }
 
 .nav-options a {
@@ -48,6 +53,10 @@ main {
   margin-bottom: 0.8em;
   font-size: 2em;
   color: #131515;
+}
+
+.nav-options a:hover {
+  color: #fffafb;
 }
 
 /* Collapsibles */
@@ -69,6 +78,10 @@ main {
   -ms-user-select: none;
   user-select: none;
   color: #fffafb;
+}
+
+.collapsible-header:hover {
+  background-color: #80cbc4;
 }
 
 .collapsible-body {
