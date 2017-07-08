@@ -5,6 +5,9 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 /* global $ */
 $(document).ready(function() {
   
+  // Initialise all modals
+  $('div.modal').modal();
+  
   // Initialise slider
   $('.slider').slider();
 
@@ -33,7 +36,20 @@ $(document).ready(function() {
 		$('html, body').animate({scrollTop: $('body').height()}, 800);
 		return false;
 	});
-
+  
+  // Result modal initialisation
+  $('#compare-result').modal({
+    ready: function(modal, trigger) {
+      $('.odometer').html(96);
+    }
+  });
+  
+  // Modal trigger
+  $('#compareBtn').on('click', function() {
+    $('#compare-result').modal('open');
+    return false;
+  });
+  
 });
 
 // Show ID Image preview
