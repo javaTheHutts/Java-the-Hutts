@@ -15,7 +15,7 @@ $(document).ready(function() {
   $('select').material_select();
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 200 // Creates a dropdown of 15 years to control year
+    selectYears: 200 // Creates a dropdown of 200 years to control year
   });
 
   // Change caret symbol when expanding collapsibles
@@ -45,9 +45,41 @@ $(document).ready(function() {
   });
   
   // Modal trigger
-  $('#compareBtn').on('click', function() {
-    $('#compare-result').modal('open');
-    return false;
+  $('#compareBtn').on('click', function(e) {
+    e.preventDefault();
+    var formData = new FormData();
+    var idPhoto = document.getElementById('idPhoto').files[0];
+    var userImage = document.getElementById('userImage').files[0];
+    var names = $('#names').val();
+    var surname = $('#surname').val();
+    var idNumber = $('#idNumber').val();
+    var nationality = $('#nationality').val();
+    var cob = $('#cob').val();
+    var status = $('#status').val();
+    var gender = $('#gender').val();
+    var dob = $('#dob').val();
+
+    formData.append('idPhoto', idPhoto);
+    formData.append('userImage', userImage);
+    formData.append('names', names);
+    formData.append('surname', surname);
+    formData.append('idNumber', idNumber);
+    formData.append('nationality', nationality);
+    formData.append('cob', cob);
+    formData.append('status', status);
+    formData.append('gender', gender);
+    formData.append('dob', dob);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5000/verifyID",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+            alert("Match: " + data.PercentageMatch + "%");
+        }
+    });
   });
   
 });
@@ -58,7 +90,7 @@ function readURL(input) {
     var reader = new FileReader();
 
     reader.onload = function(e) {
-      $('#id_image').attr('src', e.target.result);
+      $('#idPreview').attr('src', e.target.result);
     };
 
     reader.readAsDataURL(input.files[0]);
