@@ -18,7 +18,7 @@ def extractText():
     ----------------------------------------------------------------------
     Sample function to extract text from image received
     ----------------------------------------------------------------------
-    URL: http://localhost:5000/extract
+    URL: http://localhost:5000/extractText
     ----------------------------------------------------------------------
     """
     image = request.files.get("image")
@@ -42,7 +42,7 @@ def extractFace():
     ----------------------------------------------------------------------
     Sample function to extract face from image received
     ----------------------------------------------------------------------
-    URL: http://localhost:5000/extract
+    URL: http://localhost:5000/extractFace
     ----------------------------------------------------------------------
     """
     image = request.files.get("image")
@@ -57,7 +57,7 @@ def extractAll():
     ----------------------------------------------------------------------
     Sample function to extract face and text from image received
     ----------------------------------------------------------------------
-    URL: http://localhost:5000/extract
+    URL: http://localhost:5000/extractAll
     ----------------------------------------------------------------------
     """
     image = request.files.get("image")
