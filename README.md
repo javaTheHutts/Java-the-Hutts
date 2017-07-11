@@ -39,8 +39,10 @@ When you are finished developing in this environment, simply call `deactivate` i
 
 Once you are finished, execute the command `deactivate` in order to exit your virtual environment.
 
-## Interacting with the system
-I am still trying to figure that out haha...
+## Using the system
+1. After building the project, run the script `run.py` in `src/main/scripts` to start the server hosting the API.
+2. Requests can then be sent to `http://127.0.0.1:5000/` to use the API.
+3. Refer to the User Manual under `documentation/user-manual` for detailed instructions regarding requests, parameters and return types.
 
 ## Directory structure
 ```
