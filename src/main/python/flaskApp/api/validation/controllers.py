@@ -7,6 +7,7 @@ Handles all requests relevant to the validation service of the API
 """
 
 from flask import Blueprint, jsonify, request
+
 validate = Blueprint('validate', __name__)
 
 
@@ -40,6 +41,7 @@ def verifyID():
     }
     return jsonify(result)
 
+
 @validate.route('/verifyFaces', methods=['POST'])
 def verifyFaces():
     """
@@ -61,6 +63,7 @@ def verifyFaces():
         "Percentage Match": 63
     }
     return jsonify(result)
+
 
 @validate.route('/verifyInfo', methods=['POST'])
 def verifyInfo():

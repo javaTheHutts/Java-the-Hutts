@@ -7,6 +7,7 @@ Handles all requests relevant to the extraction service of the API
 """
 
 from flask import Blueprint, jsonify, request
+
 extract = Blueprint('extract', __name__)
 
 
@@ -34,6 +35,7 @@ def extractText():
     }
     return jsonify({"Extracted Fields": text})
 
+
 @extract.route('/extractFace', methods=['POST'])
 def extractFace():
     """
@@ -48,6 +50,7 @@ def extractFace():
     image = request.files.get("image")
     face = "jklanskjcbniugciuhncoiaksc6565"
     return jsonify({"Extracted Face": face})
+
 
 @extract.route('/extractAll', methods=['POST'])
 def extractAll():
