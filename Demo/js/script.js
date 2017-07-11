@@ -40,7 +40,7 @@ $(document).ready(function() {
   // Result modal initialisation
   $('#compare-result').modal({
     ready: function(modal, trigger) {
-      $('.odometer').html(96);
+      // Stuff here
     }
   });
   
@@ -80,6 +80,25 @@ $(document).ready(function() {
             alert("Match: " + data.PercentageMatch + "%");
         }
     });
+  });
+  
+  
+  // Image sliders initialisation
+  $('.image-pipelet').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    asNavFor: '.image-pipeline'
+  });
+  
+  $('.image-pipeline').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    asNavFor: '.image-pipelet',
+    dots: true,
+    centerMode: true,
+    focusOnSelect: true
   });
   
 });

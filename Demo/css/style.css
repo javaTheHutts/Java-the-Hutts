@@ -132,6 +132,24 @@ main {
 }
 
 
+.block {
+  width: 10em;
+  height: 5em;
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
+
 /* Materialize form colors */
 
 
