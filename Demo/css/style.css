@@ -61,8 +61,21 @@ main {
 
 /* Collapsibles */
 .expandable-body {
-  margin: 5em;
-  margin-left: 10em;
+  margin: 0.5em;
+}
+
+@media (min-width: 992px) {
+  .expandable-body {
+    margin: 2em;
+    margin-left: 7em;
+  }
+}
+
+@media (min-width: 1366px) {
+  .expandable-body {
+    margin: 5em;
+    margin-left: 10em;
+  }
 }
 
 .collapsible,
