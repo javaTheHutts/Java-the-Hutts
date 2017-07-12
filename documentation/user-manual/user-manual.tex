@@ -150,7 +150,6 @@ $.ajax({
 			\begin{lstlisting}
 {
    "ExtractedFace": "face.jpg"
-
 }
 			\end{lstlisting}
 		\end{itemize}
@@ -222,6 +221,207 @@ $.ajax({
     url: "http://localhost:5000/extractAll",
     data: {
             "image" : idDocument.jpg
+          },
+    success: function(data){
+        console.log(data);
+    }
+});
+		\end{lstlisting}
+		\item \textbf{Notes and Comments:}
+\end{enumerate}
+
+\subsection{Verify Faces}
+\begin{enumerate}
+	\item \textbf{Description:} Verifies the similarity between the face on the form of identification and the photo of the individual's face.
+	\item \textbf{URL:} \textit{/verifyFaces}
+	\item \textbf{Method:} POST
+	\item \textbf{URL Parameters:} None
+	\item \textbf{Data Parameters:}
+
+	\begin{lstlisting}
+{
+   "ID" : [blob],
+   "face": [blob]
+}
+	\end{lstlisting}
+
+	\textbf{Example:}
+
+	\begin{lstlisting}
+{
+   "ID" : idDocument.jpg,
+   "face": profilePic.png
+}
+	\end{lstlisting}
+	
+	\item \textbf{Success Response:} 
+		\begin{itemize}
+			\item \textbf{Code:} 200
+			\item \textbf{Content:}
+			\begin{lstlisting}
+{
+   "PercentageMatch": 75
+}
+			\end{lstlisting}
+		\end{itemize}
+		\item \textbf{Error Response:} TODO
+		\item \textbf{Sample Call:}
+		\begin{lstlisting}
+$.ajax({
+    type: "POST",
+    url: "http://localhost:5000/verifyFaces",
+    data: {
+            "ID" : idDocument.jpg,
+            "face": profilePic.png
+          },
+    success: function(data){
+        console.log(data);
+    }
+});
+		\end{lstlisting}
+		\item \textbf{Notes and Comments:}
+\end{enumerate}
+
+\subsection{Verify Info}
+\begin{enumerate}
+	\item \textbf{Description:} Verifies the similarity between the text on the form of identification and the provided personal information.
+	\item \textbf{URL:} \textit{/verifyInfo}
+	\item \textbf{Method:} POST
+	\item \textbf{URL Parameters:} None
+	\item \textbf{Data Parameters:}
+
+	\begin{lstlisting}
+{
+    "surname": [string],
+    "names": [string],
+    "gender": [string],
+    "nationality": [string],
+    "idNumber": [string],
+    "dob": [date],
+    "cob": [string],
+    "satus": [string],
+    "idPhoto": [blob]
+}
+	\end{lstlisting}
+
+	\textbf{Example:}
+
+	\begin{lstlisting}
+{   
+    "surname": "Doe",
+    "names": "John Joe",
+    "gender": "M",
+    "nationality": "South African",
+    "idNumber": "9877452008082",
+    "dob": "1998-07-06",
+    "cob": "RSA",
+    "satus": "Citizen",
+    "idPhoto": myId.jpg
+}
+	\end{lstlisting}
+	
+	\item \textbf{Success Response:} 
+		\begin{itemize}
+			\item \textbf{Code:} 200
+			\item \textbf{Content:}
+			\begin{lstlisting}
+{
+   "PercentageMatch": 96
+}
+			\end{lstlisting}
+		\end{itemize}
+		\item \textbf{Error Response:} TODO
+		\item \textbf{Sample Call:}
+		\begin{lstlisting}
+$.ajax({
+    type: "POST",
+    url: "http://localhost:5000/verifyInfo",
+    data: {
+            "surname": "Doe",
+            "names": "John Joe",
+            "gender": "M",
+            "nationality": "South African",
+            "idNumber": "9877452008082",
+            "dob": "1998-07-06",
+            "cob": "RSA",
+            "satus": "Citizen",
+            "idPhoto": myId.jpg
+          },
+    success: function(data){
+        console.log(data);
+    }
+});
+		\end{lstlisting}
+		\item \textbf{Notes and Comments:}
+\end{enumerate}
+
+\subsection{Verify ID}
+\begin{enumerate}
+	\item \textbf{Description:} Verifies the similarity between the text and image on the form of identification and the provided personal information with a photo of the individual's face.
+	\item \textbf{URL:} \textit{/verifyID}
+	\item \textbf{Method:} POST
+	\item \textbf{URL Parameters:} None
+	\item \textbf{Data Parameters:}
+
+	\begin{lstlisting}
+{
+    "userImage": [blob],
+    "surname": [string],
+    "names": [string],
+    "gender": [string],
+    "nationality": [string],
+    "idNumber": [string],
+    "dob": [date],
+    "cob": [string],
+    "satus": [string],
+    "idPhoto": [blob]
+}
+	\end{lstlisting}
+
+	\textbf{Example:}
+
+	\begin{lstlisting}
+{   
+    "userImage": profilePic.png,
+    "surname": "Doe",
+    "names": "John Joe",
+    "gender": "M",
+    "nationality": "South African",
+    "idNumber": "9877452008082",
+    "dob": "1998-07-06",
+    "cob": "RSA",
+    "satus": "Citizen",
+    "idPhoto": myId.jpg
+}
+	\end{lstlisting}
+	
+	\item \textbf{Success Response:} 
+		\begin{itemize}
+			\item \textbf{Code:} 200
+			\item \textbf{Content:}
+			\begin{lstlisting}
+{
+   "PercentageMatch": 61
+}
+			\end{lstlisting}
+		\end{itemize}
+		\item \textbf{Error Response:} TODO
+		\item \textbf{Sample Call:}
+		\begin{lstlisting}
+$.ajax({
+    type: "POST",
+    url: "http://localhost:5000/verifyInfo",
+    data: {
+            "userImage": profilePic.png,
+            "surname": "Doe",
+            "names": "John Joe",
+            "gender": "M",
+            "nationality": "South African",
+            "idNumber": "9877452008082",
+            "dob": "1998-07-06",
+            "cob": "RSA",
+            "satus": "Citizen",
+            "idPhoto": myId.jpg
           },
     success: function(data){
         console.log(data);
