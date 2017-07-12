@@ -1,5 +1,3 @@
-from skimage.filters import threshold_adaptive
-import argparse
 import cv2
 
 

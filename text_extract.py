@@ -7,10 +7,14 @@ from PIL import Image
 from preprocessing import ThresholdingManager
 from preprocessing import BlurManager
 from preprocessing import ColorManager
+from processing import FaceDetector
 import pytesseract
 import argparse
 import cv2
 import os
+
+FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
+    base_path=os.path.abspath(os.path.dirname(__file__)))
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -27,6 +31,8 @@ args = vars(ap.parse_args())
 
 image = cv2.imread(args["image"])
 color_manager = ColorManager(image)
+fd = FaceDetector(FACE_DETECTOR_PATH)
+
 if args["color"] is not None:
     image = color_manager.extractChannel(image, args["color"])
 if args["kernel"] is not None:
@@ -37,7 +43,8 @@ else:
     else:
         blur_kernel = [(3, 3)]
 
-image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+(_, image) = fd.removeFace(gray)
 # image = color_manager.histEqualisation(image)
 
 
