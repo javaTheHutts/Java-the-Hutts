@@ -7,9 +7,6 @@ $(document).ready(function() {
   
   // Initialise all modals
   $('div.modal').modal();
-  
-  // Initialise slider
-  $('.slider').slider();
 
   // Materialise component initialization
   $('select').material_select();
@@ -23,6 +20,11 @@ $(document).ready(function() {
     $(this).hasClass('active')?
     $(this).children('.carets').text('expand_more'):
     $(this).children('.carets').text('chevron_right');
+    // Trigger slick carousel events to re-init sizes
+    $('.pipeline').slick('slickNext');
+    $('.pipelet').slick('slickNext');
+    $('.pipeline').slick('slickPrev');
+    $('.pipelet').slick('slickPrev');
   });
   
   // Click event to scroll to top
@@ -82,23 +84,21 @@ $(document).ready(function() {
     });
   });
   
-  
   // Image sliders initialisation
-  $('.image-pipelet').slick({
+  $('.pipelet').slick({
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
     fade: true,
-    asNavFor: '.image-pipeline'
+    asNavFor: '.pipeline'
   });
   
-  $('.image-pipeline').slick({
+  $('.pipeline').slick({
     slidesToShow: 3,
     slidesToScroll: 1,
-    asNavFor: '.image-pipelet',
-    dots: true,
+    asNavFor: '.pipelet',
     centerMode: true,
-    focusOnSelect: true
+    focusOnSelect: true,
   });
   
 });

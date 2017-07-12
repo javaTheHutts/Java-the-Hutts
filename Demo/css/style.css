@@ -120,6 +120,16 @@ main {
   max-height: 28em;
 }
 
+.pipe-gallery {
+  padding-left: 3em;
+  padding-right: 3em;
+}
+
+.slick-prev::before,
+.slick-next::before {
+  color: black;
+}
+
 /*Footer styling */
 .page-footer,
 .page-footer .footer-copyright {
@@ -127,13 +137,11 @@ main {
 }
 
 .social {
-  width: 10em;
-  margin-bottom: 0.6em;
+  margin: 0.3em;
 }
 
-
 .block {
-  width: 10em;
+  width: 7em;
   height: 5em;
 }
 
