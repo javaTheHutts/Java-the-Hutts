@@ -143,6 +143,11 @@ main {
   color: black;
 }
 
+#result-total {
+  width: 300px;
+  height: 300px;
+}
+
 /*Footer styling */
 .page-footer,
 .page-footer .footer-copyright {

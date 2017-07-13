@@ -6,7 +6,7 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 $(document).ready(function() {
   
   // Initialise all modals
-  $('div.modal').modal();
+  $('.modal').modal();
 
   // Materialise component initialization
   $('select').material_select();
@@ -42,7 +42,23 @@ $(document).ready(function() {
   // Result modal initialisation
   $('#compare-result').modal({
     ready: function(modal, trigger) {
-      // Stuff here
+      console.log($('#result').data('percentage'))
+      // Results circliful
+      $('#result-total').circliful({
+        percent: $('#result-total').data('percentage'),
+        // text: 'match',
+        // textY: 130,
+        // textX: 108,
+        decimals: 2,
+        foregroundColor: '#80cbc4',
+        backgroundColor: 'none',
+        fillColor: '#eee',
+        foregroundBorderWidth: 4,
+        iconColor: '#80cbc4',
+        icon: 'f2c3',
+        iconSize: '30',
+        iconPosition: 'middle'
+      });
     }
   });
   
@@ -82,6 +98,11 @@ $(document).ready(function() {
             alert("Match: " + data.PercentageMatch + "%");
         }
     });
+    
+    // Move up once working
+    $('#result-total').html('');
+    $('#result-total').data('percentage', 86.55);
+    $('#compare-result').modal('open');
   });
   
   // Image sliders initialisation
