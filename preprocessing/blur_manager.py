@@ -18,7 +18,7 @@ class BlurManager:
         return blurred
 
     def medianBlur(self, image, blur_kernel=[3]):
-        # To-Do Error Checking for diffrent Kernel sizes
+        # To-Do Error Checking for different Kernel sizes
         for k in blur_kernel:
             blurred = cv2.medianBlur(image, k)
         return blurred

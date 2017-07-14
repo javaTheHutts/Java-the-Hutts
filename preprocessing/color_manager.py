@@ -7,16 +7,23 @@ class ColorManager:
         self.image = image
 
     def histEqualisation(self, image):
-        equalisation = cv2.equalizeHist(image)
-        return equalisation
+        return cv2.equalizeHist(image)
 
     def extractChannel(self, image, image_channel="green"):
         (B, G, R) = cv2.split(image)
         zeros = np.zeros(image.shape[:2], dtype="uint8")
 
         if image_channel == "green":
-            return cv2.merge([zeros, G, zeros])
+            return cv2.merge([B, zeros, R])
         elif image_channel == "blue":
-            return cv2.merge([B, zeros, zeros])
+            return cv2.merge([zeros, G, R])
         else:
-            return cv2.merge([zeros, zeros, R])
+            return cv2.merge([B, G, zeros])
+
+    def blackHat(self, image, rect_kernel_size=(13, 7)):
+        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
+        return cv2.morphologyEx(image.copy(), cv2.MORPH_BLACKHAT, rectKernel)
+
+    def topHat(self, image, rect_kernel_size=(13, 7)):
+        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
+        return  cv2.morphologyEx(image, cv2.MORPH_TOPHAT, rectKernel)

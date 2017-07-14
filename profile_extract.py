@@ -1,6 +1,5 @@
 from processing import FaceDetector
 import argparse
-import imutils
 import cv2
 import os
 
@@ -15,5 +14,6 @@ args = vars(ap.parse_args())
 fd = FaceDetector(FACE_DETECTOR_PATH)
 image = cv2.imread(args["image"])
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-(face, _) = fd.removeFace(gray)
+(face, image) = fd.removeFace(gray)
 cv2.imwrite("output/face.png", face)
+cv2.imwrite("output/faceimage.png", image)

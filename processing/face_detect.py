@@ -2,17 +2,15 @@ import cv2
 
 
 class FaceDetector:
-    def __init__(self, faceCascadePath):
-        self.faceCascade = cv2.CascadeClassifier(faceCascadePath)
+    def __init__(self, face_cascade_path):
+        self.faceCascade = cv2.CascadeClassifier(face_cascade_path)
 
-    def detect(self, image, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)):
+    def detect(self, image, scale_factor=1.1, min_neighbors=5, min_size=(30, 30)):
         # detect faces in the image
-        rects = self.faceCascade.detectMultiScale(image, scaleFactor=scaleFactor,
-                                                  minNeighbors=minNeighbors, minSize=minSize,
+        rectangles = self.faceCascade.detectMultiScale(image, scaleFactor=scale_factor,
+                                                  minNeighbors=min_neighbors, minSize=min_size,
                                                   flags=cv2.CASCADE_SCALE_IMAGE)
-
-        # return the bounding boxes around the faces in the image
-        return rects
+        return rectangles
 
     def HOG(self):
         print("HOG still to be implemented")
@@ -22,6 +20,7 @@ class FaceDetector:
         if len(rectangle_dimensions) > 0:
             # sort the bounding boxes, keeping only the largest one
             (x, y, w, h) = max(rectangle_dimensions, key=lambda b: (b[2] * b[3]))
-        image[y:y + h, x:x + w] = 0
         face = image[y:y + h, x:x + w]
-        return (face, image)
+        image_copy = image.copy()
+        image_copy[y:y + h, x:x + w] = 0
+        return face, image_copy

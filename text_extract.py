@@ -1,6 +1,9 @@
 # python text_extract.py --image img/ID.jpg  --thresholding "adaptive" --blur "blur"
 # python text_extract.py --image img/ID2.jpeg --color "green"
 # --thresholding "otsu" --blur "median" --kernel 3 3
+# python text_extract.py --color "blackhat" --image img/ID2.jpeg
+# python text_extract.py  --image img/idcard.jpg --color "green" --thresholding "adaptive" --blur "median"
+
 
 
 from PIL import Image
@@ -23,9 +26,11 @@ ap.add_argument("-i", "--image", required=True,
 ap.add_argument("-t", "--thresholding", type=str, default=None,
                 help="type of thresholding technique")
 ap.add_argument("-b", "--blur", type=str, default="gaussian",
-                help="Remove color channel")
+                help="Blur image")
 ap.add_argument("-c", "--color", type=str, default=None,
                 help="Remove color channel")
+ap.add_argument("-r", "--remove", type=bool, default=None,
+                help="Remove Face")
 ap.add_argument("-k", "--kernel", default=None, nargs='+', type=int, help="Kernel size for selected blur")
 args = vars(ap.parse_args())
 
@@ -34,7 +39,14 @@ color_manager = ColorManager(image)
 fd = FaceDetector(FACE_DETECTOR_PATH)
 
 if args["color"] is not None:
-    image = color_manager.extractChannel(image, args["color"])
+    if args["color"] == "blackhat":
+        image = color_manager.blackHat(image)
+    elif args["color"] == "tophat":
+        image = color_manager.topHat(image)
+    else:
+        image = color_manager.extractChannel(image, args["color"])
+    cv2.imwrite("output/colour_extract.png", image)
+
 if args["kernel"] is not None:
     blur_kernel = args["kernel"]
 else:
@@ -43,9 +55,11 @@ else:
     else:
         blur_kernel = [(3, 3)]
 
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-(_, image) = fd.removeFace(gray)
-# image = color_manager.histEqualisation(image)
+image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imwrite("output/gray.png", image)
+
+if args["remove"] is True:
+    (_, image) = fd.removeFace(image)
 
 
 if args["blur"] is not None:
@@ -57,6 +71,7 @@ if args["blur"] is not None:
     elif args["blur"] == "median":
         image = blur_manager.medianBlur(image, blur_kernel=blur_kernel)
 
+cv2.imwrite("output/blur.png", image)
 if args["thresholding"] is not None:
     thresh_manager = ThresholdingManager(image)
     if args["thresholding"] == "adaptive":
@@ -64,11 +79,11 @@ if args["thresholding"] is not None:
     elif args["thresholding"] == "otsu":
         image = thresh_manager.otsuThresholding(image)
 
+cv2.imwrite("output/thresh.png", image)
 filename = "{}.png".format(os.getpid())
 cv2.imwrite(filename, image)
 
+cv2.imwrite("output/Extraction.png", image)
 text = pytesseract.image_to_string(Image.open(filename))
 os.remove(filename)
 print(text)
-
-cv2.imwrite("output/img.png", image)
