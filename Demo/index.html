@@ -68,7 +68,7 @@
 									<!-- Card 1 -->
 									<div class="card compare-card">
 										<div class="card-content">
-											<span class="card-title">Given information</span>
+											<span class="card-title">Provided information</span>
 											<div class="row">
 												<div class=" col m6 input-field">
 													<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
@@ -122,13 +122,15 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="file-field input-field">
-													<div class="btn">
-														<span>Face Photo</span>
-														<input type="file" id="userImage" name="userImage" accept="image/*">
-													</div>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
+												<div class="col s12">
+													<div class="file-field input-field">
+														<div class="btn">
+															<span>Photo</span>
+															<input type="file" id="userImage" name="userImage" accept="image/*">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text">
+														</div>
 													</div>
 												</div>
 											</div>
@@ -154,13 +156,15 @@
 												<img src="img/id.jpg" alt="ID Photo" width="100%" id="idPreview">
 											</div>
 											<div class="row">
-												<div class="file-field input-field">
-													<div class="btn">
-														<span>ID Photo</span>
-														<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">
-													</div>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
+												<div class="col s12">
+													<div class="file-field input-field">
+														<div class="btn">
+															<span>ID Photo</span>
+															<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text">
+														</div>
 													</div>
 												</div>
 											</div>
@@ -260,7 +264,7 @@
 				<li>
 					<div class="collapsible-header waves-effect">
 						<i class="material-icons carets">expand_more</i>
-						Verbose Results 
+						Detailed Results 
 						<i class="fa fa-list-ol" aria-hidden="true"></i>
 					</div>
 					<div class="collapsible-body">
@@ -279,7 +283,17 @@
 				<!-- Result modal -->
 			  <div id="compare-result" class="modal">
 			    <div class="modal-content">
-			      <div id="result-total"></div>
+			    	<div class="row">
+			    		<div class="col s6 m5 offset-m1 l3 offset-l1">
+			    			<div id="result-text"></div>
+			    		</div>
+			    		<div class="col s6 m5 l3 push-l4">
+			    			<div id="result-profile"></div>
+			    		</div>
+			    		<div class="col s10 offset-s1 m8 offset-m2 l4 pull-l3">
+			    			<div id="result-total"></div>
+			    		</div>
+			    	</div>
 			    </div>
 			  </div>
 				<!-- End result modal -->

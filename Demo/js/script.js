@@ -41,21 +41,54 @@ $(document).ready(function() {
   
   // Result modal initialisation
   $('#compare-result').modal({
+    endingTop: '22%',
     ready: function(modal, trigger) {
       console.log($('#result').data('percentage'))
       // Results circliful
       $('#result-total').circliful({
         percent: $('#result-total').data('percentage'),
-        // text: 'match',
-        // textY: 130,
-        // textX: 108,
+        text: 'Total',
+        textBelow: true,
         decimals: 2,
+        alwaysDecimals: true,
         foregroundColor: '#80cbc4',
         backgroundColor: 'none',
         fillColor: '#eee',
         foregroundBorderWidth: 4,
         iconColor: '#80cbc4',
         icon: 'f2c3',
+        iconSize: '30',
+        iconPosition: 'middle'
+      });
+      
+      $('#result-text').circliful({
+        percent: $('#result-text').data('percentage'),
+        text: 'Text',
+        textBelow: true,
+        decimals: 2,
+        alwaysDecimals: true,
+        foregroundColor: '#80cbc4',
+        backgroundColor: 'none',
+        fillColor: '#eee',
+        foregroundBorderWidth: 4,
+        iconColor: '#80cbc4',
+        icon: 'f022',
+        iconSize: '30',
+        iconPosition: 'middle'
+      });
+      
+      $('#result-profile').circliful({
+        percent: $('#result-profile').data('percentage'),
+        text: 'Profile',
+        textBelow: true,
+        decimals: 2,
+        alwaysDecimals: true,
+        foregroundColor: '#80cbc4',
+        backgroundColor: 'none',
+        fillColor: '#eee',
+        foregroundBorderWidth: 4,
+        iconColor: '#80cbc4',
+        icon: 'f007',
         iconSize: '30',
         iconPosition: 'middle'
       });
@@ -102,6 +135,10 @@ $(document).ready(function() {
     // Move up once working
     $('#result-total').html('');
     $('#result-total').data('percentage', 86.55);
+    $('#result-text').html('');
+    $('#result-text').data('percentage', 84);
+    $('#result-profile').html('');
+    $('#result-profile').data('percentage', 88.99);
     $('#compare-result').modal('open');
   });
   
