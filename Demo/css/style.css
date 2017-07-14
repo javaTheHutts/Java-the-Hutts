@@ -249,19 +249,36 @@ button.picker__close {
 
 .vline {
   width: 1px;
-  height: 12em;
-  background-color: #bbb;
+  height: 16em;
+  background-color: #ccc;
   position: relative;
   left: 50%;
 }
 
 .vline-top {
-  transform: translateY(-90%);
+  transform: translateY(-70%);
 }
 
 .vline-bottom {
-  transform: translateY(90%);
+  transform: translateY(70%);
 }
+
+.hline {
+  width: 90%;
+  height: 1px;
+  background-color: #ccc;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/*.hline-left {*/
+/*  transform: translateX(10%);*/
+/*}*/
+
+/*.hline-right {*/
+/*  transform: translateX(185%);*/
+/*}*/
 
 .col.compare-button-wrapper {
   padding-top: 0;
@@ -328,8 +345,15 @@ button.picker__close {
 
 /* Collapsible 2 & 3 */
 .pipe-gallery {
-  padding-left: 3em;
-  padding-right: 3em;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+}
+  
+@media (min-width: 992px) {
+  .pipe-gallery {
+    padding-left: 3em;
+    padding-right: 3em;
+  }
 }
 
 .slick-prev::before,

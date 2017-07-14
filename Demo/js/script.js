@@ -21,10 +21,8 @@ $(document).ready(function() {
     $(this).children('.carets').text('expand_more'):
     $(this).children('.carets').text('chevron_right');
     // Trigger slick carousel events to re-init sizes
-    $('.pipeline').slick('slickNext');
-    $('.pipelet').slick('slickNext');
-    $('.pipeline').slick('slickPrev');
-    $('.pipelet').slick('slickPrev');
+    $('.pipeline').slick('slickGoTo', 0);
+    $('.pipelet').slick('slickGoTo', 0);
   });
   
   // Click event to scroll to top
@@ -43,7 +41,7 @@ $(document).ready(function() {
   $('#compare-result').modal({
     endingTop: '22%',
     ready: function(modal, trigger) {
-      console.log($('#result').data('percentage'))
+      console.log($('#result').data('percentage'));
       // Results circliful
       $('#result-total').circliful({
         percent: $('#result-total').data('percentage'),
@@ -157,6 +155,13 @@ $(document).ready(function() {
     asNavFor: '.pipelet',
     centerMode: true,
     focusOnSelect: true,
+    responsive: [{
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    }]
   });
   
 });
