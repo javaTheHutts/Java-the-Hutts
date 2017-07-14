@@ -10,6 +10,7 @@ from PIL import Image
 from preprocessing import ThresholdingManager
 from preprocessing import BlurManager
 from preprocessing import ColorManager
+from preprocessing import SimplificationManager
 from processing import FaceDetector
 import pytesseract
 import argparse
@@ -35,8 +36,12 @@ ap.add_argument("-k", "--kernel", default=None, nargs='+', type=int, help="Kerne
 args = vars(ap.parse_args())
 
 image = cv2.imread(args["image"])
+
+simplification_manager = SimplificationManager(image)
+image = simplification_manager.perspectiveTransformation(image)
+cv2.imwrite("output/warped.png", image)
 color_manager = ColorManager(image)
-fd = FaceDetector(FACE_DETECTOR_PATH)
+face_detector = FaceDetector(FACE_DETECTOR_PATH)
 
 if args["color"] is not None:
     if args["color"] == "blackhat":
@@ -59,7 +64,7 @@ image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cv2.imwrite("output/gray.png", image)
 
 if args["remove"] is True:
-    (_, image) = fd.removeFace(image)
+    (_, image) = face_detector.removeFace(image)
 
 
 if args["blur"] is not None:

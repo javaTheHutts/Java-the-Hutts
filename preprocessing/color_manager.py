@@ -21,9 +21,9 @@ class ColorManager:
             return cv2.merge([B, G, zeros])
 
     def blackHat(self, image, rect_kernel_size=(13, 7)):
-        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
-        return cv2.morphologyEx(image.copy(), cv2.MORPH_BLACKHAT, rectKernel)
+        rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
+        return cv2.morphologyEx(image.copy(), cv2.MORPH_BLACKHAT, rectangle_kernel)
 
     def topHat(self, image, rect_kernel_size=(13, 7)):
-        rectKernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
-        return  cv2.morphologyEx(image, cv2.MORPH_TOPHAT, rectKernel)
+        rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
+        return cv2.morphologyEx(image, cv2.MORPH_TOPHAT, rectangle_kernel)
