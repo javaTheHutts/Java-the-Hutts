@@ -19,7 +19,6 @@ main {
   flex: 1 0 auto;
 }
 
-.btn,
 .navbar > .fixed, 
 .collapsible-header {
   background-color: #5c8983;
@@ -108,13 +107,10 @@ main {
   margin-bottom: -20px;
 }
 
-.compare-card,
-.col.compare-button-wrapper {
-  min-height: 42em;
-}
-
-.compare-button-wrapper {
-  padding: 0;
+@media (max-width: 600px) {
+  .card-content .row {
+    margin-bottom: auto;
+  }
 }
 
 /* Collapsible 1 */
@@ -123,7 +119,6 @@ main {
 .input-field .prefix.active {
   color: #3f5e5a;
 }
-
 
 /* TYPE text */
 /* label focus color */
@@ -252,11 +247,35 @@ button.picker__close {
   color: #3f5e5a;
 }
 
-#compareBtn {
-  top: 50%;
+.vline {
+  width: 1px;
+  height: 12em;
+  background-color: #bbb;
+  position: relative;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #2b2c28;
+}
+
+.vline-top {
+  transform: translateY(-90%);
+}
+
+.vline-bottom {
+  transform: translateY(90%);
+}
+
+.col.compare-button-wrapper {
+  padding-top: 0;
+  margin-top: 13.5px;
+}
+
+.btn,
+#compareBtn {
+  background-color: #5c8983; 
+}
+
+#compareBtn {
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 #compareBtn:hover,
@@ -265,13 +284,41 @@ button.picker__close {
   background-color: #80cbc4;
 }
 
-#id_image {
-  max-height: 28em;
+@media (min-width: 992px) {
+  .compare-card,
+  .col.compare-button-wrapper {
+    min-height: 40em;
+  }
+  
+  .col.compare-button-wrapper {
+    padding-top: 13.5px;
+  }
+  
+  #idPreview {
+    max-height: 28em;
+    margin-top: 3em;
+  }
+  
+  #compareBtn {
+    top: 50%;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (min-width: 1500px) {
+  .compare-card,
+  .col.compare-button-wrapper {
+    min-height: 42em;
+  }
+  
+  #idPreview {
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 600px) {
   .input-field > .btn {
-    width: 6em;
+    width: 7em;
     height: 3em;
     font-size: 0.9em;
     padding: 0;
