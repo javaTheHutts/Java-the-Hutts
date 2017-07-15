@@ -1,11 +1,12 @@
 language: python
 python:
   - "3.5"
+# installs pybuilder before anything else
 before_install:
   - pip3.5 install pybuilder
-# command to install dependencies
+# commands to install dependencies
 install:
   - pip3.5 install -r requirements.txt
   - pyb install_dependencies
-# command to run tests
+# command to build project
 script: make
