@@ -6,10 +6,9 @@ class FaceDetector:
         self.faceCascade = cv2.CascadeClassifier(face_cascade_path)
 
     def detect(self, image, scale_factor=1.1, min_neighbors=5, min_size=(30, 30)):
-        # detect faces in the image
         rectangles = self.faceCascade.detectMultiScale(image, scaleFactor=scale_factor,
-                                                       minNeighbors=min_neighbors, minSize=min_size,
-                                                       flags=cv2.CASCADE_SCALE_IMAGE)
+                                                  minNeighbors=min_neighbors, minSize=min_size,
+                                                  flags=cv2.CASCADE_SCALE_IMAGE)
         return rectangles
 
     def HOG(self):
