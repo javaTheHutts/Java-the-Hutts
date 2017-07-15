@@ -17,7 +17,7 @@ import argparse
 import cv2
 import os
 
-FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
+SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
 # construct the argument parse and parse the arguments
@@ -41,7 +41,7 @@ simplification_manager = SimplificationManager(image)
 image = simplification_manager.perspectiveTransformation(image)
 cv2.imwrite("output/warped.png", image)
 color_manager = ColorManager(image)
-face_detector = FaceDetector(FACE_DETECTOR_PATH)
+face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
 
 if args["color"] is not None:
     if args["color"] == "blackhat":
@@ -64,7 +64,7 @@ image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cv2.imwrite("output/gray.png", image)
 
 if args["remove"] is True:
-    (_, image) = face_detector.removeFace(image)
+    (_, image) = face_detector.extractFace(image)
 
 
 if args["blur"] is not None:
