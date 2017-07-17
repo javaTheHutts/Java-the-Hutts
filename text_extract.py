@@ -89,6 +89,8 @@ filename = "{}.png".format(os.getpid())
 cv2.imwrite(filename, image)
 
 cv2.imwrite("output/Extraction.png", image)
+cv2.imshow("show", image)
 text = pytesseract.image_to_string(Image.open(filename))
 os.remove(filename)
 print(text)
+cv2.waitKey(0)
