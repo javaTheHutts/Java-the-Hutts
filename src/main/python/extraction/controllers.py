@@ -12,7 +12,7 @@ extract = Blueprint('extract', __name__)
 
 
 @extract.route('/extractText', methods=['POST'])
-def extractText():
+def extract_text():
     """
     ----------------------------------------------------------------------
     Author: Nicolai van Niekerk
@@ -23,6 +23,7 @@ def extractText():
     ----------------------------------------------------------------------
     """
     image = request.files.get("image")
+    print(image)
     text = {
         "Surname": "Doe",
         "Names": "John Jane",
@@ -37,7 +38,7 @@ def extractText():
 
 
 @extract.route('/extractFace', methods=['POST'])
-def extractFace():
+def extract_face():
     """
     ----------------------------------------------------------------------
     Author: Nicolai van Niekerk
@@ -48,12 +49,13 @@ def extractFace():
     ----------------------------------------------------------------------
     """
     image = request.files.get("image")
+    print(image)
     face = "jklanskjcbniugciuhncoiaksc6565"
     return jsonify({"Extracted Face": face})
 
 
 @extract.route('/extractAll', methods=['POST'])
-def extractAll():
+def extract_all():
     """
     ----------------------------------------------------------------------
     Author: Nicolai van Niekerk

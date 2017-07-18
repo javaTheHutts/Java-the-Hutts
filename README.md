@@ -39,8 +39,15 @@ When you are finished developing in this environment, simply call `deactivate` i
 
 Once you are finished, execute the command `deactivate` in order to exit your virtual environment.
 
-## Using the system
-1. After building the project, run the script `run.py` in `src/main/scripts` to start the server hosting the API.
+## Installing the project
+1. After building, navigate to the generated `target/dist/Java-the-Hutts-1.0.dev0/` directory.
+2. Run `python3 setup.py install` to install the project into your Python environment.
+
+All the modules that have been created has now been installed into the `site-packages` folder of your python environment (`venv/lib/python3.5/site-packages` when working with a virtual environment as aforementioned) and can be imported like any other Python module, for example `from server import app` in order to import the Flask server.
+Any of the runnable scripts can be found in the `target/dist/Java-the-Hutts-1.0.dev0/build/scripts-3.5` directory.
+
+## Starting the server
+1. After building and installing the project, run the script `run.py` in the scripts directory to start the server hosting the API.
 2. Requests can then be sent to `http://127.0.0.1:5000/` to use the API.
 3. Refer to the User Manual under `documentation/user-manual` for detailed instructions regarding requests, parameters and return types.
 

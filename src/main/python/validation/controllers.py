@@ -12,7 +12,7 @@ validate = Blueprint('validate', __name__)
 
 
 @validate.route('/verifyID', methods=['POST'])
-def verifyID():
+def verify_id():
     """
         ----------------------------------------------------------------------
         Author: Nicolai van Niekerk
@@ -23,27 +23,28 @@ def verifyID():
         URL: http://localhost:5000/verifyID
         ----------------------------------------------------------------------
         """
-    image_of_id = request.files.get("idPhoto")
-    names = request.form['names']
-    surname = request.form['surname']
-    id_number = request.form['idNumber']
-    nationality = request.form['Nationality']
-    country_of_birth = request.form['cob']
-    status = request.form['status']
-    gender = request.form['gender']
-    date_of_birth = request.form['dob']
-    face = request.files.get('userImage')
+    # image_of_id = request.files.get("id_img")
+    # names = request.form['names']
+    # surname = request.form['surname']
+    # id_number = request.form['id_number']
+    # nationality = request.form['nationality']
+    # country_of_birth = request.form['cob']
+    # status = request.form['status']
+    # gender = request.form['gender']
+    # date_of_birth = request.form['dob']
+    # face = request.files.get('face_img')
+    print(request)
 
     # do stuff to get result
 
     result = {
-        "Percentage Match": 63
+        "percent_match": 63
     }
     return jsonify(result)
 
 
 @validate.route('/verifyFaces', methods=['POST'])
-def verifyFaces():
+def verify_faces():
     """
         ----------------------------------------------------------------------
         Author: Nicolai van Niekerk
@@ -54,19 +55,19 @@ def verifyFaces():
         URL: http://localhost:5000/verifyFaces
         ----------------------------------------------------------------------
         """
-    image_of_id = request.files.get("ID")
-    face = request.files.get('face')
+    # image_of_id = request.files.get("id_img")
+    # face = request.files.get("face")
 
     # do stuff to get result
 
     result = {
-        "Percentage Match": 63
+        "percent_match": 63
     }
     return jsonify(result)
 
 
 @validate.route('/verifyInfo', methods=['POST'])
-def verifyInfo():
+def verify_info():
     """
         ----------------------------------------------------------------------
         Author: Nicolai van Niekerk
@@ -77,19 +78,19 @@ def verifyInfo():
         URL: http://localhost:5000/verifyInfo
         ----------------------------------------------------------------------
         """
-    image_of_id = request.files.get("idPhoto")
-    names = request.form['names']
-    surname = request.form['surname']
-    id_number = request.form['idNumber']
-    nationality = request.form['Nationality']
-    country_of_birth = request.form['cob']
-    status = request.form['status']
-    gender = request.form['gender']
-    date_of_birth = request.form['dob']
+    # image_of_id = request.files.get("id_img")
+    # names = request.form['names']
+    # surname = request.form['surname']
+    # id_number = request.form['id_number']
+    # nationality = request.form['nationality']
+    # country_of_birth = request.form['cob']
+    # status = request.form['status']
+    # gender = request.form['gender']
+    # date_of_birth = request.form['dob']
 
     # do stuff to get result
 
     result = {
-        "Percentage Match": 63
+        "percent_match": 63
     }
     return jsonify(result)
