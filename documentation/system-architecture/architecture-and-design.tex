@@ -43,26 +43,47 @@
 \newpage
 
 \setcounter{page}{1}
-	\section{Architectural Specifications and Design}\label{sec:architectural}
-	The purpose of this document is to give an architectural perspective of the \project system through the use of various visual models. The models depict the components of the \project system where appropriate. Additionally, the various technologies that are implemented will be addressed.
-	
-	    \subsection{Deployment Model}\label{sec:architectural-deployment}
-	    The following Deployment diagram depicts the architecture of the system as deployment of artifacts to deployment targets.
-	    \begin{figure}[h]
+	\section{Introduction}
+	\subsection{Overview}
+This document identifies the architectural design specifications that satisfy the functional requirements proposed in the System Requirements Specification. It addresses the needs of the various subsystems' non-functional requirements focusing on the quality attributes, architectural patterns as well as constraints and integration requirements of the Hutts-Verification system.\newline \newline 
+The following modules' designs are included in this document:
+\begin{itemize}
+	\item Image Processing
+	\item Extraction
+	\item Verification
+\end{itemize}
+The document begins with an explanation on the chosen architectural pattern and how it will be used to modularize the API. It then outlines the architectural design of each module along with all relevant UML diagrams. Finally the chosen technologies are discussed as well as the deployment of the system. 
+
+\subsection{Architectural Pattern}
+The Hutts-Validation system will be designed as a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling. The API will consist of three independent services: Image Processing, Extraction and Verification. 
+
+\section{Deployment Diagram}
+The following Deployment diagram depicts the architecture of the system as deployment of artifacts to deployment targets.. This can be seen as an overall view on the system in a deployment scenario.
+\begin{figure}[h]
 	    	\centering
 	    	\includegraphics[scale=0.5]{img/Quant.png}
 	    	\caption{Deployment Diagram}
 	    \end{figure}
-	    
-	    \subsection{Use Case Models}\label{sec:architectural-use-case}
-	    
-	    \subsection{Class Models}\label{sec:architectural-class}
-	    
-	    \subsection{Activity Models}\label{sec:architectural-activity}
-	    
-	    \subsection{Sequence Models}\label{sec:architectural-sequence}
-	    
-	    \subsection{State Models}\label{sec:architectural-state}
-	    
-	    \subsection{Technologies}\label{sec:architectural-technologies}
-	    \end{document}
+	    \pagebreak
+
+\section{Services}
+This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
+
+\subsection{Image Processing}
+TODO: Some description about the service
+\subsubsection{Class Diagram}
+The class diagram of the Image Processing module makes use of a combination of two well-known design patterns: 
+\begin{itemize}
+	\item \textbf{Decorator:} Different preprocessing techniques are added to the PreProcessor object at runtime.
+	\item \textbf{Strategy:} Each preprocessing technique's \textit{preProcess()} algorithm can be changed at runtime.
+	\begin{figure}[h]
+	    	\centering
+	    	\includegraphics[scale=0.3]{img/imageProcessingClassDiagram.png}
+	    	\caption{Image Processing Class Diagram}
+	    \end{figure}
+\end{itemize}
+\subsubsection{Sequence Diagram}
+\subsubsection{Activity Diagram}
+\subsubsection{State Diagram}
+\subsubsection{Use Case Diagram}
+\end{document}
