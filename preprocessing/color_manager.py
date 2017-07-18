@@ -3,8 +3,8 @@ import numpy as np
 
 
 class ColorManager:
-    def __init__(self, image):
-        self.image = image
+    def __init__(self):
+        print("Initialise ColorManager")
 
     def histEqualisation(self, image):
         return cv2.equalizeHist(image)

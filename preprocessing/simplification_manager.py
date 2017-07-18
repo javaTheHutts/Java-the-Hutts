@@ -5,8 +5,8 @@ from imutils.perspective import order_points, four_point_transform
 from skimage.filters import threshold_adaptive
 
 class SimplificationManager:
-    def __init__(self, image):
-        self.image = image
+    def __init__(self):
+        print("Initialise SimplificationManager")
 
     def perspectiveTransformation(self, image):
         ratio = image.shape[0] / 500.0

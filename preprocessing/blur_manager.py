@@ -2,8 +2,8 @@ import cv2
 
 
 class BlurManager:
-    def __init__(self, image):
-        self.image = image
+    def __init__(self):
+        print("Initialise BlurManager")
 
     def blur(self, image, blur_kernel=[(3, 3)]):
 
