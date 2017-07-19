@@ -172,7 +172,7 @@ function readURL(input) {
     var reader = new FileReader();
 
     reader.onload = function(e) {
-      $('#idPreview').attr('src', e.target.result);
+      $('#idPreview, #id-extract-preview').attr('src', e.target.result);
     };
 
     reader.readAsDataURL(input.files[0]);

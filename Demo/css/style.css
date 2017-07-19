@@ -340,7 +340,12 @@ button.picker__close {
   }
 }
 
-/* Collapsible 2 & 3 */
+/* Collapsible 2 */
+.extraction-options {
+  margin-top: 40px;
+}
+
+/* Collapsible 3 & 4 */
 .pipe-gallery {
   padding-left: 0.4em;
   padding-right: 0.4em;
@@ -358,7 +363,7 @@ button.picker__close {
   color: black;
 }
 
-/* Colapsible 4 */
+/* Colapsible 5 */
 
 /*Footer styling */
 .page-footer,

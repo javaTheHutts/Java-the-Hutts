@@ -62,7 +62,7 @@
 				<li>
 					<div class="collapsible-header active waves-effect">
 						<i class="material-icons carets">chevron_right</i>
-						Compare 
+						Verification
 						<i class="fa fa-clone" aria-hidden="true"></i>
 					</div>
 					<div class="collapsible-body">
@@ -72,7 +72,7 @@
 									<!-- Card 1 -->
 									<div class="card compare-card">
 										<div class="card-content">
-											<span class="card-title">Provided information</span>
+											<span class="card-title">Verification Details</span>
 											<div class="row">
 												<div class=" col s12 m6 input-field">
 													<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
@@ -147,7 +147,7 @@
 									<div class="vline vline-top hide-on-med-and-down"></div>
 									<div class="vline vline-bottom hide-on-med-and-down"></div>
 									<button class="btn-floating btn-large waves-effect waves-light tooltipped"
-										data-position="top" data-delay="50" data-tooltip="Compare"
+										data-position="top" data-delay="50" data-tooltip="Verify"
 										type="submit" name="compareBtn" id="compareBtn">
 										<i class="material-icons">compare</i>
 									</button>
@@ -158,9 +158,11 @@
 									<!-- Card 2 -->
 									<div class="card compare-card">
 										<div class="card-content">
-											<span class="card-title">Photo of ID Document</span>
+											<span class="card-title">Photo of ID</span>
 											<div class="row">
-												<img src="img/id-card.png" alt="ID Photo" width="100%" id="idPreview">
+												<div class="col s12">
+										  		<img src="img/id-card.png" alt="ID Photo" width="100%" id="idPreview">
+										  	</div>
 											</div>
 											<div class="row">
 												<div class="col s12">
@@ -186,6 +188,64 @@
 				<!-- End Expandable 1 -->
 				
 				<!-- Expandable 2 -->
+				<li>
+					<div class="collapsible-header waves-effect">
+						<i class="material-icons carets">expand_more</i>
+						Extraction
+						<i class="fa fa-picture-o" aria-hidden="true"></i>
+					</div>
+					<div class="collapsible-body">
+						<div class="row">
+							<div class="col s12 card-wrapper">
+								<div class="card">
+									<div class="card-content">
+									  <div class="row">
+									  	<div class="col s12">
+									  		<img src="img/id-card.png" alt="ID Photo" width="100%" id="id-extract-preview">
+									  	</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<div class="file-field input-field">
+													<div class="btn">
+														<span>ID Photo</span>
+														<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">
+													</div>
+													<div class="file-path-wrapper">
+														<input class="file-path validate" type="text">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row extraction-options">
+							<div class="col s4 left-align">
+								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped"
+									data-position="top" data-delay="50" data-tooltip="Extract Text">
+									<i class="material-icons prefix fa fa-list"></i>
+								</button>
+							</div>
+							<div class="col s4 center-align">
+								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped"
+									data-position="top" data-delay="50" data-tooltip="Extract Image">
+									<i class="material-icons prefix fa fa-user"></i> 
+								</button>
+							</div>
+							<div class="col s4 right-align">
+								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped"
+									data-position="top" data-delay="50" data-tooltip="Extract All">
+									<i class="material-icons prefix fa fa-id-card-o"></i> 
+								</button>
+							</div>
+						</div>
+					</div>
+				</li> 
+				<!-- End Expandable 3 -->
+				
+				<!-- Expandable 3 -->
 				<li>
 					<div class="collapsible-header waves-effect">
 						<i class="material-icons carets">expand_more</i>
@@ -224,9 +284,9 @@
 						</div>
 					</div>
 				</li> 
-				<!-- End Expandable 2 -->
+				<!-- End Expandable 3 -->
 				
-				<!-- Expandable 3 -->
+				<!-- Expandable 4 -->
 				<li>
 					<div class="collapsible-header waves-effect">
 						<i class="material-icons carets">expand_more</i>
@@ -265,9 +325,9 @@
 						</div>
 					</div>
 				</li> 
-				<!-- End Expandable 3 -->
+				<!-- End Expandable 4 -->
 				
-				<!-- Expandable 4 -->
+				<!-- Expandable 5 -->
 				<li>
 					<div class="collapsible-header waves-effect">
 						<i class="material-icons carets">expand_more</i>
@@ -285,7 +345,7 @@
 						</div>
 					</div>
 				</li> 
-				<!-- End Expandable 4 -->
+				<!-- End Expandable 5 -->
 				
 				<!-- Result modal -->
 			  <div id="compare-result" class="modal">
