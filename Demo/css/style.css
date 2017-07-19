@@ -12,7 +12,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #fffafb;
+  background-color: #fcfcfc;
 }
 
 main {
@@ -56,6 +56,11 @@ main {
 
 .nav-options a:hover {
   color: #fffafb;
+}
+
+/* Product */
+#product {
+  margin-top: 30px;
 }
 
 /* Collapsibles */
@@ -250,7 +255,7 @@ button.picker__close {
 .vline {
   width: 1px;
   height: 16em;
-  background-color: #ccc;
+  background-color: #ddd;
   position: relative;
   left: 50%;
 }
@@ -266,19 +271,11 @@ button.picker__close {
 .hline {
   width: 90%;
   height: 1px;
-  background-color: #ccc;
+  background-color: #ddd;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
-
-/*.hline-left {*/
-/*  transform: translateX(10%);*/
-/*}*/
-
-/*.hline-right {*/
-/*  transform: translateX(185%);*/
-/*}*/
 
 .col.compare-button-wrapper {
   padding-top: 0;
