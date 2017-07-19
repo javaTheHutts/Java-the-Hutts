@@ -35,7 +35,7 @@ main {
   padding: 0.4em;
 }
 
-.navlogo > img {
+.navlogo a img {
   max-width: 100%;
   max-height: 100%;
 }
