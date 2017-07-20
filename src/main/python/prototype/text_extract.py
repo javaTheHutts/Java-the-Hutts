@@ -1,12 +1,11 @@
 """
 ----------------------------------------------------------------------
-Author: Stephan Nell
+Author(s): Stephan Nell, Jan-Justin van Tonder
 ----------------------------------------------------------------------
 Driver for extracting text from the image passed and converting
 extracted text into a JSON object
 ----------------------------------------------------------------------
 Example:
-   python text_extract.py --image img/ID.jpg  --thresholding "adaptive" --blur "blur"
    python text_extract.py --image img/ID2.jpeg --color "red" --thresholding "otsu" --blur "median" --kernel 3 3
    python text_extract.py  --image img/idcard.jpg --color "green" --thresholding "adaptive" --blur "median"
 ----------------------------------------------------------------------
@@ -19,6 +18,7 @@ from preprocessing import ColorManager
 from preprocessing import SimplificationManager
 from processing import FaceDetector
 from processing import BarCodeManager
+from processing import TextManager
 
 import pytesseract
 import argparse
@@ -26,7 +26,7 @@ import cv2
 import os
 import json
 
-# Constants path to trained data for Shapre Predictor.
+# Constants path to trained data for Shape Predictor.
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
@@ -53,7 +53,7 @@ barcode_manager = BarCodeManager()
 color_manager = ColorManager()
 face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
 image = simplification_manager.perspectiveTransformation(image)
-cv2.imwrite("output/warped.png", image)
+cv2.imwrite("output/3-warped.png", image)
 
 
 barcode_data_found, barcode_scan_data, image = barcode_manager.get_barcode_info(image)
@@ -66,6 +66,7 @@ if barcode_data_found:
 
 if args["remove"] is True:
     image = face_detector.blur_face(image)
+    cv2.imwrite("output/4-faceRemvoal.png", image)
 
 if args["color"] is not None:
     if args["color"] == "blackhat":
@@ -74,8 +75,9 @@ if args["color"] is not None:
         image = color_manager.topHat(image)
     else:
         image = color_manager.extractChannel(image, args["color"])
-    cv2.imwrite("output/colour_extract.png", image)
+    cv2.imwrite("output/5-colour_extract.png", image)
 
+cv2.imwrite("output/colour_extract.png", image)
 if args["kernel"] is not None:
     blur_kernel = args["kernel"]
 else:
@@ -85,7 +87,7 @@ else:
         blur_kernel = [(3, 3)]
 
 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-cv2.imwrite("output/gray.png", image)
+cv2.imwrite("output/6-gray.png", image)
 
 if args["blur"] is not None:
     blur_manager = BlurManager()
@@ -96,7 +98,7 @@ if args["blur"] is not None:
     elif args["blur"] == "median":
         image = blur_manager.medianBlur(image, blur_kernel=blur_kernel)
 
-cv2.imwrite("output/blur.png", image)
+cv2.imwrite("output/7-blur.png", image)
 if args["thresholding"] is not None:
     thresh_manager = ThresholdingManager()
     if args["thresholding"] == "adaptive":
@@ -104,11 +106,17 @@ if args["thresholding"] is not None:
     elif args["thresholding"] == "otsu":
         image = thresh_manager.otsuThresholding(image)
 
-cv2.imwrite("output/thresh.png", image)
 filename = "{}.png".format(os.getpid())
 cv2.imwrite(filename, image)
 
-cv2.imwrite("output/Extraction.png", image)
+cv2.imwrite("output/8-Extraction.png", image)
 text = pytesseract.image_to_string(Image.open(filename))
 os.remove(filename)
-print(text)
+
+# Text cleanup and retrieval
+text_manager = TextManager()
+print(text, "\n------------------------------------------------------")
+clean_text = text_manager.clean_up(text)
+print(clean_text, "\n -----------------------------------------------")
+id_details = text_manager.dictify(clean_text)
+print(id_details)

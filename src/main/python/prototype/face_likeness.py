@@ -18,7 +18,7 @@ import argparse
 import cv2
 import os
 
-# Constants path to trained data for Shapre Predictor and Face recognition
+# Constants path to trained data for Shape Predictor and Face recognition
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
