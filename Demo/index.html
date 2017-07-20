@@ -27,23 +27,24 @@
 				<div class="navlogo">
 					<a href="https://javathehutts.github.io/Java-the-Hutts/" 
 					target="_blank">
-						<img class="circle" src="img/Java-Hutts2.png">
+						<img class="circle hoverable tooltipped" src="img/Java-Hutts2.png"
+						data-position="right" data-delay="50" data-tooltip="Java the Hutts">
 					</a>
 				</div>
 				<div class="nav-options">
-					<a href="#" class="waves-effect tooltipped"
+					<a href="#" class="waves-effect tooltipped hoverable"
 					data-position="right" data-delay="50" data-tooltip="Settings">
 						<i class="material-icons">settings</i>
 					</a>
-					<a href="#" class="waves-effect tooltipped scroll-top"
+					<a href="#" class="waves-effect tooltipped scroll-top hoverable"
 					data-position="right" data-delay="50" data-tooltip="To top">
 						<i class="material-icons prefix fa fa-angle-double-up"></i>
 					</a>
-					<a href="#" class="waves-effect tooltipped scroll-bottom"
+					<a href="#" class="waves-effect tooltipped scroll-bottom hoverable"
 					data-position="right" data-delay="50" data-tooltip="To bottom">
 						<i class="material-icons prefix fa fa-angle-double-down"></i>
 					</a>
-					<a href="#" class="waves-effect tooltipped"
+					<a href="#" class="waves-effect tooltipped hoverable"
 					data-position="right" data-delay="50" data-tooltip="Info">
 						<i class="material-icons">info_outline</i>
 					</a>
@@ -64,7 +65,7 @@
 				
 				<!-- Expandable 1 -->
 				<li>
-					<div class="collapsible-header active waves-effect">
+					<div class="collapsible-header active waves-effect hoverable">
 						<i class="material-icons carets">chevron_right</i>
 						Verification
 						<i class="material-icons" aria-hidden="true">verified_user</i>
@@ -132,7 +133,7 @@
 											<div class="row">
 												<div class="col s12">
 													<div class="file-field input-field">
-														<div class="btn">
+														<div class="btn hoverable">
 															<span>Photo</span>
 															<input type="file" id="userImage" name="userImage" accept="image/*">
 														</div>
@@ -150,7 +151,7 @@
 								<div class="col s12 l1 valign-wrapper compare-button-wrapper">
 									<div class="vline vline-top hide-on-med-and-down"></div>
 									<div class="vline vline-bottom hide-on-med-and-down"></div>
-									<button class="btn-floating btn-large waves-effect waves-light tooltipped"
+									<button class="btn-floating btn-large waves-effect waves-light tooltipped hoverable"
 										data-position="top" data-delay="50" data-tooltip="Verify"
 										type="submit" name="compareBtn" id="compareBtn">
 										<i class="material-icons">compare</i>
@@ -171,7 +172,7 @@
 											<div class="row">
 												<div class="col s12">
 													<div class="file-field input-field">
-														<div class="btn">
+														<div class="btn hoverable">
 															<span>ID Photo</span>
 															<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">
 														</div>
@@ -193,14 +194,14 @@
 				
 				<!-- Expandable 2 -->
 				<li>
-					<div class="collapsible-header waves-effect">
+					<div class="collapsible-header waves-effect hoverable">
 						<i class="material-icons carets">expand_more</i>
 						Extraction
 						<i class="material-icons" aria-hidden="true">content_copy</i>
 					</div>
 					<div class="collapsible-body">
 						<div class="row">
-							<div class="col s12 card-wrapper">
+							<div class="col s12 m8 card-wrapper">
 								<div class="card">
 									<div class="card-content">
 									  <div class="row">
@@ -211,7 +212,7 @@
 										<div class="row">
 											<div class="col s12">
 												<div class="file-field input-field">
-													<div class="btn">
+													<div class="btn hoverable">
 														<span>ID Photo</span>
 														<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">
 													</div>
@@ -224,22 +225,16 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row extraction-options">
-							<div class="col s4 left-align">
-								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped"
+							<div class="col s4 center-align">
+								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped extraction-option hoverable"
 									data-position="top" data-delay="50" data-tooltip="Extract Text">
 									<i class="material-icons prefix fa fa-list"></i>
 								</button>
-							</div>
-							<div class="col s4 center-align">
-								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped"
+								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped extraction-option hoverable"
 									data-position="top" data-delay="50" data-tooltip="Extract Image">
 									<i class="material-icons prefix fa fa-user"></i> 
 								</button>
-							</div>
-							<div class="col s4 right-align">
-								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped"
+								<button class="btn btn-floating btn-large waves-effect waves-light tooltipped extraction-option hoverable"
 									data-position="top" data-delay="50" data-tooltip="Extract All">
 									<i class="material-icons prefix fa fa-id-card-o"></i> 
 								</button>
@@ -247,11 +242,11 @@
 						</div>
 					</div>
 				</li> 
-				<!-- End Expandable 3 -->
+				<!-- End Expandable 2 -->
 				
 				<!-- Expandable 3 -->
 				<li>
-					<div class="collapsible-header waves-effect">
+					<div class="collapsible-header waves-effect hoverable">
 						<i class="material-icons carets">expand_more</i>
 						ID Image Pipeline 
 						<i class="material-icons" aria-hidden="true">recent_actors</i>
@@ -292,7 +287,7 @@
 				
 				<!-- Expandable 4 -->
 				<li>
-					<div class="collapsible-header waves-effect">
+					<div class="collapsible-header waves-effect hoverable">
 						<i class="material-icons carets">expand_more</i>
 						ID Personal Details Pipeline 
 						<i class="material-icons" aria-hidden="true">burst_mode</i>
@@ -333,7 +328,7 @@
 				
 				<!-- Expandable 5 -->
 				<li>
-					<div class="collapsible-header waves-effect">
+					<div class="collapsible-header waves-effect hoverable">
 						<i class="material-icons carets">expand_more</i>
 						Detailed Results 
 						<i class="material-icons" aria-hidden="true">show_chart</i>
@@ -379,7 +374,7 @@
 				<div class="col s7">
 					<p class="white-text">2017 Java the Hutts</p>
 				</div>
-				<div class="col s5 center-align">
+				<div class="col s5 right-align">
 					<a class="waves-effect waves-light social btn-floating btn tooltipped"
 						href="https://github.com/javaTheHutts/Java-the-Hutts"
 						target="_blank"

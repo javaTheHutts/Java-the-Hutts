@@ -319,6 +319,15 @@ button.picker__close {
   }
 }
 
+.compare-card {
+  transition:box-shadow .25s;
+}
+
+.compare-card.compare-card-hover {
+  transition:box-shadow .25s;
+  box-shadow:0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)
+}
+
 @media (min-width: 1500px) {
   .compare-card,
   .col.compare-button-wrapper {
@@ -344,6 +353,7 @@ button.picker__close {
 .extraction-options {
   margin-top: 40px;
 }
+
 
 /* Collapsible 3 & 4 */
 .pipe-gallery {

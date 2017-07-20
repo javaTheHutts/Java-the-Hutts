@@ -164,6 +164,13 @@ $(document).ready(function() {
     }]
   });
   
+  // Hover compare cards on compare button hover
+  $('#compareBtn').hover(function() {
+    $('.compare-card').addClass('compare-card-hover');
+  }, function() {
+    $('.compare-card').removeClass('compare-card-hover');
+  });
+  
 });
 
 // Show ID Image preview
