@@ -15,14 +15,26 @@ $(document).ready(function() {
     selectYears: 200 // Creates a dropdown of 200 years to control year
   });
 
-  // Change caret symbol when expanding collapsibles
-  $('.collapsible-header').on('click', function() {
-    $(this).hasClass('active')?
-    $(this).children('.carets').text('expand_more'):
-    $(this).children('.carets').text('chevron_right');
-    // Trigger slick carousel events to re-init sizes
-    $('.pipeline').slick('slickGoTo', 0);
-    $('.pipelet').slick('slickGoTo', 0);
+  // Initialise collapsibles
+  $('.collapsible').collapsible({
+    onOpen: function () {
+      // Change caret symbol when expanding collapsibles
+      $('.collapsible-header').each(function(el) {
+        console.log($(this))
+        $(this).hasClass('active')?
+        $(this).children('.carets').text('chevron_right'):
+        $(this).children('.carets').text('expand_more');
+      });
+    },
+    onClose: function () {
+      // Change caret symbol when expanding collapsibles
+      $('.collapsible-header').each(function(el) {
+        console.log($(this))
+        $(this).hasClass('active')?
+        $(this).children('.carets').text('chevron_right'):
+        $(this).children('.carets').text('expand_more');
+      });
+    }
   });
   
   // Click event to scroll to top

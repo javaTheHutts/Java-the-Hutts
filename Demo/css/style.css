@@ -12,7 +12,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #fcfcfc;
+  background-color: #f8f8f8;
 }
 
 main {
@@ -68,14 +68,14 @@ main {
   margin: 0.5em;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 993px) {
   .expandable-body {
     margin: 2em;
     margin-left: 7em;
   }
 }
 
-@media (min-width: 1366px) {
+@media (min-width: 1367px) {
   .expandable-body {
     margin: 5em;
     margin-left: 10em;
@@ -298,7 +298,11 @@ button.picker__close {
   background-color: #80cbc4;
 }
 
-@media (min-width: 992px) {
+.id-preview {
+  padding-top: 3em;
+}
+
+@media (min-width: 993px) {
   .compare-card,
   .col.compare-button-wrapper {
     min-height: 40em;
@@ -308,9 +312,8 @@ button.picker__close {
     padding-top: 13.5px;
   }
   
-  #idPreview {
+  .id-preview {
     max-height: 28em;
-    margin-top: 3em;
   }
   
   #compareBtn {
@@ -333,10 +336,6 @@ button.picker__close {
   .col.compare-button-wrapper {
     min-height: 42em;
   }
-  
-  #idPreview {
-    margin-top: 0;
-  }
 }
 
 @media (max-width: 600px) {
@@ -348,6 +347,7 @@ button.picker__close {
     margin-top: 5px;
   }
 }
+
 
 /* Collapsible 2 */
 .extraction-options {
@@ -361,7 +361,7 @@ button.picker__close {
   padding-right: 0.4em;
 }
   
-@media (min-width: 992px) {
+@media (min-width: 993px) {
   .pipe-gallery {
     padding-left: 3em;
     padding-right: 3em;
