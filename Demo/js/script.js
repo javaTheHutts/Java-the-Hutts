@@ -20,7 +20,6 @@ $(document).ready(function() {
     onOpen: function () {
       // Change caret symbol when expanding collapsibles
       $('.collapsible-header').each(function(el) {
-        console.log($(this))
         $(this).hasClass('active')?
         $(this).children('.carets').text('chevron_right'):
         $(this).children('.carets').text('expand_more');
@@ -29,7 +28,6 @@ $(document).ready(function() {
     onClose: function () {
       // Change caret symbol when expanding collapsibles
       $('.collapsible-header').each(function(el) {
-        console.log($(this))
         $(this).hasClass('active')?
         $(this).children('.carets').text('chevron_right'):
         $(this).children('.carets').text('expand_more');
@@ -50,7 +48,7 @@ $(document).ready(function() {
 	});
   
   // Result modal initialisation
-  $('#compare-result').modal({
+  $('#verify-result').modal({
     endingTop: '22%',
     ready: function(modal, trigger) {
       console.log($('#result').data('percentage'));
@@ -106,19 +104,19 @@ $(document).ready(function() {
   });
   
   // Modal trigger
-  $('#compareBtn').on('click', function(e) {
+  $('#verify-btn').on('click', function(e) {
     e.preventDefault();
     var formData = new FormData();
-    var idPhoto = document.getElementById('idPhoto').files[0];
-    var userImage = document.getElementById('userImage').files[0];
-    var names = $('#names').val();
-    var surname = $('#surname').val();
-    var idNumber = $('#idNumber').val();
-    var nationality = $('#nationality').val();
-    var cob = $('#cob').val();
-    var status = $('#status').val();
-    var gender = $('#gender').val();
-    var dob = $('#dob').val();
+    var idPhoto = document.getElementById('id-photo-verify').files[0];
+    var userImage = document.getElementById('profile-photo').files[0];
+    var names = $('#names-verify').val();
+    var surname = $('#surname-verify').val();
+    var idNumber = $('#id-number-verify').val();
+    var nationality = $('#nationality-verify').val();
+    var cob = $('#cob-verify').val();
+    var status = $('#status-verify').val();
+    var gender = $('#gender-verify').val();
+    var dob = $('#dob-verify').val();
 
     formData.append('idPhoto', idPhoto);
     formData.append('userImage', userImage);
@@ -149,7 +147,7 @@ $(document).ready(function() {
     $('#result-text').data('percentage', 84);
     $('#result-profile').html('');
     $('#result-profile').data('percentage', 88.99);
-    $('#compare-result').modal('open');
+    $('#verify-result').modal('open');
   });
   
   // Image sliders initialisation
@@ -177,10 +175,10 @@ $(document).ready(function() {
   });
   
   // Hover compare cards on compare button hover
-  $('#compareBtn').hover(function() {
-    $('.compare-card').addClass('compare-card-hover');
+  $('#verify-btn, .extraction-options button').hover(function() {
+    $('.duo-card').addClass('duo-card-hover');
   }, function() {
-    $('.compare-card').removeClass('compare-card-hover');
+    $('.duo-card').removeClass('duo-card-hover');
   });
   
 });
@@ -189,11 +187,10 @@ $(document).ready(function() {
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
-
     reader.onload = function(e) {
-      $('#idPreview, #id-extract-preview').attr('src', e.target.result);
+      $('#id-preview-verify').attr('src', e.target.result);
+      $('#id-preview-extract').attr('src', e.target.result);
     };
-
     reader.readAsDataURL(input.files[0]);
   }
 }

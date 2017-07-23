@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="css/jquery.circliful.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="https//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/slick.min.js"></script>
 	<script type="text/javascript" src="js/jquery.circliful.min.js"></script>
@@ -68,59 +68,59 @@
 						<div class="row">
 							<div class="col s12 l6 card-wrapper card1-wrapper">
 								<!-- Card 1 -->
-								<div class="card compare-card">
+								<div class="card duo-card">
 									<div class="card-content">
 										<span class="card-title">Verification Details</span>
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
-												<input id="names" type="text" class="validate" name="names">
-												<label for="names">Names</label>
+												<input id="names-verify" type="text" class="validate">
+												<label for="names-verify">Names</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class="material-icons prefix">account_circle</i>
-												<input id="surname" type="text" class="validate" name="surname">
-												<label for="surname">Surname</label>
+												<input id="surname-verify" type="text" class="validate">
+												<label for="surname-verify">Surname</label>
 											</div>
 										</div>
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-id-card" aria-hidden="true"></i>
-												<input id="idNumber" type="text" class="validate" name="idNumber">
-												<label for="idNumber">Identity Number</label>
+												<input id="id-number-verify" type="text" class="validate">
+												<label for="id-number-verify">Identity Number</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-flag" aria-hidden="true"></i>
-												<input id="nationality" type="text" class="validate" name="nationality">
-												<label for="Nationality">Nationality</label>
+												<input id="nationality-verify" type="text" class="validate">
+												<label for="nationality-verify">Nationality</label>
 											</div>
 										</div>
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
-												<input id="cob" type="text" class="validate" name="cob">
-												<label for="cob">Country of Birth</label>
+												<input id="cob-verify" type="text" class="validate">
+												<label for="cob-verify">Country of Birth</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
-												<input id="status" type="text" class="validate" name="status">
-												<label for="status">Status</label>
+												<input id="status-verify" type="text" class="validate">
+												<label for="status-verify">Status</label>
 											</div>
 										</div>
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
-												<input type="date" class="datepicker" id="dob" name="dob">
-												<label for="dob">Date of Birth</label>
+												<input type="date" class="datepicker" id="dob-verify">
+												<label for="dob-verify">Date of Birth</label>
 											</div>
 											<div class="col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
-												<select id="gender" name="gender">
+												<select id="gender-verify">
 															<option value="" disabled selected>Male / Female</option>
 															<option value="M">Male</option>
 															<option value="F">Female</option>
 														</select>
-												<label for="gender">Gender</label>
+												<label for="gender-verify">Gender</label>
 											</div>
 										</div>
 										<div class="row">
@@ -128,7 +128,7 @@
 												<div class="file-field input-field">
 													<div class="btn hoverable">
 														<span>Photo</span>
-														<input type="file" id="userImage" name="userImage" accept="image/*">
+														<input type="file" id="profile-photo" accept="image/*">
 													</div>
 													<div class="file-path-wrapper">
 														<input class="file-path validate" type="text">
@@ -140,24 +140,28 @@
 								</div>
 							</div>
 							<!-- End Card 1 -->
-							<!-- Compare Button -->
-							<div class="col s12 l1 valign-wrapper compare-button-wrapper">
+							<!-- Verify Button -->
+							<div class="col s12 l1 valign-wrapper duo-button-wrapper">
 								<div class="vline vline-top hide-on-med-and-down"></div>
 								<div class="vline vline-bottom hide-on-med-and-down"></div>
-								<button class="btn-floating btn-large waves-effect waves-light tooltipped hoverable" data-position="top" data-delay="50" data-tooltip="Verify" type="submit" name="compareBtn" id="compareBtn">
+								<button 
+								class="btn-floating btn-large waves-effect waves-light tooltipped hoverable" 
+								data-position="top" data-delay="50" data-tooltip="Verify"
+								id="verify-btn">
 									<i class="material-icons">compare</i>
 								</button>
 								<div class="hline hide-on-large-only"></div>
 							</div>
-							<!-- End Compare -->
+							<!-- End Verify Button -->
 							<div class="col s12 l5 card-wrapper card2-wrapper">
 								<!-- Card 2 -->
-								<div class="card compare-card">
+								<div class="card duo-card">
 									<div class="card-content">
 										<span class="card-title">Photo of ID</span>
 										<div class="row">
 											<div class="col s12">
-												<img src="img/id-card.png" alt="ID Photo" width="100%" class="id-preview" id="idPreview">
+												<img src="img/id-card.png" alt="ID Photo" 
+												class="id-preview" id="id-preview-verify">
 											</div>
 										</div>
 										<div class="row">
@@ -165,7 +169,8 @@
 												<div class="file-field input-field">
 													<div class="btn hoverable">
 														<span>ID Photo</span>
-														<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">
+														<input type="file" onchange="readURL(this);" 
+														id="id-photo-verify" accept="image/*">
 													</div>
 													<div class="file-path-wrapper">
 														<input class="file-path validate" type="text">
@@ -193,12 +198,13 @@
 						<div class="row">
 							<div class="col s12 l5 card-wrapper card1-wrapper">
 								<!-- Card 1 -->
-								<div class="card compare-card">
+								<div class="card duo-card">
 									<div class="card-content">
 										<span class="card-title">Photo of ID</span>
 										<div class="row">
 											<div class="col s12">
-												<img src="img/id-card.png" alt="ID Photo" width="100%" class="id-preview" id="idExtractionPreview">
+												<img src="img/id-card.png" alt="ID Photo"
+												class="id-preview" id="id-preview-extract">
 											</div>
 										</div>
 										<div class="row">
@@ -206,7 +212,8 @@
 												<div class="file-field input-field">
 													<div class="btn hoverable">
 														<span>ID Photo</span>
-														<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">
+														<input type="file" onchange="readURL(this);"
+														id="id-photo-extract" accept="image/*">
 													</div>
 													<div class="file-path-wrapper">
 														<input class="file-path validate" type="text">
@@ -218,84 +225,79 @@
 								</div>
 							</div>
 							<!-- End Card 1 -->
-							<!-- Compare Button -->
-							<div class="col s12 l1 valign-wrapper compare-button-wrapper">
+							<!-- Extract Buttons -->
+							<div class="col s12 l1 valign-wrapper duo-button-wrapper extraction-options">
 								<div class="vline vline-top hide-on-med-and-down"></div>
 								<div class="vline vline-bottom hide-on-med-and-down"></div>
-								<button class="btn-floating btn-large waves-effect waves-light tooltipped hoverable" data-position="top" data-delay="50" data-tooltip="Verify" type="submit" name="compareBtn" id="compareBtn">
-								<i class="material-icons">compare</i>
-							</button>
+								<button id="extract-text-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract Text">
+									<i class="material-icons prefix fa fa-list"></i>
+								</button>
+								<button id="extract-all-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract All">
+									<i class="material-icons prefix fa fa-id-card-o"></i> 
+								</button>
+								<button id="extract-photo-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract Photo">
+									<i class="material-icons prefix fa fa-user"></i> 
+								</button>
 								<div class="hline hide-on-large-only"></div>
 							</div>
-							<!-- End Compare -->
+							<!-- End Extract Buttons -->
 							<div class="col s12 l6 card-wrapper card2-wrapper">
 								<!-- Card 2 -->
-								<div class="card compare-card">
+								<div class="card duo-card">
 									<div class="card-content">
 										<span class="card-title">Extracted Details</span>
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
-												<input id="names" type="text" class="validate" name="names">
-												<label for="names">Names</label>
+												<input id="names-extract" type="text" class="validate">
+												<label for="names-extract">Names</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class="material-icons prefix">account_circle</i>
-												<input id="surname" type="text" class="validate" name="surname">
-												<label for="surname">Surname</label>
+												<input id="surname-extract" type="text" class="validate">
+												<label for="surname-extract">Surname</label>
 											</div>
 										</div>
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-id-card" aria-hidden="true"></i>
-												<input id="idNumber" type="text" class="validate" name="idNumber">
-												<label for="idNumber">Identity Number</label>
+												<input id="id-number-extract" type="text" class="validate">
+												<label for="id-number-extract">Identity Number</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-flag" aria-hidden="true"></i>
-												<input id="nationality" type="text" class="validate" name="nationality">
-												<label for="Nationality">Nationality</label>
+												<input id="nationality-extract" type="text" class="validate">
+												<label for="nationality-extract">Nationality</label>
 											</div>
 										</div>
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
-												<input id="cob" type="text" class="validate" name="cob">
-												<label for="cob">Country of Birth</label>
+												<input id="cob-extract" type="text" class="validate">
+												<label for="cob-extract">Country of Birth</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
-												<input id="status" type="text" class="validate" name="status">
-												<label for="status">Status</label>
+												<input id="status-extract" type="text" class="validate">
+												<label for="status-extract">Status</label>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
-												<select id="gender" name="gender">
-														<option value="" disabled selected>Choose your Gender</option>
-														<option value="M">Male</option>
-														<option value="F">Female</option>
-													</select>
-												<label for="gender">Gender</label>
+												<input id="gender-extract" type="text" class="validate">
+												<label for="gender-extract">Gender</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
-												<input type="date" class="datepicker" id="dob" name="dob">
-												<label for="dob">Date of Birth</label>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col s12">
-												<div class="file-field input-field">
-													<div class="btn hoverable">
-														<span>Photo</span>
-														<input type="file" id="userImage" name="userImage" accept="image/*">
-													</div>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
-													</div>
-												</div>
+												<input id="dob-extract">
+												<label for="dob-extract">Date of Birth</label>
 											</div>
 										</div>
 									</div>
@@ -303,48 +305,6 @@
 							</div>
 							<!-- End Card 2 -->
 						</div>
-
-						<!--<div class="row">-->
-						<!--	<div class="col s12 m8 card-wrapper">-->
-						<!--		<div class="card">-->
-						<!--			<div class="card-content">-->
-						<!--			  <div class="row">-->
-						<!--			  	<div class="col s12">-->
-						<!--			  		<img src="img/id-card.png" alt="ID Photo" width="100%" id="id-extract-preview">-->
-						<!--			  	</div>-->
-						<!--				</div>-->
-						<!--				<div class="row">-->
-						<!--					<div class="col s12">-->
-						<!--						<div class="file-field input-field">-->
-						<!--							<div class="btn hoverable">-->
-						<!--								<span>ID Photo</span>-->
-						<!--								<input type="file" onchange="readURL(this);" id="idPhoto" name="idPhoto" accept="image/*">-->
-						<!--							</div>-->
-						<!--							<div class="file-path-wrapper">-->
-						<!--								<input class="file-path validate" type="text">-->
-						<!--							</div>-->
-						<!--						</div>-->
-						<!--					</div>-->
-						<!--				</div>-->
-						<!--			</div>-->
-						<!--		</div>-->
-						<!--	</div>-->
-						<!--	<div class="col s4 center-align">-->
-						<!--		<button class="btn btn-floating btn-large waves-effect waves-light tooltipped extraction-option hoverable"-->
-						<!--			data-position="top" data-delay="50" data-tooltip="Extract Text">-->
-						<!--			<i class="material-icons prefix fa fa-list"></i>-->
-						<!--		</button>-->
-						<!--		<button class="btn btn-floating btn-large waves-effect waves-light tooltipped extraction-option hoverable"-->
-						<!--			data-position="top" data-delay="50" data-tooltip="Extract Image">-->
-						<!--			<i class="material-icons prefix fa fa-user"></i> -->
-						<!--		</button>-->
-						<!--		<button class="btn btn-floating btn-large waves-effect waves-light tooltipped extraction-option hoverable"-->
-						<!--			data-position="top" data-delay="50" data-tooltip="Extract All">-->
-						<!--			<i class="material-icons prefix fa fa-id-card-o"></i> -->
-						<!--		</button>-->
-						<!--	</div>-->
-						<!--</div>-->
-
 					</div>
 				</li>
 				<!-- End Expandable 2 -->
