@@ -45,10 +45,19 @@ def extract_text():
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
         print(image)
-        data.update({"surname": "Doe", "names": "John Jane", "sex": "M", "nationality": "RSA",
-                     "identity_number": "6944585228083", "date_of_birth": "06-05-1996",
-                     "country_of_birth": "RSA", "status": "citizen", "success": True})
-    return jsonify({"Extracted Fields": data})
+        data.update(
+            {
+                "surname": "Doe",
+                "names": "John Jane",
+                "sex": "M", "nationality": "RSA",
+                "identity_number": "6944585228083",
+                "date_of_birth": "06-05-1996",
+                "country_of_birth": "RSA",
+                "status": "citizen",
+                "success": True
+            }
+        )
+    return jsonify(data)
 
 
 @extract.route('/extractFace', methods=['POST'])
@@ -71,23 +80,24 @@ def extract_face():
         if request.files.get("image", None) is not None:
             # grab the uploaded image
             image = _grab_image(stream=request.files["image"])
-
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
             url = request.post.get("url", None)
-
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
                 return jsonify(data)
-
             # load the image and convert
             image = _grab_image(url=url)
     # Call open CV commands here with the extracted image
     print(image)
     face = "jklanskjcbniugciuhncoiaksc6565"
-    return jsonify({"extracted_face": face})
+    return jsonify(
+        {
+            "extracted_face": face
+        }
+    )
 
 
 @extract.route('/extractAll', methods=['POST'])
@@ -109,25 +119,33 @@ def extract_all():
         if request.files.get("image", None) is not None:
             # grab the uploaded image
             image = _grab_image(stream=request.files["image"])
-
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
             url = request.post.get("url", None)
-
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
                 return jsonify(data)
-
             # load the image and convert
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
         print(image)
-        data.update({"surname": "Nell", "names": "Stephan Jack", "Sex": "M", "nationality": "RSA",
-                     "identity_number": "9511068172098", "date_of_birth": "06-11-1995",
-                     "country_of_birth": "RSA", "status": "citizen", "face": "McFace", "success": True})
-    return jsonify({"Extracted Fields": data})
+        data.update(
+            {
+                "surname": "Nell",
+                "names": "Stephan Jack",
+                "sex": "M",
+                "nationality": "RSA",
+                "identity_number": "9511068172098",
+                "date_of_birth": "06-11-1995",
+                "country_of_birth": "RSA",
+                "status": "citizen",
+                "face": "McFace",
+                "success": True
+            }
+        )
+    return jsonify(data)
 
 
 def _grab_image(path=None, stream=None, url=None):
