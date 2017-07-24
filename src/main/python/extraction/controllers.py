@@ -45,9 +45,9 @@ def extract_text():
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
         print(image)
-        data.update({"Surname": "Doe", "Names": "John Jane", "Sex": "M", "Nationality": "RSA",
-                     "Identity Number": "6944585228083", "Date of Birth": "06-05-1996",
-                     "Country of Birth": "RSA", "Status": "Citizen", "success": True})
+        data.update({"surname": "Doe", "names": "John Jane", "sex": "M", "nationality": "RSA",
+                     "identity_number": "6944585228083", "date_of_birth": "06-05-1996",
+                     "country_of_birth": "RSA", "status": "citizen", "success": True})
     return jsonify({"Extracted Fields": data})
 
 
@@ -87,7 +87,7 @@ def extract_face():
     # Call open CV commands here with the extracted image
     print(image)
     face = "jklanskjcbniugciuhncoiaksc6565"
-    return jsonify({"Extracted Face": face})
+    return jsonify({"extracted_face": face})
 
 
 @extract.route('/extractAll', methods=['POST'])
@@ -124,9 +124,9 @@ def extract_all():
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
         print(image)
-        data.update({"Surname": "Nell", "Names": "Stephan Jack", "Sex": "M", "Nationality": "RSA",
-                     "Identity Number": "9511068172098", "Date of Birth": "06-11-1995",
-                     "Country of Birth": "RSA", "Status": "Citizen", "face": "McFace", "success": True})
+        data.update({"surname": "Nell", "names": "Stephan Jack", "Sex": "M", "nationality": "RSA",
+                     "identity_number": "9511068172098", "date_of_birth": "06-11-1995",
+                     "country_of_birth": "RSA", "status": "citizen", "face": "McFace", "success": True})
     return jsonify({"Extracted Fields": data})
 
 
