@@ -176,7 +176,7 @@ $(document).ready(function() {
         processData: false,
         contentType: false,
         success: function(data){
-            alert("Match: " + data.PercentageMatch + "%");
+            alert("Match: " + data.percent_match + "%");
         }
     });
     
@@ -212,28 +212,28 @@ $(document).ready(function() {
         contentType: false,
         success: function(data){
           $('#names-extract').focus();
-          $('#names-extract').val(data.ExtractedFields.Names);
+          $('#names-extract').val(data.names);
           
           $('#surname-extract').focus();
-          $('#surname-extract').val(data.ExtractedFields.Surname);
+          $('#surname-extract').val(data.surname);
           
           $('#id-number-extract').focus();
-          $('#id-number-extract').val(data.ExtractedFields.IdentityNumber);
+          $('#id-number-extract').val(data.identity_number);
 
           $('#nationality-extract').focus();
-          $('#nationality-extract').val(data.ExtractedFields.Nationality);
+          $('#nationality-extract').val(data.nationality);
 
           $('#cob-extract').focus();
-          $('#cob-extract').val(data.ExtractedFields.CountryofBirth);
+          $('#cob-extract').val(data.country_of_birth);
 
           $('#status-extract').focus();
-          $('#status-extract').val(data.ExtractedFields.Status);
+          $('#status-extract').val(data.status);
 
           $('#gender-extract').focus();
-          $('#gender-extract').val(data.ExtractedFields.Sex);
+          $('#gender-extract').val(data.sex);
 
           $('#dob-extract').focus();
-          $('#dob-extract').val(data.ExtractedFields.DateofBirth);
+          $('#dob-extract').val(data.date_of_birth);
         }
     });
   });
@@ -251,7 +251,7 @@ $(document).ready(function() {
         processData: false,
         contentType: false,
         success: function(data){
-          $('#face-preview-extract').attr('src', data.ExtractedFace);
+          $('#face-preview-extract').attr('src', data.extracted_face);
         }
     });
   });
@@ -272,31 +272,31 @@ $(document).ready(function() {
 
           // Populate text fields
           $('#names-extract').focus();
-          $('#names-extract').val(data.ExtractedFields.Names);
+          $('#names-extract').val(data.names);
           
           $('#surname-extract').focus();
-          $('#surname-extract').val(data.ExtractedFields.Surname);
+          $('#surname-extract').val(data.surname);
           
           $('#id-number-extract').focus();
-          $('#id-number-extract').val(data.ExtractedFields.IdentityNumber);
+          $('#id-number-extract').val(data.identity_number);
 
           $('#nationality-extract').focus();
-          $('#nationality-extract').val(data.ExtractedFields.Nationality);
+          $('#nationality-extract').val(data.nationality);
 
           $('#cob-extract').focus();
-          $('#cob-extract').val(data.ExtractedFields.CountryofBirth);
+          $('#cob-extract').val(data.country_of_birth);
 
           $('#status-extract').focus();
-          $('#status-extract').val(data.ExtractedFields.Status);
+          $('#status-extract').val(data.status);
 
           $('#gender-extract').focus();
-          $('#gender-extract').val(data.ExtractedFields.Sex);
+          $('#gender-extract').val(data.sex);
 
           $('#dob-extract').focus();
-          $('#dob-extract').val(data.ExtractedFields.DateofBirth);
+          $('#dob-extract').val(data.date_of_birth);
           
           // Show face 
-          $('#face-preview-extract').attr('src', data.ExtractedFields.Face);
+          $('#face-preview-extract').attr('src', data.face);
         }
     });
   });

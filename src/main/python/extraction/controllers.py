@@ -30,18 +30,18 @@ def extract_text():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("image", None) is not None:
+        if request.files.get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = _grab_image(stream=request.files["image"])
+            image = _grab_image(stream=request.files["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.post.get("url", None)
+            url = request.args.get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
                 return jsonify(data)
-            # load the image and convert
+                # load the image and convert
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
         print(image)
@@ -49,7 +49,8 @@ def extract_text():
             {
                 "surname": "Doe",
                 "names": "John Jane",
-                "sex": "M", "nationality": "RSA",
+                "sex": "M",
+                "nationality": "RSA",
                 "identity_number": "6944585228083",
                 "date_of_birth": "06-05-1996",
                 "country_of_birth": "RSA",
@@ -77,13 +78,13 @@ def extract_face():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("image", None) is not None:
+        if request.files.get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = _grab_image(stream=request.files["image"])
+            image = _grab_image(stream=request.files["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.post.get("url", None)
+            url = request.args.get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
@@ -116,9 +117,9 @@ def extract_all():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("image", None) is not None:
+        if request.files.get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = _grab_image(stream=request.files["image"])
+            image = _grab_image(stream=request.files["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
@@ -141,7 +142,7 @@ def extract_all():
                 "date_of_birth": "06-11-1995",
                 "country_of_birth": "RSA",
                 "status": "citizen",
-                "face": "McFace",
+                "face": "img/returnFace.jpg",
                 "success": True
             }
         )
