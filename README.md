@@ -26,9 +26,9 @@ To set up the development environment and be able to use `pybuilder`, execute th
 
 When you are finished developing in this environment, simply call `deactivate` in order to exit the virtual environment.
 
-## Building the project
+## Building and installing the project
 1. Execute `source venv/bin/activate` (you need only do this once in order to enter your virtual environment).
-2. Execute `make` in the root folder (the folder where `build.py` and `makefile` is located). This builds the project, runs the unit tests, runs the integration tests, lints the files and creates a portable distribution of the project ready for installation.
+2. Execute `make` in the root folder (the folder where `build.py` and `makefile` is located). This builds the project, runs the unit tests, runs the integration tests, lints the files and creates a portable distribution of the project ready for installation, and installs it in the Python environment.
 
 ### Extra tasks
 - If you only want to lint the project, run `make lint`.
@@ -38,13 +38,6 @@ When you are finished developing in this environment, simply call `deactivate` i
 - To skip the linting, run `make build`. This will build and run the tests without linting the files.
 
 Once you are finished, execute the command `deactivate` in order to exit your virtual environment.
-
-## Installing the project
-1. After building, navigate to the generated `target/dist/Java-the-Hutts-1.0.dev0/` directory.
-2. Run `python3 setup.py install` to install the project into your Python environment.
-
-All the modules that have been created has now been installed into the `site-packages` folder of your python environment (`venv/lib/python3.5/site-packages` when working with a virtual environment as aforementioned) and can be imported like any other Python module, for example `from server import app` in order to import the Flask server.
-Any of the runnable scripts can be found in the `target/dist/Java-the-Hutts-1.0.dev0/build/scripts-3.5` directory.
 
 ## Starting the server
 1. After building and installing the project, run the script `run.py` in the scripts directory to start the server hosting the API.

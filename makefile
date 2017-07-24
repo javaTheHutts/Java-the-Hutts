@@ -1,5 +1,5 @@
 all:
-	pyb analyze publish
+	pyb analyze publish install
 
 lint:
 	pyb analyze
