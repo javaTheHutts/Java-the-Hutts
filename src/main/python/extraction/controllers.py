@@ -92,7 +92,7 @@ def extract_face():
             image = _grab_image(url=url)
     # Call open CV commands here with the extracted image
     print(image)
-    face = "jklanskjcbniugciuhncoiaksc6565"
+    face = "img/returnFace.jpg"
     return jsonify(
         {
             "extracted_face": face

@@ -196,6 +196,110 @@ $(document).ready(function() {
   }, function() {
     $('.duo-card').removeClass('duo-card-hover');
   });
+
+  // Extract text
+ $('#extract-text-btn').on('click', function(e) {
+    e.preventDefault();
+    var formData = new FormData();
+    var idPhoto = document.getElementById('id-photo-extract').files[0];
+    formData.append('idPhoto', idPhoto);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5000/extractText",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+          $('#names-extract').focus();
+          $('#names-extract').val(data.ExtractedFields.Names);
+          
+          $('#surname-extract').focus();
+          $('#surname-extract').val(data.ExtractedFields.Surname);
+          
+          $('#id-number-extract').focus();
+          $('#id-number-extract').val(data.ExtractedFields.IdentityNumber);
+
+          $('#nationality-extract').focus();
+          $('#nationality-extract').val(data.ExtractedFields.Nationality);
+
+          $('#cob-extract').focus();
+          $('#cob-extract').val(data.ExtractedFields.CountryofBirth);
+
+          $('#status-extract').focus();
+          $('#status-extract').val(data.ExtractedFields.Status);
+
+          $('#gender-extract').focus();
+          $('#gender-extract').val(data.ExtractedFields.Sex);
+
+          $('#dob-extract').focus();
+          $('#dob-extract').val(data.ExtractedFields.DateofBirth);
+        }
+    });
+  });
+
+  // Extract profile
+  $('#extract-photo-btn').on('click', function(e){
+    var formData = new FormData();
+    var idPhoto = document.getElementById('id-photo-extract').files[0];
+    formData.append('idPhoto', idPhoto);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5000/extractFace",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+          $('#face-preview-extract').attr('src', data.ExtractedFace);
+        }
+    });
+  });
+
+  // Extract all
+  $('#extract-all-btn').on('click', function(e){
+    var formData = new FormData();
+    var idPhoto = document.getElementById('id-photo-extract').files[0];
+    formData.append('idPhoto', idPhoto);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5000/extractAll",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+
+          // Populate text fields
+          $('#names-extract').focus();
+          $('#names-extract').val(data.ExtractedFields.Names);
+          
+          $('#surname-extract').focus();
+          $('#surname-extract').val(data.ExtractedFields.Surname);
+          
+          $('#id-number-extract').focus();
+          $('#id-number-extract').val(data.ExtractedFields.IdentityNumber);
+
+          $('#nationality-extract').focus();
+          $('#nationality-extract').val(data.ExtractedFields.Nationality);
+
+          $('#cob-extract').focus();
+          $('#cob-extract').val(data.ExtractedFields.CountryofBirth);
+
+          $('#status-extract').focus();
+          $('#status-extract').val(data.ExtractedFields.Status);
+
+          $('#gender-extract').focus();
+          $('#gender-extract').val(data.ExtractedFields.Sex);
+
+          $('#dob-extract').focus();
+          $('#dob-extract').val(data.ExtractedFields.DateofBirth);
+          
+          // Show face 
+          $('#face-preview-extract').attr('src', data.ExtractedFields.Face);
+        }
+    });
+  });
   
 });
 
