@@ -66,6 +66,15 @@ The following Deployment diagram depicts the architecture of the system as deplo
 	    \end{figure}
 	    \pagebreak
 
+\section{High Level Diagrams}
+
+\subsection{State Diagram}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{img/StateModelHighLevel.png}
+	\caption{High Level State Diagram}
+\end{figure}
+	 
 \section{Services}
 This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
 
@@ -76,13 +85,13 @@ The class diagram of the Image Processing module makes use of a combination of t
 \begin{itemize}
 	\item \textbf{Decorator:} Different preprocessing techniques are added to the PreProcessor object at runtime.
 	\item \textbf{Strategy:} Each preprocessing technique's \textit{preProcess()} algorithm can be changed at runtime.
-	\begin{figure}[h]
+	\begin{figure}[!h]
 	    \centering
 	    \includegraphics[scale=0.3]{img/imageProcessingClassDiagram.png}
 	    \caption{Image Pre-Processing Class Diagram}
 	 \end{figure}
 	   \pagebreak
-	 \begin{figure}[h]
+	 \begin{figure}[!h]
 		\centering
 	    \includegraphics[scale=0.3]{img/processingClassDiagram.png}
 	    \caption{Image Processing Class Diagram}
@@ -92,4 +101,23 @@ The class diagram of the Image Processing module makes use of a combination of t
 \subsubsection{Activity Diagram}
 \subsubsection{State Diagram}
 \subsubsection{Use Case Diagram}
+
+\subsection{Image Preprocessing}
+TODO: Some description about the service
+\subsubsection{State Diagram}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{img/StateModelPreprocess.png}
+	\caption{Image Pre-Processing State Diagram}
+\end{figure}
+
+\subsection{Image Verification}
+TODO: Some description about the service
+\subsubsection{State Diagram}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{img/StateModelVerify.png}
+	\caption{Image Verification State Diagram}
+\end{figure}
+
 \end{document}
