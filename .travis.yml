@@ -21,4 +21,4 @@ install:
   - pip3.5 install zbar-py==1.0.4
   - pyb install_dependencies
 # command to build project
-script: make
+script: pyb analyze publish
