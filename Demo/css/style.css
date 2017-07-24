@@ -58,6 +58,12 @@ main {
   color: #fffafb;
 }
 
+/* Slide Outs */
+.slide-out {
+  z-index: 998;
+  margin-left: 4em;
+}
+
 /* Product */
 #product {
   margin-top: 30px;

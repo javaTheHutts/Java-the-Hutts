@@ -5,6 +5,16 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 /* global $ */
 $(document).ready(function() {
   
+  // Initialize slide menu buttons
+  $('.slide-btn').sideNav({
+    menuWidth: 300
+  });
+  
+  // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  $('.collapsible').collapsible();
+  
   // Initialise all modals
   $('.modal').modal();
 

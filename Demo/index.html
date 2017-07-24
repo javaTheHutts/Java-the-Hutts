@@ -14,7 +14,6 @@
 	<link rel="stylesheet" href="css/jquery.circliful.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="https//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/slick.min.js"></script>
 	<script type="text/javascript" src="js/jquery.circliful.min.js"></script>
@@ -23,30 +22,48 @@
 
 <body>
 	<header>
-		<!-- Fixed side navbar -->
+		<!-- Fixed Side Navbar -->
 		<div class="navbar">
 			<div class="side-nav fixed">
 				<div class="navlogo">
 					<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank">
-						<img class="circle hoverable tooltipped" src="img/Java-Hutts2.png" data-position="right" data-delay="50" data-tooltip="Java the Hutts">
+						<img class="circle hoverable tooltipped" src="img/Java-Hutts2.png"
+						data-position="right" data-delay="50" data-tooltip="Java the Hutts">
 					</a>
 				</div>
 				<div class="nav-options">
-					<a href="#" class="waves-effect tooltipped hoverable" data-position="right" data-delay="50" data-tooltip="Settings">
+					<a href="#" data-activates="settings-slide"
+					data-position="right" data-delay="50" data-tooltip="Settings"
+					class="waves-effect tooltipped hoverable slide-btn">
 						<i class="material-icons">settings</i>
 					</a>
-					<a href="#" class="waves-effect tooltipped scroll-top hoverable" data-position="right" data-delay="50" data-tooltip="To Top">
+					<a href="#" class="waves-effect tooltipped scroll-top hoverable"
+					data-position="right" data-delay="50" data-tooltip="To Top">
 						<i class="material-icons prefix fa fa-angle-double-up"></i>
 					</a>
-					<a href="#" class="waves-effect tooltipped scroll-bottom hoverable" data-position="right" data-delay="50" data-tooltip="To Bottom">
+					<a href="#" class="waves-effect tooltipped scroll-bottom hoverable"
+					data-position="right" data-delay="50" data-tooltip="To Bottom">
 						<i class="material-icons prefix fa fa-angle-double-down"></i>
 					</a>
-					<a href="#" class="waves-effect tooltipped hoverable" data-position="right" data-delay="50" data-tooltip="Info">
+					<a href="#" data-activates="info-slide"
+					data-position="right" data-delay="50" data-tooltip="Info"
+					class="waves-effect tooltipped hoverable slide-btn">
 						<i class="material-icons">info_outline</i>
 					</a>
 				</div>
 			</div>
 		</div>
+		<!-- End Fixed Side Navbar -->
+		<!-- Settings Slide Out -->
+		<ul id="settings-slide" class="side-nav slide-out">
+
+	  </ul>
+  	<!-- End Settings Slide Out -->
+		<!-- Info Slide Out -->
+		<ul id="info-slide" class="side-nav slide-out">
+
+	  </ul>
+  	<!-- End Info Slide Out -->
 	</header>
 
 	<main>
@@ -145,8 +162,8 @@
 							<div class="col s12 l1 valign-wrapper duo-button-wrapper">
 								<div class="vline vline-top hide-on-med-and-down"></div>
 								<div class="vline vline-bottom hide-on-med-and-down"></div>
-								<button 
-								class="btn-floating btn-large waves-effect waves-light tooltipped hoverable" 
+								<button
+								class="btn-floating btn-large waves-effect waves-light tooltipped hoverable"
 								data-position="top" data-delay="50" data-tooltip="Verify"
 								id="verify-btn">
 									<i class="material-icons">compare</i>
@@ -161,7 +178,7 @@
 										<span class="card-title">Photo of ID</span>
 										<div class="row">
 											<div class="col s12">
-												<img src="img/id-card.png" alt="ID Photo" 
+												<img src="img/id-card.png" alt="ID Photo"
 												class="id-preview" id="id-preview-verify">
 											</div>
 										</div>
@@ -170,7 +187,7 @@
 												<div class="file-field input-field">
 													<div class="btn hoverable">
 														<span>ID Photo</span>
-														<input type="file" onchange="readURL(this);" 
+														<input type="file" onchange="readURL(this);"
 														id="id-photo-verify" accept="image/*">
 													</div>
 													<div class="file-path-wrapper">
@@ -238,12 +255,12 @@
 								<button id="extract-all-btn"
 								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
 								data-position="top" data-delay="50" data-tooltip="Extract All">
-									<i class="material-icons prefix fa fa-id-card-o"></i> 
+									<i class="material-icons prefix fa fa-id-card-o"></i>
 								</button>
 								<button id="extract-photo-btn"
 								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
 								data-position="top" data-delay="50" data-tooltip="Extract Photo">
-									<i class="material-icons prefix fa fa-user"></i> 
+									<i class="material-icons prefix fa fa-user"></i>
 								</button>
 								<div class="hline hide-on-large-only"></div>
 							</div>
