@@ -1,6 +1,7 @@
 language: python
 python:
   - "3.5"
+dist: "trusty"
 # packages to install before anything else
 before_install:
   - sudo apt-get -qq update
