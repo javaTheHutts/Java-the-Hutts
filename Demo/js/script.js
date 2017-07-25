@@ -24,6 +24,30 @@ $(document).ready(function() {
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 200 // Creates a dropdown of 200 years to control year
   });
+  
+    // Image sliders initialisation
+    $('.pipelet').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.pipeline'
+    });
+    
+    $('.pipeline').slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      asNavFor: '.pipelet',
+      centerMode: true,
+      focusOnSelect: true,
+      responsive: [{
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      }]
+    });
 
   // Initialise collapsibles
   $('.collapsible').collapsible({
@@ -33,6 +57,8 @@ $(document).ready(function() {
         $(this).hasClass('active')?
         $(this).children('.carets').text('chevron_right'):
         $(this).children('.carets').text('expand_more');
+        // Refresh slick carousels
+        $('.pipelet, .pipeline').slick('setPosition');
       });
     },
     onClose: function () {
@@ -158,30 +184,6 @@ $(document).ready(function() {
     $('#result-profile').html('');
     $('#result-profile').data('percentage', 88.99);
     $('#verify-result').modal('open');
-  });
-  
-  // Image sliders initialisation
-  $('.pipelet').slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    fade: true,
-    asNavFor: '.pipeline'
-  });
-  
-  $('.pipeline').slick({
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    asNavFor: '.pipelet',
-    centerMode: true,
-    focusOnSelect: true,
-    responsive: [{
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2
-      }
-    }]
   });
   
   // Hover compare cards on compare button hover
