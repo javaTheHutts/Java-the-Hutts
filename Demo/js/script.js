@@ -7,13 +7,17 @@ $(document).ready(function() {
   
   // Initialize slide menu buttons
   $('.slide-btn').sideNav({
-    menuWidth: 300
+    menuWidth: 300,
+    closeOnClick: true
   });
   
-  // Initialize collapse button
-  $(".button-collapse").sideNav();
-  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
-  $('.collapsible').collapsible();
+  // Hide existing side navs
+  $('.slide-btn').on('click', function() {
+    // Not the best fix... but workable
+    if ($('#sidenav-overlay').css('opacity') == '1') {
+      $('#sidenav-overlay').trigger('click');
+    }
+  });
   
   // Initialise all modals
   $('.modal').modal();
