@@ -56,12 +56,103 @@
 		<!-- End Fixed Side Navbar -->
 		<!-- Settings Slide Out -->
 		<ul id="settings-slide" class="side-nav slide-out">
-			<li><a href="#">Random</a></li>
+			<li>
+				<div class="slide-head-wrapper">
+					<p>
+						<i class="material-icons prefix">settings</i>
+						Settings
+					</p>
+				</div>
+			</li>
+			<li>
+				<!-- Settings 1 -->
+				<ul class="collapsible" data-collapsible="accordion">
+					<li>
+						<div class="collapsible-header waves-effect">
+							<i class="material-icons carets">chevron_right</i>
+							General
+						</div>
+						<div class="collapsible-body">
+
+						</div>
+					</li>
+					<li>
+						<div class="collapsible-header waves-effect active">
+							<i class="material-icons carets">expand_more</i>
+							Text Extraction
+						</div>
+						<div class="collapsible-body">
+							<div class="row">
+								<div class="col s6">
+									<p>Blur Profile</p>
+								</div>
+								<div class="col s6">
+									<div class="switch">
+										<label>
+											No
+											<input type="checkbox" checked="checked">
+											<span class="lever"></span>
+											Yes
+											</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s6">
+									<p>Blur Barcode</p>
+								</div>
+								<div class="col s6">
+									<div class="switch">
+										<label>
+											No
+											<input type="checkbox" checked="checked">
+											<span class="lever"></span>
+											Yes
+											</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">Remove Channel</div>
+								<div class="col s12">
+									<p>
+							      <input type="checkbox" id="remove-red"/>
+							      <label for="remove-red">Red</label>
+							    </p>
+							    <p>
+							      <input type="checkbox" id="remove-green"/>
+							      <label for="remove-green">Green</label>
+							    </p>
+							    <p>
+							      <input type="checkbox" id="remove-blue"/>
+							      <label for="remove-blue">Blue</label>
+							    </p>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="collapsible-header waves-effect">
+							<i class="material-icons carets">expand_more</i>Profile Extraction
+						</div>
+						<div class="collapsible-body">
+
+						</div>
+					</li>
+				</ul>
+				<!-- End Settings 1 -->
+			</li>
 	  </ul>
   	<!-- End Settings Slide Out -->
 		<!-- Info Slide Out -->
 		<ul id="info-slide" class="side-nav slide-out">
-
+			<li>
+				<div class="slide-head-wrapper">
+					<p>
+						<i class="material-icons prefix">info_outline</i>More Information
+					</p>
+				</div>
+			</li>
 	  </ul>
   	<!-- End Info Slide Out -->
 	</header>
@@ -79,8 +170,9 @@
 				<!-- Expandable 1 -->
 				<li>
 					<div class="collapsible-header active waves-effect hoverable">
-						<i class="material-icons carets">chevron_right</i> Verification
+						<i class="material-icons carets">chevron_right</i>
 						<i class="material-icons" aria-hidden="true">verified_user</i>
+						Verification
 					</div>
 					<div class="collapsible-body">
 						<div class="row">
@@ -208,8 +300,9 @@
 				<!-- Expandable 2 -->
 				<li>
 					<div class="collapsible-header waves-effect hoverable">
-						<i class="material-icons carets">expand_more</i> Extraction
+						<i class="material-icons carets">expand_more</i>
 						<i class="material-icons" aria-hidden="true">content_copy</i>
+						Extraction
 					</div>
 					<div class="collapsible-body">
 						<!-- Card 1 -->
@@ -330,8 +423,9 @@
 				<!-- Expandable 3 -->
 				<li>
 					<div class="collapsible-header waves-effect hoverable">
-						<i class="material-icons carets">expand_more</i> ID Image Pipeline
+						<i class="material-icons carets">expand_more</i>
 						<i class="material-icons" aria-hidden="true">recent_actors</i>
+						ID Image Pipeline
 					</div>
 					<div class="collapsible-body">
 						<div class="row">
@@ -339,7 +433,7 @@
 								<div class="card">
 									<div class="card-content">
 										<div class="pipe-gallery">
-											
+
 											<div class="pipelet">
 												<div class="block red"></div>
 												<div class="block blue"></div>
@@ -370,8 +464,9 @@
 				<!-- Expandable 4 -->
 				<li>
 					<div class="collapsible-header waves-effect hoverable">
-						<i class="material-icons carets">expand_more</i> ID Personal Details Pipeline
+						<i class="material-icons carets">expand_more</i>
 						<i class="material-icons" aria-hidden="true">burst_mode</i>
+						ID Personal Details Pipeline
 					</div>
 					<div class="collapsible-body">
 						<div class="row">
@@ -410,8 +505,9 @@
 				<!-- Expandable 5 -->
 				<li>
 					<div class="collapsible-header waves-effect hoverable">
-						<i class="material-icons carets">expand_more</i> Detailed Results
+						<i class="material-icons carets">expand_more</i>
 						<i class="material-icons" aria-hidden="true">show_chart</i>
+						Detailed Results
 					</div>
 					<div class="collapsible-body">
 						<div class="row">

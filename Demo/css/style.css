@@ -59,9 +59,60 @@ main {
 }
 
 /* Slide Outs */
-.slide-out {
-  z-index: 998;
-  margin-left: 4em;
+.side-nav li {
+  line-height: 40px;
+}
+
+@media (min-width: 993px) {
+  .slide-out {
+    z-index: 998;
+    margin-left: 4em;
+  } 
+}
+
+.slide-head-wrapper {
+  padding: 12px 12px 18px 28px;
+}
+
+.slide-head-wrapper p {
+  margin: 0;
+  display: block;
+  font-size: 22px;
+  font-weight: 300;
+  height: 48px;
+  line-height: 48px;
+  color: #333;
+}
+
+.slide-head-wrapper p i{
+  float: right;
+  height: 48px;
+  line-height: 48px;
+  margin: 0 10px 0 0;
+  width: 24px;
+}
+
+.slide-out li .collapsible-header {
+  color: rgba(0,0,0,0.54);
+  box-shadow: none;
+}
+
+.slide-out li .collapsible-body {
+  padding: 16px 0;
+}
+
+.slide-out li .row,
+.slide-out li .row .col,
+.slide-out li .row .col p {
+  margin: 0;
+}
+
+.slide-out li .row {
+  padding: 0 12px 0 32px;
+}
+
+.slide-out li .row .col {
+  padding: 0;
 }
 
 /* Product */

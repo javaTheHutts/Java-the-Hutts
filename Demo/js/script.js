@@ -29,29 +29,29 @@ $(document).ready(function() {
     selectYears: 200 // Creates a dropdown of 200 years to control year
   });
   
-    // Image sliders initialisation
-    $('.pipelet').slick({
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: false,
-      fade: true,
-      asNavFor: '.pipeline'
-    });
-    
-    $('.pipeline').slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      asNavFor: '.pipelet',
-      centerMode: true,
-      focusOnSelect: true,
-      responsive: [{
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2
-        }
-      }]
-    });
+  // Image sliders initialisation
+  $('.pipelet').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    asNavFor: '.pipeline'
+  });
+  
+  $('.pipeline').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    asNavFor: '.pipelet',
+    centerMode: true,
+    focusOnSelect: true,
+    responsive: [{
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    }]
+  });
 
   // Initialise collapsibles
   $('.collapsible').collapsible({
