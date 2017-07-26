@@ -289,8 +289,8 @@
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-id-card" aria-hidden="true"></i>
-												<input id="id-number-verify" type="text" class="validate">
-												<label for="id-number-verify">Identity Number</label>
+												<input id="identity_number-verify" type="text" class="validate">
+												<label for="identity_number-verify">Identity Number</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-flag" aria-hidden="true"></i>
@@ -301,8 +301,8 @@
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
-												<input id="cob-verify" type="text" class="validate">
-												<label for="cob-verify">Country of Birth</label>
+												<input id="country_of_birth-verify" type="text" class="validate">
+												<label for="country_of_birth-verify">Country of Birth</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
@@ -313,17 +313,17 @@
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
-												<input type="date" class="datepicker" id="dob-verify">
-												<label for="dob-verify">Date of Birth</label>
+												<input type="date" class="datepicker" id="date_of_birth-verify">
+												<label for="date_of_birth-verify">Date of Birth</label>
 											</div>
 											<div class="col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
-												<select id="gender-verify">
+												<select id="sex-verify">
 															<option value="" disabled selected>Male / Female</option>
 															<option value="M">Male</option>
 															<option value="F">Female</option>
 														</select>
-												<label for="gender-verify">Gender</label>
+												<label for="sex-verify">Gender</label>
 											</div>
 										</div>
 										<div class="row">
@@ -471,8 +471,8 @@
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-id-card" aria-hidden="true"></i>
-												<input id="id-number-extract" type="text" class="validate">
-												<label for="id-number-extract">Identity Number</label>
+												<input id="identity_number-extract" type="text" class="validate">
+												<label for="identity_number-extract">Identity Number</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-flag" aria-hidden="true"></i>
@@ -483,8 +483,8 @@
 										<div class="row">
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
-												<input id="cob-extract" type="text" class="validate">
-												<label for="cob-extract">Country of Birth</label>
+												<input id="country_of_birth-extract" type="text" class="validate">
+												<label for="country_of_birth-extract">Country of Birth</label>
 											</div>
 											<div class=" col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
@@ -495,13 +495,19 @@
 										<div class="row">
 											<div class="col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
-												<input id="gender-extract" type="text" class="validate">
-												<label for="gender-extract">Gender</label>
+												<input id="sex-extract" type="text" class="validate">
+												<label for="sex-extract">Gender</label>
 											</div>
-											<div class=" col s12 l6 input-field">
+											<div class="col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
-												<input id="dob-extract">
-												<label for="dob-extract">Date of Birth</label>
+												<input id="date_of_birth-extract" type="text" class="validate">
+												<label for="date_of_birth-extract">Date of Birth</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12 l6 input-field">
+												<img style="width:50%; height:50%" src="img/stock-face.jpg" alt="face-extract"
+												class="face-preview" id="face-preview-extract">
 											</div>
 										</div>
 									</div>
