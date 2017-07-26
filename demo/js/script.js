@@ -179,7 +179,7 @@ $(document).ready(function() {
         processData: false,
         contentType: false,
         success: function(data){
-            alert("Match: " + data.PercentageMatch + "%");
+            alert("Match: " + data.percent_match + "%");
         }
     });
     
@@ -198,6 +198,82 @@ $(document).ready(function() {
     $('.duo-card').addClass('duo-card-hover');
   }, function() {
     $('.duo-card').removeClass('duo-card-hover');
+  });
+
+  // Extract text
+ $('#extract-text-btn').on('click', function(e) {
+    e.preventDefault();
+    var formData = new FormData();
+    var idPhoto = document.getElementById('id-photo-extract').files[0];
+    formData.append('idPhoto', idPhoto);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5000/extractText",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+          $("input[id$=extract]").each(function(){
+            var id = $(this).attr("id").replace("-extract", "");
+            if(id != "id-photo")
+            {
+              $(this).focus();
+              $(this).val(data[id]);
+              $(this).blur();
+            }
+          });
+        }
+    });
+  });
+
+  // Extract profile
+  $('#extract-photo-btn').on('click', function(e){
+    var formData = new FormData();
+    var idPhoto = document.getElementById('id-photo-extract').files[0];
+    formData.append('idPhoto', idPhoto);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5000/extractFace",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+          $('#face-preview-extract').attr('src', data.extracted_face);
+        }
+    });
+  });
+
+  // Extract all
+  $('#extract-all-btn').on('click', function(e){
+    var formData = new FormData();
+    var idPhoto = document.getElementById('id-photo-extract').files[0];
+    formData.append('idPhoto', idPhoto);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:5000/extractAll",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data){
+
+          // Populate text fields
+          $("input[id$=extract]").each(function(){
+            var id = $(this).attr("id").replace("-extract", "");
+            if(id != "id-photo")
+            {
+              $(this).focus();
+              $(this).val(data[id]);
+              $(this).blur();
+            }
+          });
+          
+          // Show face 
+          $('#face-preview-extract').attr('src', data.face);
+        }
+    });
   });
   
 });
