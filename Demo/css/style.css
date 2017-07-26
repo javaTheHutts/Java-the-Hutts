@@ -71,7 +71,7 @@ main {
 }
 
 .slide-head-wrapper {
-  padding: 12px 12px 18px 28px;
+  padding: 12px 12px 12px 28px;
 }
 
 .slide-head-wrapper p {
@@ -92,13 +92,14 @@ main {
   width: 24px;
 }
 
+.light,
 .slide-out li .collapsible-header {
   color: rgba(0,0,0,0.54);
   box-shadow: none;
 }
 
 .slide-out li .collapsible-body {
-  padding: 16px 0;
+  padding: 6px 0;
 }
 
 .slide-out li .row,
@@ -113,6 +114,16 @@ main {
 
 .slide-out li .row .col {
   padding: 0;
+}
+
+.slide-out .input-field.col > label {
+  left: 0;
+}
+
+.slide-out .select-dropdown,
+.slide-out .dropdown-content.select-dropdown li > a,
+.slide-out .dropdown-content.select-dropdown li > span {
+  color: #26a69a;
 }
 
 /* Product */

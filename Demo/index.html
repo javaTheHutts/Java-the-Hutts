@@ -84,22 +84,47 @@
 						<div class="collapsible-body">
 							<div class="row">
 								<div class="col s6">
-									<p>Blur Profile</p>
+									<p>Techniques</p>
 								</div>
-								<div class="col s6">
-									<div class="switch">
-										<label>
-											No
-											<input type="checkbox" checked="checked">
-											<span class="lever"></span>
-											Yes
-											</label>
+								<div class="input-field col s12">
+									<select>
+										<option value="" disabled selected></option>
+										<option value="1">Conventional</option>
+										<option value="2">Gaussian</option>
+										<option value="3">Median</option>
+									</select>
+									<label>Blur Technique</label>
+								</div>
+								<div class="input-field col s12">
+									<select>
+										<option value="" disabled selected></option>
+										<option value="1">Adaptive</option>
+										<option value="2">Otsu</option>
+									</select>
+									<label>Threshold Technique</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">Noise Reduction</div>
+								<div class="col s12">
+									<div class="col s6">
+										<p class="light">Profile</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox" checked="checked">
+												<span class="lever"></span>
+												Yes
+												</label>
+										</div>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col s6">
-									<p>Blur Barcode</p>
+									<p class="light">Barcode</p>
 								</div>
 								<div class="col s6">
 									<div class="switch">
@@ -115,18 +140,45 @@
 							<div class="row">
 								<div class="col s12">Remove Channel</div>
 								<div class="col s12">
-									<p>
-							      <input type="checkbox" id="remove-red"/>
-							      <label for="remove-red">Red</label>
-							    </p>
-							    <p>
-							      <input type="checkbox" id="remove-green"/>
-							      <label for="remove-green">Green</label>
-							    </p>
-							    <p>
-							      <input type="checkbox" id="remove-blue"/>
-							      <label for="remove-blue">Blue</label>
-							    </p>
+									<div class="col s6">
+										<p class="light">Red</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox">
+												<span class="lever"></span>
+												Yes
+												</label>
+										</div>
+									</div>
+									<div class="col s6">
+										<p class="light">Green</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox">
+												<span class="lever"></span>
+												Yes
+												</label>
+										</div>
+									</div>
+									<div class="col s6">
+										<p class="light">Blue</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox">
+												<span class="lever"></span>
+												Yes
+												</label>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
