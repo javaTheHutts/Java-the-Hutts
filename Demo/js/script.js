@@ -211,29 +211,15 @@ $(document).ready(function() {
         processData: false,
         contentType: false,
         success: function(data){
-          $('#names-extract').focus();
-          $('#names-extract').val(data.names);
-          
-          $('#surname-extract').focus();
-          $('#surname-extract').val(data.surname);
-          
-          $('#id-number-extract').focus();
-          $('#id-number-extract').val(data.identity_number);
-
-          $('#nationality-extract').focus();
-          $('#nationality-extract').val(data.nationality);
-
-          $('#cob-extract').focus();
-          $('#cob-extract').val(data.country_of_birth);
-
-          $('#status-extract').focus();
-          $('#status-extract').val(data.status);
-
-          $('#gender-extract').focus();
-          $('#gender-extract').val(data.sex);
-
-          $('#dob-extract').focus();
-          $('#dob-extract').val(data.date_of_birth);
+          $("input[id$=extract]").each(function(){
+            var id = $(this).attr("id").replace("-extract", "");
+            if(id != "id-photo")
+            {
+              $(this).focus();
+              $(this).val(data[id]);
+              $(this).blur();
+            }
+          });
         }
     });
   });
@@ -271,29 +257,15 @@ $(document).ready(function() {
         success: function(data){
 
           // Populate text fields
-          $('#names-extract').focus();
-          $('#names-extract').val(data.names);
-          
-          $('#surname-extract').focus();
-          $('#surname-extract').val(data.surname);
-          
-          $('#id-number-extract').focus();
-          $('#id-number-extract').val(data.identity_number);
-
-          $('#nationality-extract').focus();
-          $('#nationality-extract').val(data.nationality);
-
-          $('#cob-extract').focus();
-          $('#cob-extract').val(data.country_of_birth);
-
-          $('#status-extract').focus();
-          $('#status-extract').val(data.status);
-
-          $('#gender-extract').focus();
-          $('#gender-extract').val(data.sex);
-
-          $('#dob-extract').focus();
-          $('#dob-extract').val(data.date_of_birth);
+          $("input[id$=extract]").each(function(){
+            var id = $(this).attr("id").replace("-extract", "");
+            if(id != "id-photo")
+            {
+              $(this).focus();
+              $(this).val(data[id]);
+              $(this).blur();
+            }
+          });
           
           // Show face 
           $('#face-preview-extract').attr('src', data.face);
