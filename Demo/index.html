@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/slick.min.js"></script>
 	<script type="text/javascript" src="js/jquery.circliful.min.js"></script>
+	<script type="text/javascript" src="js/sticky-nav.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 </head>
 
@@ -207,7 +208,47 @@
 			</li>
 	  </ul>
   	<!-- End Info Slide Out -->
+  	<!-- Mobile Slide Out -->
+		<ul id="mobile-slide" class="side-nav slide-out">
+			<li>
+				<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank"
+				class="team-logo">
+					<img class="circle z-depth-1" src="img/Java-Hutts2.png">
+				</a>
+			</li>
+	    <li>
+	    	<a class="waves-effect" href="#">
+	    		<i class="material-icons">settings</i>Settings
+	    	</a>
+	    </li>
+	    <li>
+	    	<a class="waves-effect" href="#">
+	    		<i class="material-icons">info_outline</i>Info
+	    	</a>
+	    </li>
+	    <li>
+	    	<a class="waves-effect" href="#">
+	    		<i class="material-icons fa fa-github"></i>GitHub Repository
+	    	</a>
+	    </li>
+	    <li>
+	    	<a class="waves-effect" href="#">
+	    		<i class="material-icons fa fa-users"></i>The Team
+	    	</a>
+	    </li>
+		</ul>
 	</header>
+	
+	<nav class="hide-on-large-only auto-hide-header">
+    <div class="nav-wrapper">
+			<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank">
+				<img class="circle z-depth-1" src="img/Java-Hutts2.png">
+			</a>
+			<a href="#" data-activates="mobile-slide" class="slide-btn right">
+				<i class="material-icons">menu</i>
+			</a>
+    </div>
+  </nav>
 
 	<main>
 		<div class="row">

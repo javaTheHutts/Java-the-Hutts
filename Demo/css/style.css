@@ -19,7 +19,15 @@ main {
   flex: 1 0 auto;
 }
 
-.navbar > .fixed, 
+@media (max-width: 992px) {
+  main {
+    margin-top: 56px;
+  }
+}
+
+nav,
+.nav-wrapper,
+.navbar > .fixed,
 .collapsible-header {
   background-color: #5c8983;
 }
@@ -56,6 +64,27 @@ main {
 
 .nav-options a:hover {
   color: #fffafb;
+}
+
+/* Mobile Nav */
+.auto-hide-header {
+  position: fixed;
+  z-index: 997;
+  transition: transform .6s;
+}
+
+.auto-hide-header.is-hidden { 
+  transform: translateY(-90px);
+}
+
+.nav-wrapper {
+  padding: 0 18px;  
+}
+
+.nav-wrapper a img {
+  height: 64px;
+  width: 64px;
+  margin: 22px 12px 12px 0;
 }
 
 /* Slide Outs */
@@ -124,6 +153,17 @@ main {
 .slide-out .dropdown-content.select-dropdown li > a,
 .slide-out .dropdown-content.select-dropdown li > span {
   color: #26a69a;
+}
+
+#mobile-slide .team-logo,
+#mobile-slide .team-logo > img {
+  height: 150px;
+  width: 150px;
+  padding: 0;
+}
+
+#mobile-slide .team-logo {
+  margin: 20px auto 64px auto;
 }
 
 /* Product */

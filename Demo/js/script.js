@@ -4,7 +4,7 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 
 /* global $ */
 $(document).ready(function() {
-  
+
   // Initialize slide menu buttons
   $('.slide-btn').sideNav({
     menuWidth: 300,
