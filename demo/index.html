@@ -14,11 +14,11 @@
 	<link rel="stylesheet" href="css/jquery.circliful.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/slick.min.js"></script>
 	<script type="text/javascript" src="js/jquery.circliful.min.js"></script>
 	<script type="text/javascript" src="js/sticky-nav.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 </head>
 
 <body>
@@ -69,7 +69,7 @@
 				<!-- Settings 1 -->
 				<ul class="collapsible" data-collapsible="accordion">
 					<li>
-						<div class="collapsible-header waves-effect">
+						<div class="collapsible-header waves-effect waves-teal">
 							<i class="material-icons carets">chevron_right</i>
 							General
 						</div>
@@ -78,14 +78,14 @@
 						</div>
 					</li>
 					<li>
-						<div class="collapsible-header waves-effect active">
+						<div class="collapsible-header waves-effect waves-teal active">
 							<i class="material-icons carets">expand_more</i>
 							Text Extraction
 						</div>
 						<div class="collapsible-body">
 							<div class="row">
 								<div class="col s6">
-									<p>Techniques</p>
+									<p class="special">Techniques</p>
 								</div>
 								<div class="input-field col s12">
 									<select>
@@ -185,7 +185,7 @@
 						</div>
 					</li>
 					<li>
-						<div class="collapsible-header waves-effect">
+						<div class="collapsible-header waves-effect waves-teal">
 							<i class="material-icons carets">expand_more</i>Profile Extraction
 						</div>
 						<div class="collapsible-body">
@@ -216,24 +216,29 @@
 					<img class="circle z-depth-1" src="img/Java-Hutts2.png">
 				</a>
 			</li>
+			<li><div class="divider"></div></li>
 	    <li>
-	    	<a class="waves-effect" href="#">
+	    	<a class="waves-effect waves-teal slide-btn" href="#"
+	    	data-activates="settings-slide">
 	    		<i class="material-icons">settings</i>Settings
 	    	</a>
 	    </li>
 	    <li>
-	    	<a class="waves-effect" href="#">
-	    		<i class="material-icons">info_outline</i>Info
-	    	</a>
-	    </li>
-	    <li>
-	    	<a class="waves-effect" href="#">
+	    	<a class="waves-effect waves-teal" target="_blank"
+	    	href="https://github.com/javaTheHutts/Java-the-Hutts">
 	    		<i class="material-icons fa fa-github"></i>GitHub Repository
 	    	</a>
 	    </li>
 	    <li>
-	    	<a class="waves-effect" href="#">
+	    	<a class="waves-effect waves-teal" target="_blank"
+	    	href="https://javathehutts.github.io/Java-the-Hutts/">
 	    		<i class="material-icons fa fa-users"></i>The Team
+	    	</a>
+	    </li>
+	    <li>
+	    	<a class="waves-effect waves-teal slide-btn" href="#"
+	    	data-activates="info-slide">
+	    		<i class="material-icons">info_outline</i>Info
 	    	</a>
 	    </li>
 		</ul>
@@ -319,10 +324,10 @@
 											<div class="col s12 l6 input-field">
 												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
 												<select id="gender-verify">
-															<option value="" disabled selected>Male / Female</option>
-															<option value="M">Male</option>
-															<option value="F">Female</option>
-														</select>
+													<option value="" disabled selected>Male / Female</option>
+													<option value="M">Male</option>
+													<option value="F">Female</option>
+												</select>
 												<label for="gender-verify">Gender</label>
 											</div>
 										</div>
@@ -644,10 +649,14 @@
 					<p class="white-text">2017 Java the Hutts</p>
 				</div>
 				<div class="col s5 right-align">
-					<a class="waves-effect waves-light social btn-floating btn tooltipped" href="https://github.com/javaTheHutts/Java-the-Hutts" target="_blank" data-position="top" data-delay="50" data-tooltip="GitHub">
+					<a class="waves-effect waves-light social btn-floating btn tooltipped"
+					href="https://github.com/javaTheHutts/Java-the-Hutts"
+					target="_blank" data-position="top" data-delay="50" data-tooltip="GitHub">
 						<i class="material-icons prefix fa fa-github"></i> GitHub
 					</a>
-					<a class="waves-effect waves-light social btn-floating btn tooltipped" href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank" data-position="top" data-delay="50" data-tooltip="The team">
+					<a class="waves-effect waves-light social btn-floating btn tooltipped"
+					href="https://javathehutts.github.io/Java-the-Hutts/"
+					target="_blank" data-position="top" data-delay="50" data-tooltip="The team">
 						<i class="material-icons prefix fa fa-users"></i> Team
 					</a>
 				</div>

@@ -24,9 +24,12 @@ $(document).ready(function() {
 
   // Materialise component initialization
   $('select').material_select();
+  
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 200 // Creates a dropdown of 200 years to control year
+    selectYears: 110, // Creates a dropdown of 15 years to control year,
+    format: 'dd/mm/yyyy',
+    closeOnSelect: false // Close upon selecting a date,
   });
   
   // Image sliders initialisation

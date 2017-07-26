@@ -19,17 +19,23 @@ main {
   flex: 1 0 auto;
 }
 
+nav,
+.nav-wrapper,
+.navbar > .fixed,
+.collapsible-header {
+  background-color: #5c8983;
+}
+
 @media (max-width: 992px) {
   main {
     margin-top: 56px;
   }
 }
 
-nav,
-.nav-wrapper,
-.navbar > .fixed,
-.collapsible-header {
-  background-color: #5c8983;
+@media (min-width: 993px) and (max-width: 1070px) {
+  #verify-btn i {
+    margin-left: -2.7px;
+  }
 }
 
 /* Side navbar */
@@ -128,7 +134,15 @@ nav,
 }
 
 .slide-out li .collapsible-body {
-  padding: 6px 0;
+  padding: 4px 0;
+}
+
+.slide-out .collapsible-body * {
+  line-height: 32px;
+}
+
+.slide-out li .row .col .special {
+  margin-bottom: 8px;
 }
 
 .slide-out li .row,
@@ -163,7 +177,15 @@ nav,
 }
 
 #mobile-slide .team-logo {
-  margin: 20px auto 64px auto;
+  margin: 32px auto 32px auto;
+}
+
+#mobile-slide .fa {
+  font-size: 24px;
+}
+
+#mobile-slide .divider {
+  margin-bottom: 20px;
 }
 
 /* Product */
