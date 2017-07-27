@@ -3,7 +3,7 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 */
 
 /* global $ */
-var PATH_TO_PIPELINE = '../../hutts/_build/img/';
+var PATH_TO_PIPELINE = '../../hutts_build/img/';
 
 $(document).ready(function() {
 
@@ -338,8 +338,8 @@ function populatePipeline(isTextPipeline, numImages) {
                   $('#text-pipeline collapsible-body card pipeline'):
                   $('#profile-pipeline collapsible-body card pipeline');
   var imagePrepend = isTextPipeline? '': 'f';
-  var imagePath = PATH_TO_PIPELINE + imagePrepend + i + '.png';
   for (var i = 1; i <= numImages; i++) {
+    var imagePath = PATH_TO_PIPELINE + imagePrepend + i + '.png';
     // Create anchor
     var anchor = $('<a>', {
       'href': imagePath,
