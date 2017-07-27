@@ -79,12 +79,12 @@ nav,
   transition: transform .6s;
 }
 
-.auto-hide-header.is-hidden { 
+.auto-hide-header.is-hidden {
   transform: translateY(-90px);
 }
 
 .nav-wrapper {
-  padding: 0 18px;  
+  padding: 0 18px;
 }
 
 .nav-wrapper a img {
@@ -102,7 +102,7 @@ nav,
   .slide-out {
     z-index: 998;
     margin-left: 4em;
-  } 
+  }
 }
 
 .slide-head-wrapper {
@@ -245,7 +245,7 @@ nav,
 .card-content .row {
   margin-bottom: auto;
 }
-  
+
 @media (min-width: 993px) {
   .card-content .row {
     margin-bottom: 20px;
@@ -337,7 +337,7 @@ textarea.invalid {
    border-bottom: 1px solid #3f5e5a;
   box-shadow: 0 1px 0 0 #3f5e5a;
 }
-  
+
 /* TYPE select */
 /* valid color */
 
@@ -418,7 +418,7 @@ button.picker__close {
 
 .btn,
 #verify-btn {
-  background-color: #5c8983; 
+  background-color: #5c8983;
 }
 
 #verify-btn {
@@ -442,15 +442,15 @@ button.picker__close {
   .col.duo-button-wrapper {
     min-height: 40.4em;
   }
-  
+
   .col.duo-button-wrapper {
     padding-top: 13.5px;
   }
-  
+
   .id-preview {
     max-height: 28em;
   }
-  
+
   #verify-btn {
     top: 50%;
   }
@@ -503,25 +503,25 @@ button.picker__close {
   .extraction-options .vline {
     height: 9em;
   }
-  
+
   .extraction-options .vline-bottom {
     transform: translateY(20em);
   }
-  
+
   .extraction-options .vline-top {
     transform: translateY(1em);
   }
-  
+
   #extract-text-btn {
     left: 50%;
     transform: translate(-50%, -6em);
   }
-  
+
   #extract-all-btn {
     left: 50%;
     transform: translate(-50%, -4em);
   }
-  
+
   #extract-photo-btn {
     left: 50%;
     transform: translate(-50%, -2em);
@@ -532,17 +532,17 @@ button.picker__close {
   .extraction-options .vline {
     height: 10em;
   }
-  
+
   #extract-text-btn {
     left: 50%;
     transform: translate(-50%, -7em);
   }
-  
+
   #extract-all-btn {
     left: 50%;
     transform: translate(-50%, -5em);
   }
-  
+
   #extract-photo-btn {
     left: 50%;
     transform: translate(-50%, -3em);
@@ -554,12 +554,12 @@ button.picker__close {
     left: 50%;
     transform: translate(-47%, -7em);
   }
-  
+
   #extract-all-btn {
     left: 50%;
     transform: translate(-155%, -1.5em);
   }
-  
+
   #extract-photo-btn {
     left: 50%;
     transform: translate(-50%, 0.5em);
@@ -571,7 +571,7 @@ button.picker__close {
   padding-left: 0.4em;
   padding-right: 0.4em;
 }
-  
+
 @media (min-width: 993px) {
   .pipe-gallery {
     padding-left: 3em;
@@ -586,6 +586,15 @@ button.picker__close {
 
 /* Colapsible 5 */
 
+/* Result modal */
+.spinner {
+  padding-top: 4em;
+}
+
+#verify-result.modal .modal-footer {
+  text-align: center;
+}
+
 /*Footer styling */
 .page-footer,
 .page-footer .footer-copyright {
@@ -596,19 +605,8 @@ button.picker__close {
   margin: 0.3em;
 }
 
-.block {
-  width: 7em;
-  height: 5em;
-}
-
-.red {
-  background-color: red;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.green {
-  background-color: green;
+/* Tests */
+.test-circle {
+  height: 150px;
+  width: 150px;
 }
