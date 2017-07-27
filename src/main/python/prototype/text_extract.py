@@ -12,13 +12,13 @@ Example:
 """
 
 from PIL import Image
-from preprocessing import ThresholdingManager
-from preprocessing import BlurManager
-from preprocessing import ColorManager
-from preprocessing import SimplificationManager
-from processing import FaceDetector
-from processing import BarCodeManager
-from processing import TextManager
+from prototype.preprocessing.thresholding_manager import ThresholdingManager
+from prototype.preprocessing.blur_manager import BlurManager
+from prototype.preprocessing.color_manager import ColorManager
+from prototype.preprocessing.simplification_manager import SimplificationManager
+from prototype.processing.face_manager import FaceDetector
+from prototype.processing.barcode_manager import BarCodeManager
+from prototype.processing.text_manager import TextManager
 
 import pytesseract
 import cv2
@@ -31,9 +31,9 @@ SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.
 
 
 class TextExtractor:
-    def extract(img, thresh="adaptive", blurr="median", clr="red", rm=False, knl=[7]):
+    def extract(self, img, thresh="adaptive", blurr="median", clr="red", rm=False, knl=[7]):
 
-        image = cv2.imread(img)
+        image = img
 
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()

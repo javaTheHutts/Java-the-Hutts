@@ -9,6 +9,7 @@ from imutils.convenience import url_to_image
 from flask import Blueprint, jsonify, request
 import cv2
 import numpy as np
+from prototype.text_extract import TextExtractor
 
 extract = Blueprint('extract', __name__)
 
@@ -30,13 +31,13 @@ def extract_text():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("image", None) is not None:
+        if request.files.get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = _grab_image(stream=request.files["image"])
+            image = _grab_image(stream=request.files["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.post.get("url", None)
+            url = request.args.get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
@@ -44,7 +45,10 @@ def extract_text():
             # load the image and convert
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
-        print(image)
+        extractor = TextExtractor()
+        result = extractor.extract(image)
+        print("PRINTING RESULT!!!!!!!!!!!!!!")
+        print(result)
         data.update(
             {
                 "surname": "Doe",
@@ -77,13 +81,13 @@ def extract_face():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("image", None) is not None:
+        if request.files.get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = _grab_image(stream=request.files["image"])
+            image = _grab_image(stream=request.files["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.post.get("url", None)
+            url = request.args.get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
@@ -116,13 +120,13 @@ def extract_all():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("image", None) is not None:
+        if request.files.get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = _grab_image(stream=request.files["image"])
+            image = _grab_image(stream=request.files["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.post.get("url", None)
+            url = request.args.get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
