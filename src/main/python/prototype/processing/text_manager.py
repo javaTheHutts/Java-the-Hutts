@@ -60,12 +60,24 @@ class TextManager:
             'regex': r'((fore\ *)?(names)\ *\n)((\w*\ *)*\n)',
             'text': True
         }, {
-            'find': 'idNumber',
+            'find': 'identity_number',
             'regex': r'((id\w*\ * )(no|number) *\s)((\w* *)*\n)',
             'text': False
         }, {
-            'find': 'gender',
+            'find': 'sex',
             'regex': r'((sex|gender)\ *\n)((\w*\ *)*\n)',
+            'text': True
+        }, {
+            'find': 'date_of_birth',
+            'regex': r'(date of birth\ *\n)((\w*\ *)*\n)',
+            'text': True
+        }, {
+            'find': 'country_of_birth',
+            'regex': r'(nationallity\ *\n)((\w*\ *)*\n)',
+            'text': True
+        }, {
+            'find': 'status',
+            'regex': r'(status\ *\n)((\w*\ *)*\n)',
             'text': True
         }]
         # Attempt to retrieve regex matches
@@ -74,12 +86,12 @@ class TextManager:
             reg_exp = find_match['regex']
             text = find_match['text']
             id_info[key] = self._get_match(id_string, reg_exp, text)
-            if (key == "idNumber"):
+            if key == "identity_number" and id_info[key]:
                 yy = id_info[key][:2]
                 mm = id_info[key][2:4]
                 dd = id_info[key][4:6]
                 date_of_birth = str(yy) + "-" + str(mm) + "-" + str(dd)
-                id_info['dateOfBirth'] = date_of_birth
+                id_info['date_of_birth'] = date_of_birth
 
         # Return the info we tried to find.
         return id_info

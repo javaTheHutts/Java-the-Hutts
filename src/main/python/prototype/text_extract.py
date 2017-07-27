@@ -31,7 +31,7 @@ SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.
 
 
 class TextExtractor:
-    def extract(self, img, thresh="adaptive", blurr="median", clr="red", rm=False, knl=[7]):
+    def extract(self, img, thresh="adaptive", blurr="median", clr="red", rm=False, knl=[9]):
 
         image = img
 

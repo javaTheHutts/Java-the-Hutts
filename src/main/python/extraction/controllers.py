@@ -49,19 +49,7 @@ def extract_text():
         result = extractor.extract(image)
         print("PRINTING RESULT!!!!!!!!!!!!!!")
         print(result)
-        data.update(
-            {
-                "surname": "Doe",
-                "names": "John Jane",
-                "sex": "M", "nationality": "RSA",
-                "identity_number": "6944585228083",
-                "date_of_birth": "06-05-1996",
-                "country_of_birth": "RSA",
-                "status": "citizen",
-                "success": True
-            }
-        )
-    return jsonify(data)
+    return jsonify(result)
 
 
 @extract.route('/extractFace', methods=['POST'])
