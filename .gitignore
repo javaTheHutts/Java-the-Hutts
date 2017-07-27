@@ -341,4 +341,6 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+### Editor specific
 .idea
+.vscode

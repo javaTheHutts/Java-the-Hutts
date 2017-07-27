@@ -3,6 +3,7 @@ from imutils.face_utils import rect_to_bb
 import dlib
 import cv2
 
+
 class FaceDetector:
     """
     The FaceDetector class is responsible for
@@ -97,4 +98,3 @@ class FaceDetector:
         sub_face = cv2.GaussianBlur(sub_face, (31, 31), 0)
         image_copy[y:y + sub_face.shape[0], x:x + sub_face.shape[1]] = sub_face
         return image_copy
-

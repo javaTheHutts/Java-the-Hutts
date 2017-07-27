@@ -1,4 +1,3 @@
-__author__ = 'Stephan'
+# __author__ = 'Stephan'
 
-from .face_verify import FaceVerify
-
+# from .face_verify import FaceVerify

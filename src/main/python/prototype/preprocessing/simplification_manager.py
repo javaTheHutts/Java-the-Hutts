@@ -2,6 +2,7 @@ import cv2
 import imutils
 from imutils.perspective import four_point_transform
 
+
 class SimplificationManager:
     """
     The Simpificaton mager is used to remove unwanted content in an image thus

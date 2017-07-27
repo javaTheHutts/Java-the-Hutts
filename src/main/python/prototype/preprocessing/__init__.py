@@ -1,7 +1,6 @@
-__author__ = 'Stephan'
+# __author__ = 'Stephan'
 
-from .thresholding_manager import ThresholdingManager
-from .blur_manager import BlurManager
-from .color_manager import ColorManager
-from .simplification_manager import SimplificationManager
-
+# from .thresholding_manager import ThresholdingManager
+# from .blur_manager import BlurManager
+# from .color_manager import ColorManager
+# from .simplification_manager import SimplificationManager

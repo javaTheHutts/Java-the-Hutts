@@ -2,6 +2,7 @@ import dlib
 import cv2
 from scipy.spatial import distance
 
+
 class FaceVerify:
     """
     The FaceVerify class is responsible for
