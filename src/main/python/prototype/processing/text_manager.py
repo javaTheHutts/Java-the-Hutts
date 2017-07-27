@@ -73,16 +73,14 @@ class TextManager:
             key = find_match['find']
             reg_exp = find_match['regex']
             text = find_match['text']
-            
             id_info[key] = self._get_match(id_string, reg_exp, text)
-            if(key=="idNumber"):
-                yy=id_info[key][:2]
-                mm=id_info[key][2:4]
-                dd=id_info[key][4:6]
-                date_of_birth=str(yy)+ "-"+str(mm)+"-"+str(dd)
-                id_info['dateOfBirth']=date_of_birth
+            if (key == "idNumber"):
+                yy = id_info[key][:2]
+                mm = id_info[key][2:4]
+                dd = id_info[key][4:6]
+                date_of_birth = str(yy) + "-" + str(mm) + "-" + str(dd)
+                id_info['dateOfBirth'] = date_of_birth
 
-                
         # Return the info we tried to find.
         return id_info
 

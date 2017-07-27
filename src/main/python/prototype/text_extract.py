@@ -21,7 +21,6 @@ from processing import BarCodeManager
 from processing import TextManager
 
 import pytesseract
-import argparse
 import cv2
 import os
 import json
@@ -108,5 +107,3 @@ class TextExtractor:
         id_details = text_manager.dictify(clean_text)
         print(id_details)
         return id_details
-
-    #extract("img/id_card.jpg")

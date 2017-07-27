@@ -1,21 +1,24 @@
 import cv2
-import argparse
 
 
 class TemplateMatching:
+
     """
-    The TemplateMatching class receives template images to identify the type of identification that is used in the image.
+    The TemplateMatching class receives template images to identify the type of identification
+    that is used in the image.
     Thus you provide it with templates and it will identify whether you used an id card, id book etc.
     """
-    def identify(src,template):
+
+    def identify(src, template):
         """
         This function identifies the src image by searching for the templates provided.
         Author(s):
             Marno Hermann
         Args:
             Image : File path to the image that needs to be identified
-            Tuple list: Each tuple has 4 elements width of image from where template was extracted, the path to the template,
-                        threshold value to identify object in the range (0,1), type you want returned as your identifier
+            Tuple list: Each tuple has 4 elements width of image from where template was extracted,
+                        the path to the template, threshold value to identify object in the range (0,1),
+                        type you want returned as your identifier.
         Returns:
             dict obj: Returns a type if no type could be identified, None is returned
         Todo:
@@ -27,9 +30,8 @@ class TemplateMatching:
 
         # load the source and template image
         source = cv2.imread(src)
-        val=[]
-        for (h,temp,t,n) in template:
-
+        val = []
+        for (h, temp, t, n) in template:
             templ = cv2.imread(temp)
             r = h / source.shape[1]
             dim = (h, int(source.shape[0] * r))
@@ -42,12 +44,11 @@ class TemplateMatching:
 
             (minVal, maxVal, minLoc, (x, y)) = cv2.minMaxLoc(result)
 
-            val=val+[(maxVal,t,n)]
+            val = val + [(maxVal, t, n)]
 
-        for (m,s,n) in val:
+        for (m, s, n) in val:
             if (m > s):
                 print(n)
-                return {'type':n}
+                return {'type': n}
 
-
-        return {'type':None}
+        return {'type': None}
