@@ -2,7 +2,7 @@
 
 <a href="https://zenhub.com"><img src="https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png"></a>
 [![Build Status](https://travis-ci.org/javaTheHutts/Java-the-Hutts.svg?branch=Develop)](https://travis-ci.org/javaTheHutts/Java-the-Hutts)
-[![Github file size](https://img.shields.io/github/size/webcaetano/craft/build/craft.min.js.svg)]()
+![](https://reposs.herokuapp.com/?path=javaTheHutts/Java-the-Hutts&style=flat)
 [![PyPI](https://img.shields.io/pypi/l/Django.svg)]()
 
 Repository for the Java the Hutts team for COS301.
