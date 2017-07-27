@@ -47,8 +47,6 @@ def extract_text():
         # Call open CV commands here with the extracted image
         extractor = TextExtractor()
         result = extractor.extract(image)
-        print("PRINTING RESULT!!!!!!!!!!!!!!")
-        print(result)
     return jsonify(result)
 
 
@@ -121,8 +119,8 @@ def extract_all():
                 return jsonify(data)
             # load the image and convert
             image = _grab_image(url=url)
+            print(image)
         # Call open CV commands here with the extracted image
-        print(image)
         data.update(
             {
                 "surname": "Nell",

@@ -54,26 +54,13 @@ class TextExtractor:
             image = face_detector.blur_face(image)
             cv2.imwrite("output/4-faceRemvoal.png", image)
 
-        if clr is not None:
-            if clr == "blackhat":
-                image = color_manager.blackHat(image)
-            elif clr == "tophat":
-                image = color_manager.topHat(image)
-            else:
-                image = color_manager.extractChannel(image, clr)
-            cv2.imwrite("output/5-colour_extract.png", image)
-
-        cv2.imwrite("output/colour_extract.png", image)
         if knl is not None:
             blur_kernel = knl
         else:
             if blurr == "median":
-                blur_kernel = [3]
+                blur_kernel = [9]
             else:
-                blur_kernel = [(3, 3)]
-
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        cv2.imwrite("output/6-gray.png", image)
+                blur_kernel = [(9, 9)]
 
         if blurr is not None:
             blur_manager = BlurManager()
@@ -83,8 +70,20 @@ class TextExtractor:
                 image = blur_manager.gaussianBlur(image, blur_kernel=blur_kernel)
             elif blurr == "median":
                 image = blur_manager.medianBlur(image, blur_kernel=blur_kernel)
+        cv2.imwrite("output/5-blur.png", image)
 
-        cv2.imwrite("output/7-blur.png", image)
+        if clr is not None:
+            if clr == "blackhat":
+                image = color_manager.blackHat(image)
+            elif clr == "tophat":
+                image = color_manager.topHat(image)
+            else:
+                image = color_manager.extractChannel(image, clr)
+            cv2.imwrite("output/6-colour_extract.png", image)
+
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        cv2.imwrite("output/7-gray.png", image)
+
         if thresh is not None:
             thresh_manager = ThresholdingManager()
             if thresh == "adaptive":

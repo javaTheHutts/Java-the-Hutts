@@ -97,10 +97,10 @@ class BarCodeManager:
             print(gray)
             print(gray.shape)
             results = scanner.scan(gray)
-            image = self.apply_barcode_blur(image, box)
             if not results:
                 return False, "", image
             else:
+                image = self.apply_barcode_blur(image, box)
                 return True, results[0].data, image
         else:
             return False, "", image
