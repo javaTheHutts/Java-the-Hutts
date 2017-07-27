@@ -344,3 +344,5 @@ fabric.properties
 ### Editor specific
 .idea
 .vscode
+
+hutts_build

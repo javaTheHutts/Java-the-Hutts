@@ -47,14 +47,14 @@ def extract_text():
         print(image)
         data.update(
             {
-                "surname": "Doe",
-                "names": "John Jane",
+                "surname": "Nell",
+                "names": "Stephan Jack",
                 "sex": "M",
                 "nationality": "RSA",
-                "identity_number": "6944585228083",
-                "date_of_birth": "06-05-1996",
+                "identity_number": "9511065182088",
+                "date_of_birth": "1995-11-06",
                 "country_of_birth": "RSA",
-                "status": "citizen",
+                "status": "Citizen",
                 "success": True
             }
         )
@@ -139,10 +139,10 @@ def extract_all():
                 "sex": "M",
                 "nationality": "RSA",
                 "identity_number": "9511068172098",
-                "date_of_birth": "06-11-1995",
+                "date_of_birth": "1995-11-06",
                 "country_of_birth": "RSA",
-                "status": "citizen",
-                "face": "img/returnFace.jpg",
+                "status": "Citizen",
+                "face": "img/extracted_face.jpg",
                 "success": True
             }
         )
