@@ -339,7 +339,7 @@ function populatePipeline(isTextPipeline, numImages) {
                   $('#profile-pipeline collapsible-body card pipeline');
   var imagePrepend = isTextPipeline? '': 'f';
   var imagePath = PATH_TO_PIPELINE + imagePrepend + i + '.png';
-  for (var i = 1; i < numImages; i++) {
+  for (var i = 1; i <= numImages; i++) {
     // Create anchor
     var anchor = $('<a>', {
       'href': imagePath,
