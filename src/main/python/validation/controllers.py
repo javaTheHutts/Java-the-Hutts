@@ -23,22 +23,24 @@ def verify_id():
         URL: http://localhost:5000/verifyID
         ----------------------------------------------------------------------
         """
-    # image_of_id = request.files.get("id_img")
+    # image_of_id = request.files.get("idPhoto")
     # names = request.form['names']
     # surname = request.form['surname']
-    # id_number = request.form['id_number']
+    # id_number = request.form['idNumber']
     # nationality = request.form['nationality']
     # country_of_birth = request.form['cob']
     # status = request.form['status']
     # gender = request.form['gender']
     # date_of_birth = request.form['dob']
-    # face = request.files.get('face_img')
-    print(request)
+    # face = request.files.get('userImage')
 
     # do stuff to get result
+    print(request)
 
     result = {
-        "percent_match": 63
+        "total_match": 86,
+        "text_match": 98,
+        "profile_match": 68
     }
     return jsonify(result)
 

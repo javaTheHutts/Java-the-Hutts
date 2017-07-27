@@ -131,6 +131,7 @@ $(document).ready(function() {
       processData: false,
       contentType: false,
       success: function(data){
+        console.log(data);
         $('.circle-result').html('');
         $('.result-total')[0].data('percentage', data.total_match);
         $('.result-text')[0].data('percentage', data.total_match);
