@@ -14,11 +14,11 @@
 	<link rel="stylesheet" href="css/jquery.circliful.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/slick.min.js"></script>
 	<script type="text/javascript" src="js/jquery.circliful.min.js"></script>
 	<script type="text/javascript" src="js/sticky-nav.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 </head>
 
 <body>
@@ -269,6 +269,135 @@
 				<li>
 					<div class="collapsible-header active waves-effect hoverable">
 						<i class="material-icons carets">chevron_right</i>
+						<i class="material-icons" aria-hidden="true">content_copy</i>
+						Extraction
+					</div>
+					<div class="collapsible-body">
+						<!-- Card 1 -->
+						<div class="row">
+							<div class="col s12 l5 card-wrapper card1-wrapper">
+								<!-- Card 1 -->
+								<div class="card duo-card">
+									<div class="card-content">
+										<span class="card-title">Photo of ID</span>
+										<div class="row">
+											<div class="col s12">
+												<img src="img/id-card.png" alt="ID Photo"
+												class="id-preview" id="id-preview-extract">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<div class="file-field input-field">
+													<div class="btn hoverable">
+														<span>ID Photo</span>
+														<input type="file" onchange="readURL(this);"
+														id="id-photo-extract" accept="image/*">
+													</div>
+													<div class="file-path-wrapper">
+														<input class="file-path validate" type="text">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Card 1 -->
+							<!-- Extract Buttons -->
+							<div class="col s12 l1 valign-wrapper duo-button-wrapper extraction-options">
+								<div class="vline vline-top hide-on-med-and-down"></div>
+								<div class="vline vline-bottom hide-on-med-and-down"></div>
+								<button id="extract-text-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract Text">
+									<i class="material-icons prefix fa fa-list"></i>
+								</button>
+								<button id="extract-all-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract All">
+									<i class="material-icons prefix fa fa-id-card-o"></i>
+								</button>
+								<button id="extract-photo-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract Photo">
+									<i class="material-icons prefix fa fa-user"></i>
+								</button>
+								<div class="hline hide-on-large-only"></div>
+							</div>
+							<!-- End Extract Buttons -->
+							<div class="col s12 l6 card-wrapper card2-wrapper">
+								<!-- Card 2 -->
+								<div class="card duo-card">
+									<div class="card-content">
+										<span class="card-title">Extracted Details</span>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
+												<input id="names-extract" type="text" class="validate">
+												<label for="names-extract">Names</label>
+											</div>
+											<div class=" col s12 l6 input-field">
+												<i class="material-icons prefix">account_circle</i>
+												<input id="surname-extract" type="text" class="validate">
+												<label for="surname-extract">Surname</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-id-card" aria-hidden="true"></i>
+												<input id="identity_number-extract" type="text" class="validate">
+												<label for="identity_number-extract">Identity Number</label>
+											</div>
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-flag" aria-hidden="true"></i>
+												<input id="nationality-extract" type="text" class="validate">
+												<label for="nationality-extract">Nationality</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
+												<input id="country_of_birth-extract" type="text" class="validate">
+												<label for="country_of_birth-extract">Country of Birth</label>
+											</div>
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
+												<input id="status-extract" type="text" class="validate">
+												<label for="status-extract">Status</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
+												<input id="sex-extract" type="text" class="validate">
+												<label for="sex-extract">Gender</label>
+											</div>
+											<div class="col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
+												<input id="date_of_birth-extract" type="text" class="validate">
+												<label for="date_of_birth-extract">Date of Birth</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12 l6 input-field">
+												<img style="width:50%; height:50%" src="img/stock-face.jpg" alt="face-extract"
+												class="face-preview" id="face-preview-extract">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Card 2 -->
+						</div>
+					</div>
+				</li>
+				<!-- End Expandable 1 -->
+
+				<!-- Expandable 2 -->
+				<li>
+					<div class="collapsible-header waves-effect hoverable">
+						<i class="material-icons carets">expand_more</i>
 						<i class="material-icons" aria-hidden="true">verified_user</i>
 						Verification
 					</div>
@@ -390,135 +519,6 @@
 								</div>
 								<!-- End Card 2 -->
 							</div>
-						</div>
-					</div>
-				</li>
-				<!-- End Expandable 1 -->
-
-				<!-- Expandable 2 -->
-				<li>
-					<div class="collapsible-header waves-effect hoverable">
-						<i class="material-icons carets">expand_more</i>
-						<i class="material-icons" aria-hidden="true">content_copy</i>
-						Extraction
-					</div>
-					<div class="collapsible-body">
-						<!-- Card 1 -->
-						<div class="row">
-							<div class="col s12 l5 card-wrapper card1-wrapper">
-								<!-- Card 1 -->
-								<div class="card duo-card">
-									<div class="card-content">
-										<span class="card-title">Photo of ID</span>
-										<div class="row">
-											<div class="col s12">
-												<img src="img/id-card.png" alt="ID Photo"
-												class="id-preview" id="id-preview-extract">
-											</div>
-										</div>
-										<div class="row">
-											<div class="col s12">
-												<div class="file-field input-field">
-													<div class="btn hoverable">
-														<span>ID Photo</span>
-														<input type="file" onchange="readURL(this);"
-														id="id-photo-extract" accept="image/*">
-													</div>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- End Card 1 -->
-							<!-- Extract Buttons -->
-							<div class="col s12 l1 valign-wrapper duo-button-wrapper extraction-options">
-								<div class="vline vline-top hide-on-med-and-down"></div>
-								<div class="vline vline-bottom hide-on-med-and-down"></div>
-								<button id="extract-text-btn"
-								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
-								data-position="top" data-delay="50" data-tooltip="Extract Text">
-									<i class="material-icons prefix fa fa-list"></i>
-								</button>
-								<button id="extract-all-btn"
-								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
-								data-position="top" data-delay="50" data-tooltip="Extract All">
-									<i class="material-icons prefix fa fa-id-card-o"></i>
-								</button>
-								<button id="extract-photo-btn"
-								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
-								data-position="top" data-delay="50" data-tooltip="Extract Photo">
-									<i class="material-icons prefix fa fa-user"></i>
-								</button>
-								<div class="hline hide-on-large-only"></div>
-							</div>
-							<!-- End Extract Buttons -->
-							<div class="col s12 l6 card-wrapper card2-wrapper">
-								<!-- Card 2 -->
-								<div class="card duo-card">
-									<div class="card-content">
-										<span class="card-title">Extracted Details</span>
-										<div class="row">
-											<div class=" col s12 l6 input-field">
-												<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
-												<input id="names-extract" type="text" class="validate">
-												<label for="names-extract">Names</label>
-											</div>
-											<div class=" col s12 l6 input-field">
-												<i class="material-icons prefix">account_circle</i>
-												<input id="surname-extract" type="text" class="validate">
-												<label for="surname-extract">Surname</label>
-											</div>
-										</div>
-										<div class="row">
-											<div class=" col s12 l6 input-field">
-												<i class=" material-icons prefix fa fa-id-card" aria-hidden="true"></i>
-												<input id="identity_number-extract" type="text" class="validate">
-												<label for="identity_number-extract">Identity Number</label>
-											</div>
-											<div class=" col s12 l6 input-field">
-												<i class=" material-icons prefix fa fa-flag" aria-hidden="true"></i>
-												<input id="nationality-extract" type="text" class="validate">
-												<label for="nationality-extract">Nationality</label>
-											</div>
-										</div>
-										<div class="row">
-											<div class=" col s12 l6 input-field">
-												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
-												<input id="country_of_birth-extract" type="text" class="validate">
-												<label for="country_of_birth-extract">Country of Birth</label>
-											</div>
-											<div class=" col s12 l6 input-field">
-												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
-												<input id="status-extract" type="text" class="validate">
-												<label for="status-extract">Status</label>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col s12 l6 input-field">
-												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
-												<input id="sex-extract" type="text" class="validate">
-												<label for="sex-extract">Gender</label>
-											</div>
-											<div class="col s12 l6 input-field">
-												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
-												<input id="date_of_birth-extract" type="text" class="validate">
-												<label for="date_of_birth-extract">Date of Birth</label>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col s12 l6 input-field">
-												<img style="width:50%; height:50%" src="img/stock-face.jpg" alt="face-extract"
-												class="face-preview" id="face-preview-extract">
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- End Card 2 -->
 						</div>
 					</div>
 				</li>
