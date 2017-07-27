@@ -3,6 +3,8 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 */
 
 /* global $ */
+var PATH_TO_PIPELINE = '../../hutts/_build/img/';
+
 $(document).ready(function() {
 
   // Hide some content
@@ -35,26 +37,24 @@ $(document).ready(function() {
     closeOnSelect: false // Close upon selecting a date,
   });
 
-  // Image sliders initialisation
-  $('.pipelet').slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    fade: true,
-    asNavFor: '.pipeline'
-  });
-
+  // Image pipeline initialisation
   $('.pipeline').slick({
     slidesToShow: 3,
     slidesToScroll: 1,
-    asNavFor: '.pipelet',
-    centerMode: true,
+    centerMode: false,
+    infinite: false,
     focusOnSelect: true,
     responsive: [{
-      breakpoint: 600,
+      breakpoint: 601,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }, {
+      breakpoint: 993,
       settings: {
         slidesToShow: 2,
-        slidesToScroll: 2
+        slidesToScroll: 1
       }
     }]
   });
@@ -68,7 +68,7 @@ $(document).ready(function() {
         $(this).children('.carets').text('chevron_right'):
         $(this).children('.carets').text('expand_more');
         // Refresh slick carousels
-        $('.pipelet, .pipeline').slick('setPosition');
+        $('.pipeline').slick('setPosition');
       });
     },
     onClose: function () {
@@ -188,6 +188,12 @@ $(document).ready(function() {
         $('.spinner').hide();
         $('.circle-results-wrapper, #verify-result.modal .modal-footer')
           .show(500);
+          
+        // Populate and unhide pipeline
+        populatePipeline(true, 8);
+        populatePipeline(false, 6);
+        $('#text-pipeline').show(600);
+        $('#profile-pipeline').show(600);
       }
     });
 
@@ -249,6 +255,9 @@ $(document).ready(function() {
               $(this).blur();
             }
           });
+          // Populate and unhide pipeline
+          populatePipeline(true, 8);
+          $('#text-pipeline').show(600);
         }
       });
     });
@@ -267,6 +276,9 @@ $(document).ready(function() {
         contentType: false,
         success: function(data){
           $('#face-preview-extract').attr('src', data.extracted_face);
+          // Populate and unhide pipeline
+          populatePipeline(false, 6);
+          $('#profile-pipeline').show(600);
         }
     });
   });
@@ -296,6 +308,12 @@ $(document).ready(function() {
 
           // Show face
           $('#face-preview-extract').attr('src', data.face);
+          
+          // Populate and unhide pipeline
+          populatePipeline(true, 8);
+          populatePipeline(false, 6);
+          $('#text-pipeline').show(600);
+          $('#profile-pipeline').show(600);
         }
     });
   });
@@ -311,5 +329,27 @@ function readURL(input) {
       $('#id-preview-extract').attr('src', e.target.result);
     };
     reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// Populate slides for pipeline carousel
+function populatePipeline(isTextPipeline, numImages) {
+  var attachTo = isTextPipeline?
+                  $('#text-pipeline collapsible-body card pipeline'):
+                  $('#profile-pipeline collapsible-body card pipeline');
+  var imagePrepend = isTextPipeline? '': 'f';
+  var imagePath = PATH_TO_PIPELINE + imagePrepend + i + '.png';
+  for (var i = 1; i < numImages; i++) {
+    // Create anchor
+    var anchor = $('<a>', {
+      'href': imagePath,
+      'data-lightbox': 'text-pipelet'
+    }).appendTo(attachTo);
+    // Attach to the anchor
+    $('<div>', {
+      'class': 'pipe-slide'
+    }).css({
+      'background-image': 'url(' + imagePath + ');'
+    }).appendTo(anchor);
   }
 }
