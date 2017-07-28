@@ -42,13 +42,12 @@ def extract_text():
             if url is None:
                 data["error"] = "No URL provided."
                 return jsonify(data)
-            # load the image and convert
+                # load the image and convert
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
         extractor = TextExtractor()
         result = extractor.extract(image)
     return jsonify(result)
-
 
 @extract.route('/extractFace', methods=['POST'])
 def extract_face():
@@ -82,7 +81,7 @@ def extract_face():
             image = _grab_image(url=url)
     # Call open CV commands here with the extracted image
     print(image)
-    face = "jklanskjcbniugciuhncoiaksc6565"
+    face = "img/returnFace.jpg"
     return jsonify(
         {
             "extracted_face": face
@@ -131,7 +130,7 @@ def extract_all():
                 "date_of_birth": "06-11-1995",
                 "country_of_birth": "RSA",
                 "status": "citizen",
-                "face": "McFace",
+                "face": "img/returnFace.jpg",
                 "success": True
             }
         )
