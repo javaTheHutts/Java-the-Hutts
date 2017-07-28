@@ -73,11 +73,15 @@ class TextManager:
             'text': True
         }, {
             'find': 'country_of_birth',
-            'regex': r'((nationality|nahally|country of birth)\ *\n)((\w*\ *)*\n)',
+            'regex': r'(country of birth\ *\n)((\w*\ *)*\n)',
             'text': True
         }, {
             'find': 'status',
             'regex': r'(status\ *\n)((\w*\ *)*\n)',
+            'text': True
+        }, {
+            'find': 'nationality',
+            'regex': r'((nationality|nahally|nahonallly)\ *\n)((\w*\ *)*\n)',
             'text': True
         }]
         # Attempt to retrieve regex matches

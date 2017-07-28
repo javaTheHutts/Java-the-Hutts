@@ -28,6 +28,8 @@ import os
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
+DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+
 
 class TextExtractor:
     def extract(self, img, thresh="adaptive", blurr="median", clr="red", rm=False, knl=[9]):
@@ -39,7 +41,7 @@ class TextExtractor:
         color_manager = ColorManager()
         face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
         image = simplification_manager.perspectiveTransformation(image)
-        cv2.imwrite("output/3-warped.png", image)
+        cv2.imwrite(DESKTOP + "/output/3.png", image)
         data = {}
         barcode_data_found, barcode_scan_data, image = barcode_manager.get_barcode_info(image)
         if barcode_data_found:
@@ -47,17 +49,17 @@ class TextExtractor:
                 'identity_number': barcode_scan_data.decode('utf-8'),
             }
 
-        if rm is True:
+        if rm:
             image = face_detector.blur_face(image)
-            cv2.imwrite("output/4-faceRemvoal.png", image)
+            cv2.imwrite(DESKTOP + "/output/4.png", image)
 
-        if knl is not None:
-            blur_kernel = knl
-        else:
+        if knl:
             if blurr == "median":
                 blur_kernel = [9]
             else:
                 blur_kernel = [(9, 9)]
+        else:
+            blur_kernel = knl
 
         if blurr is not None:
             blur_manager = BlurManager()
@@ -67,7 +69,7 @@ class TextExtractor:
                 image = blur_manager.gaussianBlur(image, blur_kernel=blur_kernel)
             elif blurr == "median":
                 image = blur_manager.medianBlur(image, blur_kernel=blur_kernel)
-        cv2.imwrite("output/5-blur.png", image)
+            cv2.imwrite(DESKTOP + "/output/5.png", image)
 
         if clr is not None:
             if clr == "blackhat":
@@ -76,10 +78,10 @@ class TextExtractor:
                 image = color_manager.topHat(image)
             else:
                 image = color_manager.extractChannel(image, clr)
-            cv2.imwrite("output/6-colour_extract.png", image)
+            cv2.imwrite(DESKTOP + "/output/6.png", image)
 
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        cv2.imwrite("output/7-gray.png", image)
+        cv2.imwrite(DESKTOP + "/output/7.png", image)
 
         if thresh is not None:
             thresh_manager = ThresholdingManager()
@@ -91,7 +93,7 @@ class TextExtractor:
         filename = "{}.png".format(os.getpid())
         cv2.imwrite(filename, image)
 
-        cv2.imwrite("output/8-Extraction.png", image)
+        cv2.imwrite(DESKTOP+"/output/8.png", image)
         text = pytesseract.image_to_string(Image.open(filename))
         os.remove(filename)
 
