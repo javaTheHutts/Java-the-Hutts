@@ -49,6 +49,7 @@ def extract_text():
         result = extractor.extract(image)
     return jsonify(result)
 
+
 @extract.route('/extractFace', methods=['POST'])
 def extract_face():
     """
