@@ -45,7 +45,7 @@ class TextManager:
                 sanitised.append(deplorable)
         return sanitised
 
-    def dictify(self, id_string):
+    def dictify(self, id_string, barcode_scan_data):
         # Given a string containing extracted ID text,
         # create a dictionary object from said text.
         id_info = {}
@@ -53,7 +53,7 @@ class TextManager:
         # The ID number regex is not the best performing pattern at this stage.
         find_matches = [{
             'find': 'surname',
-            'regex': r'(surname\ *\n)((\w*\ *)*\n)',
+            'regex': r'((surname|surinmame)\ *\n)((\w*\ *)*\n)',
             'text': True
         }, {
             'find': 'names',
@@ -73,7 +73,7 @@ class TextManager:
             'text': True
         }, {
             'find': 'country_of_birth',
-            'regex': r'(nationallity\ *\n)((\w*\ *)*\n)',
+            'regex': r'((nationality|nahally|country of birth)\ *\n)((\w*\ *)*\n)',
             'text': True
         }, {
             'find': 'status',
@@ -85,13 +85,33 @@ class TextManager:
             key = find_match['find']
             reg_exp = find_match['regex']
             text = find_match['text']
-            id_info[key] = self._get_match(id_string, reg_exp, text)
-            if key == "identity_number" and id_info[key]:
-                yy = id_info[key][:2]
-                mm = id_info[key][2:4]
-                dd = id_info[key][4:6]
-                date_of_birth = str(yy) + "-" + str(mm) + "-" + str(dd)
-                id_info['date_of_birth'] = date_of_birth
+            if key not in id_info:
+                id_info[key] = self._get_match(id_string, reg_exp, text)
+            if key == "identity_number":
+                if barcode_scan_data:
+                    id_info[key] = barcode_scan_data["identity_number"]
+
+                if id_info[key]:
+                    yy = id_info[key][:2]
+                    mm = id_info[key][2:4]
+                    dd = id_info[key][4:6]
+                    gender_digit = id_info[key][6:7]
+                    status_digit = id_info[key][10:11]
+
+                    date_of_birth = str(yy) + "-" + str(mm) + "-" + str(dd)
+                    id_info['date_of_birth'] = date_of_birth
+
+                    if gender_digit < "5":
+                        gender = "F"
+                    else:
+                        gender = "M"
+                    id_info['sex'] = gender
+
+                    if status_digit == "0":
+                        status = "Citizen"
+                    else:
+                        status = "Non Citizen"
+                    id_info['status'] = status
 
         # Return the info we tried to find.
         return id_info

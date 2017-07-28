@@ -23,7 +23,6 @@ from prototype.processing.text_manager import TextManager
 import pytesseract
 import cv2
 import os
-import json
 
 # Constants path to trained data for Shape Predictor.
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
@@ -41,14 +40,12 @@ class TextExtractor:
         face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
         image = simplification_manager.perspectiveTransformation(image)
         cv2.imwrite("output/3-warped.png", image)
-
+        data = {}
         barcode_data_found, barcode_scan_data, image = barcode_manager.get_barcode_info(image)
         if barcode_data_found:
             data = {
-                'ID_number': barcode_scan_data.decode('utf-8'),
+                'identity_number': barcode_scan_data.decode('utf-8'),
             }
-            card_data = json.dumps(data)
-            print(card_data)
 
         if rm is True:
             image = face_detector.blur_face(image)
@@ -103,6 +100,6 @@ class TextExtractor:
         print(text, "\n------------------------------------------------------")
         clean_text = text_manager.clean_up(text)
         print(clean_text, "\n -----------------------------------------------")
-        id_details = text_manager.dictify(clean_text)
+        id_details = text_manager.dictify(clean_text, data)
         print(id_details)
         return id_details
