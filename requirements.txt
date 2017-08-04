@@ -7,3 +7,5 @@ imutils==0.4.3
 pillow==4.2.1
 pytesseract==0.1.7
 opencv-python==3.2.0.8
+fuzzywuzzy==0.15.1
+python-levenshtein==0.12.0
