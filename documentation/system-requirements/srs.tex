@@ -5,7 +5,6 @@
 \usepackage{eso-pic}
 \usepackage{hyperref}
 \usepackage{wrapfig}
-\usepackage{lipsum}
 \usepackage{array}
 \usepackage{enumitem}
 \AddToShipoutPictureBG{%
@@ -262,8 +261,63 @@
             \item The system should indicate that images match only if the images match with an accuracy of at least 75\%.
 		\end{itemize}
 		\section{Technology Choices}
+		This section describes the technologies in use, and the
+		arguments behind why we decided on these technologies.\\
+		It was important to us to try and make use of technologies that are,
+		free to use, efficient, relatively small in terms package size and
+		requires as few as possible dependencies. 
+		\subsection{
+		\href{http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html}			{OpenCV-Python Version \textit{3.2.0}}}
+		OpenCV (Open Source Computer Vision Library) is free for commercial use.
+		OpenCV is by far the best documented and supported Computer Vision library
+		since it has been available and been developed on for over 15 years now.
+		OpenCV is available in many programming language 
+		including Python which was one of the requirements of the client.
+		OpenCV now also support Multi-core hardware acceleration which will
+		increase efficiency drastically. \\
 		
-
+		\noindent
+		OpenCV will be used for real-time processing of images in the application
+		which will include image clean-up image extraction and image manipulation.
+	
+		\subsection{\href{http://dlib.net/}{Dlib \textit{19.4.0}}}
+		Dlib is an Open Source Machine learning toolkit and is also
+		the only machine learning library that support facial landmark
+		optimisation and Face likeness detection out of the box.\\ 
+		
+		\noindent
+		Dlib allows us to make use of a High Quality pre-trained classifiers
+		for facial likeness which made use of over 3 million faces 
+		during training. This allows for a claimed accuracy of 99.38 \% in the
+		\href{http://vis-www.cs.umass.edu/lfw/}
+		{\textit{Labeled Faces in the Wild}}
+		bench mark, thus allowing us to meet all our performance requirements
+		in terms of the face likeness detection sub-section\\
+		
+		\noindent
+		Dlib also allows for face detection as well as face landmark 
+		detection both of which is required to improve the
+		accuracy and reliability of the face likeness algorithm by supporting
+		the alignment and clean-up of detected faces.
+		
+		\subsection{\href{https://pypi.python.org/pypi/pytesseract}
+		{Pytesseract \textit{0.1.7}}}
+		Python-tesseract is an Open Source optical 
+		character recognition (OCR) tool for python. This allows 
+		for reading and decoding of embedded text in images.\\
+		
+		\noindent
+		Tesseract allows for easy automated scanning of cards. By making use
+		of Tesseract we no longer need to:
+		\begin{enumerate}
+			\item Detect Region of text.
+			\item Process Region of text.
+			\item Use a trained classifier to read the extracted text.
+		\end{enumerate}
+		If it is found later to be a requirement Tesseract does support
+		additional training of fonts which will allow for greater
+		reliability and accuracy when extracting text.  
+	
 	\cleardoublepage
 
 \end{document}
