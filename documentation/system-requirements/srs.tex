@@ -231,11 +231,10 @@
 		
 		\subsection{Performance Requirements}\label{subsec:specific-performance}
 		\begin{itemize}
-		    \item The application should be versatile enough to handle any future enhancement, like supporting a wider variety of identification materials.
+		\item A single extraction request should return in under 100 milliseconds.
+		\item The system should be able to process 4 concurrent extraction requests in under 200 milliseconds.
+		\item Any facial verification request should be handled in 5 seconds.
 		    \item Any internal errors and exceptions should be handle by the system itself.
-		    \item The system should function in real time. All OCR request should be handled in under 5 seconds.
-		    \item Any request with regards to facial comparisons and image optimisation should be handled in under 10 seconds.
-		    \item The system should be able to handle a high amount of concurrent requests within an acceptable timeframe.
 		\end{itemize}
 
 		\subsection{Design Constraints}\label{subsec:specific-constraints}
@@ -253,7 +252,7 @@
 		\end{enumerate}
 		\subsubsection{Security}
 		\begin{enumerate}
-		    \item All incoming and outgoing data will be encrypted due to the sensitive nature of the data collected.
+		    \item All incoming and outgoing data will be encrypted using the HTTPS protocol due to the sensitive nature of the data collected.
 		\end{enumerate}
 		\subsubsection{Availability}
 
@@ -262,6 +261,8 @@
             \item Documentation should be of such a standard that anyone can easily implement the application when needed.
             \item The system should indicate that images match only if the images match with an accuracy of at least 75\%.
 		\end{itemize}
+		\section{Technology Choices}
+		
 
 	\cleardoublepage
 
