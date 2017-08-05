@@ -19,54 +19,53 @@ class TextManager:
 
     Attributes:
         _deplorables (list): A list of strings that contain characters that is to be filtered out from the OCR output
-        string during string cleaning.
+            string during string cleaning.
 
         fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
-        two strings.
+            two strings.
 
         _max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are noted
-        as running onto multiple lines.
-        e.g. Given OCR output such as :
-            ...
-            Names\n
-            This is a long\n
-            long list of names\n
-            that spans multiple\n
-            lines\n
-            ...
-            max_multi_line = 2, means that only the string:
-            "This is a long list of names" is retrieved.
+            as running onto multiple lines.
+            e.g. Given OCR output such as :
+                ...
+                Names\n
+                This is a long\n
+                long list of names\n
+                that spans multiple\n
+                lines\n
+                ...
+                max_multi_line = 2, means that only the string:
+                "This is a long list of names" is retrieved.
 
         match_contexts (list): A list of dictionaries that contain the contextual information used in the process of
-        retrieving field values from the OCR output string.
-        e.g. {
-                'field': 'surname',     // The field name - can be set to anything one desires.
-                'find': ['surname'],    // A list of strings to be used for matching field names
-                                        // in the OCR output strings (used to know what to look for).
-                'text': True,           // Indicates if the field value is to be treated as alphanumeric or
-                                        // just numeric (removes all text from field value if it's false).
-                'to_uppercase': False,  // Indicates that the retrieved field value must be converted to all
-                                        // uppercase.
-                'multi_line': True,     // Indicates that the field value spans multiple lines.
-                'multi_line_end':       // (Optional, unless multi_line is true) A list of strings specifying the
-                                        // the next field name that indicates the end of the multi-line field
-                                        // value.
-                [
-                    'names', 'fore names'
-                ]
-            }
+            retrieving field values from the OCR output string.
+            e.g. {
+                    'field': 'surname',     // The field name - can be set to anything one desires.
+                    'find': ['surname'],    // A list of strings to be used for matching field names
+                                            // in the OCR output strings (used to know what to look for).
+                    'text': True,           // Indicates if the field value is to be treated as alphanumeric or
+                                            // just numeric (removes all text from field value if it's false).
+                    'to_uppercase': False,  // Indicates that the retrieved field value must be converted to all
+                                            // uppercase.
+                    'multi_line': True,     // Indicates that the field value spans multiple lines.
+                    'multi_line_end': [     // (Optional, unless multi_line is true) A list of strings specifying the
+                                            // the next field name that indicates the end of the multi-line field
+                                            // value.
+                      'names', 'fore names'
+                    ]
+                }
     """
     def __init__(self, fuzzy_min_ratio=65):
         """
         Responsible for initialising the TextManager object.
         Args:
-            :param fuzzy_min_ratio (int): The threshold value for the minimum ratio of fuzziness when comparing
-                                          two strings.
+            fuzzy_min_ratio (int): The threshold value for the minimum ratio of fuzziness when comparing
+            two strings.
         """
         # Specify initial list of undesirable characters.
         self._deplorables = ['_']
         # Specify initial list of contexts for string extraction when populating
-        # ID information dictionary to send as output.
+        # the ID information dictionary to send as output.
         self.match_contexts = [{
             'field': 'identity_number',
             'find': ['id no', 'identity number'],
@@ -122,9 +121,25 @@ class TextManager:
         # Set the maximum number of lines for a multi line field in the id string to extract
         self._max_multi_line = 2
 
-    def clean_up(self, string, exclusions=None, append=True):
+    def clean_up(self, string, exclusions=None, append_to_exclusions=True):
+        """
+        This function serves to receive an input string, clean it up through removing undesirable characters and
+        unnecessary whitespace, and to return the cleaned string.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            string (str): The input string that is to be cleaned.
+            exclusions (list, Optional): A list of characters that are to be filtered from the input string.
+            append_to_exclusions (bool, Optional): Indicates whether the list of exclusions should be appended to the
+                existing list of exclusions in the class if true, if false it will overwrite the existing list.
+
+        Returns:
+            str: A string that has been stripped of undesirable characters and unnecessary whitespace.
+        """
         # Remove undesirable characters, spaces and newlines.
-        compiled_deplorable_re = self._compile_deplorables(exclusions, append)
+        compiled_deplorable_re = self._compile_deplorables(exclusions, append_to_exclusions)
         sanitised = re.sub(compiled_deplorable_re, '', string)
         # Remove empty lines in between text-filled lines.
         stripped_and_sanitised = re.sub(r'(\n\s*\n)', '\n', sanitised)
@@ -134,6 +149,21 @@ class TextManager:
         return clean_text.strip()
 
     def _compile_deplorables(self, deplorables, append_to_deplorables):
+        """
+        This function is responsible for compiling a regex pattern that is used to filter out the characters that
+        were deemed undesirable from a string.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            deplorables (list): A list of characters that are to be filtered from the input string.
+            append_to_deplorables (bool): Indicates whether the list of exclusions should be appended to the existing
+                list of exclusions in the class if true, if false it will overwrite the existing list.
+
+        Returns:
+            A compiled regex pattern used to match undesirable characters in a string.
+        """
         # Append to existing list of undesirable characters if there is a given list of
         # undesirable characters and append_to_deplorables is true.
         if deplorables is not None and append_to_deplorables is True:
@@ -153,6 +183,19 @@ class TextManager:
         return re.compile(reg_exp, re.UNICODE)
 
     def _sanitise_deplorables(self, deplorables):
+        """
+        This function serves as a helper function which sanitises a list of characters that is to be removed.
+        It escapes or removes characters that may impede a regex pattern that is compiled within this class.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            deplorables (list): A list of characters that are to be filtered from an input string.
+
+        Returns:
+            (list): A list of sanitised characters.
+        """
         # List of sanitised deplorables
         sanitised = []
         for deplorable in deplorables:
@@ -165,6 +208,20 @@ class TextManager:
         return sanitised
 
     def dictify(self, id_string, barcode_data=None):
+        """
+        This function is responsible for generating a dictionary object containing the relevant ID information,
+        such as names, surname, ID number, etc., from a given input string containing said relevant information.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            id_string (str): A string containing some ID information.
+            barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
+
+        Returns:
+            (dict): A dictionary object containing the relevant, extracted ID information.
+        """
         # Given a string containing extracted ID text,
         # create a dictionary object and populate it with
         # relevant information from said text.
@@ -180,6 +237,22 @@ class TextManager:
         return id_info
 
     def _id_number_information_extraction(self, id_info, id_number):
+        """
+        This function is responsible for extracting information from a given ID number and populating a given
+        dictionary object with said information.
+
+        Authors:
+            Marno Hermann
+            Stephan Nell
+            Jan-Justin van Tonder
+
+        Args:
+            id_info (dict): A dictionary object containing extracted ID information.
+            id_number (str): An ID number.
+
+        Return:
+            (dict): A dictionary object populated with information extracted from an ID number.
+        """
         # Extract date of birth digits from ID number.
         yy = id_number[:2]
         mm = id_number[2:4]
@@ -197,6 +270,17 @@ class TextManager:
         id_info['status'] = 'Citizen' if status_digit == '0' else 'Non Citizen'
 
     def _populate_id_information(self, id_string, id_info):
+        """
+        This function is responsible for populating a dictionary object with information that it is able to find
+        and extract from a given string containing ID information.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            id_string (str): A string containing some ID information.
+            id_info (dict): A dictionary object used to house extracted ID information.
+        """
         # Split the id_string on the newline character to generate a list.
         id_string_list = id_string.split('\n')
         # Attempt to retrieve matches.
@@ -213,6 +297,23 @@ class TextManager:
                     self._id_number_information_extraction(id_info, id_info[key])
 
     def _get_match(self, id_string_list, match_context):
+        """
+        This function is responsible for searching through a list of lines from an ID string, and extracting the
+        relevant ID information based on some context for extraction that is provided as input. Fuzzy string matching
+        is performed on field names in order to extract field values. This process is assisted with a context that is
+        is to be provided.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            id_string_list (list): An ID string that has been broken down into a list of individual lines.
+            match_context (dict): A dictionary object that provides context for the information that is to be extracted.
+
+        Returns:
+            (str): A string containing the extracted information, if a match was found.
+            (None): If nothing was matched or an extracted value is an empty string.
+        """
         best_match_ratio = self.fuzzy_min_ratio
         match = None
         skip_to_index = -1
