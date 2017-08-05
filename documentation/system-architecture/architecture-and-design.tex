@@ -79,7 +79,7 @@ The following Deployment diagram depicts the architecture of the system as deplo
 This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
 
 \subsection{Image Processing}
-TODO: Some description about the service
+The Image Processing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used by the Extraction module to prepare the image for OCR. 
 \subsubsection{Class Diagram}
 The class diagram of the Image Processing module makes use of a combination of two well-known design patterns: 
 \begin{itemize}
@@ -97,27 +97,13 @@ The class diagram of the Image Processing module makes use of a combination of t
 	    \caption{Image Processing Class Diagram}
 	 \end{figure}
 \end{itemize}
+\pagebreak
 \subsubsection{Sequence Diagram}
-\subsubsection{Activity Diagram}
-\subsubsection{State Diagram}
-\subsubsection{Use Case Diagram}
+\begin{figure}[h]
+	    \centering
+	    \includegraphics[scale=0.5]{img/image_processing_sequence.png}
+	    \caption{Image Pre-Processing Sequence Diagram}
+	 \end{figure}
 
-\subsection{Image Preprocessing}
-TODO: Some description about the service
-\subsubsection{State Diagram}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.5]{img/StateModelPreprocess.png}
-	\caption{Image Pre-Processing State Diagram}
-\end{figure}
-
-\subsection{Image Verification}
-TODO: Some description about the service
-\subsubsection{State Diagram}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.5]{img/StateModelVerify.png}
-	\caption{Image Verification State Diagram}
-\end{figure}
 
 \end{document}
