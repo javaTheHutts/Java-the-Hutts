@@ -1,5 +1,5 @@
 import cv2
-import os
+
 
 class Pipeline:
     """
@@ -18,7 +18,7 @@ class Pipeline:
         """
         This function applies all the processing needed on the image
         Author(s):
-            Stephan Nell, Nicolai van Niekerk
+            Nicolai van Niekerk
         Args:
             image (:obj:'OpenCV image'): Image to which processing should be applied to.
         Returns:

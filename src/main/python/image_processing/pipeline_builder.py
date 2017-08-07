@@ -1,4 +1,5 @@
-from main.python.image_processing.pipeline import Pipeline
+from image_processing.pipeline import Pipeline
+
 
 class PipelineBuilder:
     """

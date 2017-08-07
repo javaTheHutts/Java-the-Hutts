@@ -25,7 +25,7 @@ class ColorManager:
         elif self.type == "blackHat":
             return self.blackHat(image, self.kernel_size)
         elif self.type == "topHat":
-            return self.topHat(image, self.kernel_size);
+            return self.topHat(image, self.kernel_size)
 
     def histEqualisation(self, image):
         """
