@@ -121,7 +121,7 @@ class TextManager:
         # Set the maximum number of lines for a multi line field in the id string to extract
         self._max_multi_line = 2
 
-    def clean_up(self, string, exclusions=None, append_to_exclusions=True):
+    def clean_up(self, in_string, deplorables=None, append_to_deplorables=True):
         """
         This function serves to receive an input string, clean it up through removing undesirable characters and
         unnecessary whitespace, and to return the cleaned string.
@@ -130,17 +130,31 @@ class TextManager:
             Jan-Justin van Tonder
 
         Args:
-            string (str): The input string that is to be cleaned.
-            exclusions (list, Optional): A list of characters that are to be filtered from the input string.
-            append_to_exclusions (bool, Optional): Indicates whether the list of exclusions should be appended to the
+            in_string (str): The input string that is to be cleaned.
+            deplorables (list, Optional): A list of characters that are to be filtered from the input string.
+            append_to_deplorables (bool, Optional): Indicates whether the list of exclusions should be appended to the
                 existing list of exclusions in the class if true, if false it will overwrite the existing list.
 
         Returns:
             str: A string that has been stripped of undesirable characters and unnecessary whitespace.
+
+        Raises:
+            TypeError: If in_string is not a string.
+            TypeError: If deplorables is not a list of strings.
+            TypeError: If append_to_deplorables is not a bool.
         """
+        # Check if the correct argument types have been passed in.
+        if type(in_string) is not str:
+            raise TypeError('Bad type for arg in_string - expected string. Received type ' + str(type(in_string)))
+        if type(deplorables) is not list or (deplorables and type(deplorables[0]) is not str):
+            raise TypeError('Bad type for arg deplorables - expected list of strings. Received type '
+                            + str(type(deplorables)))
+        if type(append_to_deplorables) is not bool:
+            raise TypeError('Bad type for arg append_to_deplorables - expected list of strings. Received type '
+                            + str(type(append_to_deplorables)))
         # Remove undesirable characters, spaces and newlines.
-        compiled_deplorable_re = self._compile_deplorables(exclusions, append_to_exclusions)
-        sanitised = re.sub(compiled_deplorable_re, '', string)
+        compiled_deplorable_re = self._compile_deplorables(deplorables, append_to_deplorables)
+        sanitised = re.sub(compiled_deplorable_re, '', in_string)
         # Remove empty lines in between text-filled lines.
         stripped_and_sanitised = re.sub(r'(\n\s*\n)', '\n', sanitised)
         # Remove multiple spaces before text-filled line.
@@ -158,8 +172,9 @@ class TextManager:
 
         Args:
             deplorables (list): A list of characters that are to be filtered from the input string.
-            append_to_deplorables (bool): Indicates whether the list of exclusions should be appended to the existing
-                list of exclusions in the class if true, if false it will overwrite the existing list.
+            append_to_deplorables (bool): Indicates whether the list of characters to be should be appended to the
+                existing list of characters to be excluded in the class if true, if false it will overwrite the
+                existing list.
 
         Returns:
             A compiled regex pattern used to match undesirable characters in a string.
@@ -221,7 +236,17 @@ class TextManager:
 
         Returns:
             (dict): A dictionary object containing the relevant, extracted ID information.
+
+        Raises:
+            TypeError: If id_string is not a string.
+            TypeError: If barcode_data is not a dictionary.
         """
+        # Check if arguments passed in are the correct type.
+        if type(id_string) is not str:
+            raise TypeError('Bad type for arg id_string - expected string. Received type ' + str(type(id_string)))
+        if barcode_data and type(barcode_data) is not dict:
+            raise TypeError('Bad type for arg id_string - expected dictionary. Received type '
+                            + str(type(barcode_data)))
         # Given a string containing extracted ID text,
         # create a dictionary object and populate it with
         # relevant information from said text.
