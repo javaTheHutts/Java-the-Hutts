@@ -1,7 +1,24 @@
 language: python
 python:
   - "3.5"
-# command to install dependencies
-install: "pip install -r requirements.txt"
-# command to run tests
-script: pytest
+dist: "trusty"
+# packages to install before anything else
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y build-essential cmake pkg-config
+  - sudo apt-get install -y libjpeg8-dev libtiff4-dev libjasper-dev libpng12-dev
+  - sudo apt-get install -y libatlas-base-dev gfortran
+  - sudo apt-get install -y libboost-all-dev
+  - sudo apt-get install -y tesseract-ocr
+  - pip3.5 install pybuilder
+# commands to install dependencies
+install:
+  - pip3.5 install -r requirements.txt
+  - sudo apt-get install -y libzbar0
+  - sudo apt-get install -y libzbar-dev
+  - pip3.5 install pyzbar==0.1.4
+  - pip3.5 install pyzbar[scripts]
+  - pip3.5 install zbar-py==1.0.4
+  - pyb install_dependencies
+# command to build project
+script: pyb analyze publish

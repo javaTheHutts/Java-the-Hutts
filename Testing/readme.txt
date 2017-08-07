@@ -1,2 +1,0 @@
-For the autotestmaker the format is as follows:
-<name of test file to create without test_> <name of test without test_> <name of file containing function to test> <name of function to test> <parameters of function>#<variable name to compare>?<value of variable in assert statement>
