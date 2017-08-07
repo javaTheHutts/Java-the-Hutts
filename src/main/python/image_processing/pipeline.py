@@ -9,7 +9,7 @@ class Pipeline:
     """
     The Pipeline will perform all necessary processing on the image and is built by the PipelineBuilder
     """
-    def __init__(self, blur_manager, barcode_manager, color_manager, face_detector, simplification_manager, threshold_manager):
+    def __init__(self, blur_manager=None, barcode_manager=None, color_manager=None, face_detector=None, simplification_manager=None, threshold_manager=None):
         """
         Initialize Pipeline with parameters passed from the Builder
         """
