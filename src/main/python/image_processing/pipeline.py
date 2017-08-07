@@ -1,9 +1,5 @@
-from main.python.image_processing.blur_manager import BlurManager
-from main.python.image_processing.barcode_manager import BarCodeManager
-from main.python.image_processing.color_manager import ColorManager
-from main.python.image_processing.face_manager import FaceDetector
-from main.python.image_processing.simplification_manager import SimplificationManager
-from main.python.image_processing.thresholding_manager import ThresholdingManager
+import cv2
+import os
 
 class Pipeline:
     """
@@ -20,7 +16,7 @@ class Pipeline:
         self.simplification_manager = simplification_manager
         self.threshold_manager = threshold_manager
 
-    def process(self, image):
+    def process(self, image, rm=False):
         """
         This function applies all the processing needed on the image
         Author(s):
@@ -32,3 +28,29 @@ class Pipeline:
         Todo:
 
         """
+
+        # Do perspective transformation
+        image = self.simplification_manager.perspectiveTransformation(image)
+
+        # Try and read from barcode
+        barcode_data_found, barcode_scan_data, image = self.barcode_manager.get_barcode_info(image)
+        if barcode_data_found:
+            data = {'identity_number': barcode_scan_data.decode('utf-8'), }
+
+        # Remove face from image
+        if rm:
+            image = self.face_detector.blur_face(image)
+
+        # Blur image
+        image = self.blur_manager.apply(image)
+
+        # Apply channel extraction, tophat, blackhat or histogram equalization
+        image = self.color_manager.apply(image)
+
+        # Convert image to grayscale
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        # Apply thresholding
+        image = self.threshold_manager.apply(image)
+
+        return image

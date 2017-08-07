@@ -13,6 +13,7 @@ SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
+
 class BuildDirector:
     """
     The BuildDirector constructs the Pipeline using the PipelineBuilder
