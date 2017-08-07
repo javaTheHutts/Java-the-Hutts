@@ -5,11 +5,18 @@ class ThresholdingManager:
     """
     The Thresholding manager is responsible for applying the different types of thresholding techniques
     """
-    def __init__(self):
+    def __init__(self, type):
         """
         Initialise the Thresholding manager
         """
+        self.type = type
         print("Initialise Thresholding Manager")
+
+    def apply(self, image):
+        if self.type == "adaptive":
+            return self.adaptiveThresholding(image)
+        elif self.type == "otsu":
+            return self.otsuThresholding(image)
 
     def adaptiveThresholding(self, image):
         """
