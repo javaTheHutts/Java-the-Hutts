@@ -16,12 +16,6 @@ class PipelineBuilder:
     def set_color_manager(self, value):
         self.pipeline.color_manager = value
 
-    def set_simplification_manager(self, value):
-        self.pipeline.simplification_manager = value
-
-    def set_barcode_manager(self, value):
-        self.pipeline.barcode_manager = value
-
     def set_threshold_manager(self, value):
         self.pipeline.threshold_manager = value
 
