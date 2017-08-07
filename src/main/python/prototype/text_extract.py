@@ -12,68 +12,54 @@ Example:
 """
 
 from PIL import Image
-from preprocessing import ThresholdingManager
-from preprocessing import BlurManager
-from preprocessing import ColorManager
-from preprocessing import SimplificationManager
-from processing import FaceDetector
-from processing import BarCodeManager
-from processing import TextManager
+from prototype.preprocessing.thresholding_manager import ThresholdingManager
+from prototype.preprocessing.blur_manager import BlurManager
+from prototype.preprocessing.color_manager import ColorManager
+from prototype.preprocessing.simplification_manager import SimplificationManager
+from prototype.processing.face_manager import FaceDetector
+from prototype.processing.barcode_manager import BarCodeManager
+from prototype.processing.text_manager import TextManager
 
 import pytesseract
 import cv2
 import os
-import json
 
 # Constants path to trained data for Shape Predictor.
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
+DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+
 
 class TextExtractor:
-    def extract(img, thresh="adaptive", blurr="median", clr="red", rm=False, knl=[7]):
+    def extract(self, img, thresh="adaptive", blurr="median", clr="red", rm=False, knl=[9]):
 
-        image = cv2.imread(img)
+        image = img
 
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
         color_manager = ColorManager()
         face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
         image = simplification_manager.perspectiveTransformation(image)
-        cv2.imwrite("output/3-warped.png", image)
-
+        cv2.imwrite(DESKTOP + "/output/3.png", image)
+        data = {}
         barcode_data_found, barcode_scan_data, image = barcode_manager.get_barcode_info(image)
         if barcode_data_found:
             data = {
-                'ID_number': barcode_scan_data.decode('utf-8'),
+                'identity_number': barcode_scan_data.decode('utf-8'),
             }
-            card_data = json.dumps(data)
-            print(card_data)
 
-        if rm is True:
+        if rm:
             image = face_detector.blur_face(image)
-            cv2.imwrite("output/4-faceRemvoal.png", image)
+            cv2.imwrite(DESKTOP + "/output/4.png", image)
 
-        if clr is not None:
-            if clr == "blackhat":
-                image = color_manager.blackHat(image)
-            elif clr == "tophat":
-                image = color_manager.topHat(image)
-            else:
-                image = color_manager.extractChannel(image, clr)
-            cv2.imwrite("output/5-colour_extract.png", image)
-
-        cv2.imwrite("output/colour_extract.png", image)
-        if knl is not None:
-            blur_kernel = knl
-        else:
+        if knl:
             if blurr == "median":
-                blur_kernel = [3]
+                blur_kernel = [9]
             else:
-                blur_kernel = [(3, 3)]
-
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        cv2.imwrite("output/6-gray.png", image)
+                blur_kernel = [(9, 9)]
+        else:
+            blur_kernel = knl
 
         if blurr is not None:
             blur_manager = BlurManager()
@@ -83,8 +69,20 @@ class TextExtractor:
                 image = blur_manager.gaussianBlur(image, blur_kernel=blur_kernel)
             elif blurr == "median":
                 image = blur_manager.medianBlur(image, blur_kernel=blur_kernel)
+            cv2.imwrite(DESKTOP + "/output/5.png", image)
 
-        cv2.imwrite("output/7-blur.png", image)
+        if clr is not None:
+            if clr == "blackhat":
+                image = color_manager.blackHat(image)
+            elif clr == "tophat":
+                image = color_manager.topHat(image)
+            else:
+                image = color_manager.extractChannel(image, clr)
+            cv2.imwrite(DESKTOP + "/output/6.png", image)
+
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        cv2.imwrite(DESKTOP + "/output/7.png", image)
+
         if thresh is not None:
             thresh_manager = ThresholdingManager()
             if thresh == "adaptive":
@@ -95,7 +93,7 @@ class TextExtractor:
         filename = "{}.png".format(os.getpid())
         cv2.imwrite(filename, image)
 
-        cv2.imwrite("output/8-Extraction.png", image)
+        cv2.imwrite(DESKTOP+"/output/8.png", image)
         text = pytesseract.image_to_string(Image.open(filename))
         os.remove(filename)
 
@@ -104,6 +102,6 @@ class TextExtractor:
         print(text, "\n------------------------------------------------------")
         clean_text = text_manager.clean_up(text)
         print(clean_text, "\n -----------------------------------------------")
-        id_details = text_manager.dictify(clean_text)
+        id_details = text_manager.dictify(clean_text, data)
         print(id_details)
         return id_details

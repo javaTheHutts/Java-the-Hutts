@@ -9,6 +9,7 @@ from imutils.convenience import url_to_image
 from flask import Blueprint, jsonify, request
 import cv2
 import numpy as np
+from prototype.text_extract import TextExtractor
 
 extract = Blueprint('extract', __name__)
 
@@ -44,21 +45,9 @@ def extract_text():
                 # load the image and convert
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
-        print(image)
-        data.update(
-            {
-                "surname": "Doe",
-                "names": "John Jane",
-                "sex": "M",
-                "nationality": "RSA",
-                "identity_number": "6944585228083",
-                "date_of_birth": "06-05-1996",
-                "country_of_birth": "RSA",
-                "status": "citizen",
-                "success": True
-            }
-        )
-    return jsonify(data)
+        extractor = TextExtractor()
+        result = extractor.extract(image)
+    return jsonify(result)
 
 
 @extract.route('/extractFace', methods=['POST'])
@@ -123,15 +112,15 @@ def extract_all():
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.post.get("url", None)
+            url = request.args.get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
                 return jsonify(data)
             # load the image and convert
             image = _grab_image(url=url)
+            print(image)
         # Call open CV commands here with the extracted image
-        print(image)
         data.update(
             {
                 "surname": "Nell",

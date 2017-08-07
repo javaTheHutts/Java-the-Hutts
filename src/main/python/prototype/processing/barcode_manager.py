@@ -94,11 +94,13 @@ class BarCodeManager:
         if detection:
             gray = cv2.cvtColor(detected_image, cv2.COLOR_BGR2GRAY)
             scanner = zbar.Scanner()
+            print(gray)
+            print(gray.shape)
             results = scanner.scan(gray)
-            image = self.apply_barcode_blur(image, box)
             if not results:
                 return False, "", image
             else:
+                image = self.apply_barcode_blur(image, box)
                 return True, results[0].data, image
         else:
             return False, "", image
