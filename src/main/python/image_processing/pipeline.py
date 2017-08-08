@@ -1,4 +1,6 @@
 import cv2
+import os
+DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
 class Pipeline:
@@ -29,17 +31,22 @@ class Pipeline:
         # Remove face from image
         if rm:
             image = self.face_detector.blur_face(image)
+            cv2.imwrite(DESKTOP + "/output/4.png", image)
 
         # Blur image
         image = self.blur_manager.apply(image)
+        cv2.imwrite(DESKTOP + "/output/5.png", image)
 
         # Apply channel extraction, tophat, blackhat or histogram equalization
         image = self.color_manager.apply(image)
+        cv2.imwrite(DESKTOP + "/output/6.png", image)
 
         # Convert image to grayscale
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        cv2.imwrite(DESKTOP + "/output/7.png", image)
 
         # Apply thresholding
         image = self.threshold_manager.apply(image)
+        cv2.imwrite(DESKTOP + "/output/8.png", image)
 
         return image

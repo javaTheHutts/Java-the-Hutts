@@ -1,6 +1,9 @@
 import cv2
+import os
 import imutils
 from imutils.perspective import four_point_transform
+
+DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
 class SimplificationManager:
@@ -38,7 +41,7 @@ class SimplificationManager:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (5, 5), 0)
         edged = cv2.Canny(gray, 75, 200)
-        cv2.imwrite("output/1-cannay.png", edged)
+        cv2.imwrite(DESKTOP + "/output/1.png", edged)
         (_, contours, _) = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
         contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
         warped = orig
@@ -54,6 +57,6 @@ class SimplificationManager:
                     break
 
             cv2.drawContours(image, [screen_contours], -1, (0, 255, 0), 2)
-            cv2.imwrite("output/2-outline.png", image)
+            cv2.imwrite(DESKTOP + "/output/2.png", image)
             warped = four_point_transform(orig, screen_contours.reshape(4, 2) * ratio)
         return warped

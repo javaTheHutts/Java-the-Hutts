@@ -7,6 +7,8 @@ from PIL import Image
 import cv2
 import os
 
+DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+
 
 class TextExtractor:
     def extract(self, img):
@@ -16,6 +18,7 @@ class TextExtractor:
 
         # Perform perspective transformation and read from barcode
         image = simplification_manager.perspectiveTransformation(img)
+        cv2.imwrite(DESKTOP + "/output/3.png", image)
         barcode_data_found, barcode_scan_data, image = barcode_manager.get_barcode_info(image)
         if barcode_data_found:
             data = {
