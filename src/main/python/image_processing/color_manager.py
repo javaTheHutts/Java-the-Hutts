@@ -47,10 +47,10 @@ class ColorManager:
         Args:
             image (:obj:'OpenCV image'): Image to which image channel should be removed
             str: Color that should be removed valid color red, green, blue
+        Raises:
+            NameError: If invalid colour is selected i.e. not red, green, blue
         Returns:
             obj:'OpenCV image': A copy of the image passed but with a color channel removed
-        Todo:
-            Add additional checks for invalid color name
         """
         (B, G, R) = cv2.split(image)
         zeros = np.zeros(image.shape[:2], dtype="uint8")
@@ -59,8 +59,10 @@ class ColorManager:
             return cv2.merge([B, zeros, R])
         elif image_channel == "blue":
             return cv2.merge([zeros, G, R])
-        else:
+        elif image_channel == "red":
             return cv2.merge([B, G, zeros])
+        else:
+            raise NameError('Invalid Colour Selection! Only red, green, blue are valid colour selections')
 
     def blackHat(self, image, rect_kernel_size=(13, 7)):
         """

@@ -369,14 +369,14 @@ class TextManager:
                         match = id_string_list[current_index + 1]
                         # If the field value exists over multiple lines.
                         if match_context['multi_line']:
-                        	# Determine the lower bound index for field values that span multiple lines.
-                        	lower_index = current_index + 2
-                        	if lower_index >= id_num_lines:
-                        		continue
-                        	# Determine the upper bound index for field values that span multiple lines.
-                        	upper_index = current_index + self._max_multi_line + 1
-                        	if upper_index > id_num_lines:
-                        		upper_index = id_num_lines
+                            # Determine the lower bound index for field values that span multiple lines.
+                            lower_index = current_index + 2
+                            if lower_index >= id_num_lines:
+                                continue
+                            # Determine the upper bound index for field values that span multiple lines.
+                            upper_index = current_index + self._max_multi_line + 1
+                            if upper_index > id_num_lines:
+                                upper_index = id_num_lines
                             # Iterate ahead to retrieve the field value that spans over multiple lines.
                             for forward_index in range(lower_index, upper_index):
                                 # For ech of the specified endpoints, check if the end of the field value has
@@ -394,7 +394,7 @@ class TextManager:
                                 match += ' ' + id_string_list[forward_index].strip()
                     # Check if a match was found during the current iteration before processing further.
                     if not match:
-                    	continue
+                        continue
                     # Check if the field value is text and does not require to be converted to uppercase.
                     if match_context['text'] and not match_context['to_uppercase']:
                         # Convert to lowercase and capitilise the character of each new word.

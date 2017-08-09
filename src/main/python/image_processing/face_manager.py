@@ -33,7 +33,6 @@ class FaceDetector:
             image (:obj:'OpenCV image'): Image containing the face we need to detect.
         Returns:
             Integer List: This list contains the box coordinates for the region in which the face resides.
-
         Raises:
             ValueError: If no face can be detected.
         Todo:
@@ -69,7 +68,7 @@ class FaceDetector:
 
     def blur_face(self, image):
         """
-        This function find the faces and applly a blurring effect on the detected region.
+        This function find the faces and apply a blurring effect on the detected region.
         After the region has been blurred, the blurred region is reapplied to the original image.
         Blurring the face is implemented as a method in the attempt to reduce noise when extracting
         text from the image later in the image pipeline.
