@@ -15,6 +15,16 @@ class BlurManager:
         print("Initialise BlurManager")
 
     def apply(self, image):
+        """
+        This performs the blurring
+        Author(s):
+            Nicolai van Niekerk
+        Args:
+            image: The image to be blurred
+        Returns:
+            obj:'OpenCV image': The blurred image
+        Todo:
+        """
         if self.type == "normal":
             return self.blur(image, self.kernel_size)
         elif self.type == "gaussian":

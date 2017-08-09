@@ -11,7 +11,20 @@ DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
 class TextExtractor:
+    """
+        The TextExtractor extracts text from the ID image
+    """
     def extract(self, img):
+        """
+        This function is a sample that demonstrates how text would be extracted
+        Author(s):
+            Nicolai van Niekerk
+        Args:
+            image: The image of the ID that contains the text tom be extracted
+        Returns:
+            id_details: JSON obj (The extracted information)
+        Todo:
+        """
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
         data = {}

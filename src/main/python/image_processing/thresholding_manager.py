@@ -13,6 +13,16 @@ class ThresholdingManager:
         print("Initialise Thresholding Manager")
 
     def apply(self, image):
+        """
+        This performs the thresholding based on the predefined technique
+        Author(s):
+            Nicolai van Niekerk
+        Args:
+            image: The image to which the thresholding must be applied
+        Returns:
+            obj:'OpenCV image': The thresholded image
+        Todo:
+        """
         if self.type == "adaptive":
             return self.adaptiveThresholding(image)
         elif self.type == "otsu":

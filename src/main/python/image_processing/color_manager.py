@@ -18,6 +18,16 @@ class ColorManager:
         print("Initialise Color Manager")
 
     def apply(self, image):
+        """
+        This performs the specified processing technique
+        Author(s):
+            Nicolai van Niekerk
+        Args:
+            image: The image to which the technique must be applied
+        Returns:
+            obj:'OpenCV image': The modified image
+        Todo:
+        """
         if self.type == "histogram":
             return self.histEqualisation(image)
         elif self.type == "extract":

@@ -18,6 +18,17 @@ class BuildDirector:
     """
     @staticmethod
     def construct():
+        """
+        This function constructs the pipeline
+        Author(s):
+            Nicolai van Niekerk
+        Args:
+            None
+        Returns:
+            :Pipeline (Constructed pipeline)
+        Todo:
+
+        """
         builder = PipelineBuilder()
 
         blur_manager = BlurManager("median", (9, 9))
