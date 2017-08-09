@@ -5,6 +5,7 @@
 \usepackage{eso-pic}
 \usepackage{hyperref}
 \usepackage{wrapfig}
+\usepackage{float}
 \usepackage{lipsum}
 \usepackage{array}
 \usepackage{enumitem}
@@ -81,29 +82,20 @@ This section outlines the design of each individual service and in terms of UML 
 \subsection{Image Processing}
 The Image Processing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used by the Extraction module to prepare the image for OCR. 
 \subsubsection{Class Diagram}
-The class diagram of the Image Processing module makes use of a combination of two well-known design patterns: 
+The class diagram of the Image Processing module makes use of a well-known design pattern: 
 \begin{itemize}
-	\item \textbf{Decorator:} Different preprocessing techniques are added to the PreProcessor object at runtime.
-	\item \textbf{Strategy:} Each preprocessing technique's \textit{preProcess()} algorithm can be changed at runtime.
-	\begin{figure}[!h]
+	\item \textbf{Builder:} Allows us to separate the representation of the pipeline from its construction. As a result, we can use the same construction process to create different pipelines, depending on the situation and type of ID document.
+\end{itemize}
+	\begin{figure}[H]
 	    \centering
-	    \includegraphics[scale=0.3]{img/imageProcessingClassDiagram.png}
+	    \includegraphics[scale=0.5]{img/imageProcessingClassDiagram.png}
 	    \caption{Image Pre-Processing Class Diagram}
 	 \end{figure}
-	   \pagebreak
-	 \begin{figure}[!h]
-		\centering
-	    \includegraphics[scale=0.3]{img/processingClassDiagram.png}
-	    \caption{Image Processing Class Diagram}
-	 \end{figure}
-\end{itemize}
-\pagebreak
+	 \pagebreak
 \subsubsection{Sequence Diagram}
-\begin{figure}[h]
+\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/image_processing_sequence.png}
 	    \caption{Image Pre-Processing Sequence Diagram}
 	 \end{figure}
-
-
 \end{document}
