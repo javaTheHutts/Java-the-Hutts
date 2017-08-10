@@ -49,7 +49,7 @@
 			The purpose of this document is to present the reader with a detailed description of the \project system. It will delve into the purpose and features of the system, the various interfaces of the system, the capabilities of the system, as well as the constraints under which the system must operate. The content of this document is intended for both the various stakeholders and the developers of the \project system.
 
 		\subsection{Scope}\label{subsec:scope}
-			The \project is a proposed standalone system that provides the core functionality of extracting client details from an image of some form of ID, and comparing existing client information with that of an image of some form of ID.
+			The \project is proposed as a standalone system that provides the core functionality of extracting client details from an image of some form of ID, and comparing existing client information with that which was extracted from the image of the ID.
 
 		\subsection{Definitions, Acronyms, and Abbreviations}\label{subsec:daa}
 			\begin{table}[h!]
@@ -75,41 +75,41 @@
 			\end{table}
 		    
 		\subsection{Overview}\label{subsec:overview}
-			The remainder of this document will consist of two remaining chapters.\\
+			The remainder of this document will consist of two chapters.\\
 
-            \noindent The second chapter will address the overall description of the \project system. In addition to this, chapter two will describe the context of the \project system, its relations and the potential interfaces with other systems. This chapter will also provide a summary of the functions of the \project system as well as consider the numerous user characteristics, constraints, assumptions and dependencies relevant to the system.\\
+            \noindent The second chapter will address the overall description of the \project system. In addition to this, the second chapter will also describe the context of the \project system, its relations and the potential interfaces with other systems. This chapter will also provide a summary of the functions of the \project system as well as consider the numerous user characteristics, constraints, assumptions and dependencies relevant to the system.\\
             
             \noindent The third chapter serves the purpose of describing the software requirements of the \project system. This chapter will address the External Interface Requirements, Functional Requirements, Performance Requirements, Design Constraints, Software System Attributes and any other requirements not previously explored.\\
 
 	\cleardoublepage
 
 	\section{Overall Description}\label{sec:overall-description}
-		This chapter aims to give an overview of the entire \project system. The system will be contextualised in order to demonstrate the basic functionality of the system as well as demonstrate how the system interacts with other systems. It will also describe the levels, or types, of users that will utilise the system and describe the functionality that is available to said user. At the end of this chapter, the constraints and assumptions for the system will be addressed.
+		This chapter aims to give an overview of the entire \project system. The system will be contextualised in order to demonstrate the basic functionality of the system, as well as demonstrate how the system interacts with other systems. It will also describe the levels, or types, of users that will utilise the system and describe the functionality that is available to said user. At the end of this chapter, the constraints and assumptions for the system will be addressed.
 
 		\subsection{Product Perspective}\label{subsec:overall-product-perspective}
-		The system will be designed in the form of a Web API which will be hosted on an independent server.\\
+		The system will be designed in the form of a Web API, which is to be hosted on an independent server.\\
 		
-		 \noindent The application will focus on two main criteria. The first is that the application should be able to extract a name, surname, ID number and face, from a photo of either an ID book, ID card, driver's license or passport. The application should then take the information that was extracted and compare it to existing profile and then a percentage match score for each corresponding value should be returned.\\
+		 \noindent The application will focus on two main criteria. The first is that the application should be able to extract a name, surname, ID number and face, from a photo of either an ID book or ID card. The application should then take the information that was extracted and compare it to an existing profile and then a percentage match score for each corresponding value should be returned.\\
 		 
-		  \noindent When comparing the face for a similarity percentage, the application will deal with problems like an old photo or changed facial features like a beard. By manipulating the photo with different methods to ensure that highest accuracy is ensured when matching with a photo.\\
+		  \noindent When comparing the face for a similarity percentage, the application will deal with problems like an old photo or changed facial features, such as a beard, by manipulating the photo with different methods to ensure that highest accuracy is ensured when a comparison is being performed.\\
 		  
-		  \noindent The second feature extracts the information from the identification photo and returns the collection of the information that the application extracted.
+		  \noindent The second feature is responsible for extracting the information from a given ID photo and returns the collection of the information that the system managed to extract.
 
 		\subsection{User Characteristics}\label{subsec:overall-user-characteristics}
-		    The intent of the \project system is to function as an Web API, thus the users will require some knowledge in restful programming. \project is platform independent, therefore user requires no platform specific knowledge.
+		    The intent of the \project system is to function as a Web API, thus, the users will require some knowledge regarding restful programming. \project is platform independent, therefore, users require no platform specific knowledge.
 
 		\subsection{Constraints}\label{subsec:overall-constraints}
 			Only a valid South African ID book, South African ID card, South African Driver license or South African Passport can be used with the application.\\
 			
-			\noindent People's facial features could change or the photo provided could be very old, or the individual in the photo could be standing skew and not providing a full frontal facial image.\\
+			\noindent People's facial features could change or the photo provided could be very old, or the individual in the photo could be standing skew and not providing a full frontal, facial image.\\
 
 			\noindent Low DPI, lighting and resolution of images can drastically    affect performance.
 
 		\subsection{Assumptions and Dependencies}\label{subsec:overall-asusmptions-and-dependencies}
 		\begin{itemize}
-		    \item It is assumed that enough resources will be provided to test multiple ID cards, ID books, driver's licenses or passports.
-		    \item It is assumed that a clear, well-lit and sufficiently high DPI will be provided photo will always be provided.
-		    \item It is assumed that all identification documentation follows the format of documentation issued in South Africa.
+		    \item It is assumed that enough resources will be provided to test multiple forms of ID, such as ID cards and ID books.
+		    \item It is assumed that a clear, well-lit and sufficiently high DPI image is to be provided to the system.
+		    \item It is assumed that all identification documentation follows the relevant, fixed format of documentation issued in South Africa.
 		\end{itemize}
 			
 
@@ -120,41 +120,37 @@
 
 		\subsection{External Interface Requirements}\label{subsec:specific-external}
 		\subsubsection{User-interfaces}
-		The system will be implemented as an API that will be called from within the client's exsisting application. As a result there are no user-interface requirements.
+		The system will be implemented as a Web API that will be called over a network. As a result there are no (graphical) user-interface requirements.
 		\subsubsection{Hardware Interfaces}
-		No extra hardware interface is needed, since the application is designed as a API and is completely detached from any hardware requirements.
+		No extra hardware interface is needed, since the application is designed as a Web API and is detached from any hardware requirements.
 		\subsubsection{Software Interfaces}
-		Since the system will be implemented as an API, it will interface with the existing systems of the client.
+		Since the system will be implemented as a Web API, it will interface with the existing systems of the client.
 		\subsubsection{Communication Interfaces}
 		Communication is an important aspect of an API to function correctly. The application must be able to pass the correct information to any system that makes use of the application functionality. It is also important that descriptive responses are provided in case of an error, or if the need arises to provide extra information.\\
 			
 
 		\subsection{Functional Requirements}\label{subsec:specific-functional}
-		This section describes the functional requirements of the system. The requirements are derived from the specific use cases that are modelled using use case diagrams. Non-trivial use cases are also further elaborated using Actor-System interaction diagrams.
+		This section describes the functional requirements of the system. The requirements are derived from the specific use cases that are modelled using use case diagrams. Non-trivial use cases are also further elaborated upon using Actor-System interaction.
 		
 		\begin{enumerate}
-		    \item \textbf{FR-01:} The system must be able to accept the relevant input data and a(n) ID/Passport/License photo in a specified format.
+		    \item \textbf{FR-01:} The system must be able to accept the relevant input data and a(n) ID card/ID book in a specified format.
 		    \item \textbf{FR-02:} The system must be able to extract text from the provided image.
 		    \item \textbf{FR-03:} The system must be able to extract the photo from the image.
 		    \item \textbf{FR-04:} The system must be able to detect a face from the extracted image.
-		    \item \textbf{FR-05:} The system must be able to age the detected face to a specified date.
-		    \item \textbf{FR-06:} The system must be able to align a face for better matching.
-		    \item \textbf{FR-07:} The system must be able to compare the extracted text with provided data.
-		    \item \textbf{FR-08:} The system must be able to compare two faces after image processing.
-		    \item \textbf{FR-09:} The system must be able to give a percentage match on the validated data.
-		    \item \textbf{FR-10:} The system must be able to visually show the differences in images.
-		    \item \textbf{FR-11:} The system must be able to perform extraction on a South African ID book.
-		    \item \textbf{FR-12:} The system must be able to perform extraction on a South African ID card.
-		    \item \textbf{FR-13:} The system must be able to perform extraction on a South African driver's license.
-		    \item \textbf{FR-14:} The system must be able to perform extraction on a South African passport.
-		    \item \textbf{FR-15:} The system must allow a user to specify a matching accuracy threshold.
-		    \item \textbf{FR-16:} The system must be able to remove beards and/or piercings from the detected face.
+		    \item \textbf{FR-05:} The system must be able to align a face for better matching.
+		    \item \textbf{FR-06:} The system must be able to compare the extracted text with provided data.
+		    \item \textbf{FR-07:} The system must be able to compare two faces after image processing.
+		    \item \textbf{FR-08:} The system must be able to give a percentage match on the validated data.
+		    \item \textbf{FR-09:} The system must be able to visually show the differences in images.
+		    \item \textbf{FR-10:} The system must be able to perform extraction on a South African ID book.
+		    \item \textbf{FR-11:} The system must be able to perform extraction on a South African ID card.
+		    \item \textbf{FR-12:} The system must allow a user to specify a matching accuracy threshold.
 		    
 		\end{enumerate}
 		
 		\subsubsection{Use cases}
 		\begin{figure}[h]
-			\includegraphics[scale=0.6]{img/UseCase.png}
+			\includegraphics[scale=0.6]{img/use_case.png}
 			\caption{Use Case Diagram for Hutts-Verification}
 		\end{figure}
 		\begin{enumerate}
@@ -163,46 +159,40 @@
 				\item Verify ID
 				\begin{enumerate}
 					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against a photo of the individual in question. The personal information of the individual should also be verified.
-					\item \textbf{Precondition:} Two photos with a high DPI and good proportionate lighting.
+					\item \textbf{Precondition:} Two photos with a high DPI and reasonable, proportionate lighting.
+					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
+				\end{enumerate}
+				\item Verify Personal Information
+				\begin{enumerate}
+					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against provided personal information of the individual in question.
+					\item \textbf{Precondition:} Personal information of the person in question should be provided.
 					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
 				\end{enumerate}
 				\item Verify Faces
 				\begin{enumerate}
 					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against a photo of the individual in question.
-					\item \textbf{Precondition:} Two photos with a high DPI and good proportionate lighting.
-					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
-				\end{enumerate}
-				\item Verify Personal Information
-				\begin{enumerate}
-					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against provided personal information of the individual in question
-					\item \textbf{Precondition:} Personal information of the person in question should be provided
+					\item \textbf{Precondition:} Two photos with a high DPI and reasonable, proportionate lighting.
 					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
 				\end{enumerate}
 			\end{enumerate}
-			\item \underline{Processing Subsystem}
+			\item \underline{Extraction Subsystem}
 			\begin{enumerate}
-				\item Compare faces
+				\item Extract All
 				\begin{enumerate}
-					\item \textbf{Description:} The system should be able to receive two images containing faces of the person in question and compare them to return a percentage match.
-					\item \textbf{Precondition:} The faces should be extracted from the images
-					\item \textbf{Postcondition:} The system compares the faces and returns a percentage match.
+					\item \textbf{Description:} The system should be able to extract the relevant personal information, as well as the face of the person in the given ID.
+					\item \textbf{Precondition:} An ID with a high DPI and reasonable, proportionate lighting should be provided.
+					\item \textbf{Postcondition:} The system returns the extracted text and the extracted face.
 				\end{enumerate}
-				\item Compare personal information
-				\begin{enumerate}
-					\item \textbf{Description:} The system should be able to receive text extracted from the ID and compare it with provided personal information of the person in question.
-					\item \textbf{Precondition:} The information should be extracted from the photo of the ID.
-					\item \textbf{Postcondition:} The system compares the text and returns a percentage match.
-				\end{enumerate}
-				\item Extract personal information
+				\item Extract Personal Information
 				\begin{enumerate}
 					\item \textbf{Description:} The system should be able to extract the relevant personal information from a photo of the ID document.
-					\item \textbf{Precondition:} An ID with a high DPI and good proportionate lighting should be provided.
+					\item \textbf{Precondition:} An ID with a high DPI and reasonable, proportionate lighting should be provided.
 					\item \textbf{Postcondition:} The system returns the extracted text.
 				\end{enumerate}
-				\item Extract profile
+				\item Extract Face
 				\begin{enumerate}
-					\item \textbf{Description:} The system should be able to detect and extract the face of the person in question from the photo of the ID document.
-					\item \textbf{Precondition:} AAn ID with a high DPI and good proportionate lighting. should be provided.
+					\item \textbf{Description:} The system should be able to detect and extract the face of the person in the given ID.
+					\item \textbf{Precondition:} An ID with a high DPI and reasonable proportionate lighting should be provided.
 					\item \textbf{Postcondition:} The system returns the extracted face.
 				\end{enumerate}
 			\end{enumerate}
@@ -211,18 +201,17 @@
 \centering
 \caption{Traceability Matrix}
 \label{my-label}
-\begin{tabular}{cc|c|c|c|c|c|l|l|l|l|l|l|l|l|l|l|l|}
-\cline{3-18}
-                                        &                   & \multicolumn{16}{c|}{\textbf{Functional Requirements}}                 \\ \hline
-\multicolumn{1}{|c|}{\textbf{Use Case}} & \textbf{Priority} & 1 & 2 & 3 & 4 & 5  & 6  & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\ \hline
-\multicolumn{1}{|c|}{1.1}               & 7                 & X &   &   &   &    &    &   &   &   &    &    &    &    &    &    &    \\ \hline
-\multicolumn{1}{|c|}{1.2}               & 5                 & X &   &   &   &    &    &   &   &   &    &    &    &    &    & X  &    \\ \hline
-\multicolumn{1}{|c|}{1.3}               & 6                 & X &   &   &   &    &    &   &   &   &    &    &    &    &    & X  &    \\ \hline
-\multicolumn{1}{|c|}{2.1}               & 3                 &   &   &   &   & X  & X  &   & X & X & X  &    &    &    &    &    &    \\ \hline
-\multicolumn{1}{|c|}{2.2}               & 4                 &   &   &   &   &    &    & X &   & X &    &    &    &    &    &    &    \\ \hline
-\multicolumn{1}{|c|}{2.3}               & 2                 & X & X &   &   &    &    &   &   &   &    & X  & X  & X  & X  &    &    \\ \hline
-\multicolumn{1}{|c|}{2.4}               & 1                 & X &   & X & X &    &    &   &   &   &    & X  & X  & X  & X  &    & X  \\ \hline
-\multicolumn{2}{|c|}{\textbf{Requirement Priority}}         & 1 & 5 & 4 & 6 & 10 & 11 & 8 & 7 & 3 & 12 & 2  & 14 & 15 & 16 & 9  & 13 \\ \hline
+\begin{tabular}{cc|c|c|c|c|c|l|l|l|l|l|l|l|}
+\cline{3-14}
+                                        &                   & \multicolumn{12}{c|}{\textbf{Functional Requirements}} \\ \hline
+\multicolumn{1}{|c|}{\textbf{Use Case}} & \textbf{Priority} & 1 & 2 & 3 & 4 & 5  & 6 & 7 & 8 & 9  & 10 & 11 & 12 	 \\ \hline
+\multicolumn{1}{|c|}{1.1}               & 6                 & X &   &   &   &    &   &   &   &    &    &    &    	 \\ \hline
+\multicolumn{1}{|c|}{1.2}               & 4                 & X &   &   &   & X  &   & X & X & X  &    &    & X  	 \\ \hline
+\multicolumn{1}{|c|}{1.3}               & 5                 & X &   &   &   &    & X &   & X &    &    &    & X  	 \\ \hline
+\multicolumn{1}{|c|}{2.1}               & 3                 & X &   &   &   &    &   &   &   &    &    &    &    	 \\ \hline
+\multicolumn{1}{|c|}{2.2}               & 1                 & X & X &   &   &    &   &   &   &    & X  & X  &    	 \\ \hline
+\multicolumn{1}{|c|}{2.3}               & 2                 & X &   & X & X &    &   &   &   &    & X  & X  &    	 \\ \hline
+\multicolumn{2}{|c|}{\textbf{Requirement Priority}}         & 1 & 5 & 4 & 6 & 10 & 8 & 7 & 3 & 11 & 2  & 12 & 9  	 \\ \hline
 \end{tabular}
 \end{table}
 		
@@ -263,59 +252,59 @@
 		\section{Technology Choices}
 		This section describes the technologies in use, and the
 		arguments behind why we decided on these technologies.\\
-		It was important to us to try and make use of technologies that are,
+		It was important to us to try and utilise technologies that are,
 		free to use, efficient, relatively small in terms package size and
 		requires as few as possible dependencies. 
 		\subsection{
 		\href{http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html}			{OpenCV-Python Version \textit{3.2.0}}}
 		OpenCV (Open Source Computer Vision Library) is free for commercial use.
-		OpenCV is by far the best documented and supported Computer Vision library
-		since it has been available and been developed on for over 15 years now.
+		OpenCV is a well-documented and supported Computer Vision library
+		since it has been available and been developed on for over 15 years at this point.
 		OpenCV is available in many programming language 
-		including Python which was one of the requirements of the client.
-		OpenCV now also support Multi-core hardware acceleration which will
+		including Python, which was one of the requirements specified by the client.
+		OpenCV now also supports multi-core hardware acceleration, which will
 		increase efficiency drastically. \\
 		
 		\noindent
-		OpenCV will be used for real-time processing of images in the application
+		OpenCV will be used for real-time processing of images throughout the system,
 		which will include image clean-up image extraction and image manipulation.
 	
 		\subsection{\href{http://dlib.net/}{Dlib \textit{19.4.0}}}
-		Dlib is an Open Source Machine learning toolkit and is also
-		the only machine learning library that support facial landmark
-		optimisation and Face likeness detection out of the box.\\ 
+		Dlib is an open source Machine learning toolkit and is also
+		the only open source machine learning library that supports facial landmark
+		optimisation and face likeness calculations out of the box.\\ 
 		
 		\noindent
-		Dlib allows us to make use of a High Quality pre-trained classifiers
-		for facial likeness which made use of over 3 million faces 
-		during training. This allows for a claimed accuracy of 99.38 \% in the
+		Dlib allows us to make use of a high quality, pre-trained classifiers
+		for facial likeness, which made use of over 3 million faces 
+		during training. This allows for an accuracy of 99.38 \%, according to the author of Dlib, in the
 		\href{http://vis-www.cs.umass.edu/lfw/}
 		{\textit{Labeled Faces in the Wild}}
-		bench mark, thus allowing us to meet all our performance requirements
-		in terms of the face likeness detection sub-section\\
+		bench mark, thus allowing us to meet most of our performance requirements
+		in terms of the face likeness calculations. \\
 		
 		\noindent
-		Dlib also allows for face detection as well as face landmark 
-		detection both of which is required to improve the
+		Dlib also allows for face detection, as well as facial landmark 
+		detection, both of which is required to improve the
 		accuracy and reliability of the face likeness algorithm by supporting
 		the alignment and clean-up of detected faces.
 		
 		\subsection{\href{https://pypi.python.org/pypi/pytesseract}
 		{Pytesseract \textit{0.1.7}}}
-		Python-tesseract is an Open Source optical 
+		Python-tesseract is an open source optical 
 		character recognition (OCR) tool for python. This allows 
-		for reading and decoding of embedded text in images.\\
+		for the reading and decoding of embedded text in images.\\
 		
 		\noindent
-		Tesseract allows for easy automated scanning of cards. By making use
+		Tesseract allows for easy, automated scanning of cards. By making use
 		of Tesseract we no longer need to:
 		\begin{enumerate}
-			\item Detect Region of text.
-			\item Process Region of text.
+			\item Detect region of text.
+			\item Process region of text.
 			\item Use a trained classifier to read the extracted text.
 		\end{enumerate}
-		If it is found later to be a requirement Tesseract does support
-		additional training of fonts which will allow for greater
+		If it is found later to be a necessity in future, Tesseract supports
+		additional training of fonts, which will allow for greater
 		reliability and accuracy when extracting text.  
 	
 	\cleardoublepage
