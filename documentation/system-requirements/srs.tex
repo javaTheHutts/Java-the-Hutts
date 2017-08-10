@@ -162,42 +162,36 @@
 					\item \textbf{Precondition:} Two photos with a high DPI and reasonable, proportionate lighting.
 					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
 				\end{enumerate}
-				\item Verify Faces
-				\begin{enumerate}
-					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against a photo of the individual in question.
-					\item \textbf{Precondition:} Two photos with a high DPI and reasonable, proportionate lighting.
-					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
-				\end{enumerate}
 				\item Verify Personal Information
 				\begin{enumerate}
 					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against provided personal information of the individual in question.
 					\item \textbf{Precondition:} Personal information of the person in question should be provided.
 					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
 				\end{enumerate}
+				\item Verify Faces
+				\begin{enumerate}
+					\item \textbf{Description:} The developer must be able to send a picture of an ID and the system should verify the ID against a photo of the individual in question.
+					\item \textbf{Precondition:} Two photos with a high DPI and reasonable, proportionate lighting.
+					\item \textbf{Postcondition:} The system verifies and returns a percentage match.
+				\end{enumerate}
 			\end{enumerate}
-			\item \underline{Processing Subsystem}
+			\item \underline{Extraction Subsystem}
 			\begin{enumerate}
-				\item Compare faces
+				\item Extract All
 				\begin{enumerate}
-					\item \textbf{Description:} The system should be able to receive two images containing faces of the person in question and compare them to return a percentage match.
-					\item \textbf{Precondition:} The faces should be extracted from the images
-					\item \textbf{Postcondition:} The system compares the faces and returns a percentage match.
+					\item \textbf{Description:} The system should be able to extract the relevant personal information, as well as the face of the person in the given ID.
+					\item \textbf{Precondition:} An ID with a high DPI and reasonable, proportionate lighting should be provided.
+					\item \textbf{Postcondition:} The system returns the extracted text and the extracted face.
 				\end{enumerate}
-				\item Compare personal information
-				\begin{enumerate}
-					\item \textbf{Description:} The system should be able to receive text extracted from the ID and compare it with provided personal information of the person in question.
-					\item \textbf{Precondition:} The information should be extracted from the photo of the ID.
-					\item \textbf{Postcondition:} The system compares the text and returns a percentage match.
-				\end{enumerate}
-				\item Extract personal information
+				\item Extract Personal Information
 				\begin{enumerate}
 					\item \textbf{Description:} The system should be able to extract the relevant personal information from a photo of the ID document.
 					\item \textbf{Precondition:} An ID with a high DPI and reasonable, proportionate lighting should be provided.
 					\item \textbf{Postcondition:} The system returns the extracted text.
 				\end{enumerate}
-				\item Extract profile
+				\item Extract Face
 				\begin{enumerate}
-					\item \textbf{Description:} The system should be able to detect and extract the face of the person in question from the photo of the ID document.
+					\item \textbf{Description:} The system should be able to detect and extract the face of the person in the given ID.
 					\item \textbf{Precondition:} An ID with a high DPI and reasonable proportionate lighting should be provided.
 					\item \textbf{Postcondition:} The system returns the extracted face.
 				\end{enumerate}
