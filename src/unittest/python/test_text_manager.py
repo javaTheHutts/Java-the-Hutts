@@ -349,7 +349,7 @@ def test_dictify_default_id_num_not_found():
 
 def test_dictify_id_in_barcode():
     """
-    Test the case in which an ID number was extracted from a barcode and passed t dictify and whether it is used to
+    Test the case in which an ID number was extracted from a barcode and passed to dictify and whether it is used to
     extract other information such as date of birth, status and sex.
     """
     txt_man = TextManager()
