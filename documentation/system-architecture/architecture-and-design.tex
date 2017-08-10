@@ -75,12 +75,52 @@ The following Deployment diagram depicts the architecture of the system as deplo
 	\includegraphics[scale=0.5]{img/StateModelHighLevel.png}
 	\caption{High Level State Diagram}
 \end{figure}
+
+\subsection{Activty Diagrams}
+\subsubsection{Verification}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.4]{img/verify_id_activity.png}
+		\caption{Verify ID Activity Diagram}
+	\end{figure}
+\pagebreak
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.455]{img/verify_personal_info_activity.png}
+		\caption{Verify Personal Information Activity Diagram}
+	\end{figure}
+\pagebreak
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[scale=0.455]{img/verify_faces_activity.png}
+		\caption{Verify Faces Activity Diagram}
+	\end{figure}
+\pagebreak
+\subsubsection{Extraction}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[scale=0.65]{img/extract_all_activity.png}
+		\caption{Extract All Activity Diagram}
+	\end{figure}
+\pagebreak
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.5]{img/extract_personal_info_activity.png}
+		\caption{Extract Personal Information Activity Diagram}
+	\end{figure}
+\pagebreak
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.5]{img/extract_face_activity.png}
+		\caption{Extract Face Activity Diagram}
+	\end{figure}
+\pagebreak
 	 
 \section{Services}
 This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
 
 \subsection{Image Preprocessing}
-The Image Preprocessing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used to prepare the image for OCR. 
+The Image Preprocessing service is a crucial module of the system that requires a heavy emphasis. This service creates the image preprocessing pipeline for the application of all the necessary preprocessing techniques on incoming images to yield better results further down the system pipeline, specifically for further processing. This service is mostly used to prepare the image for OCR and facial recognition. 
 \subsubsection{Class Diagram}
 The class diagram of the Image Preprocessing module makes use of a well-known design pattern: 
 \begin{itemize}
@@ -92,10 +132,38 @@ The class diagram of the Image Preprocessing module makes use of a well-known de
 	    \caption{Image Preprocessing Class Diagram}
 	 \end{figure}
 	 \pagebreak
+\subsubsection{Activity Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/process_activity.png}
+	    \caption{Image Processing Activity Diagram}
+	 \end{figure}
+	 \pagebreak
+
+\subsection{Image Processing}
+The Image Processing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used to process the information contained within an incoming image into a workable format. 
+\subsubsection{Activity Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/process_activity.png}
+	    \caption{Image Processing Activity Diagram}
+	 \end{figure}
+	 \pagebreak
 \subsubsection{Sequence Diagram}
 \begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/image_processing_sequence.png}
 	    \caption{Image Preprocessing Sequence Diagram}
 	 \end{figure}
+	 \pagebreak
+	 
+\subsection{Verification}
+The Verification service is the part of the system that is responsible for all the logic releated to verifying a form of ID against given information. It performs the required checks and calculations to determine a likeness percentage that forms the ultimate verfier.
+\subsubsection{Activity Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/verify_activity.png}
+	    \caption{Verification Activity Diagram}
+	 \end{figure}
+	 \pagebreak
 \end{document}
