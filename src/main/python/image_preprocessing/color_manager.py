@@ -7,11 +7,35 @@ class ColorManager:
     The Color manager is responsible for applying several color management techniques
     to image passed.
     """
-    def __init__(self):
+    def __init__(self, type, channel="green", kernel_size=(13, 7)):
         """
         Initialise the Colour Manager
         """
+        self.type = type
+        self.channel = channel
+        self.kernel_size = kernel_size
+
         print("Initialise Color Manager")
+
+    def apply(self, image):
+        """
+        This performs the specified processing technique
+        Author(s):
+            Nicolai van Niekerk
+        Args:
+            image: The image to which the technique must be applied
+        Returns:
+            obj:'OpenCV image': The modified image
+        Todo:
+        """
+        if self.type == "histogram":
+            return self.histEqualisation(image)
+        elif self.type == "extract":
+            return self.extractChannel(image, self.channel)
+        elif self.type == "blackHat":
+            return self.blackHat(image, self.kernel_size)
+        elif self.type == "topHat":
+            return self.topHat(image, self.kernel_size)
 
     def histEqualisation(self, image):
         """
@@ -33,10 +57,10 @@ class ColorManager:
         Args:
             image (:obj:'OpenCV image'): Image to which image channel should be removed
             str: Color that should be removed valid color red, green, blue
+        Raises:
+            NameError: If invalid colour is selected i.e. not red, green, blue
         Returns:
             obj:'OpenCV image': A copy of the image passed but with a color channel removed
-        Todo:
-            Add additional checks for invalid color name
         """
         (B, G, R) = cv2.split(image)
         zeros = np.zeros(image.shape[:2], dtype="uint8")
@@ -45,8 +69,10 @@ class ColorManager:
             return cv2.merge([B, zeros, R])
         elif image_channel == "blue":
             return cv2.merge([zeros, G, R])
-        else:
+        elif image_channel == "red":
             return cv2.merge([B, G, zeros])
+        else:
+            raise NameError('Invalid Colour Selection! Only red, green, blue are valid colour selections')
 
     def blackHat(self, image, rect_kernel_size=(13, 7)):
         """

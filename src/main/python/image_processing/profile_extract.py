@@ -22,7 +22,7 @@ SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True,
-                help="path to input image for profile extraction")
+                help="path to input image for profile image_processing")
 args = vars(ap.parse_args())
 
 

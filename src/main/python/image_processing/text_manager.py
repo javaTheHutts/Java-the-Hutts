@@ -64,7 +64,7 @@ class TextManager:
         """
         # Specify initial list of undesirable characters.
         self._deplorables = ['_']
-        # Specify initial list of contexts for string extraction when populating
+        # Specify initial list of contexts for string image_processing when populating
         # the ID information dictionary to send as output.
         self.match_contexts = [{
             'field': 'identity_number',
@@ -146,11 +146,11 @@ class TextManager:
         # Check if the correct argument types have been passed in.
         if type(in_string) is not str:
             raise TypeError('Bad type for arg in_string - expected string. Received type ' + str(type(in_string)))
-        if type(deplorables) is not list or (deplorables and type(deplorables[0]) is not str):
+        if deplorables and (type(deplorables) is not list or type(deplorables[0]) is not str):
             raise TypeError('Bad type for arg deplorables - expected list of strings. Received type '
                             + str(type(deplorables)))
         if type(append_to_deplorables) is not bool:
-            raise TypeError('Bad type for arg append_to_deplorables - expected list of strings. Received type '
+            raise TypeError('Bad type for arg append_to_deplorables - expected bool. Received type '
                             + str(type(append_to_deplorables)))
         # Remove undesirable characters, spaces and newlines.
         compiled_deplorable_re = self._compile_deplorables(deplorables, append_to_deplorables)
@@ -324,9 +324,9 @@ class TextManager:
     def _get_match(self, id_string_list, match_context):
         """
         This function is responsible for searching through a list of lines from an ID string, and extracting the
-        relevant ID information based on some context for extraction that is provided as input. Fuzzy string matching
-        is performed on field names in order to extract field values. This process is assisted with a context that is
-        is to be provided.
+        relevant ID information based on some context for image_processing that is provided as input. Fuzzy string
+        matching is performed on field names in order to extract field values. This process is assisted with a context
+        that is is to be provided.
 
         Authors:
             Jan-Justin van Tonder
@@ -342,6 +342,7 @@ class TextManager:
         best_match_ratio = self.fuzzy_min_ratio
         match = None
         skip_to_index = -1
+        id_num_lines = len(id_string_list)
         # Iterate over the id_string list to find fuzzy matches.
         for current_index, current_line in enumerate(id_string_list):
             move_to_next_field = False
@@ -363,13 +364,21 @@ class TextManager:
                     if match_context['field'] == 'identity_number' and current_line[-3:].isnumeric():
                         match = current_line
                     # The field value is on a seperate line or lines.
-                    else:
+                    elif current_index + 1 < id_num_lines:
                         # Retrieve the field value on the very next line.
                         match = id_string_list[current_index + 1]
                         # If the field value exists over multiple lines.
                         if match_context['multi_line']:
+                            # Determine the lower bound index for field values that span multiple lines.
+                            lower_index = current_index + 2
+                            if lower_index >= id_num_lines:
+                                continue
+                            # Determine the upper bound index for field values that span multiple lines.
+                            upper_index = current_index + self._max_multi_line + 1
+                            if upper_index > id_num_lines:
+                                upper_index = id_num_lines
                             # Iterate ahead to retrieve the field value that spans over multiple lines.
-                            for forward_index in range(current_index + 2, current_index + self._max_multi_line + 1):
+                            for forward_index in range(lower_index, upper_index):
                                 # For ech of the specified endpoints, check if the end of the field value has
                                 # been reached.
                                 for end_point in match_context['multi_line_end']:
@@ -383,6 +392,9 @@ class TextManager:
                                     break
                                 # Otherwise, add the line to the field value.
                                 match += ' ' + id_string_list[forward_index].strip()
+                    # Check if a match was found during the current iteration before processing further.
+                    if not match:
+                        continue
                     # Check if the field value is text and does not require to be converted to uppercase.
                     if match_context['text'] and not match_context['to_uppercase']:
                         # Convert to lowercase and capitilise the character of each new word.

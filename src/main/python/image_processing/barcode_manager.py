@@ -94,8 +94,6 @@ class BarCodeManager:
         if detection:
             gray = cv2.cvtColor(detected_image, cv2.COLOR_BGR2GRAY)
             scanner = zbar.Scanner()
-            print(gray)
-            print(gray.shape)
             results = scanner.scan(gray)
             if not results:
                 return False, "", image

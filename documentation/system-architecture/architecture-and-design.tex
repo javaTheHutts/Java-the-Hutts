@@ -5,6 +5,7 @@
 \usepackage{eso-pic}
 \usepackage{hyperref}
 \usepackage{wrapfig}
+\usepackage{float}
 \usepackage{lipsum}
 \usepackage{array}
 \usepackage{enumitem}
@@ -49,13 +50,13 @@ This document identifies the architectural design specifications that satisfy th
 The following modules' designs are included in this document:
 \begin{itemize}
 	\item Image Processing
-	\item Extraction
+	\item Image Preprocessing
 	\item Verification
 \end{itemize}
 The document begins with an explanation on the chosen architectural pattern and how it will be used to modularize the API. It then outlines the architectural design of each module along with all relevant UML diagrams. Finally the chosen technologies are discussed as well as the deployment of the system. 
 
 \subsection{Architectural Pattern}
-The Hutts-Validation system will be designed as a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling. The API will consist of three independent services: Image Processing, Extraction and Verification. 
+The Hutts-Validation system will be designed as a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling. The API will consist of three independent services: Image Processing, Image Preprocessing and Verification. 
 
 \section{Deployment Diagram}
 The following Deployment diagram depicts the architecture of the system as deployment of artifacts to deployment targets.. This can be seen as an overall view on the system in a deployment scenario.
@@ -78,32 +79,23 @@ The following Deployment diagram depicts the architecture of the system as deplo
 \section{Services}
 This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
 
-\subsection{Image Processing}
-The Image Processing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used by the Extraction module to prepare the image for OCR. 
+\subsection{Image Preprocessing}
+The Image Preprocessing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used to prepare the image for OCR. 
 \subsubsection{Class Diagram}
-The class diagram of the Image Processing module makes use of a combination of two well-known design patterns: 
+The class diagram of the Image Preprocessing module makes use of a well-known design pattern: 
 \begin{itemize}
-	\item \textbf{Decorator:} Different preprocessing techniques are added to the PreProcessor object at runtime.
-	\item \textbf{Strategy:} Each preprocessing technique's \textit{preProcess()} algorithm can be changed at runtime.
-	\begin{figure}[!h]
-	    \centering
-	    \includegraphics[scale=0.3]{img/imageProcessingClassDiagram.png}
-	    \caption{Image Pre-Processing Class Diagram}
-	 \end{figure}
-	   \pagebreak
-	 \begin{figure}[!h]
-		\centering
-	    \includegraphics[scale=0.3]{img/processingClassDiagram.png}
-	    \caption{Image Processing Class Diagram}
-	 \end{figure}
+	\item \textbf{Builder:} Allows us to separate the representation of the pipeline from its construction. As a result, we can use the same construction process to create different pipelines, depending on the situation and type of ID document.
 \end{itemize}
-\pagebreak
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/imageProcessingClassDiagram.png}
+	    \caption{Image Preprocessing Class Diagram}
+	 \end{figure}
+	 \pagebreak
 \subsubsection{Sequence Diagram}
-\begin{figure}[h]
+\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/image_processing_sequence.png}
-	    \caption{Image Pre-Processing Sequence Diagram}
+	    \caption{Image Preprocessing Sequence Diagram}
 	 \end{figure}
-
-
 \end{document}

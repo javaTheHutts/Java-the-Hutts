@@ -5,11 +5,32 @@ class BlurManager:
     """
     The blur is responsible for applying different blur techniques to the images passed
     """
-    def __init__(self):
+    def __init__(self, type, kernel_size):
         """
         Initialise the Blur Manager
         """
+        self.type = type
+        self.kernel_size = kernel_size
+
         print("Initialise BlurManager")
+
+    def apply(self, image):
+        """
+        This performs the blurring
+        Author(s):
+            Nicolai van Niekerk
+        Args:
+            image: The image to be blurred
+        Returns:
+            obj:'OpenCV image': The blurred image
+        Todo:
+        """
+        if self.type == "normal":
+            return self.blur(image, self.kernel_size)
+        elif self.type == "gaussian":
+            return self.gaussianBlur(image, self.kernel_size)
+        elif self.type == "median":
+            return self.medianBlur(image, self.kernel_size)
 
     def blur(self, image, blur_kernel=[(3, 3)]):
         """
