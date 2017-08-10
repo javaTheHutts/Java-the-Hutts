@@ -64,7 +64,7 @@ class TextManager:
         """
         # Specify initial list of undesirable characters.
         self._deplorables = ['_']
-        # Specify initial list of contexts for string extraction when populating
+        # Specify initial list of contexts for string image_processing when populating
         # the ID information dictionary to send as output.
         self.match_contexts = [{
             'field': 'identity_number',
@@ -324,9 +324,9 @@ class TextManager:
     def _get_match(self, id_string_list, match_context):
         """
         This function is responsible for searching through a list of lines from an ID string, and extracting the
-        relevant ID information based on some context for extraction that is provided as input. Fuzzy string matching
-        is performed on field names in order to extract field values. This process is assisted with a context that is
-        is to be provided.
+        relevant ID information based on some context for image_processing that is provided as input. Fuzzy string
+        matching is performed on field names in order to extract field values. This process is assisted with a context
+        that is is to be provided.
 
         Authors:
             Jan-Justin van Tonder

@@ -37,7 +37,7 @@ class Pipeline:
         image = self.blur_manager.apply(image)
         cv2.imwrite(DESKTOP + "/output/5.png", image)
 
-        # Apply channel extraction, tophat, blackhat or histogram equalization
+        # Apply channel image_processing, tophat, blackhat or histogram equalization
         image = self.color_manager.apply(image)
         cv2.imwrite(DESKTOP + "/output/6.png", image)
 

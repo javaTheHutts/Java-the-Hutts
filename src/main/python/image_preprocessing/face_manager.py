@@ -24,7 +24,7 @@ class FaceDetector:
     def detect(self, image):
         """
         This function detects the face in the image passed.
-        By making use of the dlib HOG feature extraction and linear classifier for frontal face detection
+        By making use of the dlib HOG feature image_preprocessing and linear classifier for frontal face detection
         we are able to detect the face with less false-positive results and without a major time penalty.
         More Information dlib frontal_face detection: http://dlib.net/imaging.html#get_frontal_face_detector
         Author(s):
