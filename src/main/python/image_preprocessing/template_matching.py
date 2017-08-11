@@ -35,37 +35,24 @@ class TemplateMatching:
 
         # load the source and template image
         source = cv2.imread(src)
-        val = []
-        for (h, temp, t, n) in template:
-            templ = cv2.imread(temp)
-            r = h / source.shape[1]
-            dim = (h, int(source.shape[0] * r))
-            resized = cv2.resize(source, dim, interpolation=cv2.INTER_AREA)
-
-            (tempH, tempW) = templ.shape[:2]
+        template_objects = []
+        for (original_template_image_width, template_path, threshold, object_identifier) in template:
+            template_image = cv2.imread(template_path)
+            ratio = original_template_image_width / source.shape[1]
+            dimension = (original_template_image_width, int(source.shape[0] * ratio))
+            resized = cv2.resize(source, dimension, interpolation=cv2.INTER_AREA)
 
             # find the template in the source image
-            result = cv2.matchTemplate(resized, templ, cv2.TM_CCOEFF_NORMED)
+            result = cv2.matchTemplate(resized, template_image, cv2.TM_CCOEFF_NORMED)
 
-            (minVal, maxVal, minLoc, (x, y)) = cv2.minMaxLoc(result)
+            (_, maximum_value, minLoc, (x, y)) = cv2.minMaxLoc(result)
 
-            val = val + [(maxVal, t, n)]
+            template_objects = template_objects + [(maximum_value, threshold, object_identifier)]
 
-        for (m, s, n) in val:
-            if (m > s):
-                print(n)
-                return {'type': n}
+        for (max, threshold_value, object_type) in template_objects:
+            if (max > threshold_value):
+                print(object_type)
+                return {'type': object_type}
 
         return {'type': None}
 
-
-tm = TemplateMatching()
-obj = tm.identify(args["image"], [(1034, "templates/temp_flag.jpg", 0.75, "idcard"), (875, "templates/wap.jpg", 0.60, "idbook"),(1280, "templates/pp2.jpg", 0.65, "studentcard")])
-
-image = cv2.imread(args["image"])
-(cx, cy) = image.shape[:2]
-cv2.putText(image, "{}".format(obj['type']), (int(cy / 2), 60), cv2.FONT_HERSHEY_SIMPLEX,
-            2.0, (0, 255, 0), 3)
-cv2.imshow(obj['type'], image)
-
-cv2.waitKey(0)
