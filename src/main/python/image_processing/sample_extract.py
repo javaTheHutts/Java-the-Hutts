@@ -1,7 +1,7 @@
-from image_processing.build_director import BuildDirector
-from extraction.text_manager import TextManager
-from extraction.simplification_manager import SimplificationManager
-from extraction.barcode_manager import BarCodeManager
+from image_preprocessing.build_director import BuildDirector
+from image_processing.text_manager import TextManager
+from image_processing.simplification_manager import SimplificationManager
+from image_processing.barcode_manager import BarCodeManager
 import pytesseract
 from PIL import Image
 import cv2

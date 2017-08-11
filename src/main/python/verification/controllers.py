@@ -8,10 +8,10 @@ Handles all requests relevant to the validation service of the API
 
 from flask import Blueprint, jsonify, request
 
-validate = Blueprint('validate', __name__)
+verify = Blueprint('verify', __name__)
 
 
-@validate.route('/verifyID', methods=['POST'])
+@verify.route('/verifyID', methods=['POST'])
 def verify_id():
     """
         ----------------------------------------------------------------------
@@ -43,7 +43,7 @@ def verify_id():
     return jsonify(result)
 
 
-@validate.route('/verifyFaces', methods=['POST'])
+@verify.route('/verifyFaces', methods=['POST'])
 def verify_faces():
     """
         ----------------------------------------------------------------------
@@ -66,7 +66,7 @@ def verify_faces():
     return jsonify(result)
 
 
-@validate.route('/verifyInfo', methods=['POST'])
+@verify.route('/verifyInfo', methods=['POST'])
 def verify_info():
     """
         ----------------------------------------------------------------------

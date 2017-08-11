@@ -1,6 +1,6 @@
 from flask import Flask
-from validation.controllers import validate
-from extraction.controllers import extract
+from verification.controllers import verify
+from image_processing.controllers import extract
 
 """
 ----------------------------------------------------------------------
@@ -13,5 +13,5 @@ blueprints
 
 app = Flask(__name__)
 
-app.register_blueprint(validate)
+app.register_blueprint(verify)
 app.register_blueprint(extract)
