@@ -1,15 +1,20 @@
 import cv2
+import argparse
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+                help="path to input image for profile extraction")
+args = vars(ap.parse_args())
 
 
 class TemplateMatching:
-
     """
     The TemplateMatching class receives template images to identify the type of identification
     that is used in the image.
     Thus you provide it with templates and it will identify whether you used an id card, id book etc.
     """
 
-    def identify(src, template):
+    def identify(self, src, template):
         """
         This function identifies the src image by searching for the templates provided.
         Author(s):
@@ -52,3 +57,15 @@ class TemplateMatching:
                 return {'type': n}
 
         return {'type': None}
+
+
+tm = TemplateMatching()
+obj = tm.identify(args["image"], [(1034, "templates/temp_flag.jpg", 0.75, "idcard"), (875, "templates/wap.jpg", 0.60, "idbook"),(1280, "templates/pp2.jpg", 0.65, "studentcard")])
+
+image = cv2.imread(args["image"])
+(cx, cy) = image.shape[:2]
+cv2.putText(image, "{}".format(obj['type']), (int(cy / 2), 60), cv2.FONT_HERSHEY_SIMPLEX,
+            2.0, (0, 255, 0), 3)
+cv2.imshow(obj['type'], image)
+
+cv2.waitKey(0)
