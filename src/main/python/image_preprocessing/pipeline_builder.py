@@ -1,4 +1,4 @@
-from image_processing.pipeline import Pipeline
+from image_preprocessing.pipeline import Pipeline
 
 
 class PipelineBuilder:

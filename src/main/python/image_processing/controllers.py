@@ -9,7 +9,7 @@ from imutils.convenience import url_to_image
 from flask import Blueprint, jsonify, request
 import cv2
 import numpy as np
-from extraction.sample_extract import TextExtractor
+from image_processing.sample_extract import TextExtractor
 
 extract = Blueprint('extract', __name__)
 
