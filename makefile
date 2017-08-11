@@ -18,3 +18,11 @@ build:
 
 run:
 	python src/main/scripts/run.py install
+
+setup:
+	python setup.py install
+
+buildrun:
+	pyb analyze publish install	
+	cd target/dist/Java-the-Hutts-1.0.dev0/ && python setup.py install
+	make run
