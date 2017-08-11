@@ -15,3 +15,6 @@ itest:
 
 build:
 	pyb
+
+run:
+	python src/main/scripts/run.py install
