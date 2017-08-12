@@ -13,12 +13,16 @@ class FaceDetector:
     """
     def __init__(self, shape_predictor_path):
         """
-        Initialise Face Detector Manager
+        Initialise Face Detector Manager.
+        Authors(s):
+            Nicolai van Niekerk, Stephan Nell
         Args:
             shape_predictor_path (str): Describes the path the Shape Predictor
             trained data.
+        Returns:
+            None
+
         """
-        print("Initialise FaceDetector")
         self.shape_predictor_path = shape_predictor_path
 
     def detect(self, image):
@@ -31,12 +35,13 @@ class FaceDetector:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image containing the face we need to detect.
-        Returns:
-            Integer List: This list contains the box coordinates for the region in which the face resides.
         Raises:
             ValueError: If no face can be detected.
+        Returns:
+            Integer List: This list contains the box coordinates for the region in which the face resides.
         Todo:
             Return error if no face detected
+
         """
         detector = dlib.get_frontal_face_detector()
         rectangles = detector(image, 1)
@@ -50,14 +55,15 @@ class FaceDetector:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image containing the face we need to detect and extract.
+        Raises:
+            ValueError: If no face can be detected.
         Returns:
             obj:'OpenCV image': Any background and unnecessary components are removed and only
             the aligned face is returned.
             obj:'OpenCV image': A copy of the original image is returned.
-        Raises:
-            ValueError: If no face can be detected.
         Todo:
             Return error if no face detected
+
         """
         rectangle = self.detect(image)
         predictor = dlib.shape_predictor(self.shape_predictor_path)
@@ -76,20 +82,21 @@ class FaceDetector:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image containing the face we need to detect and blur.
-        Returns:
-            obj:'OpenCV image': A copy of the original image is returned but with the applied
-            blurring to the face region
         Raises:
             ValueError: If no face can be detected.
+        Returns:
+            obj:'OpenCV image': A copy of the original image is returned but with the applied
+            blurring to the face region.
         Todo:
-            Return error if no face detected
-            Remove hard coded y and h adjustment values
+            Return error if no face detected.
+            Remove hard coded y and h adjustment values.
+
         """
         # We make a deep copy of an image to avoid problems with shallow copies.
         image_copy = image.copy()
         rectangle = self.detect(image)
         (x, y, w, h) = rect_to_bb(rectangle)
-        # To Extend the entire region of face since face detector does not include upper head
+        # To Extend the entire region of face since face detector does not include upper head.
         y = y-75
         h = h+75
         sub_face = image[y:y + h, x:x + w]

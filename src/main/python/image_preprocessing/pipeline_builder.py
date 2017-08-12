@@ -20,7 +20,6 @@ class PipelineBuilder:
             value (:BlurManager): BlurManager object to be added
         Returns:
             None
-        Todo:
 
         """
         self.pipeline.blur_manager = value
@@ -34,7 +33,6 @@ class PipelineBuilder:
             value (:ColorManager): ColorManager object to be added
         Returns:
             None
-        Todo:
 
         """
         self.pipeline.color_manager = value
@@ -48,7 +46,6 @@ class PipelineBuilder:
             value (:ThresholdManager): ThresholdManager object to be added
         Returns:
             None
-        Todo:
 
         """
         self.pipeline.threshold_manager = value
@@ -62,7 +59,6 @@ class PipelineBuilder:
             value (:FaceDetector): FaceDetector object to be added
         Returns:
             None
-        Todo:
 
         """
         self.pipeline.face_detector = value
@@ -76,7 +72,6 @@ class PipelineBuilder:
             None
         Returns:
             :Pipeline (Assembled pipeline)
-        Todo:
 
         """
         return self.pipeline

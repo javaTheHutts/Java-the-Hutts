@@ -22,12 +22,8 @@ class BuildDirector:
         This function constructs the pipeline
         Author(s):
             Nicolai van Niekerk
-        Args:
-            None
         Returns:
             :Pipeline (Constructed pipeline)
-        Todo:
-
         """
         builder = PipelineBuilder()
 

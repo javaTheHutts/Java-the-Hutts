@@ -2,7 +2,7 @@
 ----------------------------------------------------------------------
 Author(s): Nicolai van Niekerk, Stephan Nell
 ----------------------------------------------------------------------
-Handles all requests relevant to the extraction service of the API
+Handles all requests relevant to the extraction service of the API.
 ----------------------------------------------------------------------
 """
 from imutils.convenience import url_to_image
@@ -20,31 +20,31 @@ def extract_text():
     ----------------------------------------------------------------------
     Author(s): Nicolai van Niekerk, Stephan Nell
     ----------------------------------------------------------------------
-    Sample function to extract text from image received
+    Sample function to extract text from image received.
     ----------------------------------------------------------------------
     URL: http://localhost:5000/extractText
     ----------------------------------------------------------------------
     """
-    # initialize the data dictionary to be returned by the request
+    # Initialize the data dictionary to be returned by the request.
     data = {"success": False}
 
-    # check to see if this is a post request
+    # Check to see if this is a post request.
     if request.method == "POST":
-        # check to see if an image was uploaded
+        # Check to see if an image was uploaded.
         if request.files.get("idPhoto", None) is not None:
-            # grab the uploaded image
+            # Grab the uploaded image.
             image = _grab_image(stream=request.files["idPhoto"])
-        # otherwise, assume that a URL was passed in
+        # Otherwise, assume that a URL was passed in.
         else:
-            # grab the URL from the request
+            # Grab the URL from the request.
             url = request.args.get("url", None)
-            # if the URL is None, then return an error
+            # If the URL is None, then return an error.
             if url is None:
                 data["error"] = "No URL provided."
                 return jsonify(data)
-                # load the image and convert
+                # Load the image and convert.
             image = _grab_image(url=url)
-        # Call open CV commands here with the extracted image
+        # Call OpenCV commands here with the extracted image.
         extractor = TextExtractor()
         result = extractor.extract(image)
     return jsonify(result)
