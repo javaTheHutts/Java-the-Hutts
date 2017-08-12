@@ -6,15 +6,10 @@ import zbar.misc
 class BarCodeManager:
     """
     The BarCode Manager is responsible for:
-    1. Detecting the barcode
+    1. Detecting the barcode.
     2. Extracting any information on the detected barcode.
     3. Applying blurring to the detected barcode to reduce noise.
     """
-    def __init__(self):
-        """
-        Initialise the BarCode Detector.
-        """
-        print("Initialise BarCodeDetector")
 
     def detect(self, image):
         """
@@ -30,12 +25,12 @@ class BarCodeManager:
         Author(s):
             Stephan Nell
         Args:
-            image (:obj:'OpenCV image'): Image containing the potential barcode
+            image (:obj:'OpenCV image'): Image containing the potential barcode.
         Returns:
             Boolean: A value of True is returned if a Barcode was detected
-                if however a barcode was not detected a value of false is returned.
-            obj:'OpenCV image': If a Barcode was successfully detected the detected barcode is returned
-                if a barcode was not detected return the original image.
+                If however a barcode was not detected a value of false is returned.
+            obj:'OpenCV image': If a Barcode was successfully detected the detected barcode is returned.
+                If a barcode was not detected return the original image.
             Integer List: This list contains the box coordinates for the region in which the barcode resides.
         Todo:
             Find a way to support PDF417 format.
@@ -66,7 +61,7 @@ class BarCodeManager:
         box = cv2.boxPoints(rectangle)
         box = np.int0(box)
         (x, y, w, h) = cv2.boundingRect(box)
-        # The Diffrence between the upper and lower Y-value is calculated to ensure a Barcode is detected.
+        # The Difference between the upper and lower Y-value is calculated to ensure a Barcode is detected.
         # This reduces the chance of a false positive detection.
         diff = y - (y+h)
         if abs(diff) < 200:
@@ -80,12 +75,12 @@ class BarCodeManager:
         Author(s):
             Stephan Nell
         Args:
-            image (:obj:'OpenCV image'): Image containing a Barcode
+            image (:obj:'OpenCV image'): Image containing a Barcode.
         Returns:
             Boolean: A value of True if the function was able to extract information from the barcode.
-                If no information was extracted from the barcode a value of False is returned
-            String: A UTF-8 String containing the information extracted from the Barcode
-                If no information was extracted from the barcode a empty string is returned
+                If no information was extracted from the barcode a value of False is returned.
+            String: A UTF-8 String containing the information extracted from the Barcode.
+                If no information was extracted from the barcode a empty string is returned.
             obj:'OpenCV image': A copy of the original image.
         Todo:
             Find a way to support PDF417 format.
@@ -103,22 +98,25 @@ class BarCodeManager:
         else:
             return False, "", image
 
-    def apply_barcode_blur(self, image, box):
+    def apply_barcode_blur(self, image, box, dilation_intensity=2):
         """
         This function applies blurring to a detected barcode region to reduce noise in the image.
         The barcode region is first extracted, then blurring is applied, after blurring is applied
-        the blurred out barcode is reapplied to the original image
+        the blurred out barcode is reapplied to the original image.
         Author(s):
             Stephan Nell
         Args:
-            image (:obj:'OpenCV image'): Image containing a Barcode
-            box: The box is an integer list containing the box region coordinates of the barcode location
+            image (:obj:'OpenCV image'): Image containing a Barcode.
+            box: The box is an integer list containing the box region coordinates of the barcode location.
+            dilation_intensity (int): Indicates the intensity by which the barcode should be dilated.
+                The greater the intensity the greater the extent of dilation. Greater intensity
+                leads to reduce of speed with every iterations.
         Returns:
              obj:'OpenCV image': The Original image with blurring applied to the barcode region in the image.
         """
         (x, y, w, h) = cv2.boundingRect(box)
         sub_bar_code = image[y:y + h, x:x + w]
-        sub_bar_code = cv2.dilate(sub_bar_code, None, iterations=3)
+        sub_bar_code = cv2.dilate(sub_bar_code, None, iterations=dilation_intensity)
         sub_bar_code = cv2.GaussianBlur(sub_bar_code, (31, 31), 0)
         image[y:y + sub_bar_code.shape[0], x:x + sub_bar_code.shape[1]] = sub_bar_code
         return image

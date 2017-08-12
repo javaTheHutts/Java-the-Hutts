@@ -29,7 +29,7 @@ class TextExtractor:
         barcode_manager = BarCodeManager()
         data = {}
 
-        # Perform perspective transformation and read from barcode
+        # Perform perspective transformation and read from barcode.
         image = simplification_manager.perspectiveTransformation(img)
         cv2.imwrite(DESKTOP + "/output/3.png", image)
         barcode_data_found, barcode_scan_data, barcoded_image = barcode_manager.get_barcode_info(image)
