@@ -16,9 +16,9 @@ class Pipeline:
         self.face_detector = face_detector
         self.threshold_manager = threshold_manager
 
-    def process(self, image, remove_face=False):
+    def process_text_extraction(self, image, remove_face=False):
         """
-        This function applies all the processing needed on the image.
+        This function applies all the processing needed to extract text from a image.
         Author(s):
             Nicolai van Niekerk
         Args:
@@ -52,3 +52,18 @@ class Pipeline:
         cv2.imwrite(DESKTOP + "/output/8.png", thresholded_image)
 
         return thresholded_image
+
+    def process_face_extraction(self, image):
+        """
+        This function applies all the processing needed to extract a face from a image.
+        Author(s):
+            Stephan Nell
+        Args:
+            image (:obj:'OpenCV image'): Image to which processing should be applied to.
+        Returns:
+            image: The processed image.
+
+        """
+        (extracted_face, _) = self.face_detector.extract_face(image)
+
+        return extracted_face

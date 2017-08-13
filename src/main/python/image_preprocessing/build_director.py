@@ -9,17 +9,17 @@ from image_preprocessing.thresholding_manager import ThresholdingManager
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
-DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
-
 
 class BuildDirector:
     """
     The BuildDirector constructs the Pipeline using the PipelineBuilder
     """
     @staticmethod
-    def construct(preferences):
+    def construct_text_extract_pipeline(preferences):
         """
-        This function constructs the pipeline
+        This function constructs the pipeline for text extraction.
+        This includes building different managers with there specify parameters.
+        These managers will be called within the pipeline when executed.
         Author(s):
             Nicolai van Niekerk
         Args:
@@ -76,5 +76,23 @@ class BuildDirector:
         builder.set_color_manager(color_manager)
         builder.set_face_detector(face_detector)
         builder.set_threshold_manager(threshold_manager)
+
+        return builder.get_result()
+
+    @staticmethod
+    def construct_face_extract_pipeline():
+        """
+        This function constructs the pipeline for face extraction.
+        This includes building different managers with there specify parameters.
+        These managers will be called within the pipeline when executed.
+        Author(s):
+            Stephan Nell
+        Returns:
+            :Pipeline (Constructed pipeline)
+        """
+        builder = PipelineBuilder()
+
+        face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
+        builder.set_face_detector(face_detector)
 
         return builder.get_result()

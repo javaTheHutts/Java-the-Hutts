@@ -10,6 +10,7 @@ from flask import Blueprint, jsonify, request
 import cv2
 import numpy as np
 from image_processing.sample_extract import TextExtractor
+from image_processing.sample_extract import FaceExtractor
 
 extract = Blueprint('extract', __name__)
 
@@ -96,7 +97,9 @@ def extract_face():
             # load the image and convert
             image = _grab_image(url=url)
     # Call open CV commands here with the extracted image
-    print(image)
+    extractor = FaceExtractor()
+    result = extractor.extract(image)
+    print(result)
     face = "img/returnFace.jpg"
     return jsonify(
         {
