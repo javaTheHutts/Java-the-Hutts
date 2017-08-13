@@ -137,22 +137,13 @@ def extract_all():
                 return jsonify(data)
             # load the image and convert
             image = _grab_image(url=url)
-            print(image)
         # Call open CV commands here with the extracted image
-        data.update(
-            {
-                "surname": "Nell",
-                "names": "Stephan Jack",
-                "sex": "M",
-                "nationality": "RSA",
-                "identity_number": "9511068172098",
-                "date_of_birth": "06-11-1995",
-                "country_of_birth": "RSA",
-                "status": "citizen",
-                "face": "img/returnFace.jpg",
-                "success": True
-            }
-        )
+        extractor = TextExtractor()
+        result = extractor.extract(image)
+        data.update(result)
+        extractor = FaceExtractor()
+        result = extractor.extract(image)
+        print(result)
     return jsonify(data)
 
 
