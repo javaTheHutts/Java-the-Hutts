@@ -14,6 +14,19 @@ class TextExtractor:
     """
         The TextExtractor extracts text from the ID image
     """
+    def __init__(self, preferences):
+        """
+        Initialise Text Extractor.
+        Authors(s):
+            Nicolai van Niekerk
+        Args:
+            preferences (dict): User-specified CV techniques.
+        Returns:
+            None
+
+        """
+        self.preferences = preferences
+
     def extract(self, img):
         """
         This function is a sample that demonstrates how text would be extracted
@@ -25,6 +38,9 @@ class TextExtractor:
             id_details: JSON obj (The extracted information)
         Todo:
         """
+        if 'remove_face' in self.preferences:
+            remove_face = self.preferences['remove_face'] == 'true'
+
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
         data = {}
@@ -39,8 +55,8 @@ class TextExtractor:
             }
 
         # Process image
-        pipeline = BuildDirector.construct()
-        image = pipeline.process(barcoded_image)
+        pipeline = BuildDirector.construct(self.preferences)
+        image = pipeline.process(barcoded_image, remove_face)
 
         # Extract and return text
         filename = "{}.png".format(os.getpid())

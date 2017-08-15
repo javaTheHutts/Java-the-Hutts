@@ -91,17 +91,15 @@
 								</div>
 								<div class="input-field col s12">
 									<select id="blur_technique">
-										<option value="" disabled selected></option>
-										<option value="conventional">Conventional</option>
+										<option value="normal">Conventional</option>
 										<option value="gaussian">Gaussian</option>
-										<option value="median">Median</option>
+										<option value="median" selected="selected">Median</option>
 									</select>
 									<label>Blur Technique</label>
 								</div>
 								<div class="input-field col s12">
 									<select id="threshold_technique">
-										<option value="" disabled selected></option>
-										<option value="adaptive">Adaptive</option>
+										<option value="adaptive" selected="selected">Adaptive</option>
 										<option value="otsu">Otsu</option>
 									</select>
 									<label>Threshold Technique</label>
@@ -117,7 +115,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" checked="checked" id="profile_switch">
+												<input type="checkbox" id="profile_switch">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -150,7 +148,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" id="extract_red" class="channel_extractors">
+												<input type="checkbox" checked="checked" id="extract_red" class="channel_extractors">
 												<span class="lever"></span>
 												Yes
 												</label>

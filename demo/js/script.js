@@ -242,30 +242,25 @@ $(document).ready(function() {
       var profileSwitch = $('#profile_switch').is(':checked');
       var barcodeSwitch = $('#barcode_switch').is(':checked');
       var extractRed = $('#extract_red').is(':checked');
+      console.log(profileSwitch);
       var extractGreen = $('#extract_green').is(':checked');
       var extractBlue = $('#extract_blue').is(':checked');
       var idPhoto = document.getElementById('id-photo-extract').files[0];
 
       formData.append('idPhoto', idPhoto);
+
+      // Comment out to test API without preferences
       formData.append('blur_technique', blurTechnique);
       formData.append('threshold_technique', thresholdTechnique);
       formData.append('remove_face', profileSwitch);
       formData.append('remove_barcode', barcodeSwitch);
       
-      if(!extractBlue && !extractGreen && !extractRed)
-        formData.append('extract_channel', false);
-      else
-      {
-        formData.append('extract_channel', true);
-        if(extractBlue)
-          formData.append('color', "blue");
-        else if(extractGreen)
-          formData.append('color', "green");
-        else if(extractRed)
-          formData.append('color', "red");
-        else
-          alert("THERE IS A PROBLEM REGARDING COLOR EXTRACTION!");
-      }
+      if(extractBlue)
+        formData.append('color', "blue");
+      else if(extractGreen)
+        formData.append('color', "green");
+      else if(extractRed)
+        formData.append('color', "red");
 
       $.ajax({
         type: "POST",
