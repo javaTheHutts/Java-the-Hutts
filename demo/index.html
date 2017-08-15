@@ -90,7 +90,7 @@
 									<p class="special">Techniques</p>
 								</div>
 								<div class="input-field col s12">
-									<select>
+									<select id="blur_technique">
 										<option value="" disabled selected></option>
 										<option value="1">Conventional</option>
 										<option value="2">Gaussian</option>
@@ -99,7 +99,7 @@
 									<label>Blur Technique</label>
 								</div>
 								<div class="input-field col s12">
-									<select>
+									<select id="threshold_technique">
 										<option value="" disabled selected></option>
 										<option value="1">Adaptive</option>
 										<option value="2">Otsu</option>
@@ -117,7 +117,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" checked="checked">
+												<input type="checkbox" checked="checked" id="profile_switch">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -133,7 +133,7 @@
 									<div class="switch">
 										<label>
 											No
-											<input type="checkbox" checked="checked">
+											<input type="checkbox" checked="checked" id="barcode_switch">
 											<span class="lever"></span>
 											Yes
 											</label>
@@ -150,7 +150,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox">
+												<input type="checkbox" id="extract_red">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -163,7 +163,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox">
+												<input type="checkbox" id="extract_green">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -176,7 +176,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox">
+												<input type="checkbox" id="extract_blue">
 												<span class="lever"></span>
 												Yes
 												</label>
