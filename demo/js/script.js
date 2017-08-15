@@ -237,6 +237,10 @@ $(document).ready(function() {
    $('#extract-text-btn').on('click', function(e) {
       e.preventDefault();
       var formData = new FormData();
+      var blurTechnique = $('#blur_technique').val();
+      var thresholdTechnique = $('#threshold_technique').val();
+      console.log(thresholdTechnique);
+      console.log(blurTechnique);
       var idPhoto = document.getElementById('id-photo-extract').files[0];
       formData.append('idPhoto', idPhoto);
 
