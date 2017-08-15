@@ -54,7 +54,6 @@ def extract_text():
             preferences['threshold_method'] = request.form['threshold_technique']
         if 'remove_face' in request.form:
             preferences['remove_face'] = request.form['remove_face']
-            print("======= " + preferences['remove_face'] + " ========")
         if 'remove_barcode' in request.form:
             preferences['remove_barcode'] = request.form['remove_barcode']
         if 'color' in request.form:
