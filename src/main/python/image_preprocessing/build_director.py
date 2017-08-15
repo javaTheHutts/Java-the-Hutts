@@ -29,10 +29,17 @@ class BuildDirector:
         """
         builder = PipelineBuilder()
 
+        # Use template matching to identify type here
+
         if 'blur_method' in preferences:
             blur_method = preferences['blur_method']
         else:
-            # Default
+            """
+                if type == 'card':
+                    blur_method = 'gaussian'
+                else if type == 'book':
+                    blur_method = 'median'
+            """
             blur_method = 'median'
 
         if blur_method == 'median':
