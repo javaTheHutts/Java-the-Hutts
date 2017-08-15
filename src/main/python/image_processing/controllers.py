@@ -38,7 +38,7 @@ def extract_text():
         else:
             # Grab the URL from the request.
             url = request.args.get("url", None)
-            # If the URL is None, then return an error.remove_face = request.form['remove_face']
+            # If the URL is None, then return an error.
             if url is None:
                 data["error"] = "No URL provided."
                 return jsonify(data)
