@@ -239,10 +239,33 @@ $(document).ready(function() {
       var formData = new FormData();
       var blurTechnique = $('#blur_technique').val();
       var thresholdTechnique = $('#threshold_technique').val();
-      console.log(thresholdTechnique);
-      console.log(blurTechnique);
+      var profileSwitch = $('#profile_switch').is(':checked');
+      var barcodeSwitch = $('#barcode_switch').is(':checked');
+      var extractRed = $('#extract_red').is(':checked');
+      var extractGreen = $('#extract_green').is(':checked');
+      var extractBlue = $('#extract_blue').is(':checked');
       var idPhoto = document.getElementById('id-photo-extract').files[0];
+
       formData.append('idPhoto', idPhoto);
+      formData.append('blur_technique', blurTechnique);
+      formData.append('threshold_technique', thresholdTechnique);
+      formData.append('remove_face', profileSwitch);
+      formData.append('remove_barcode', barcodeSwitch);
+      
+      if(!extractBlue && !extractGreen && !extractRed)
+        formData.append('extract_channel', false);
+      else
+      {
+        formData.append('extract_channel', true);
+        if(extractBlue)
+          formData.append('color', "blue");
+        else if(extractGreen)
+          formData.append('color', "green");
+        else if(extractRed)
+          formData.append('color', "red");
+        else
+          alert("THERE IS A PROBLEM REGARDING COLOR EXTRACTION!");
+      }
 
       $.ajax({
         type: "POST",
@@ -320,6 +343,14 @@ $(document).ready(function() {
           $('#profile-pipeline').show(600);
         }
     });
+  });
+
+  $(".channel_extractors").change(function(){
+      var currentID = $(this).attr('id');
+      $(".channel_extractors").each(function(index){
+        if($(this).attr('id') != currentID)
+          $(this).prop('checked', false);
+      });
   });
 
 });
