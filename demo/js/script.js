@@ -242,7 +242,6 @@ $(document).ready(function() {
       var profileSwitch = $('#profile_switch').is(':checked');
       var barcodeSwitch = $('#barcode_switch').is(':checked');
       var extractRed = $('#extract_red').is(':checked');
-      console.log(profileSwitch);
       var extractGreen = $('#extract_green').is(':checked');
       var extractBlue = $('#extract_blue').is(':checked');
       var idPhoto = document.getElementById('id-photo-extract').files[0];
