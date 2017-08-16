@@ -17,13 +17,15 @@ class BuildDirector:
     The BuildDirector constructs the Pipeline using the PipelineBuilder
     """
     @staticmethod
-    def construct(preferences):
+    def construct(preferences, identification_type):
         """
         This function constructs the pipeline
         Author(s):
-            Nicolai van Niekerk
+            Nicolai van Niekerk and Marno Hermann
         Args:
             preferences (dict): User-specified techniques to use in pipeline.
+            identification_type (dict): Containts the type of identification, this is used
+                                        to determine which techniques are used.
         Returns:
             :Pipeline (Constructed pipeline)
         """
@@ -33,13 +35,14 @@ class BuildDirector:
 
         if 'blur_method' in preferences:
             blur_method = preferences['blur_method']
+        elif identification_type['type'] == 'idcard':
+            blur_method = 'gaussian'
+        elif identification_type['type'] == 'idbook':
+            blur_method = 'median'
+        elif identification_type['type'] == 'studentcard':
+            blur_method = 'median'
         else:
-            """
-                if type == 'card':
-                    blur_method = 'gaussian'
-                else if type == 'book':
-                    blur_method = 'median'
-            """
+            # Default
             blur_method = 'median'
 
         if blur_method == 'median':
@@ -49,6 +52,12 @@ class BuildDirector:
 
         if 'threshold_method' in preferences:
             threshold_method = preferences['threshold_method']
+        elif identification_type['type'] == 'idcard':
+            threshold_method = 'otsu'
+        elif identification_type['type'] == 'idbook':
+            threshold_method = 'adaptive'
+        elif identification_type['type'] == 'studentcard':
+            threshold_method = 'adaptive'
         else:
             # Default
             threshold_method = 'adaptive'
@@ -56,6 +65,15 @@ class BuildDirector:
         if 'color' in preferences:
             color_extraction_type = 'extract'
             color = preferences['color']
+        elif identification_type['type'] == 'idcard':
+            color_extraction_type = 'extract'
+            color = 'red'
+        elif identification_type['type'] == 'idbook':
+            color_extraction_type = 'extract'
+            color = 'red'
+        elif identification_type['type'] == 'studentcard':
+            color_extraction_type = 'extract'
+            color = 'red'
         else:
             # Default
             color_extraction_type = 'extract'

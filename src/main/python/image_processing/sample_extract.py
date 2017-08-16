@@ -2,6 +2,7 @@ from image_preprocessing.build_director import BuildDirector
 from image_processing.text_manager import TextManager
 from image_processing.simplification_manager import SimplificationManager
 from image_processing.barcode_manager import BarCodeManager
+from image_preprocessing.template_matching import TemplateMatching
 import pytesseract
 from PIL import Image
 import cv2
@@ -14,6 +15,7 @@ class TextExtractor:
     """
         The TextExtractor extracts text from the ID image
     """
+
     def __init__(self, preferences):
         """
         Initialise Text Extractor.
@@ -55,7 +57,9 @@ class TextExtractor:
             }
 
         # Process image
-        pipeline = BuildDirector.construct(self.preferences)
+        template_match = TemplateMatching()
+        identification_type = template_match.identify(barcoded_image)
+        pipeline = BuildDirector.construct(self.preferences, identification_type)
         image = pipeline.process(barcoded_image, remove_face)
 
         # Extract and return text

@@ -1,4 +1,7 @@
 import cv2
+from flask import jsonify
+import os
+DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
 class TemplateMatching:
@@ -8,13 +11,15 @@ class TemplateMatching:
     Thus you provide it with templates and it will identify whether you used an id card, id book etc.
     """
 
-    def identify(self, src, template):
+    def identify(self, src, template=[(1034, DESKTOP + "/templates/temp_flag.jpg", 0.75, "idcard"),
+                                      (875, DESKTOP + "/templates/wap.jpg", 0.60, "idbook"),
+                                      (1280, DESKTOP + "/templates/pp2.jpg", 0.60, "studentcard")]):
         """
         This function identifies the src image by searching for the templates provided.
         Author(s):
             Marno Hermann
         Args:
-            Image : File path to the image that needs to be identified
+            Image : The image that needs to be identified
             Tuple list: Each tuple has 4 elements width of image from where template was extracted,
                         the path to the template, threshold value to identify object in the range (0,1),
                         type you want returned as your identifier.
@@ -28,10 +33,11 @@ class TemplateMatching:
         """
 
         # load the source and template image
-        source = cv2.imread(src)
+        source = src
         template_objects = []
         for (original_template_image_width, template_path, threshold, object_identifier) in template:
             template_image = cv2.imread(template_path)
+
             ratio = original_template_image_width / source.shape[1]
             dimension = (original_template_image_width, int(source.shape[0] * ratio))
             resized = cv2.resize(source, dimension, interpolation=cv2.INTER_AREA)
@@ -46,6 +52,6 @@ class TemplateMatching:
         for (max, threshold_value, object_type) in template_objects:
             if (max > threshold_value):
                 print(object_type)
-                return {'type': object_type}
+                return jsonify({'type': object_type})
 
-        return {'type': None}
+        return jsonify({'type': None})
