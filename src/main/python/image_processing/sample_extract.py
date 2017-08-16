@@ -28,6 +28,7 @@ class TextExtractor:
 
         """
         self.preferences = preferences
+        self.remove_face = 'false'
 
     def extract(self, img):
         """
@@ -35,15 +36,12 @@ class TextExtractor:
         Author(s):
             Nicolai van Niekerk
         Args:
-            image: The image of the ID that contains the text tom be extracted
+            image: The image of the ID that contains the text to be extracted
         Returns:
             id_details: JSON obj (The extracted information)
-        Todo:
         """
         if 'remove_face' in self.preferences:
-            remove_face = self.preferences['remove_face'] == 'true'
-        else:
-            remove_face = False
+            self.remove_face = self.preferences['remove_face'] == 'true'
 
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
@@ -61,8 +59,8 @@ class TextExtractor:
         # Process image
         template_match = TemplateMatching()
         identification_type = template_match.identify(barcoded_image)
-        pipeline = BuildDirector.construct(self.preferences, identification_type)
-        image = pipeline.process(barcoded_image, remove_face)
+        pipeline = BuildDirector.construct_text_extract_pipeline(self.preferences, identification_type)
+        image = pipeline.process_text_extraction(barcoded_image, self.remove_face)
 
         # Extract and return text
         filename = "{}.png".format(os.getpid())
@@ -78,3 +76,30 @@ class TextExtractor:
         id_details = text_manager.dictify(clean_text, data)
         print(id_details)
         return id_details
+
+
+class FaceExtractor:
+    """
+        The FaceExtractor extracts the face region for the image passed.
+    """
+    def extract(self, img):
+        """
+        This function is a sample that demonstrates how the face would be extracted.
+        Author(s):
+            Stephan Nell
+        Args:
+            image: The image of the ID that contains the face that must be extracted.
+        Returns:
+            image: The extracted and aligned facial image.
+        """
+        simplification_manager = SimplificationManager()
+
+        # Perform perspective transformation
+        perspective_image = simplification_manager.perspectiveTransformation(img)
+        cv2.imwrite(DESKTOP + "/output/10.png", perspective_image)
+
+        # Process image
+        pipeline = BuildDirector.construct_face_extract_pipeline()
+        image = pipeline.process_face_extraction(perspective_image)
+
+        return image

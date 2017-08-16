@@ -299,7 +299,8 @@ $(document).ready(function() {
         processData: false,
         contentType: false,
         success: function(data){
-          $('#face-preview-extract').attr('src', data.extracted_face);
+        var face = jQuery.parseJSON(data)
+        document.getElementById("face-preview-extract").src = face.extracted_face;
           // Populate and unhide pipeline
           populatePipeline(false, 6);
           $('#profile-pipeline').show(600);
@@ -331,7 +332,8 @@ $(document).ready(function() {
           });
 
           // Show face
-          $('#face-preview-extract').attr('src', data.face);
+          var face = jQuery.parseJSON(data);
+          document.getElementById("face-preview-extract").src = face.extracted_face;
           
           // Populate and unhide pipeline
           populatePipeline(true, 8);
