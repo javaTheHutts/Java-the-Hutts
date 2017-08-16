@@ -9,6 +9,8 @@ class TemplateMatching:
     The TemplateMatching class receives template images to identify the type of identification
     that is used in the image.
     Thus you provide it with templates and it will identify whether you used an id card, id book etc.
+    Line 16 that specifies my parameters are all pointing to the desktop my template folder needs
+    to be added to the site packages.
     """
 
     def identify(self, src, template=[(1034, DESKTOP + "/templates/temp_flag.jpg", 0.75, "idcard"),
