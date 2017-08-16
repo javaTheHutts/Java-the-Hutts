@@ -44,8 +44,23 @@ def extract_text():
                 return jsonify(data)
                 # Load the image and convert.
             image = _grab_image(url=url)
-        # Call OpenCV commands here with the extracted image.
-        extractor = TextExtractor()
+
+        # Grab additional parameters specifying techniques
+        preferences = {}
+
+        if 'blur_technique' in request.form:
+            preferences['blur_method'] = request.form['blur_technique']
+        if 'threshold_technique' in request.form:
+            preferences['threshold_method'] = request.form['threshold_technique']
+        if 'remove_face' in request.form:
+            preferences['remove_face'] = request.form['remove_face']
+        if 'remove_barcode' in request.form:
+            preferences['remove_barcode'] = request.form['remove_barcode']
+        if 'color' in request.form:
+            preferences['color'] = request.form['color']
+
+        # Extract test from image
+        extractor = TextExtractor(preferences)
         result = extractor.extract(image)
     return jsonify(result)
 

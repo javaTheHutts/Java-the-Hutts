@@ -237,8 +237,29 @@ $(document).ready(function() {
    $('#extract-text-btn').on('click', function(e) {
       e.preventDefault();
       var formData = new FormData();
+      var blurTechnique = $('#blur_technique').val();
+      var thresholdTechnique = $('#threshold_technique').val();
+      var profileSwitch = $('#profile_switch').is(':checked');
+      var barcodeSwitch = $('#barcode_switch').is(':checked');
+      var extractRed = $('#extract_red').is(':checked');
+      var extractGreen = $('#extract_green').is(':checked');
+      var extractBlue = $('#extract_blue').is(':checked');
       var idPhoto = document.getElementById('id-photo-extract').files[0];
+
       formData.append('idPhoto', idPhoto);
+
+      // Comment out to test API without preferences
+      formData.append('blur_technique', blurTechnique);
+      formData.append('threshold_technique', thresholdTechnique);
+      formData.append('remove_face', profileSwitch);
+      formData.append('remove_barcode', barcodeSwitch);
+      
+      if(extractBlue)
+        formData.append('color', "blue");
+      else if(extractGreen)
+        formData.append('color', "green");
+      else if(extractRed)
+        formData.append('color', "red");
 
       $.ajax({
         type: "POST",
@@ -316,6 +337,14 @@ $(document).ready(function() {
           $('#profile-pipeline').show(600);
         }
     });
+  });
+
+  $(".channel_extractors").change(function(){
+      var currentID = $(this).attr('id');
+      $(".channel_extractors").each(function(index){
+        if($(this).attr('id') != currentID)
+          $(this).prop('checked', false);
+      });
   });
 
 });

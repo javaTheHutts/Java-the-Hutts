@@ -90,19 +90,17 @@
 									<p class="special">Techniques</p>
 								</div>
 								<div class="input-field col s12">
-									<select>
-										<option value="" disabled selected></option>
-										<option value="1">Conventional</option>
-										<option value="2">Gaussian</option>
-										<option value="3">Median</option>
+									<select id="blur_technique">
+										<option value="normal">Conventional</option>
+										<option value="gaussian">Gaussian</option>
+										<option value="median" selected="selected">Median</option>
 									</select>
 									<label>Blur Technique</label>
 								</div>
 								<div class="input-field col s12">
-									<select>
-										<option value="" disabled selected></option>
-										<option value="1">Adaptive</option>
-										<option value="2">Otsu</option>
+									<select id="threshold_technique">
+										<option value="adaptive" selected="selected">Adaptive</option>
+										<option value="otsu">Otsu</option>
 									</select>
 									<label>Threshold Technique</label>
 								</div>
@@ -117,7 +115,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" checked="checked">
+												<input type="checkbox" id="profile_switch">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -133,7 +131,7 @@
 									<div class="switch">
 										<label>
 											No
-											<input type="checkbox" checked="checked">
+											<input type="checkbox" checked="checked" id="barcode_switch">
 											<span class="lever"></span>
 											Yes
 											</label>
@@ -150,7 +148,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox">
+												<input type="checkbox" checked="checked" id="extract_red" class="channel_extractors">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -163,7 +161,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox">
+												<input type="checkbox" id="extract_green" class="channel_extractors">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -176,7 +174,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox">
+												<input type="checkbox" id="extract_blue" class="channel_extractors">
 												<span class="lever"></span>
 												Yes
 												</label>

@@ -23,7 +23,7 @@ class Pipeline:
             Nicolai van Niekerk
         Args:
             image (:obj:'OpenCV image'): Image to which processing should be applied to.
-            remove_face boolean: If the remove face flag is set to true extra processes will
+            remove_face :boolean: If the remove face flag is set to true extra processes will
                 be activated during the pre-processing phase to remove the face from the image.
         Returns:
             image: The processed image.
@@ -31,6 +31,7 @@ class Pipeline:
         """
         # Remove face from image.
         if remove_face:
+            print("REMOVING FACE...")
             image = self.face_detector.blur_face(image)
             cv2.imwrite(DESKTOP + "/output/4.png", image)
 
