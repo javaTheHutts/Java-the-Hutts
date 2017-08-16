@@ -9,7 +9,7 @@ DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 class SimplificationManager:
     """
     The Simplification manger is used to remove unwanted content in an image thus
-    simplifying process like OCR and facial comparisons.
+    simplifying process like OCR and facial comparisons..\
     """
 
     def perspectiveTransformation(self, image):
