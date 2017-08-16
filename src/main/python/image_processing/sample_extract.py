@@ -26,6 +26,7 @@ class TextExtractor:
 
         """
         self.preferences = preferences
+        self.remove_face = 'false'
 
     def extract(self, img):
         """
@@ -38,7 +39,7 @@ class TextExtractor:
             id_details: JSON obj (The extracted information)
         """
         if 'remove_face' in self.preferences:
-            remove_face = self.preferences['remove_face'] == 'true'
+            self.remove_face = self.preferences['remove_face'] == 'true'
 
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
@@ -55,7 +56,7 @@ class TextExtractor:
 
         # Process image
         pipeline = BuildDirector.construct_text_extract_pipeline(self.preferences)
-        image = pipeline.process_text_extraction(barcoded_image,remove_face)
+        image = pipeline.process_text_extraction(barcoded_image, self.remove_face)
 
         # Extract and return text
         filename = "{}.png".format(os.getpid())

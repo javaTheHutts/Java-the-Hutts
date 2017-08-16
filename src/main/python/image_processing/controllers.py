@@ -6,11 +6,13 @@ Handles all requests relevant to the extraction service of the API.
 ----------------------------------------------------------------------
 """
 from imutils.convenience import url_to_image
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, make_response
 import cv2
+import base64
 import numpy as np
 from image_processing.sample_extract import TextExtractor
 from image_processing.sample_extract import FaceExtractor
+
 
 extract = Blueprint('extract', __name__)
 
@@ -99,13 +101,23 @@ def extract_face():
     # Call open CV commands here with the extracted image
     extractor = FaceExtractor()
     result = extractor.extract(image)
-    print(result)
-    face = "img/returnFace.jpg"
-    return jsonify(
+    _, buffer = cv2.imencode('.jpg', result)
+    # replace base64 indicator for the first occurence
+    jpg_img = str(base64.b64encode(buffer)).replace("b", ",", 1)
+    # apply base64 jpg encoding
+    jpg_img = 'data:image/jpg;base64' + jpg_img
+    # cleanup interference
+    jpg_img = jpg_img.replace("'", "")
+    data = jsonify(
         {
-            "extracted_face": face
-        }
-    )
+            "extracted_face": jpg_img
+        })
+    # prepare response
+    response = make_response(data)
+    response.mimetype = 'multipart/form-data'
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    return response
 
 
 @extract.route('/extractAll', methods=['POST'])
@@ -138,13 +150,42 @@ def extract_all():
             # load the image and convert
             image = _grab_image(url=url)
         # Call open CV commands here with the extracted image
-        extractor = TextExtractor()
-        result = extractor.extract(image)
-        data.update(result)
+        # Grab additional parameters specifying techniques
+        preferences = {}
+
+        if 'blur_technique' in request.form:
+            preferences['blur_method'] = request.form['blur_technique']
+        if 'threshold_technique' in request.form:
+            preferences['threshold_method'] = request.form['threshold_technique']
+        if 'remove_face' in request.form:
+            preferences['remove_face'] = request.form['remove_face']
+        if 'remove_barcode' in request.form:
+            preferences['remove_barcode'] = request.form['remove_barcode']
+        if 'color' in request.form:
+            preferences['color'] = request.form['color']
+        # Extract test from image
         extractor = FaceExtractor()
         result = extractor.extract(image)
-        print(result)
-    return jsonify(data)
+        _, buffer = cv2.imencode('.jpg', result)
+        # replace base64 indicator for the first occurence
+        jpg_img = str(base64.b64encode(buffer)).replace("b", ",", 1)
+        # apply base64 jpg encoding
+        jpg_img = 'data:image/jpg;base64' + jpg_img
+        # cleanup interference
+        jpg_img = jpg_img.replace("'", "")
+        data = {
+                "extracted_face": jpg_img
+            }
+        extractor = TextExtractor(preferences)
+        result = extractor.extract(image)
+        data.update(result)
+
+        # prepare response
+        response = make_response(jsonify(data))
+        response.mimetype = 'multipart/form-data'
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        return response
 
 
 def _grab_image(path=None, stream=None, url=None):
