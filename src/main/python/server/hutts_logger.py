@@ -1,11 +1,41 @@
 """
 ----------------------------------------------------------------------
-Author: Jan-Justin van Tonder
+Authors: Jan-Justin van Tonder
 ----------------------------------------------------------------------
-Wraps the logic required to setup and use the flask logging for
-debugging and production.
+Wraps the logic required to setup and use a custom logger while
+disabling the built-in flask logger.
+----------------------------------------------------------------------
+Example usage:
+
+    # First import the logger from the hutts_logger module...
+    from server.hutts_logger import logger
+    # then start logging.
+    logger.info('logging an example')
+
+There are 5 logging levels, as shown below with their corresponding
+function call (from lowest to highest level):
+
+    DEBUG       -   logger.debug(message)
+    INFO        -   logger.info(message)
+    WARNING     -   logger.warning(message)
+    ERROR       -   logger.error(message)
+    CRITICAL    -   logger.critical(message)
+
+The default level of the logger will be INFO, unless the flask app is
+run in debug mode, in which case the logger level will be DEBUG.
+What this means is that messages lower than INFO, i.e. DEBUG, will
+not be shown, again this is unless the flask app is run in debug
+mode.
+
+NOTE: A function (prettify_json_message) has been included to take
+a json obj/dict and return a prettified string of said json obj/dict
+in the event that someone wishes to display a message in the form of
+a json obj/dict.
+----------------------------------------------------------------------
+TODO: Look into handling the constants in a config file instead.
 ----------------------------------------------------------------------
 """
+
 import colorlog
 import errno
 import json
@@ -16,7 +46,7 @@ from logging.handlers import RotatingFileHandler
 """Specifies the name of the custom logger."""
 LOGGING_LOGGER_NAME = 'hutts_logger'
 """Specifies the default level for logging."""
-LOGGING_DEFAULT_LEVEL = logging.DEBUG
+LOGGING_DEFAULT_LEVEL = logging.INFO
 """Specifies the date format to be used by the various logging formatters."""
 LOGGING_LOG_DATE_FMT = '%Y-%m-%d %H:%M:%S'
 
@@ -63,7 +93,7 @@ It is initialised to the default python logger to avoid errors during installati
 logger = logging
 
 
-def setup_logger(log_file_dir=None):
+def setup_logger(debug=False, log_file_dir=None):
     """
     This function is responsible for creating the custom logger and delegating the creation of its handlers.
 
@@ -74,8 +104,9 @@ def setup_logger(log_file_dir=None):
         log_file_dir (str): A directory in which the logger is to log to a file.
     """
     global logger
+    logging_level = logging.DEBUG if debug else LOGGING_DEFAULT_LEVEL
     logger = logging.getLogger(LOGGING_LOGGER_NAME)
-    logger.setLevel(LOGGING_DEFAULT_LEVEL)
+    logger.setLevel(logging_level)
     if LOGGING_LOG_TO_CONSOLE:
         console_handler = get_console_handler()
         logger.addHandler(console_handler)
@@ -84,7 +115,7 @@ def setup_logger(log_file_dir=None):
         logger.addHandler(file_handler)
 
 
-def disable_flask_logging(app):
+def disable_flask_logging(app_instance):
     """
     This function disables the flask logging, which interferes with the custom logger.
 
@@ -92,10 +123,10 @@ def disable_flask_logging(app):
         Jan-Justin van Tonder
 
     Args:
-        app (obj): A reference to the current flask server application.
+        app_instance (obj): A reference to the current flask server application.
     """
-    app.logger.handlers = []
-    app.logger.propagate = True
+    app_instance.logger.handlers = []
+    app_instance.logger.propagate = True
     logger.getLogger('werkzeug').disabled = True
 
 
@@ -140,7 +171,7 @@ def get_file_handler(log_dir=None):
 
 def prettify_json_message(json_message):
     """
-    This function is a helper function that is used to prettify a json/dict message string so that is more readable
+    This function is a helper function that is used to prettify a json/dict message obj so that is more readable
     for humans when it is logged.
 
     Args:
