@@ -10,6 +10,7 @@ from flask import Blueprint, jsonify, request, make_response
 import cv2
 import base64
 import numpy as np
+import itertools
 from image_processing.sample_extract import TextExtractor
 from image_processing.sample_extract import FaceExtractor
 
@@ -99,24 +100,7 @@ def extract_face():
             # load the image and convert
             image = _grab_image(url=url)
     # Call open CV commands here with the extracted image
-    extractor = FaceExtractor()
-    result = extractor.extract(image)
-    _, buffer = cv2.imencode('.jpg', result)
-    # replace base64 indicator for the first occurence
-    jpg_img = str(base64.b64encode(buffer)).replace("b", ",", 1)
-    # apply base64 jpg encoding
-    jpg_img = 'data:image/jpg;base64' + jpg_img
-    # cleanup interference
-    jpg_img = jpg_img.replace("'", "")
-    data = jsonify(
-        {
-            "extracted_face": jpg_img
-        })
-    # prepare response
-    response = make_response(data)
-    response.mimetype = 'multipart/form-data'
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response.headers['Pragma'] = 'no-cache'
+    response = face_extraction_response(image)
     return response
 
 
@@ -164,27 +148,11 @@ def extract_all():
         if 'color' in request.form:
             preferences['color'] = request.form['color']
         # Extract test from image
-        extractor = FaceExtractor()
-        result = extractor.extract(image)
-        _, buffer = cv2.imencode('.jpg', result)
-        # replace base64 indicator for the first occurence
-        jpg_img = str(base64.b64encode(buffer)).replace("b", ",", 1)
-        # apply base64 jpg encoding
-        jpg_img = 'data:image/jpg;base64' + jpg_img
-        # cleanup interference
-        jpg_img = jpg_img.replace("'", "")
-        data = {
-                "extracted_face": jpg_img
-            }
+        response = face_extraction_response(image)
         extractor = TextExtractor(preferences)
         result = extractor.extract(image)
-        data.update(result)
+        response = dict(itertools.chain(response.items(), result.items()))
 
-        # prepare response
-        response = make_response(jsonify(data))
-        response.mimetype = 'multipart/form-data'
-        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-        response.headers['Pragma'] = 'no-cache'
         return response
 
 
@@ -218,3 +186,26 @@ def _grab_image(path=None, stream=None, url=None):
             image = np.asarray(bytearray(data), dtype="uint8")
             image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     return image
+
+
+def face_extraction_response(image):
+    extractor = FaceExtractor()
+    result = extractor.extract(image)
+    _, buffer = cv2.imencode('.jpg', result)
+    # replace base64 indicator for the first occurrence
+    jpg_img = str(base64.b64encode(buffer)).replace("b", ",", 1)
+    # apply base64 jpg encoding
+    jpg_img = 'data:image/jpg;base64' + jpg_img
+    # cleanup interference
+    jpg_img = jpg_img.replace("'", "")
+    data = jsonify(
+        {
+            "extracted_face": jpg_img
+        })
+    # prepare response
+    response = make_response(data)
+    response.mimetype = 'multipart/form-data'
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+
+    return response
