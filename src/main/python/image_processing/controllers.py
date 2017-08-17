@@ -5,13 +5,13 @@ Author(s): Nicolai van Niekerk, Stephan Nell
 Handles all requests relevant to the extraction service of the API.
 ----------------------------------------------------------------------
 """
-from imutils.convenience import url_to_image
-from flask import Blueprint, jsonify, request, make_response
 import cv2
 import base64
 import numpy as np
 from image_processing.sample_extract import TextExtractor
 from image_processing.sample_extract import FaceExtractor
+from imutils.convenience import url_to_image
+from flask import Blueprint, jsonify, request, make_response
 
 
 extract = Blueprint('extract', __name__)
