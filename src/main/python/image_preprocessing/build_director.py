@@ -24,13 +24,12 @@ class BuildDirector:
             Nicolai van Niekerk and Marno Hermann
         Args:
             preferences (dict): User-specified techniques to use in pipeline.
-            identification_type (dict): Containts the type of identification, this is used
+            identification_type (string): Containts the type of identification, this is used
                                         to determine which techniques are used.
         Returns:
             :Pipeline (Constructed pipeline)
         """
         builder = PipelineBuilder()
-
         # Use template matching to identify type here
 
         if 'blur_method' in preferences:
@@ -48,7 +47,10 @@ class BuildDirector:
         if blur_method == 'median':
             blur_kernel_size = [9]
         else:
-            blur_kernel_size = [(3, 3)]
+            if identification_type['type'] == 'idbook':
+                blur_kernel_size = [(7, 7)]
+            else:
+                blur_kernel_size = [(3, 3)]
 
         if 'threshold_method' in preferences:
             threshold_method = preferences['threshold_method']

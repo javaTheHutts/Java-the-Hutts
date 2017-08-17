@@ -1,6 +1,6 @@
 import cv2
-from flask import jsonify
 import os
+
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
@@ -11,9 +11,12 @@ class TemplateMatching:
     Thus you provide it with templates and it will identify whether you used an id card, id book etc.
     """
 
-    def identify(self, src, template=[(1034, DESKTOP + "/templates/temp_flag.jpg", 0.75, "idcard"),
-                                      (875, DESKTOP + "/templates/wap.jpg", 0.60, "idbook"),
-                                      (1280, DESKTOP + "/templates/pp2.jpg", 0.60, "studentcard")]):
+    def __init__(self):
+        self.template = [(1034, DESKTOP + "/templates/temp_flag.jpg", 0.75, "idcard"),
+                         (875, DESKTOP + "/templates/wap.jpg", 0.60, "idbook"),
+                         (1280, DESKTOP + "/templates/pp2.jpg", 0.60, "studentcard")]
+
+    def identify(self, src):
         """
         This function identifies the src image by searching for the templates provided.
         Author(s):
@@ -35,7 +38,7 @@ class TemplateMatching:
         # load the source and template image
         source = src
         template_objects = []
-        for (original_template_image_width, template_path, threshold, object_identifier) in template:
+        for (original_template_image_width, template_path, threshold, object_identifier) in self.template:
             template_image = cv2.imread(template_path)
 
             ratio = original_template_image_width / source.shape[1]
@@ -52,6 +55,6 @@ class TemplateMatching:
         for (max, threshold_value, object_type) in template_objects:
             if (max > threshold_value):
                 print(object_type)
-                return jsonify({'type': object_type})
+                return {'type': object_type}
 
-        return jsonify({'type': None})
+        return {'type': None}

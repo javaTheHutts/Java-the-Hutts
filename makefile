@@ -17,7 +17,7 @@ build:
 	pyb
 
 run:
-	python src/main/scripts/run.py install
+	python src/main/scripts/run.py
 
 setup:
 	python setup.py install
