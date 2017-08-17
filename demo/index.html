@@ -86,11 +86,26 @@
 						</div>
 						<div class="collapsible-body">
 							<div class="row">
+								<div class="col s12">
+									<div class="col s6">
+										<p><b>Auto Settings</b></p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												Off
+												<input type="checkbox" id="auto_settings" checked="checked">
+												<span class="lever"></span>
+												On
+												</label>
+										</div>
+									</div>
+								</div>
 								<div class="col s6">
 									<p class="special">Techniques</p>
 								</div>
 								<div class="input-field col s12">
-									<select id="blur_technique">
+									<select id="blur_technique" disabled class="text-extract-settings">
 										<option value="normal">Conventional</option>
 										<option value="gaussian">Gaussian</option>
 										<option value="median" selected="selected">Median</option>
@@ -98,7 +113,7 @@
 									<label>Blur Technique</label>
 								</div>
 								<div class="input-field col s12">
-									<select id="threshold_technique">
+									<select id="threshold_technique" disabled class="text-extract-settings">
 										<option value="adaptive" selected="selected">Adaptive</option>
 										<option value="otsu">Otsu</option>
 									</select>
@@ -115,7 +130,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" id="profile_switch">
+												<input type="checkbox" id="profile_switch" disabled class="text-switch text-extract-settings">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -131,7 +146,7 @@
 									<div class="switch">
 										<label>
 											No
-											<input type="checkbox" checked="checked" id="barcode_switch">
+											<input type="checkbox" id="barcode_switch" disabled class="text-switch text-extract-settings">
 											<span class="lever"></span>
 											Yes
 											</label>
@@ -148,7 +163,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" checked="checked" id="extract_red" class="channel_extractors">
+												<input type="checkbox" disabled id="extract_red" class="text-switch channel_extractors text-extract-settings">
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -161,7 +176,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" id="extract_green" class="channel_extractors">
+												<input type="checkbox" id="extract_green" class="text-switch channel_extractors text-extract-settings" disabled>
 												<span class="lever"></span>
 												Yes
 												</label>
@@ -174,7 +189,7 @@
 										<div class="switch">
 											<label>
 												No
-												<input type="checkbox" id="extract_blue" class="channel_extractors">
+												<input type="checkbox" id="extract_blue" class="text-switch channel_extractors text-extract-settings" disabled>
 												<span class="lever"></span>
 												Yes
 												</label>

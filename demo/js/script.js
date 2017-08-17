@@ -248,18 +248,21 @@ $(document).ready(function() {
 
       formData.append('idPhoto', idPhoto);
 
-      // Comment out to test API without preferences
-      formData.append('blur_technique', blurTechnique);
-      formData.append('threshold_technique', thresholdTechnique);
-      formData.append('remove_face', profileSwitch);
-      formData.append('remove_barcode', barcodeSwitch);
-      
-      if(extractBlue)
-        formData.append('color', "blue");
-      else if(extractGreen)
-        formData.append('color', "green");
-      else if(extractRed)
-        formData.append('color', "red");
+      // Send preferences if auto settings is off
+      if(!$('#auto_settings').is(':checked'))
+      {
+        formData.append('blur_technique', blurTechnique);
+        formData.append('threshold_technique', thresholdTechnique);
+        formData.append('remove_face', profileSwitch);
+        formData.append('remove_barcode', barcodeSwitch);
+        
+        if(extractBlue)
+          formData.append('color', "blue");
+        else if(extractGreen)
+          formData.append('color', "green");
+        else if(extractRed)
+          formData.append('color', "red");
+      }
 
       $.ajax({
         type: "POST",
@@ -339,12 +342,25 @@ $(document).ready(function() {
     });
   });
 
+  // Make sure you can only extract one channel
   $(".channel_extractors").change(function(){
       var currentID = $(this).attr('id');
       $(".channel_extractors").each(function(index){
         if($(this).attr('id') != currentID)
           $(this).prop('checked', false);
       });
+  });
+
+  // Enable and Disable Auto Settings
+  $('#auto_settings').change(function(){
+      if($(this).is(':checked'))
+      {
+        $('.text-switch').prop('checked', false);
+        $('.text-extract-settings').prop('disabled', true);
+      }
+      else
+        $('.text-extract-settings').prop('disabled', false);
+      $('select').material_select();
   });
 
 });
