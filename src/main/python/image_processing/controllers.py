@@ -146,6 +146,7 @@ def extract_all():
             preferences['remove_barcode'] = request.form['remove_barcode']
         if 'color' in request.form:
             preferences['color'] = request.form['color']
+
         # Extract test from image
         extractor = TextExtractor(preferences)
         result = extractor.extract(image)

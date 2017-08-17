@@ -327,7 +327,7 @@ $(document).ready(function() {
             var id = $(this).attr("id").replace("-extract", "");
             if(id != "id-photo") {
               $(this).focus();
-              $(this).val(cardComponents.text_extract_result);
+              $(this).val(cardComponents.text_extract_result[id]);
               $(this).blur();
             }
           });
