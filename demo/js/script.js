@@ -322,18 +322,19 @@ $(document).ready(function() {
         contentType: false,
         success: function(data){
           // Populate text fields
+          var cardComponents = jQuery.parseJSON(data);
           $("input[id$=extract]").each(function() {
             var id = $(this).attr("id").replace("-extract", "");
             if(id != "id-photo") {
               $(this).focus();
-              $(this).val(data[id]);
+              $(this).val(cardComponents.text_extract_result);
               $(this).blur();
             }
           });
 
           // Show face
-          var face = jQuery.parseJSON(data);
-          document.getElementById("face-preview-extract").src = face.extracted_face;
+          console.log(cardComponents.text_extract_result)
+          document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
           
           // Populate and unhide pipeline
           populatePipeline(true, 8);

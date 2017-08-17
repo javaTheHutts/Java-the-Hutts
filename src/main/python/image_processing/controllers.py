@@ -10,7 +10,6 @@ from flask import Blueprint, jsonify, request, make_response
 import cv2
 import base64
 import numpy as np
-import itertools
 from image_processing.sample_extract import TextExtractor
 from image_processing.sample_extract import FaceExtractor
 
@@ -148,10 +147,10 @@ def extract_all():
         if 'color' in request.form:
             preferences['color'] = request.form['color']
         # Extract test from image
-        response = face_extraction_response(image)
         extractor = TextExtractor(preferences)
         result = extractor.extract(image)
-        response = dict(itertools.chain(response.items(), result.items()))
+
+        response = face_extraction_response(image, result)
 
         return response
 
@@ -188,7 +187,20 @@ def _grab_image(path=None, stream=None, url=None):
     return image
 
 
-def face_extraction_response(image):
+def face_extraction_response(image, text_extract_result=None):
+    """
+    This function convert the extract cv2 image and converts it
+    to a jpg image. Furthermore, the jpg image is converted to
+    Base64 jpg type and returned. If text extraction result are provided
+    the response will contain the data of text extraction result as well.
+    Author(s):
+        Stephan Nell
+    Args:
+        image: The cv2 (numpy) image that should be converted to jpg
+        text_extract_result (dict) the extracted text results
+    Returns:
+        (:obj:'Response'): The response object that contains the information for HTTP transmissiond
+    """
     extractor = FaceExtractor()
     result = extractor.extract(image)
     _, buffer = cv2.imencode('.jpg', result)
@@ -200,7 +212,8 @@ def face_extraction_response(image):
     jpg_img = jpg_img.replace("'", "")
     data = jsonify(
         {
-            "extracted_face": jpg_img
+            "extracted_face": jpg_img,
+            "text_extract_result": text_extract_result
         })
     # prepare response
     response = make_response(data)
