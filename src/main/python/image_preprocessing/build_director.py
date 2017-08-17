@@ -34,11 +34,11 @@ class BuildDirector:
 
         if 'blur_method' in preferences:
             blur_method = preferences['blur_method']
-        elif identification_type['type'] == 'idcard':
+        elif identification_type == 'idcard':
             blur_method = 'gaussian'
-        elif identification_type['type'] == 'idbook':
-            blur_method = 'median'
-        elif identification_type['type'] == 'studentcard':
+        elif identification_type == 'idbook':
+            blur_method = 'gaussian'
+        elif identification_type == 'studentcard':
             blur_method = 'median'
         else:
             # Default
@@ -47,18 +47,20 @@ class BuildDirector:
         if blur_method == 'median':
             blur_kernel_size = [9]
         else:
-            if identification_type['type'] == 'idbook':
+            if identification_type == 'idbook':
                 blur_kernel_size = [(7, 7)]
+            elif identification_type == 'idcard':
+                blur_kernel_size = [(9, 9)]
             else:
                 blur_kernel_size = [(3, 3)]
 
         if 'threshold_method' in preferences:
             threshold_method = preferences['threshold_method']
-        elif identification_type['type'] == 'idcard':
+        elif identification_type == 'idcard':
             threshold_method = 'otsu'
-        elif identification_type['type'] == 'idbook':
+        elif identification_type == 'idbook':
             threshold_method = 'adaptive'
-        elif identification_type['type'] == 'studentcard':
+        elif identification_type == 'studentcard':
             threshold_method = 'adaptive'
         else:
             # Default
@@ -67,13 +69,13 @@ class BuildDirector:
         if 'color' in preferences:
             color_extraction_type = 'extract'
             color = preferences['color']
-        elif identification_type['type'] == 'idcard':
+        elif identification_type == 'idcard':
             color_extraction_type = 'extract'
             color = 'red'
-        elif identification_type['type'] == 'idbook':
+        elif identification_type == 'idbook':
             color_extraction_type = 'extract'
             color = 'red'
-        elif identification_type['type'] == 'studentcard':
+        elif identification_type == 'studentcard':
             color_extraction_type = 'extract'
             color = 'red'
         else:
