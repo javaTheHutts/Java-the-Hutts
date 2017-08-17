@@ -17,38 +17,51 @@ class BuildDirector:
     The BuildDirector constructs the Pipeline using the PipelineBuilder
     """
     @staticmethod
-    def construct(preferences):
+    def construct(preferences, identification_type):
         """
         This function constructs the pipeline
         Author(s):
-            Nicolai van Niekerk
+            Nicolai van Niekerk and Marno Hermann
         Args:
             preferences (dict): User-specified techniques to use in pipeline.
+            identification_type (string): Containts the type of identification, this is used
+                                        to determine which techniques are used.
         Returns:
             :Pipeline (Constructed pipeline)
         """
         builder = PipelineBuilder()
-
         # Use template matching to identify type here
 
         if 'blur_method' in preferences:
             blur_method = preferences['blur_method']
+        elif identification_type == 'idcard':
+            blur_method = 'gaussian'
+        elif identification_type == 'idbook':
+            blur_method = 'gaussian'
+        elif identification_type == 'studentcard':
+            blur_method = 'median'
         else:
-            """
-                if type == 'card':
-                    blur_method = 'gaussian'
-                else if type == 'book':
-                    blur_method = 'median'
-            """
+            # Default
             blur_method = 'median'
 
         if blur_method == 'median':
             blur_kernel_size = [9]
         else:
-            blur_kernel_size = [(3, 3)]
+            if identification_type == 'idbook':
+                blur_kernel_size = [(7, 7)]
+            elif identification_type == 'idcard':
+                blur_kernel_size = [(9, 9)]
+            else:
+                blur_kernel_size = [(3, 3)]
 
         if 'threshold_method' in preferences:
             threshold_method = preferences['threshold_method']
+        elif identification_type == 'idcard':
+            threshold_method = 'otsu'
+        elif identification_type == 'idbook':
+            threshold_method = 'adaptive'
+        elif identification_type == 'studentcard':
+            threshold_method = 'adaptive'
         else:
             # Default
             threshold_method = 'adaptive'
@@ -56,6 +69,15 @@ class BuildDirector:
         if 'color' in preferences:
             color_extraction_type = 'extract'
             color = preferences['color']
+        elif identification_type == 'idcard':
+            color_extraction_type = 'extract'
+            color = 'red'
+        elif identification_type == 'idbook':
+            color_extraction_type = 'extract'
+            color = 'red'
+        elif identification_type == 'studentcard':
+            color_extraction_type = 'extract'
+            color = 'red'
         else:
             # Default
             color_extraction_type = 'extract'
