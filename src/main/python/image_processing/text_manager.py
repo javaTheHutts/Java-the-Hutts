@@ -160,6 +160,8 @@ class TextManager:
         stripped_and_sanitised = re.sub(r'(\n\s*\n)', '\n', sanitised)
         # Remove multiple spaces before text-filled line.
         clean_text = re.sub(r'(\s*\n\s*)', '\n', stripped_and_sanitised)
+        # Remove multiple spaces in-between text-filled line.
+        clean_text = re.sub(r'( +)', ' ', clean_text)
         # Return cleaned text with additional stripping for good measure.
         return clean_text.strip()
 
