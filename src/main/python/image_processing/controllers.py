@@ -5,11 +5,14 @@ Author(s): Nicolai van Niekerk, Stephan Nell
 Handles all requests relevant to the extraction service of the API.
 ----------------------------------------------------------------------
 """
-from imutils.convenience import url_to_image
-from flask import Blueprint, jsonify, request
 import cv2
+import base64
 import numpy as np
 from image_processing.sample_extract import TextExtractor
+from image_processing.sample_extract import FaceExtractor
+from imutils.convenience import url_to_image
+from flask import Blueprint, jsonify, request, make_response
+
 
 extract = Blueprint('extract', __name__)
 
@@ -96,13 +99,8 @@ def extract_face():
             # load the image and convert
             image = _grab_image(url=url)
     # Call open CV commands here with the extracted image
-    print(image)
-    face = "img/returnFace.jpg"
-    return jsonify(
-        {
-            "extracted_face": face
-        }
-    )
+    response = face_extraction_response(image)
+    return response
 
 
 @extract.route('/extractAll', methods=['POST'])
@@ -134,23 +132,28 @@ def extract_all():
                 return jsonify(data)
             # load the image and convert
             image = _grab_image(url=url)
-            print(image)
         # Call open CV commands here with the extracted image
-        data.update(
-            {
-                "surname": "Nell",
-                "names": "Stephan Jack",
-                "sex": "M",
-                "nationality": "RSA",
-                "identity_number": "9511068172098",
-                "date_of_birth": "06-11-1995",
-                "country_of_birth": "RSA",
-                "status": "citizen",
-                "face": "img/returnFace.jpg",
-                "success": True
-            }
-        )
-    return jsonify(data)
+        # Grab additional parameters specifying techniques
+        preferences = {}
+
+        if 'blur_technique' in request.form:
+            preferences['blur_method'] = request.form['blur_technique']
+        if 'threshold_technique' in request.form:
+            preferences['threshold_method'] = request.form['threshold_technique']
+        if 'remove_face' in request.form:
+            preferences['remove_face'] = request.form['remove_face']
+        if 'remove_barcode' in request.form:
+            preferences['remove_barcode'] = request.form['remove_barcode']
+        if 'color' in request.form:
+            preferences['color'] = request.form['color']
+
+        # Extract test from image
+        extractor = TextExtractor(preferences)
+        result = extractor.extract(image)
+
+        response = face_extraction_response(image, result)
+
+        return response
 
 
 def _grab_image(path=None, stream=None, url=None):
@@ -183,3 +186,40 @@ def _grab_image(path=None, stream=None, url=None):
             image = np.asarray(bytearray(data), dtype="uint8")
             image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     return image
+
+
+def face_extraction_response(image, text_extract_result=None):
+    """
+    This function converts the extracted cv2 image and converts it
+    to a jpg image. Furthermore, the jpg image is converted to
+    Base64 jpg type and returned. If text extraction results are provided
+    the response will contain the data of text extraction result as well.
+    Author(s):
+        Stephan Nell
+    Args:
+        image: The cv2 (numpy) image that should be converted to jpg
+        text_extract_result (dict) the extracted text results
+    Returns:
+        (:obj:'Response'): The response object that contains the information for HTTP transmissiond
+    """
+    extractor = FaceExtractor()
+    result = extractor.extract(image)
+    _, buffer = cv2.imencode('.jpg', result)
+    # replace base64 indicator for the first occurrence
+    jpg_img = str(base64.b64encode(buffer)).replace("b", ",", 1)
+    # apply base64 jpg encoding
+    jpg_img = 'data:image/jpg;base64' + jpg_img
+    # cleanup interference
+    jpg_img = jpg_img.replace("'", "")
+    data = jsonify(
+        {
+            "extracted_face": jpg_img,
+            "text_extract_result": text_extract_result
+        })
+    # prepare response
+    response = make_response(data)
+    response.mimetype = 'multipart/form-data'
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+
+    return response
