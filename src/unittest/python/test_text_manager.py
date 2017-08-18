@@ -38,9 +38,6 @@ def test_clean_up_unicode_support():
 def test_clean_up_remove_multiple_newlines():
     """
     Test the removal of multiple newlines in the clean up function.
-
-    TODO:
-        Look at the possible need to remove multiple spaces.
     """
     txt_man = TextManager()
     in_str = (
@@ -60,6 +57,29 @@ def test_clean_up_remove_multiple_newlines():
         'Names\n'
         'John-Michael\n'
         'Robert'
+    )
+
+
+def test_clean_up_remove_multiple_spaces():
+    """
+    Test the removal of multiple spaces in the clean up function.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'Identity Number\n'
+        '123456789\n'
+        'Surname\n'
+        'Doe\n'
+        'Names\n'
+        'John     Michael   Robert'
+    )
+    assert txt_man.clean_up(in_str) == (
+        'Identity Number\n'
+        '123456789\n'
+        'Surname\n'
+        'Doe\n'
+        'Names\n'
+        'John Michael Robert'
     )
 
 
@@ -91,9 +111,6 @@ def test_clean_up_remove_default():
 def test_clean_up_remove_specified():
     """
     Test the clean up function's removal with an additional list of characters to remove.
-
-    TODO:
-        Look at escaping troublesome characters such as '^' and '-'.
     """
     txt_man = TextManager()
     in_str = (
@@ -102,10 +119,10 @@ def test_clean_up_remove_specified():
         'Surname\n'
         'Döe\n'
         'Names\n'
-        'John-Michael\n'
+        'John+Michael\n'
         'Robert'
     )
-    assert txt_man.clean_up(in_str, ['ö', '-']) == (
+    assert txt_man.clean_up(in_str, ['+', 'ö']) == (
         'Identity Number\n'
         '123456789\n'
         'Surname\n'
@@ -141,6 +158,32 @@ def test_clean_up_remove_specified_overwrite():
     )
 
 
+def test_clean_up_remove_specified_sanitise():
+    """
+    Test the clean up function's removal with an additional list of characters to remove, but tests to see if certain
+    control characters used within the underlying regex, such as ], [, ^ and -, are escaped.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'Identity Number\n'
+        '123456789\n'
+        'Surname\n'
+        'Doe[^-]\n'
+        'Names\n'
+        'John-Michael\n'
+        'Robert'
+    )
+    assert txt_man.clean_up(in_str, [']', '[', '^', '-']) == (
+        'Identity Number\n'
+        '123456789\n'
+        'Surname\n'
+        'Doe\n'
+        'Names\n'
+        'JohnMichael\n'
+        'Robert'
+    )
+
+
 def test_clean_up_invalid_arg_in_str():
     """
     Test that the clean up function raises the correct exception for an invalid in_str type.
@@ -168,6 +211,16 @@ def test_clean_up_invalid_arg_deplorables_2():
     txt_man = TextManager()
     with pytest.raises(TypeError):
         txt_man.clean_up('', [1.1, 2.2, 3.3])
+
+
+def test_clean_up_invalid_arg_deplorables_3():
+    """
+    Test that the clean up function raises the correct exception for an invalid deplorables type.
+    Particularly, checks to see if it is not a list of srings.
+    """
+    txt_man = TextManager()
+    with pytest.raises(TypeError):
+        txt_man.clean_up('', ['almost', 'but not quite', 3.3])
 
 
 def test_clean_up_invalid_arg_append_deplorables():
@@ -271,7 +324,7 @@ def test_dictify_default_id_num_found():
     }
 
 
-def test_dictify_default_id_num_found_sameline():
+def test_dictify_default_id_num_found_same_line():
     """
     Test the case in which an ID number was found, on the same line as the ID number field name, by dictify and
     whether it is used to extract other information such as date of birth, status and sex.
@@ -362,7 +415,7 @@ def test_dictify_id_in_barcode():
         'Jane-Michael\n'
         'Robert'
     )
-    assert txt_man.dictify(in_str, {'identity_number': '7101134111111'}) == {
+    assert txt_man.dictify(in_str, barcode_data={'identity_number': '7101134111111'}) == {
         'identity_number': '7101134111111',
         'surname': 'Doe',
         'names': 'Jane-Michael Robert',
@@ -374,15 +427,10 @@ def test_dictify_id_in_barcode():
     }
 
 
-def test_dictify_multiline_1():
+def test_dictify_multi_line_1():
     """
     Test the ability of the dictify function to retrieve field values over multiple lines.
     This case checks for a maximum of 2 lines.
-
-    TODO:
-        Update the multi_line_end fields in the contexts... specifically Names.
-        Check that dictify doesn't match field values as field names.
-        Allow the ability to specify max lines.
     """
     txt_man = TextManager()
     in_str = (
@@ -409,7 +457,7 @@ def test_dictify_multiline_1():
     }
 
 
-def test_dictify_multiline_2():
+def test_dictify_multi_line_2():
     """
     Test the ability of the dictify function to retrieve field values over multiple lines.
     This case checks if a match to multi_line_end was found.
@@ -429,6 +477,85 @@ def test_dictify_multiline_2():
         'identity_number': '7101135111011',
         'surname': 'Doe',
         'names': 'John-Michael',
+        'sex': 'M',
+        'date_of_birth': '71-01-13',
+        'country_of_birth': None,
+        'status': 'Citizen',
+        'nationality': None
+    }
+
+
+def test_dictify_multi_line_3():
+    """
+    Test the ability of the dictify function to retrieve field values over multiple lines.
+    This case checks how a specified multi_line field value is dealt with if the value does not exist at the end of
+    the in_string.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'Names'
+    )
+    assert txt_man.dictify(in_str) == {
+        'identity_number': None,
+        'surname': None,
+        'names': None,
+        'sex': None,
+        'date_of_birth': None,
+        'country_of_birth': None,
+        'status': None,
+        'nationality': None
+    }
+
+
+def test_dictify_bare_multi_line_4():
+    """
+    Test the ability of the dictify function to retrieve field values over multiple lines.
+    This case checks how a specified multi_line field value is dealt with if the value exists, but is at the end of
+    the in_string.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'Surname\n'
+        'Doe\n'
+        'Names\n'
+        'John\n'
+        'Robert'
+    )
+    assert txt_man.dictify(in_str, max_multi_line=4) == {
+        'identity_number': None,
+        'surname': 'Doe',
+        'names': 'John Robert',
+        'sex': None,
+        'date_of_birth': None,
+        'country_of_birth': None,
+        'status': None,
+        'nationality': None
+    }
+
+
+def test_dictify_max_multi_line():
+    """
+    Test the ability of the dictify function to retrieve field values over multiple lines.
+    This case checks if the correct number of multi_line was considered when specified.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'Identity Number\n'
+        '7101135111011\n'
+        'Surname\n'
+        'Doe\n'
+        'Names\n'
+        'John-Michael\n'
+        'Robert\n'
+        'Douglas\n'
+        'Ignore'
+        'Sex\n'
+        'M'
+    )
+    assert txt_man.dictify(in_str, max_multi_line=3) == {
+        'identity_number': '7101135111011',
+        'surname': 'Doe',
+        'names': 'John-Michael Robert Douglas',
         'sex': 'M',
         'date_of_birth': '71-01-13',
         'country_of_birth': None,
@@ -496,6 +623,57 @@ def test_dictify_fuzzy_2():
         'country_of_birth': None,
         'status': 'Citizen',
         'nationality': 'RSA'
+    }
+
+
+def test_dictify_fuzzy_min_ratio():
+    """
+    Tests the dictify function fuzzy matching with a specified minimum ratio.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'Idenmy Number lll\n'
+        '7101135111011\n'
+        'Suriname\n'
+        'Doe\n'
+        'Names\n'
+        'John-Michael\n'
+        'Robert\n'
+        'Sex\n'
+        'M\n'
+        'Nahonallly\n'
+        'RSA\n'
+    )
+    assert txt_man.dictify(in_str, fuzzy_min_ratio=90) == {
+        'identity_number': None,
+        'surname': 'Doe',
+        'names': 'John-Michael Robert',
+        'sex': 'M',
+        'date_of_birth': None,
+        'country_of_birth': None,
+        'status': None,
+        'nationality': None
+    }
+
+
+def test_dictify_bare():
+    """
+    Test the dictify function's behaviour when a field name is matched, but no field value follows and is at the end
+    of the in_string.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'Surname\n'
+    )
+    assert txt_man.dictify(in_str) == {
+        'identity_number': None,
+        'surname': None,
+        'names': None,
+        'sex': None,
+        'date_of_birth': None,
+        'country_of_birth': None,
+        'status': None,
+        'nationality': None
     }
 
 
