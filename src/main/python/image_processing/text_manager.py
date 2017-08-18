@@ -170,8 +170,7 @@ class TextManager:
         reg_exp = r'[^\w\d\s-]'
         # If the existing list undesirable characters is not empty,
         # add the list of undesirable characters to the regex that is to be compiled.
-        if self._deplorables:
-            reg_exp += r'|[' + ''.join(self._deplorables) + ']'
+        reg_exp += r'|[' + ''.join(self._deplorables) + ']'
         # Returned a compiled regular expression pattern to use for matching.
         return re.compile(reg_exp, re.UNICODE)
 
@@ -188,6 +187,9 @@ class TextManager:
 
         Returns:
             (list): A list of sanitised characters.
+
+        Raises:
+            TypeError: If deplorables is not a list of strings.
         """
         # List of sanitised deplorables
         sanitised = []
@@ -200,6 +202,9 @@ class TextManager:
                 deplorable = re.sub(re.compile(r'-'), '\-', deplorable)
                 deplorable = re.sub(re.compile(r'^'), '\^', deplorable)
                 sanitised.append(deplorable)
+            else:
+                raise TypeError('Bad type for arg deplorables - expected list of strings. Received type '
+                                + str(type(deplorables)))
         return sanitised
 
     def dictify(self, id_string, barcode_data=None, fuzzy_min_ratio=65, max_multi_line=2):
