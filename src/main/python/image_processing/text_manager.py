@@ -58,6 +58,7 @@ class TextManager:
     def __init__(self, fuzzy_min_ratio=65):
         """
         Responsible for initialising the TextManager object.
+
         Args:
             fuzzy_min_ratio (int): The threshold value for the minimum ratio of fuzziness when comparing
             two strings.
@@ -84,7 +85,7 @@ class TextManager:
             'text': True,
             'to_uppercase': False,
             'multi_line': True,
-            'multi_line_end': ['sex']
+            'multi_line_end': ['sex', 'country of birth']
         }, {
             'field': 'sex',
             'find': ['sex'],
@@ -216,9 +217,11 @@ class TextManager:
         for deplorable in deplorables:
             # Filter for valid inputs.
             if type(deplorable) is str and deplorable:
-                # Escape ] and [ so as not to break the regex pattern.
+                # Escape ], [, - and ^ so as not to break the regex pattern.
                 deplorable = re.sub(re.compile(r']'), '\]', deplorable)
                 deplorable = re.sub(re.compile(r'\['), '\[', deplorable)
+                deplorable = re.sub(re.compile(r'-'), '\-', deplorable)
+                deplorable = re.sub(re.compile(r'^'), '\^', deplorable)
                 sanitised.append(deplorable)
         return sanitised
 
