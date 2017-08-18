@@ -333,7 +333,6 @@ $(document).ready(function() {
           });
 
           // Show face
-          console.log(cardComponents.text_extract_result)
           document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
           
           // Populate and unhide pipeline

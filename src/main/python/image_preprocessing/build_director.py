@@ -18,7 +18,7 @@ class BuildDirector:
     def construct_text_extract_pipeline(preferences, identification_type):
         """
         This function constructs the pipeline for text extraction.
-        This includes building different managers with there specify parameters.
+        This includes building different managers with their specific parameters.
         These managers will be called within the pipeline when executed.
         Author(s):
             Nicolai van Niekerk and Marno Hermann
@@ -105,7 +105,7 @@ class BuildDirector:
     def construct_face_extract_pipeline():
         """
         This function constructs the pipeline for face extraction.
-        This includes building different managers with there specify parameters.
+        This includes building different managers with their specific parameters.
         These managers will be called within the pipeline when executed.
         Author(s):
             Stephan Nell

@@ -190,9 +190,9 @@ def _grab_image(path=None, stream=None, url=None):
 
 def face_extraction_response(image, text_extract_result=None):
     """
-    This function convert the extract cv2 image and converts it
+    This function converts the extracted cv2 image and converts it
     to a jpg image. Furthermore, the jpg image is converted to
-    Base64 jpg type and returned. If text extraction result are provided
+    Base64 jpg type and returned. If text extraction results are provided
     the response will contain the data of text extraction result as well.
     Author(s):
         Stephan Nell
