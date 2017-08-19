@@ -3,7 +3,7 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 */
 
 /* global $ */
-var PATH_TO_PIPELINE = '../../hutts/_build/img/';
+var PATH_TO_PIPELINE = '../../hutts_build/img/';
 
 $(document).ready(function() {
 
@@ -381,22 +381,21 @@ function readURL(input) {
 
 // Populate slides for pipeline carousel
 function populatePipeline(isTextPipeline, numImages) {
-  var attachTo = isTextPipeline?
-                  $('#text-pipeline collapsible-body card pipeline'):
-                  $('#profile-pipeline collapsible-body card pipeline');
+  var attachTo = isTextPipeline? $('#text-pipe'): $('#profile-pipe');
   var imagePrepend = isTextPipeline? '': 'f';
-  var imagePath = PATH_TO_PIPELINE + imagePrepend + i + '.png';
-  for (var i = 1; i < numImages; i++) {
+  // Clear existing pipeline slides
+  attachTo.slick('removeSlide', null, null, true);
+  for (var i = 1; i <= numImages; i++) {
+    var imagePath = PATH_TO_PIPELINE + imagePrepend + i + '.png';
     // Create anchor
     var anchor = $('<a>', {
       'href': imagePath,
-      'data-lightbox': 'text-pipelet'
+      'data-lightbox': isTextPipeline? 'text-pipelet': 'profile-pipelet'
     }).appendTo(attachTo);
     // Attach to the anchor
     $('<div>', {
-      'class': 'pipe-slide'
-    }).css({
-      'background-image': 'url(' + imagePath + ');'
+      'class': 'pipe-slide',
+      'style': 'background-image: url(' + imagePath + ');'
     }).appendTo(anchor);
   }
 }
