@@ -49,6 +49,16 @@ class TextVerify:
                 percentage match value if verbose is False, or returns a dict of all the determined percentage match
                 values if verbose is True.
         """
+        if type(extracted) is not dict:
+            raise TypeError('Bad type for arg extracted - expected dict. Received type ' + str(type(extracted)))
+        if type(verifier) is not dict:
+            raise TypeError('Bad type for arg verifier - expected dict. Received type ' + str(type(verifier)))
+        if type(threshold) is not float:
+            raise TypeError('Bad type for arg threshold - expected float. Received type ' + str(type(threshold)))
+        if type(min_matches) is not int:
+            raise TypeError('Bad type for arg min_matches - expected int. Received type ' + str(type(min_matches)))
+        if type(verbose) is not bool:
+            raise TypeError('Bad type for arg verbose - expected bool. Received type ' + str(type(verbose)))
         min_percentage = threshold * 100
         # Logging for debugging and verbose purposes.
         logger.debug('Threshold for verification set as: ' + str(min_percentage))
@@ -80,12 +90,21 @@ class TextVerify:
             total_score = self._total_match(scores)
         # Either the minimum number of scores criteria was not met, or their were no matches at all.
         else:
-            logger.warning('A total of ' + str(num_scores) + ' was found, which is less than the minimum or is zero')
-        # Return the final result
+            logger.warning('A total of ' + str(num_scores) + ' matches were found, which is less than the minimum')
+        # Determine whether or not the text is verified.
+        is_verified = total_score >= min_percentage
+        # Logging for debugging purposes.
+        logger.debug('Intermediate match percentages:')
+        [logger.debug(log_line) for log_line in prettify_json_message(scores).split('\n')]
+        logger.debug('Final match percentage: ' + str(total_score))
+        logger.debug('Threshold to pass: ' + str(min_percentage))
+        logger.debug('Result' + 'Passed' if is_verified else 'Failed')
+        # Return the final result.
         if not verbose:
-            return total_score >= min_percentage, total_score
+            return is_verified, total_score
+        # Append the total to the existing scores for verbose, and return all percentage values.
         scores['total'] = total_score
-        return total_score >= min_percentage, scores
+        return is_verified, scores
 
     @staticmethod
     def _percentage_match(str_x, str_y):
@@ -102,7 +121,15 @@ class TextVerify:
 
         Returns:
             (float): Match percentage of the two given strings.
+
+        Raises:
+            TypeError: If str_x is not a string.
+            TypeError: If str_y is not a string.
         """
+        if type(str_x) is not str:
+            raise TypeError('Bad type for arg str_x - expected string. Received type ' + str(type(str_x)))
+        if type(str_y) is not str:
+            raise TypeError('Bad type for arg str_y - expected string. Received type ' + str(type(str_y)))
         return Levenshtein.ratio(str_x, str_y) * 100
 
     @staticmethod
@@ -118,6 +145,9 @@ class TextVerify:
             matches (dict): A dictionary of pre-calculated, match percentages.
 
         Returns:
-            (float): A total match percentage for a given set of match percentages.
+            (float): A total match percentage (out of 100) for a given set of match percentages.
+
+        Todo:
+            Investigate the proposal of calculating a weighted total.
         """
         return sum(matches.values()) / len(matches)
