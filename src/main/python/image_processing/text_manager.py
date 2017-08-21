@@ -18,25 +18,8 @@ class TextManager:
     for further processing.
 
     Attributes:
-        _deplorables (list): A list of strings that contain characters that is to be filtered out from the OCR output
+        deplorables (list): A list of strings that contain characters that is to be filtered out from the OCR output
             string during string cleaning.
-
-        fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
-            two strings.
-
-        _max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are noted
-            as running onto multiple lines.
-            e.g. Given OCR output such as :
-                ...
-                Names\n
-                This is a long\n
-                long list of names\n
-                that spans multiple\n
-                lines\n
-                ...
-                max_multi_line = 2, means that only the string:
-                "This is a long list of names" is retrieved.
-
         match_contexts (list): A list of dictionaries that contain the contextual information used in the process of
             retrieving field values from the OCR output string.
             e.g. {
@@ -55,12 +38,9 @@ class TextManager:
                     ]
                 }
     """
-    def __init__(self, fuzzy_min_ratio=65):
+    def __init__(self):
         """
         Responsible for initialising the TextManager object.
-        Args:
-            fuzzy_min_ratio (int): The threshold value for the minimum ratio of fuzziness when comparing
-            two strings.
         """
         # Specify initial list of undesirable characters.
         self._deplorables = ['_']
@@ -84,7 +64,7 @@ class TextManager:
             'text': True,
             'to_uppercase': False,
             'multi_line': True,
-            'multi_line_end': ['sex']
+            'multi_line_end': ['sex', 'country of birth']
         }, {
             'field': 'sex',
             'find': ['sex'],
@@ -116,10 +96,6 @@ class TextManager:
             'to_uppercase': True,
             'multi_line': False
         }]
-        # Set the minimum ratio of fuzziness for fuzzy string matching used.
-        self.fuzzy_min_ratio = fuzzy_min_ratio
-        # Set the maximum number of lines for a multi line field in the id string to extract
-        self._max_multi_line = 2
 
     def clean_up(self, in_string, deplorables=None, append_to_deplorables=True):
         """
@@ -159,6 +135,8 @@ class TextManager:
         stripped_and_sanitised = re.sub(r'(\n\s*\n)', '\n', sanitised)
         # Remove multiple spaces before text-filled line.
         clean_text = re.sub(r'(\s*\n\s*)', '\n', stripped_and_sanitised)
+        # Remove multiple spaces in-between text-filled line.
+        clean_text = re.sub(r'( +)', ' ', clean_text)
         # Return cleaned text with additional stripping for good measure.
         return clean_text.strip()
 
@@ -192,8 +170,7 @@ class TextManager:
         reg_exp = r'[^\w\d\s-]'
         # If the existing list undesirable characters is not empty,
         # add the list of undesirable characters to the regex that is to be compiled.
-        if self._deplorables:
-            reg_exp += r'|[' + ''.join(self._deplorables) + ']'
+        reg_exp += r'|[' + ''.join(self._deplorables) + ']'
         # Returned a compiled regular expression pattern to use for matching.
         return re.compile(reg_exp, re.UNICODE)
 
@@ -210,19 +187,27 @@ class TextManager:
 
         Returns:
             (list): A list of sanitised characters.
+
+        Raises:
+            TypeError: If deplorables is not a list of strings.
         """
         # List of sanitised deplorables
         sanitised = []
         for deplorable in deplorables:
             # Filter for valid inputs.
             if type(deplorable) is str and deplorable:
-                # Escape ] and [ so as not to break the regex pattern.
+                # Escape ], [, - and ^ so as not to break the regex pattern.
                 deplorable = re.sub(re.compile(r']'), '\]', deplorable)
                 deplorable = re.sub(re.compile(r'\['), '\[', deplorable)
+                deplorable = re.sub(re.compile(r'-'), '\-', deplorable)
+                deplorable = re.sub(re.compile(r'^'), '\^', deplorable)
                 sanitised.append(deplorable)
+            else:
+                raise TypeError('Bad type for arg deplorables - expected list of strings. Received type '
+                                + str(type(deplorables)))
         return sanitised
 
-    def dictify(self, id_string, barcode_data=None):
+    def dictify(self, id_string, barcode_data=None, fuzzy_min_ratio=65, max_multi_line=2):
         """
         This function is responsible for generating a dictionary object containing the relevant ID information,
         such as names, surname, ID number, etc., from a given input string containing said relevant information.
@@ -233,6 +218,10 @@ class TextManager:
         Args:
             id_string (str): A string containing some ID information.
             barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
+            fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
+                two strings.
+            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
+                noted as running onto multiple lines.
 
         Returns:
             (dict): A dictionary object containing the relevant, extracted ID information.
@@ -257,7 +246,7 @@ class TextManager:
             id_info['identity_number'] = barcode_data['identity_number']
             self._id_number_information_extraction(id_info, barcode_data['identity_number'])
         # Attempt to populate id_info.
-        self._populate_id_information(id_string, id_info)
+        self._populate_id_information(id_string, id_info, fuzzy_min_ratio, max_multi_line)
         # Return the info that was found.
         return id_info
 
@@ -294,7 +283,7 @@ class TextManager:
         # Populate id_info with status info.
         id_info['status'] = 'Citizen' if status_digit == '0' else 'Non Citizen'
 
-    def _populate_id_information(self, id_string, id_info):
+    def _populate_id_information(self, id_string, id_info, fuzzy_min_ratio, max_multi_line):
         """
         This function is responsible for populating a dictionary object with information that it is able to find
         and extract from a given string containing ID information.
@@ -305,6 +294,10 @@ class TextManager:
         Args:
             id_string (str): A string containing some ID information.
             id_info (dict): A dictionary object used to house extracted ID information.
+            fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
+                two strings.
+            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
+                noted as running onto multiple lines.
         """
         # Split the id_string on the newline character to generate a list.
         id_string_list = id_string.split('\n')
@@ -315,13 +308,13 @@ class TextManager:
             # Only retrieve information if it does not exist or it could not previously
             # be determined.
             if key not in id_info or not id_info[key]:
-                id_info[key] = self._get_match(id_string_list, match_context)
+                id_info[key] = self._get_match(id_string_list, match_context, fuzzy_min_ratio, max_multi_line)
                 # If the ID number has been retrieved, use it to extract other useful
                 # information.
                 if key == 'identity_number' and id_info[key]:
                     self._id_number_information_extraction(id_info, id_info[key])
 
-    def _get_match(self, id_string_list, match_context):
+    def _get_match(self, id_string_list, match_context, fuzzy_min_ratio, max_multi_line):
         """
         This function is responsible for searching through a list of lines from an ID string, and extracting the
         relevant ID information based on some context for image_processing that is provided as input. Fuzzy string
@@ -334,12 +327,26 @@ class TextManager:
         Args:
             id_string_list (list): An ID string that has been broken down into a list of individual lines.
             match_context (dict): A dictionary object that provides context for the information that is to be extracted.
+            fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
+                two strings.
+            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
+                noted as running onto multiple lines.
+            e.g. Given OCR output such as :
+                ...
+                Names\n
+                This is a long\n
+                long list of names\n
+                that spans multiple\n
+                lines\n
+                ...
+                max_multi_line = 2, means that only the string:
+                "This is a long list of names" is retrieved.
 
         Returns:
             (str): A string containing the extracted information, if a match was found.
             (None): If nothing was matched or an extracted value is an empty string.
         """
-        best_match_ratio = self.fuzzy_min_ratio
+        best_match_ratio = fuzzy_min_ratio
         match = None
         skip_to_index = -1
         id_num_lines = len(id_string_list)
@@ -374,7 +381,7 @@ class TextManager:
                             if lower_index >= id_num_lines:
                                 continue
                             # Determine the upper bound index for field values that span multiple lines.
-                            upper_index = current_index + self._max_multi_line + 1
+                            upper_index = current_index + max_multi_line + 1
                             if upper_index > id_num_lines:
                                 upper_index = id_num_lines
                             # Iterate ahead to retrieve the field value that spans over multiple lines.
@@ -383,7 +390,7 @@ class TextManager:
                                 # been reached.
                                 for end_point in match_context['multi_line_end']:
                                     end_point_ratio = fuzz.token_set_ratio(end_point, id_string_list[forward_index])
-                                    if end_point_ratio >= self.fuzzy_min_ratio:
+                                    if end_point_ratio >= fuzzy_min_ratio:
                                         move_to_next_field = True
                                         skip_to_index = forward_index
                                         break
@@ -397,7 +404,7 @@ class TextManager:
                         continue
                     # Check if the field value is text and does not require to be converted to uppercase.
                     if match_context['text'] and not match_context['to_uppercase']:
-                        # Convert to lowercase and capitilise the character of each new word.
+                        # Convert to lowercase and capitalise the character of each new word.
                         match = match.lower().title()
                     # Check if conversion to uppercase was specified.
                     elif match_context['text'] and match_context['to_uppercase']:
