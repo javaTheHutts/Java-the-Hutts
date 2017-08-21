@@ -28,7 +28,7 @@ class TextVerify:
         # Logging for debugging purposes.
         logger.debug('Initialising TextVerify...')
 
-    def verify(self, extracted, verifier, threshold=0.75, min_matches=3, verbose=False):
+    def verify(self, extracted, verifier, threshold=0.75, min_matches=4, verbose=False):
         """
         This function is responsible for the verification of text that is extracted from an ID and is passed in,
         along with information that is to be used to verify the extracted text.
@@ -59,6 +59,8 @@ class TextVerify:
             raise TypeError('Bad type for arg min_matches - expected int. Received type ' + str(type(min_matches)))
         if type(verbose) is not bool:
             raise TypeError('Bad type for arg verbose - expected bool. Received type ' + str(type(verbose)))
+        # Set minimum number of matches, if zero or less set to one.
+        min_matches = min_matches if min_matches > 0 else 1
         min_percentage = threshold * 100
         # Logging for debugging and verbose purposes.
         logger.debug('Threshold for verification set as: ' + str(min_percentage))
@@ -76,7 +78,7 @@ class TextVerify:
         # if the keys match and the corresponding values exist.
         for key, value in verifier.items():
             if key in extracted and extracted[key]:
-                logger.debug('Computing match "' + value + '" and "' + extracted[key] + '"...')
+                logger.debug('Computing match "' + str(value) + '" and "' + str(extracted[key]) + '"...')
                 scores[key] = self._percentage_match(value, extracted[key])
                 logger.debug('"' + value + '" and "' + extracted[key] + '" match percentage is : ' + str(scores[key]))
             else:
@@ -85,10 +87,10 @@ class TextVerify:
         num_scores = len(scores)
         total_score = 0.0
         # Check if enough matches were found.
-        if num_scores >= min_matches and num_scores > 0:
+        if num_scores >= min_matches:
             # Calculate the total match score.
             total_score = self._total_match(scores)
-        # Either the minimum number of scores criteria was not met, or their were no matches at all.
+        # Either the minimum number of scores criteria was not met.
         else:
             logger.warning('A total of ' + str(num_scores) + ' matches were found, which is less than the minimum')
         # Determine whether or not the text is verified.
