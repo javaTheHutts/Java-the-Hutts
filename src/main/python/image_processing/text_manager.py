@@ -1,6 +1,6 @@
 """
 ----------------------------------------------------------------------
-Author(s): Stephan Nell, Marno Hermann, Jan-Justin van Tonder
+Authors: Stephan Nell, Marno Hermann, Jan-Justin van Tonder
 ----------------------------------------------------------------------
 This file contains the logic used to manage the text cleanup and
 extraction of OCR output.
