@@ -13,9 +13,7 @@ from server.hutts_logger import logger, prettify_json_message
 
 class TextVerify:
     """
-    This class is responsible for the verification of text that is extracted from an ID
-    and is passed in along with information that is to be used to verify the extracted
-    text.
+    This class is responsible for the verification of text that is extracted from an ID.
 
     Authors:
         Jan-Justin van Tonder
@@ -27,9 +25,30 @@ class TextVerify:
         Authors:
             Jan-Justin van Tonder
         """
+        # Logging for debugging purposes.
         logger.debug('Initialising TextVerify...')
 
     def verify(self, extracted, verifier, threshold=0.75, min_matches=3, verbose=False):
+        """
+        This function is responsible for the verification of text that is extracted from an ID and is passed in,
+        along with information that is to be used to verify the extracted text.
+
+        Args:
+            extracted (dict): A dictionary containing the information that was extracted from an ID.
+            verifier (dict): A dictionary containing the information against which the extracted data is to be
+                verified.
+            threshold (float): A threshold decimal value that is used to determine whether or not the final match
+                percentage is accepted as verified.
+            min_matches (int): The minimum number of matches that have to be calculated for the final result to be
+                considered as verified.
+            verbose (bool): Indicates whether or not to return all of the calculated match percentages.
+
+        Returns:
+            (bool, float | dict): The first value returned is a bool that indicates whether or not the total
+                percentage match is above the specified threshold value, while the second return value is the total
+                percentage match value if verbose is False, or returns a dict of all the determined percentage match
+                values if verbose is True.
+        """
         min_percentage = threshold * 100
         # Logging for debugging and verbose purposes.
         logger.debug('Threshold for verification set as: ' + str(min_percentage))
@@ -61,7 +80,7 @@ class TextVerify:
             total_score = self._total_match(scores)
         # Either the minimum number of scores criteria was not met, or their were no matches at all.
         else:
-            logger.warning('A total of ' + str(num_scores) + ' was found, which is less than the minimum')
+            logger.warning('A total of ' + str(num_scores) + ' was found, which is less than the minimum or is zero')
         # Return the final result
         if not verbose:
             return total_score >= min_percentage, total_score
@@ -70,8 +89,35 @@ class TextVerify:
 
     @staticmethod
     def _percentage_match(str_x, str_y):
+        """
+        This function is responsible for determining the percentage match for two strings and returning
+        said percentage.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            str_x (str): The first string that is used to perform matching.
+            str_y (str): The second string that is used to perform matching.
+
+        Returns:
+            (float): Match percentage of the two given strings.
+        """
         return Levenshtein.ratio(str_x, str_y) * 100
 
     @staticmethod
     def _total_match(matches):
+        """
+        This function is responsible for calculating a single, total percentage match value for a dict of match
+        values that have been calculated.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            matches (dict): A dictionary of pre-calculated, match percentages.
+
+        Returns:
+            (float): A total match percentage for a given set of match percentages.
+        """
         return sum(matches.values()) / len(matches)
