@@ -85,6 +85,12 @@ LOGGING_LOG_TO_FILE_FILENAME = 'hutts_verification.log'
 LOGGING_LOG_TO_FILE_DEFAULT_DIR = 'log/'
 """Specifies the log format to be used when logging to a file."""
 LOGGING_LOG_TO_FILE_FMT = '[%(asctime)s.%(msecs)03d][%(levelname)8s] -- (%(filename)s:%(lineno)d) -- %(message)s'
+"""Specifies the maximum number of bytes for the log file before a rotate (assuming a rotating file is used)."""
+LOGGING_LOG_TO_FILE_MAX_BYTES = 100000
+"""Specifies the number of backups for the log file (assuming a rotating file is used)."""
+LOGGING_LOG_TO_FILE_BACKUP_COUNT = 1
+"""Specifies the encoding for the log file."""
+LOGGING_LOG_TO_FILE_ENCODING = 'utf8'
 
 """
 A global reference to the custom logger to be used.
@@ -93,7 +99,7 @@ It is initialised to the default python logger to avoid errors during installati
 logger = logging
 
 
-def setup_logger(debug=False, log_file_dir=None):
+def setup_logger(app, debug=False, log_file_dir=None):
     """
     This function is responsible for creating the custom logger and delegating the creation of its handlers.
 
@@ -101,17 +107,21 @@ def setup_logger(debug=False, log_file_dir=None):
         Jan-Justin van Tonder
 
     Args:
+        app (obj): An instance of a flask server application.
+        debug (bool): Indicates whether or not to set the log level to DEBUG.
         log_file_dir (str): A directory in which the logger is to log to a file.
     """
     global logger
     logging_level = logging.DEBUG if debug else LOGGING_DEFAULT_LEVEL
-    logger = logging.getLogger(LOGGING_LOGGER_NAME)
+    logger = app.logger
     logger.setLevel(logging_level)
     if LOGGING_LOG_TO_CONSOLE:
         console_handler = get_console_handler()
+        console_handler.setLevel(logging_level)
         logger.addHandler(console_handler)
     if LOGGING_LOG_TO_FILE:
         file_handler = get_file_handler(log_file_dir)
+        file_handler.setLevel(logging.INFO)
         logger.addHandler(file_handler)
 
 
@@ -125,8 +135,9 @@ def disable_flask_logging(app_instance):
     Args:
         app_instance (obj): A reference to the current flask server application.
     """
-    app_instance.logger.handlers = []
-    app_instance.logger.propagate = True
+    for handler in app_instance.logger.handlers[:]:
+        app_instance.logger.removeHandler(handler)
+    app_instance.logger.propagate = False
     logger.getLogger('werkzeug').disabled = True
 
 
@@ -164,7 +175,12 @@ def get_file_handler(log_dir=None):
             raise
     log_file_path = os.path.join(log_file_dir, LOGGING_LOG_TO_FILE_FILENAME)
     formatter = logging.Formatter(fmt=LOGGING_LOG_TO_FILE_FMT, datefmt=LOGGING_LOG_DATE_FMT)
-    handler = RotatingFileHandler(log_file_path, encoding='utf8', maxBytes=100000, backupCount=1)
+    handler = RotatingFileHandler(
+        log_file_path,
+        encoding=LOGGING_LOG_TO_FILE_ENCODING,
+        maxBytes=LOGGING_LOG_TO_FILE_MAX_BYTES,
+        backupCount=LOGGING_LOG_TO_FILE_BACKUP_COUNT
+    )
     handler.setFormatter(formatter)
     return handler
 
