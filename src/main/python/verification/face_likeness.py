@@ -17,6 +17,7 @@ from processing import FaceDetector
 import argparse
 import cv2
 import os
+from server.hutts_logger import logger
 
 # Constants path to trained data for Shape Predictor and Face recognition
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
@@ -48,6 +49,6 @@ gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 (face_match, face_threshold) = face_verify_manager.verify(face1, face2, 0.55)
 
 if face_match:
-    print("Face Matches with a percentage of:", (1-face_threshold) * 100, "%")
+    logger.info("Face Matches with a percentage of:", (1-face_threshold) * 100, "%")
 else:
-    print("Face does not match with a threshold value of", (1 - face_threshold) * 100, "%")
+    logger.info("Face does not match with a threshold value of", (1 - face_threshold) * 100, "%")

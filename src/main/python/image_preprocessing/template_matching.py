@@ -2,6 +2,7 @@ import cv2
 import os
 import numpy as np
 import imutils
+from server.hutts_logger import logger
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
@@ -48,7 +49,7 @@ class TemplateMatching:
             (_, maximum_value, _, _) = cv2.minMaxLoc(result)
 
             if (maximum_value > threshold):
-                print(object_identifier)
+                logger.info(object_identifier)
                 return object_identifier
         # first two parameters create a range of [0.8;1.8]. 20 specifies that we want to split the
         # range in 20 equal sizes. Each of them is used as a ratio value to get different image sizes.
@@ -68,7 +69,8 @@ class TemplateMatching:
                 (_, maximum_value, _, _) = cv2.minMaxLoc(result)
 
                 if (maximum_value > threshold):
-                    print(object_identifier)
+                    logger.info(object_identifier)
                     return object_identifier
 
+        logger.warning('Unsuccessful template matching attempt')
         return 'None'

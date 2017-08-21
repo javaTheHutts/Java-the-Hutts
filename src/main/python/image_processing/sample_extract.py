@@ -7,6 +7,7 @@ import pytesseract
 from PIL import Image
 import cv2
 import os
+from server.hutts_logger import logger
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
@@ -42,23 +43,28 @@ class TextExtractor:
         """
         if 'remove_face' in self.preferences:
             self.remove_face = self.preferences['remove_face'] == 'true'
+        logger.debug('self.remove_face: ' + self.remove_face)
 
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
         data = {}
 
         # Perform perspective transformation and read from barcode.
+        logger.info('Performing perspective transformation...')
         image = simplification_manager.perspectiveTransformation(img)
         cv2.imwrite(DESKTOP + "/output/3.png", image)
         barcode_data_found, barcode_scan_data, barcoded_image = barcode_manager.get_barcode_info(image)
         if barcode_data_found:
+            logger.info('Barcode successfully scanned')
             data = {
                 'identity_number': barcode_scan_data.decode('utf-8'),
             }
 
         # Process image
         template_match = TemplateMatching()
+        logger.info('Performing template matching...')
         identification_type = template_match.identify(barcoded_image)
+        logger.info('Constructing text extraction pipeline')
         pipeline = BuildDirector.construct_text_extract_pipeline(self.preferences, identification_type)
         image = pipeline.process_text_extraction(barcoded_image, self.remove_face)
 
@@ -70,11 +76,11 @@ class TextExtractor:
         os.remove(filename)
 
         text_manager = TextManager()
-        print(text, "\n------------------------------------------------------")
+        logger.info('Cleaning up text...')
         clean_text = text_manager.clean_up(text, ['_'])
-        print(clean_text, "\n -----------------------------------------------")
+        logger.debug(clean_text)
         id_details = text_manager.dictify(clean_text, data)
-        print(id_details)
+        logger.debug(id_details)
         return id_details
 
 
@@ -95,10 +101,12 @@ class FaceExtractor:
         simplification_manager = SimplificationManager()
 
         # Perform perspective transformation
+        logger.info('Performing perspective transformation...')
         perspective_image = simplification_manager.perspectiveTransformation(img)
         cv2.imwrite(DESKTOP + "/output/10.png", perspective_image)
 
         # Process image
+        logger.info('Constructing facial extraction pipeline...')
         pipeline = BuildDirector.construct_face_extract_pipeline()
         image = pipeline.process_face_extraction(perspective_image)
 

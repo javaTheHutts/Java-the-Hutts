@@ -4,6 +4,7 @@ from image_preprocessing.color_manager import ColorManager
 from image_preprocessing.face_manager import FaceDetector
 from image_preprocessing.pipeline_builder import PipelineBuilder
 from image_preprocessing.thresholding_manager import ThresholdingManager
+from server.hutts_logger import logger
 
 # Constants path to trained data for Shape Predictor.
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
@@ -83,11 +84,11 @@ class BuildDirector:
             color_extraction_type = 'extract'
             color = 'red'
 
-        print("Blur Method: " + blur_method)
-        print("Kernel Size: " + str(blur_kernel_size))
-        print("ColorXType: " + color_extraction_type)
-        print("Color: " + color)
-        print("Threshold Method: " + threshold_method)
+        logger.info("Blur Method: " + blur_method)
+        logger.info("Kernel Size: " + str(blur_kernel_size))
+        logger.info("ColorXType: " + color_extraction_type)
+        logger.info("Color: " + color)
+        logger.info("Threshold Method: " + threshold_method)
 
         blur_manager = BlurManager(blur_method, blur_kernel_size)
         color_manager = ColorManager(color_extraction_type, color)

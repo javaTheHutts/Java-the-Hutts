@@ -1,5 +1,6 @@
 import cv2
 import os
+from server.hutts_logger import logger
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
@@ -30,24 +31,29 @@ class Pipeline:
 
         """
         # Remove face from image.
+        logger.info("Removing face: " + remove_face)
         if remove_face:
-            print("REMOVING FACE...")
+            logger.info("REMOVING FACE...")
             image = self.face_detector.blur_face(image)
             cv2.imwrite(DESKTOP + "/output/4.png", image)
 
         # Blur image.
+        logger.info("Blurring image...")
         blur_image = self.blur_manager.apply(image)
         cv2.imwrite(DESKTOP + "/output/5.png", blur_image)
 
         # Apply channel image_processing, tophat, blackhat or histogram equalization.
+        logger.info("Removing color channel...")
         color_image = self.color_manager.apply(blur_image)
         cv2.imwrite(DESKTOP + "/output/6.png", color_image)
 
         # Convert image to grayscale.
+        logger.info("Converting image to grayscale...")
         gray_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
         cv2.imwrite(DESKTOP + "/output/7.png", gray_image)
 
         # Apply thresholding.
+        logger.info("Applying thresholding...")
         thresholded_image = self.threshold_manager.apply(gray_image)
         cv2.imwrite(DESKTOP + "/output/8.png", thresholded_image)
 
@@ -64,6 +70,7 @@ class Pipeline:
             image: The processed image.
 
         """
+        logger.info("Extracting face from image")
         (extracted_face, _) = self.face_detector.extract_face(image)
 
         return extracted_face

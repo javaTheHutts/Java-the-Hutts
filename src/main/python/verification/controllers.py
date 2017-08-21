@@ -7,6 +7,7 @@ Handles all requests relevant to the validation service of the API
 """
 
 from flask import Blueprint, jsonify, request
+from server.hutts_logger import logger
 
 verify = Blueprint('verify', __name__)
 
@@ -33,13 +34,14 @@ def verify_id():
     # gender = request.form['gender']
     # date_of_birth = request.form['dob']
     # face = request.files.get('face_img')
-    print(request)
+    logger.debug(request)
 
     # do stuff to get result
 
     result = {
         "percent_match": 63
     }
+    logger.info('Match: ' + result['percent_match'])
     return jsonify(result)
 
 
@@ -63,6 +65,7 @@ def verify_faces():
     result = {
         "percent_match": 63
     }
+    logger.info('Match: ' + result['percent_match'])
     return jsonify(result)
 
 
@@ -93,4 +96,5 @@ def verify_info():
     result = {
         "percent_match": 63
     }
+    logger.info('Match: ' + result['percent_match'])
     return jsonify(result)
