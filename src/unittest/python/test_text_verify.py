@@ -49,7 +49,7 @@ def test_verify_default():
 def test_verify_default_no_match():
     """
     Tests the return value of the verify function with default args.
-    In this case we expect a 7/8 (87.5%) match.
+    In this case we expect a 0% match.
     """
     verifier = TextVerify()
     extracted_info = {
@@ -196,12 +196,12 @@ def test_verify_verbose():
     verifier = TextVerify()
     extracted_info = {
         'identity_number': '7101135111011',
-        'surname': 'Doe',
+        'surname': 'Door',
         'names': 'John-Michael Robert',
         'sex': 'M',
         'date_of_birth': '71-01-13',
-        'country_of_birth': 'RSA',
-        'status': 'Citizen',
+        'country_of_birth': 'GRSAGT',
+        'status': 'Cytyziny',
         'nationality': 'RSA'
     }
     verifier_info = {
@@ -216,14 +216,14 @@ def test_verify_verbose():
     }
     assert verifier.verify(extracted_info, verifier_info, verbose=True) == (True, {
         'identity_number': 100.0,
-        'surname': 100.0,
+        'surname': 57.14285714285714,
         'names': 100.0,
         'sex': 100.0,
         'date_of_birth': 100.0,
-        'country_of_birth': 100.0,
-        'status': 100.0,
+        'country_of_birth': 66.66666666666666,
+        'status': 53.333333333333336,
         'nationality': 100.0,
-        'total': 100.0
+        'total': 84.64285714285714
     })
 
 

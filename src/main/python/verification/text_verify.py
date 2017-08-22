@@ -101,7 +101,7 @@ class TextVerify:
         [logger.debug(log_line) for log_line in prettify_json_message(match_percentages).split('\n')]
         logger.debug('Final match percentage: ' + str(total_match_percentage))
         logger.debug('Threshold to pass: ' + str(min_percentage))
-        logger.debug('Result' + 'Passed' if is_verified else 'Failed')
+        logger.debug('Result: ' + 'Passed' if is_verified else 'Failed')
         # Return the final result.
         if not verbose:
             return is_verified, total_match_percentage
