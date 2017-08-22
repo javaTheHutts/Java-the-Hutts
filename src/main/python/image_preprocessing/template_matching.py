@@ -50,7 +50,9 @@ class TemplateMatching:
             if (maximum_value > threshold):
                 print(object_identifier)
                 return object_identifier
-
+        # first two parameters create a range of [0.8;1.8]. 20 specifies that we want to split the
+        # range in 20 equal sizes. Each of them is used as a ratio value to get different image sizes.
+        # [::-1] just reverses the np array to start from 1.8 and down to 0.8.
         for scale in np.linspace(0.8, 1.8, 20)[::-1]:
             # resize the image according to the scale, and keep track
             # of the ratio of the resizing
