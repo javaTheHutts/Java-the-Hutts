@@ -13,6 +13,7 @@ from image_preprocessing.face_manager import FaceDetector
 from verification.text_verify import TextVerify
 from verification.face_verify import FaceVerify
 from flask import jsonify, request, Blueprint
+from hutts_utils.hutts_logger import logger
 import os
 
 verify = Blueprint('verify', __name__)
@@ -89,6 +90,7 @@ def verify_id():
     # Verify faces
     face_verifier = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
     (is_match, distance) = face_verifier.verify(extracted_face1, extracted_face2)
+    logger.info('Distance: ' + str(distance))
 
     # Extract text
     preferences = {}

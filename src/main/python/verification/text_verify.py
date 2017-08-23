@@ -8,6 +8,7 @@ of ID.
 """
 
 import Levenshtein
+from hutts_utils.hutts_logger import logger, prettify_json_message
 
 
 class TextVerify:
@@ -25,7 +26,7 @@ class TextVerify:
             Jan-Justin van Tonder
         """
         # Logging for debugging purposes.
-        # logger.debug('Initialising TextVerify...')
+        logger.debug('Initialising TextVerify...')
 
     def verify(self, extracted, verifier, threshold=0.75, min_matches=4, verbose=False):
         """
@@ -62,15 +63,15 @@ class TextVerify:
         min_matches = min_matches if min_matches > 0 else 1
         min_percentage = threshold * 100
         # Logging for debugging and verbose purposes.
-        # logger.debug('Threshold for verification set as: ' + str(min_percentage))
-        # logger.debug('Minimum number of matches for verification set as: ' + str(min_matches))
-        # logger.debug('Simplified percentages to be returned' if not verbose else 'Verbose percentages to be returned')
-        # logger.debug('Verifying:')
+        logger.debug('Threshold for verification set as: ' + str(min_percentage))
+        logger.debug('Minimum number of matches for verification set as: ' + str(min_matches))
+        logger.debug('Simplified percentages to be returned' if not verbose else 'Verbose percentages to be returned')
+        logger.debug('Verifying:')
         # # Prettify and log the extracted information.
-        # [logger.debug(log_line) for log_line in prettify_json_message(extracted).split('\n')]
-        # logger.debug('Against:')
+        [logger.debug(log_line) for log_line in prettify_json_message(extracted).split('\n')]
+        logger.debug('Against:')
         # # Prettify and log the verifier information.
-        # [logger.debug(log_line) for log_line in prettify_json_message(verifier).split('\n')]
+        [logger.debug(log_line) for log_line in prettify_json_message(verifier).split('\n')]
         # Initialise a dictionary to house the final matching percentages.
         match_percentages = {}
         # Iterate over the verifier and calculate a percentage match for the values,
