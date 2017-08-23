@@ -8,7 +8,7 @@ disabling the built-in flask logger.
 Example usage:
 
     # First import the logger from the hutts_logger module...
-    from server.hutts_logger import logger
+    from hutts_utils.hutts_logger import logger
     # then start logging.
     logger.info('logging an example')
 
@@ -46,7 +46,7 @@ from logging.handlers import RotatingFileHandler
 """Specifies the name of the custom logger."""
 LOGGING_LOGGER_NAME = 'hutts_logger'
 """Specifies the default level for logging."""
-LOGGING_DEFAULT_LEVEL = logging.INFO
+LOGGING_DEFAULT_LEVEL = logging.DEBUG
 """Specifies the date format to be used by the various logging formatters."""
 LOGGING_LOG_DATE_FMT = '%Y-%m-%d %H:%M:%S'
 
@@ -96,31 +96,25 @@ LOGGING_LOG_TO_FILE_ENCODING = 'utf8'
 A global reference to the custom logger to be used.
 It is initialised to the default python logger to avoid errors during installation of packages.
 """
-logger = logging
+logger = None
 
 
-def setup_logger(app, debug=False, log_file_dir=None):
+def setup_logger():
     """
     This function is responsible for creating the custom logger and delegating the creation of its handlers.
 
     Author:
         Jan-Justin van Tonder
-
-    Args:
-        app (obj): An instance of a flask server application.
-        debug (bool): Indicates whether or not to set the log level to DEBUG.
-        log_file_dir (str): A directory in which the logger is to log to a file.
     """
     global logger
-    logging_level = logging.DEBUG if debug else LOGGING_DEFAULT_LEVEL
-    logger = app.logger
-    logger.setLevel(logging_level)
+    logger = logging.getLogger(__name__)
+    logger.setLevel(LOGGING_DEFAULT_LEVEL)
     if LOGGING_LOG_TO_CONSOLE:
         console_handler = get_console_handler()
-        console_handler.setLevel(logging_level)
+        console_handler.setLevel(LOGGING_DEFAULT_LEVEL)
         logger.addHandler(console_handler)
     if LOGGING_LOG_TO_FILE:
-        file_handler = get_file_handler(log_file_dir)
+        file_handler = get_file_handler(LOGGING_LOG_TO_FILE_DEFAULT_DIR)
         file_handler.setLevel(logging.INFO)
         logger.addHandler(file_handler)
 
@@ -135,10 +129,9 @@ def disable_flask_logging(app_instance):
     Args:
         app_instance (obj): A reference to the current flask server application.
     """
-    for handler in app_instance.logger.handlers[:]:
-        app_instance.logger.removeHandler(handler)
+    app_instance.handlers = []
     app_instance.logger.propagate = False
-    logger.getLogger('werkzeug').disabled = True
+    logging.getLogger('werkzeug').disabled = True
 
 
 def get_console_handler():
@@ -197,3 +190,7 @@ def prettify_json_message(json_message):
         (str): A prettified json message string.
     """
     return json.dumps(json_message, indent=2, sort_keys=True)
+
+
+# Set up the logger.
+setup_logger()

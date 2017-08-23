@@ -16,6 +16,7 @@ from flask import jsonify, request, Blueprint
 from hutts_utils.hutts_logger import logger
 import os
 
+
 verify = Blueprint('verify', __name__)
 
 # Constants path to trained data for Shape Predictor.

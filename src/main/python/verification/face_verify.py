@@ -1,6 +1,6 @@
 import dlib
 from scipy.spatial import distance
-from server.hutts_logger import logger
+from hutts_utils.hutts_logger import logger
 
 
 class FaceVerify:

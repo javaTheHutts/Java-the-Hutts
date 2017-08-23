@@ -4,7 +4,7 @@ from image_preprocessing.color_manager import ColorManager
 from image_preprocessing.face_manager import FaceDetector
 from image_preprocessing.pipeline_builder import PipelineBuilder
 from image_preprocessing.thresholding_manager import ThresholdingManager
-from server.hutts_logger import logger
+from hutts_utils.hutts_logger import logger
 
 # Constants path to trained data for Shape Predictor.
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
@@ -46,19 +46,19 @@ class BuildDirector:
             blur_method = 'median'
 
         if blur_method == 'median':
-            blur_kernel_size = [9]
+            blur_kernel_size = [3]
         else:
             if identification_type == 'idbook':
-                blur_kernel_size = [(7, 7)]
+                blur_kernel_size = [(3, 3)]
             elif identification_type == 'idcard':
-                blur_kernel_size = [(9, 9)]
+                blur_kernel_size = [(3, 3)]
             else:
                 blur_kernel_size = [(3, 3)]
 
         if 'threshold_method' in preferences:
             threshold_method = preferences['threshold_method']
         elif identification_type == 'idcard':
-            threshold_method = 'otsu'
+            threshold_method = 'adaptive'
         elif identification_type == 'idbook':
             threshold_method = 'adaptive'
         elif identification_type == 'studentcard':
@@ -72,10 +72,10 @@ class BuildDirector:
             color = preferences['color']
         elif identification_type == 'idcard':
             color_extraction_type = 'extract'
-            color = 'red'
+            color = 'red_blue'
         elif identification_type == 'idbook':
             color_extraction_type = 'extract'
-            color = 'red'
+            color = 'red_blue'
         elif identification_type == 'studentcard':
             color_extraction_type = 'extract'
             color = 'red'
@@ -84,11 +84,11 @@ class BuildDirector:
             color_extraction_type = 'extract'
             color = 'red'
 
-        logger.info("Blur Method: " + blur_method)
-        logger.info("Kernel Size: " + str(blur_kernel_size))
-        logger.info("ColorXType: " + color_extraction_type)
-        logger.info("Color: " + color)
-        logger.info("Threshold Method: " + threshold_method)
+        logger.debug("Blur Method: " + blur_method)
+        logger.debug("Kernel Size: " + str(blur_kernel_size))
+        logger.debug("ColorXType: " + color_extraction_type)
+        logger.debug("Color: " + color)
+        logger.debug("Threshold Method: " + threshold_method)
 
         blur_manager = BlurManager(blur_method, blur_kernel_size)
         color_manager = ColorManager(color_extraction_type, color)

@@ -17,7 +17,7 @@ from processing import FaceDetector
 import argparse
 import cv2
 import os
-from server.hutts_logger import logger
+from hutts_utils.hutts_logger import logger
 
 # Constants path to trained data for Shape Predictor and Face recognition
 SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(

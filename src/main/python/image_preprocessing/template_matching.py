@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np
 import imutils
-from server.hutts_logger import logger
+from hutts_utils.hutts_logger import logger
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
@@ -42,7 +42,8 @@ class TemplateMatching:
             ratio = original_template_image_width / source.shape[1]
             dimension = (original_template_image_width, int(source.shape[0] * ratio))
             resized = cv2.resize(source, dimension, interpolation=cv2.INTER_AREA)
-
+            if resized.shape[0] < template_image.shape[0] or resized.shape[1] < template_image.shape[1]:
+                return 'None'
             # find the template in the source image
             result = cv2.matchTemplate(resized, template_image, cv2.TM_CCOEFF_NORMED)
 
@@ -63,7 +64,7 @@ class TemplateMatching:
                 # if the resized image is smaller than the template, then break
                 # from the loop
                 if resized.shape[0] < template_image.shape[0] or resized.shape[1] < template_image.shape[1]:
-                    break
+                    return 'None'
 
                 result = cv2.matchTemplate(resized, template_image, cv2.TM_CCOEFF_NORMED)
                 (_, maximum_value, _, _) = cv2.minMaxLoc(result)
