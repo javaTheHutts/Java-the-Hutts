@@ -124,6 +124,9 @@ $(document).ready(function () {
 		formData.append('gender', gender);
 		formData.append('dob', dob);
 
+		// Ensure that the pre-loader spinner is visible
+  		$('#verify-result .modal-content .spinner').show();
+
 		$.ajax({
 			type: "POST",
 			url: "http://localhost:5000/verifyID",
@@ -185,7 +188,7 @@ $(document).ready(function () {
 					iconPosition: 'middle'
 				});
 
-				$('.spinner').hide();
+				$('#verify-result .modal-content .spinner').hide();
 				$('.circle-results-wrapper, #verify-result.modal .modal-footer')
 					.show(500);
 
@@ -236,6 +239,15 @@ $(document).ready(function () {
 	// Extract text
 	$('#extract-text-btn').on('click', function (e) {
 		e.preventDefault();
+
+		// Display a pre-loader while waiting
+	    $('.loader-overlay .spinner').css({
+	      position:'absolute',
+	      left: ($(window).width() - $(this).outerWidth()) / 2,
+	      top: ($(window).height() - $(this).outerHeight()) / 2
+	    });
+	    $('.loader-overlay').show(600);
+
 		var formData = new FormData();
 		var blurTechnique = $('#blur_technique').val();
 		var thresholdTechnique = $('#threshold_technique').val();
@@ -270,6 +282,9 @@ $(document).ready(function () {
 			processData: false,
 			contentType: false,
 			success: function (data) {
+				// Hide pre-loader
+          		$('.loader-overlay').hide(600);
+
 				$("input[id$=extract]").each(function () {
 					var id = $(this).attr("id").replace("-extract", "");
 					if (id != "id-photo") {
@@ -281,12 +296,24 @@ $(document).ready(function () {
 				// Populate and unhide pipeline
 				populatePipeline(true, 8);
 				$('#text-pipeline').show(600);
+			},
+			error: function() {
+				// Hide pre-loader
+          		$('.loader-overlay').hide(600);
 			}
 		});
 	});
 
 	// Extract profile
 	$('#extract-photo-btn').on('click', function (e) {
+		// Display a pre-loader while waiting
+	    $('.loader-overlay .spinner').css({
+	      position:'absolute',
+	      left: ($(window).width() - $(this).outerWidth()) / 2,
+	      top: ($(window).height() - $(this).outerHeight()) / 2
+	    });
+	    $('.loader-overlay').show(600);
+
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
 		formData.append('idPhoto', idPhoto);
@@ -298,17 +325,32 @@ $(document).ready(function () {
 			processData: false,
 			contentType: false,
 			success: function (data) {
+				// Hide pre-loader
+          		$('.loader-overlay').hide(600);
+
 				var face = jQuery.parseJSON(data)
 				document.getElementById("face-preview-extract").src = face.extracted_face;
 				// Populate and unhide pipeline
 				populatePipeline(false, 6);
 				$('#profile-pipeline').show(600);
-			}
+			},
+			error: function() {
+				// Hide pre-loader
+          		$('.loader-overlay').hide(600);
+          	}
 		});
 	});
 
 	// Extract all
 	$('#extract-all-btn').on('click', function (e) {
+		// Display a pre-loader while waiting
+	    $('.loader-overlay .spinner').css({
+	      position:'absolute',
+	      left: ($(window).width() - $(this).outerWidth()) / 2,
+	      top: ($(window).height() - $(this).outerHeight()) / 2
+	    });
+	    $('.loader-overlay').show(600);
+
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
 		formData.append('idPhoto', idPhoto);
@@ -320,6 +362,9 @@ $(document).ready(function () {
 			processData: false,
 			contentType: false,
 			success: function (data) {
+				// Hide pre-loader
+          		$('.loader-overlay').hide(600);
+
 				// Populate text fields
 				var cardComponents = jQuery.parseJSON(data);
 				$("input[id$=extract]").each(function () {
@@ -339,6 +384,10 @@ $(document).ready(function () {
 				populatePipeline(false, 6);
 				$('#text-pipeline').show(600);
 				$('#profile-pipeline').show(600);
+			},
+			error: function() {
+				// Hide pre-loader
+          		$('.loader-overlay').hide(600);
 			}
 		});
 	});
@@ -362,7 +411,6 @@ $(document).ready(function () {
 			$('.text-extract-settings').prop('disabled', false);
 		$('select').material_select();
 	});
-
 });
 
 // Show ID Image preview
