@@ -133,7 +133,7 @@ class TextVerify:
             raise TypeError('Bad type for arg str_x - expected string. Received type ' + str(type(str_x)))
         if type(str_y) is not str:
             raise TypeError('Bad type for arg str_y - expected string. Received type ' + str(type(str_y)))
-        return Levenshtein.ratio(str_x, str_y) * 100
+        return round(Levenshtein.ratio(str_x, str_y) * 100, 2)
 
     @staticmethod
     def _total_percentage_match(matches):
@@ -153,4 +153,4 @@ class TextVerify:
         Todo:
             Investigate the proposal of calculating a weighted total.
         """
-        return sum(matches.values()) / len(matches)
+        return round(sum(matches.values()) / len(matches), 2)
