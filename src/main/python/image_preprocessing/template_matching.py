@@ -2,7 +2,7 @@ import cv2
 import os
 import numpy as np
 import imutils
-from server.hutts_logger import logger
+from hutts_utils.hutts_logger import logger
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 

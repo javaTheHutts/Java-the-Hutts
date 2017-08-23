@@ -7,7 +7,7 @@ import pytesseract
 from PIL import Image
 import cv2
 import os
-from server.hutts_logger import logger
+from hutts_utils.hutts_logger import logger
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 

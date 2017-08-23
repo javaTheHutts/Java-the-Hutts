@@ -8,7 +8,7 @@ of ID.
 """
 
 import Levenshtein
-from server.hutts_logger import logger, prettify_json_message
+from hutts_utils.hutts_logger import logger, prettify_json_message
 
 
 class TextVerify:
