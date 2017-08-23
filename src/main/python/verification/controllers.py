@@ -100,7 +100,6 @@ def verify_id():
         "text_match": text_match_percentage,
         "face_match": distance
     }
-    logger.info('Match: ' + result['percent_match'])
     return jsonify(result)
 
 
@@ -124,7 +123,6 @@ def verify_faces():
     result = {
         "percent_match": 63
     }
-    logger.info('Match: ' + result['percent_match'])
     return jsonify(result)
 
 
@@ -155,7 +153,6 @@ def verify_info():
     result = {
         "percent_match": 63
     }
-    logger.info('Match: ' + result['percent_match'])
     return jsonify(result)
 
 
