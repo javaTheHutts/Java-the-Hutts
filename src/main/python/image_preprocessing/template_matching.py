@@ -1,5 +1,7 @@
 import cv2
 import os
+import numpy as np
+import imutils
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
@@ -12,9 +14,9 @@ class TemplateMatching:
     """
 
     def __init__(self):
-        self.template = [(1034, DESKTOP + "/templates/temp_flag.jpg", 0.75, "idcard"),
-                         (875, DESKTOP + "/templates/wap.jpg", 0.60, "idbook"),
-                         (1280, DESKTOP + "/templates/pp2.jpg", 0.60, "studentcard")]
+        self.template = [(1034, cv2.imread(DESKTOP + "/templates/temp_flag.jpg"), 0.75, "idcard"),
+                         (875, cv2.imread(DESKTOP + "/templates/wap.jpg"), 0.60, "idbook"),
+                         (1280, cv2.imread(DESKTOP + "/templates/pp2.jpg"), 0.60, "studentcard")]
 
     def identify(self, source):
         """
@@ -34,8 +36,7 @@ class TemplateMatching:
         """
 
         # load the source and template image
-        for (original_template_image_width, template_path, threshold, object_identifier) in self.template:
-            template_image = cv2.imread(template_path)
+        for (original_template_image_width, template_image, threshold, object_identifier) in self.template:
 
             ratio = original_template_image_width / source.shape[1]
             dimension = (original_template_image_width, int(source.shape[0] * ratio))
@@ -44,9 +45,30 @@ class TemplateMatching:
             # find the template in the source image
             result = cv2.matchTemplate(resized, template_image, cv2.TM_CCOEFF_NORMED)
 
-            (_, maximum_value, minLoc, (x, y)) = cv2.minMaxLoc(result)
+            (_, maximum_value, _, _) = cv2.minMaxLoc(result)
 
             if (maximum_value > threshold):
                 print(object_identifier)
                 return object_identifier
+        # first two parameters create a range of [0.8;1.8]. 20 specifies that we want to split the
+        # range in 20 equal sizes. Each of them is used as a ratio value to get different image sizes.
+        # [::-1] just reverses the np array to start from 1.8 and down to 0.8.
+        for scale in np.linspace(0.8, 1.8, 20)[::-1]:
+            # resize the image according to the scale, and keep track
+            # of the ratio of the resizing
+            resized = imutils.resize(source, width=int(source.shape[1] * scale))
+            for (original_template_image_width, template_image, threshold, object_identifier) in self.template:
+
+                # if the resized image is smaller than the template, then break
+                # from the loop
+                if resized.shape[0] < template_image.shape[0] or resized.shape[1] < template_image.shape[1]:
+                    break
+
+                result = cv2.matchTemplate(resized, template_image, cv2.TM_CCOEFF_NORMED)
+                (_, maximum_value, _, _) = cv2.minMaxLoc(result)
+
+                if (maximum_value > threshold):
+                    print(object_identifier)
+                    return object_identifier
+
         return 'None'
