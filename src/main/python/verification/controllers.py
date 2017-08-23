@@ -29,7 +29,7 @@ FACE_RECOGNITION_PATH = "{base}/../image_preprocessing/trained_data/dlib_face_re
 def verify_id():
     """
         ----------------------------------------------------------------------
-        Author: Nicolai van Niekerk
+        Authors: Nicolai van Niekerk, Stephan Nell
         ----------------------------------------------------------------------
         Sample function to return a match percentage of an ID image and
         provided personal information and picture of face
@@ -83,12 +83,12 @@ def verify_id():
 
     # Extract face
     face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
-    gray_extracted_face1 = face_detector.face_likeness_extraction(image_of_id)
-    gray_extracted_face2 = face_detector.face_likeness_extraction(face)
+    extracted_face1, _ = face_detector.extract_face(image_of_id)
+    extracted_face2, _ = face_detector.extract_face(face)
 
     # Verify faces
     face_verifier = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
-    (isMatch, distance) = face_verifier.verify(gray_extracted_face1, gray_extracted_face2)
+    (is_match, distance) = face_verifier.verify(extracted_face1, extracted_face2)
 
     # Extract text
     preferences = {}
@@ -97,12 +97,14 @@ def verify_id():
 
     # Verify text
     text_verifier = TextVerify()
-    (isPass, text_match_percentage) = text_verifier.verify(extracted_text, entered_details)
+    (is_pass, text_match_percentage) = text_verifier.verify(extracted_text, entered_details)
 
     result = {
         "total_match": 95,
         "text_match": text_match_percentage,
-        "face_match": distance
+        "face_match": distance,
+        "is_match": is_match,
+        "is_pass": is_pass
     }
     return jsonify(result)
 
