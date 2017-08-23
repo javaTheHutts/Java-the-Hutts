@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 from imutils.convenience import url_to_image
 from image_processing.sample_extract import TextExtractor
-from image_processing.sample_extract import FaceExtractor
+from image_preprocessing.face_manager import FaceDetector
 from verification.text_verify import TextVerify
 from verification.face_verify import FaceVerify
 from flask import jsonify, request, Blueprint
@@ -77,22 +77,23 @@ def verify_id():
         request.form['dob']
     }
 
+    # Extract face
+    face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
+    gray_extracted_face1 = face_detector.face_likeness_extraction(image_of_id)
+    gray_extracted_face2 = face_detector.face_likeness_extraction(face)
+
+    # Verify faces
+    face_verifier = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
+    (isMatch, distance) = face_verifier.verify(gray_extracted_face1, gray_extracted_face2)
+
     # Extract text
     preferences = {}
     extractor = TextExtractor(preferences)
-    extracted_text = extractor.extract(image_of_id.copy())
+    extracted_text = extractor.extract(image_of_id)
 
     # Verify text
     text_verifier = TextVerify()
     (isPass, text_match_percentage) = text_verifier.verify(extracted_text, entered_details)
-
-    # Extract face
-    extractor = FaceExtractor()
-    extracted_face = extractor.extract(image_of_id.copy())
-
-    # Verify faces
-    face_verifier = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
-    (isMatch, distance) = face_verifier.verify(face, extracted_face)
 
     result = {
         "total_match": 95,

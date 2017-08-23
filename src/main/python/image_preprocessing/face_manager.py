@@ -25,6 +25,30 @@ class FaceDetector:
         """
         self.shape_predictor_path = shape_predictor_path
 
+    def face_likeness_extraction(self, image):
+        """
+        This function find a face in the image passed and is optimised
+        to align the face before being returned.
+        Author(s):
+            Stephan Nell
+        Args:
+            image (:obj:'OpenCV image'): Image containing the face we need to detect and extract.
+        Raises:
+            ValueError: If no face can be detected.
+        Returns:
+            obj:'OpenCV image': Any background and unnecessary components are removed and only
+            the aligned face is returned in gray scale for facial likeness.
+        Todo:
+            Return error if no face detected
+
+        """
+        rectangle = self.detect(image)
+        predictor = dlib.shape_predictor(self.shape_predictor_path)
+        face_aligner = FaceAligner(predictor, desiredFaceWidth=256)
+        face_aligned = face_aligner.align(image, image, rectangle)
+        gray_face = cv2.cvtColor(face_aligned, cv2.COLOR_BGR2GRAY)
+        return gray_face
+
     def detect(self, image):
         """
         This function detects the face in the image passed.
