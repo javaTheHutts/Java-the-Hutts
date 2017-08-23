@@ -51,7 +51,7 @@ class ThresholdingManager:
             Applies some error checking if an image of an invalid file type was passed.
 
         """
-        return cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 25, 15)
+        return cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 25, 10)
 
     def otsuThresholding(self, image):
         """

@@ -45,19 +45,19 @@ class BuildDirector:
             blur_method = 'median'
 
         if blur_method == 'median':
-            blur_kernel_size = [9]
+            blur_kernel_size = [3]
         else:
             if identification_type == 'idbook':
-                blur_kernel_size = [(7, 7)]
+                blur_kernel_size = [(3, 3)]
             elif identification_type == 'idcard':
-                blur_kernel_size = [(9, 9)]
+                blur_kernel_size = [(3, 3)]
             else:
                 blur_kernel_size = [(3, 3)]
 
         if 'threshold_method' in preferences:
             threshold_method = preferences['threshold_method']
         elif identification_type == 'idcard':
-            threshold_method = 'otsu'
+            threshold_method = 'adaptive'
         elif identification_type == 'idbook':
             threshold_method = 'adaptive'
         elif identification_type == 'studentcard':
@@ -71,10 +71,10 @@ class BuildDirector:
             color = preferences['color']
         elif identification_type == 'idcard':
             color_extraction_type = 'extract'
-            color = 'red'
+            color = 'red_blue'
         elif identification_type == 'idbook':
             color_extraction_type = 'extract'
-            color = 'red'
+            color = 'red_blue'
         elif identification_type == 'studentcard':
             color_extraction_type = 'extract'
             color = 'red'

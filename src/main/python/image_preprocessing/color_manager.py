@@ -90,6 +90,8 @@ class ColorManager:
             return cv2.merge([zeros, G, R])
         elif image_channel == "red":
             return cv2.merge([B, G, zeros])
+        elif image_channel == "red_blue":
+            return cv2.merge([zeros, G, zeros])
         else:
             raise NameError('Invalid Colour Selection! Only red, green, blue are valid colour selections')
 
