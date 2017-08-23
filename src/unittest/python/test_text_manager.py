@@ -1,3 +1,11 @@
+"""
+----------------------------------------------------------------------
+Authors: Jan-Justin van Tonder
+----------------------------------------------------------------------
+Unit tests for the Text Manager module.
+----------------------------------------------------------------------
+"""
+
 import pytest
 from image_processing.text_manager import TextManager
 
