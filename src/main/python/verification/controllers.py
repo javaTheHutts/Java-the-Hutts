@@ -71,10 +71,14 @@ def verify_id():
         face = _grab_image(url=url)
 
     entered_details = {
-        "names": request.form['names'], "surname": request.form['surname'], "identity_number":
-        request.form['idNumber'], "nationality": request.form['nationality'], "country_of_birth":
-        request.form['cob'], "status": request.form['status'], "sex": request.form['gender'], "date_of_birth":
-        request.form['dob']
+        "names": request.form['names'],
+        "surname": request.form['surname'],
+        "identity_number": request.form['idNumber'],
+        "nationality": request.form['nationality'],
+        "country_of_birth": request.form['cob'],
+        "status": request.form['status'],
+        "sex": request.form['gender'],
+        "date_of_birth": request.form['dob']
     }
 
     # Extract face

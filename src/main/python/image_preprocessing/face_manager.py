@@ -27,7 +27,7 @@ class FaceDetector:
 
     def face_likeness_extraction(self, image):
         """
-        This function find a face in the image passed and is optimised
+        This function finds a face in the image passed and is optimised
         to align the face before being returned.
         Author(s):
             Stephan Nell
@@ -73,7 +73,7 @@ class FaceDetector:
 
     def extract_face(self, image):
         """
-        This function find a face in the image passed and is optimised
+        This function finds a face in the image passed and is optimised
         to align the face before being returned.
         Author(s):
             Stephan Nell
