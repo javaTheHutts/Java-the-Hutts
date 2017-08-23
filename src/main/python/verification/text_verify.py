@@ -8,7 +8,6 @@ of ID.
 """
 
 import Levenshtein
-from server.hutts_logger import logger, prettify_json_message
 
 
 class TextVerify:
@@ -26,7 +25,7 @@ class TextVerify:
             Jan-Justin van Tonder
         """
         # Logging for debugging purposes.
-        logger.debug('Initialising TextVerify...')
+        # logger.debug('Initialising TextVerify...')
 
     def verify(self, extracted, verifier, threshold=0.75, min_matches=4, verbose=False):
         """
@@ -63,27 +62,27 @@ class TextVerify:
         min_matches = min_matches if min_matches > 0 else 1
         min_percentage = threshold * 100
         # Logging for debugging and verbose purposes.
-        logger.debug('Threshold for verification set as: ' + str(min_percentage))
-        logger.debug('Minimum number of matches for verification set as: ' + str(min_matches))
-        logger.debug('Simplified percentages to be returned' if not verbose else 'Verbose percentages to be returned')
-        logger.debug('Verifying:')
-        # Prettify and log the extracted information.
-        [logger.debug(log_line) for log_line in prettify_json_message(extracted).split('\n')]
-        logger.debug('Against:')
-        # Prettify and log the verifier information.
-        [logger.debug(log_line) for log_line in prettify_json_message(verifier).split('\n')]
+        # logger.debug('Threshold for verification set as: ' + str(min_percentage))
+        # logger.debug('Minimum number of matches for verification set as: ' + str(min_matches))
+        # logger.debug('Simplified percentages to be returned' if not verbose else 'Verbose percentages to be returned')
+        # logger.debug('Verifying:')
+        # # Prettify and log the extracted information.
+        # [logger.debug(log_line) for log_line in prettify_json_message(extracted).split('\n')]
+        # logger.debug('Against:')
+        # # Prettify and log the verifier information.
+        # [logger.debug(log_line) for log_line in prettify_json_message(verifier).split('\n')]
         # Initialise a dictionary to house the final matching percentages.
         match_percentages = {}
         # Iterate over the verifier and calculate a percentage match for the values,
         # if the keys match and the corresponding values exist.
         for key, value in verifier.items():
             if key in extracted and extracted[key]:
-                logger.debug('Computing match "' + str(value) + '" and "' + str(extracted[key]) + '"...')
+                # logger.debug('Computing match "' + str(value) + '" and "' + str(extracted[key]) + '"...')
                 match_percentages[key] = self._match_percentage(value, extracted[key])
-                logger.debug('"' + value + '" and "' + extracted[key] + '" match percentage is : ' +
-                             str(match_percentages[key]))
-            else:
-                logger.warning('Could not find corresponding field "' + key + '" in extracted information to verify')
+                # logger.debug('"' + value + '" and "' + extracted[key] + '" match percentage is : ' +
+                # str(match_percentages[key]))
+            # else:
+                # logger.warning('Could not find corresponding field "' + key + '" in extracted information to verify')
         # Determine the number of percentages calculated and initialise a default value for the total match score.
         num_scores = len(match_percentages)
         total_match_percentage = 0.0
@@ -92,16 +91,16 @@ class TextVerify:
             # Calculate the total match score.
             total_match_percentage = self._total_percentage_match(match_percentages)
         # Either the minimum number of percentages criteria was not met.
-        else:
-            logger.warning('A total of ' + str(num_scores) + ' matches were found, which is less than the minimum')
+        # else:
+            # logger.warning('A total of ' + str(num_scores) + ' matches were found, which is less than the minimum')
         # Determine whether or not the text is verified.
         is_verified = total_match_percentage >= min_percentage
         # Logging for debugging purposes.
-        logger.debug('Intermediate match percentages:')
-        [logger.debug(log_line) for log_line in prettify_json_message(match_percentages).split('\n')]
-        logger.debug('Final match percentage: ' + str(total_match_percentage))
-        logger.debug('Threshold to pass: ' + str(min_percentage))
-        logger.debug('Result: ' + 'Passed' if is_verified else 'Failed')
+        # logger.debug('Intermediate match percentages:')
+        # [logger.debug(log_line) for log_line in prettify_json_message(match_percentages).split('\n')]
+        # logger.debug('Final match percentage: ' + str(total_match_percentage))
+        # logger.debug('Threshold to pass: ' + str(min_percentage))
+        # logger.debug('Result: ' + 'Passed' if is_verified else 'Failed')
         # Return the final result.
         if not verbose:
             return is_verified, total_match_percentage

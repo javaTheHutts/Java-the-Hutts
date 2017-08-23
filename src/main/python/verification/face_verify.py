@@ -1,5 +1,5 @@
 import dlib
-import cv2
+# import cv2
 from scipy.spatial import distance
 from server.hutts_logger import logger
 
