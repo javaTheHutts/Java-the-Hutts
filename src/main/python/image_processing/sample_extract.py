@@ -50,9 +50,7 @@ class TextExtractor:
         # Perform perspective transformation and read from barcode.
         image = simplification_manager.perspectiveTransformation(img)
         cv2.imwrite(DESKTOP + "/output/3.png", image)
-        print('a')
         barcode_data_found, barcode_scan_data, barcoded_image = barcode_manager.get_barcode_info(image)
-        print('b')
         if barcode_data_found:
             data = {
                 'identity_number': barcode_scan_data.decode('utf-8'),

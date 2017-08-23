@@ -16,10 +16,13 @@ itest:
 build:
 	pyb
 
+run:
+	cd target/dist/Java-the-Hutts-1.0.dev0/scripts/ && python run.py
+
 setup:
 	python setup.py install
 
 buildrun:
 	pyb analyze publish install
 	cd target/dist/Java-the-Hutts-1.0.dev0/ && python setup.py install
-	cd src/main/scripts/ && python run.py
+	make run
