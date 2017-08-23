@@ -7,17 +7,13 @@ Initialises logging and starts the server.
 """
 
 import argparse
-from server import app
-from flask import request
-from server import hutts_logger
+from flask import Flask, request
+from hutts_utils import hutts_logger
+from verification.controllers import verify
+from image_processing.controllers import extract
 
-
-def init_logger(debug=False):
-    """
-    Disables flask's built-in logging handlers and initialises custom logger.
-    """
-    hutts_logger.disable_flask_logging(app)
-    hutts_logger.setup_logger(app, debug=debug)
+# Initialise flask application.
+app = Flask(__name__)
 
 
 @app.before_request
@@ -53,11 +49,14 @@ def log_response(response):
 
 if __name__ == '__main__':
     # Parse args.
-    parser = argparse.ArgumentParser(description='Start the application server.')
+    parser = argparse.ArgumentParser(description='Starts the application server.')
     parser.add_argument('-d', '--debug', action='store_true')
     args = vars(parser.parse_args())
-    # Initialise logger.
-    init_logger(debug=args['debug'])
+    # Initialise blueprints
+    app.register_blueprint(verify)
+    app.register_blueprint(extract)
     # Run the server.
+    hutts_logger.disable_flask_logging(app)
     print('* Running server')
-    app.run(debug=args['debug'])
+    app.debug = args['debug']
+    app.run()

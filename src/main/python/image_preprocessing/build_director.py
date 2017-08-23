@@ -84,11 +84,11 @@ class BuildDirector:
             color_extraction_type = 'extract'
             color = 'red'
 
-        logger.info("Blur Method: " + blur_method)
-        logger.info("Kernel Size: " + str(blur_kernel_size))
-        logger.info("ColorXType: " + color_extraction_type)
-        logger.info("Color: " + color)
-        logger.info("Threshold Method: " + threshold_method)
+        logger.debug("Blur Method: " + blur_method)
+        logger.debug("Kernel Size: " + str(blur_kernel_size))
+        logger.debug("ColorXType: " + color_extraction_type)
+        logger.debug("Color: " + color)
+        logger.debug("Threshold Method: " + threshold_method)
 
         blur_manager = BlurManager(blur_method, blur_kernel_size)
         color_manager = ColorManager(color_extraction_type, color)
