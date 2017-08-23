@@ -7,7 +7,7 @@ Handles all requests relevant to the validation service of the API
 """
 
 from flask import Blueprint, jsonify, request
-from server.hutts_logger import logger
+from hutts_utils.hutts_logger import logger
 
 verify = Blueprint('verify', __name__)
 

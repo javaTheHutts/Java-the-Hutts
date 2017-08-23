@@ -8,7 +8,7 @@ disabling the built-in flask logger.
 Example usage:
 
     # First import the logger from the hutts_logger module...
-    from server.hutts_logger import logger
+    from hutts_utils.hutts_logger import logger
     # then start logging.
     logger.info('logging an example')
 
