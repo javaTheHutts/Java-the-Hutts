@@ -216,14 +216,14 @@ def test_verify_verbose():
     }
     assert verifier.verify(extracted_info, verifier_info, verbose=True) == (True, {
         'identity_number': 100.0,
-        'surname': 57.14285714285714,
+        'surname': 57.14,
         'names': 100.0,
         'sex': 100.0,
         'date_of_birth': 100.0,
-        'country_of_birth': 66.66666666666666,
-        'status': 53.333333333333336,
+        'country_of_birth': 66.67,
+        'status': 53.33,
         'nationality': 100.0,
-        'total': 84.64285714285714
+        'total': 84.64
     })
 
 
