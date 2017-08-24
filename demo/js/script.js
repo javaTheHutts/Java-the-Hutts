@@ -285,6 +285,13 @@ $(document).ready(function () {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
 
+				// Handle the case involving a UP card, if a UP card
+				// was used as an input image
+				if (data['up_card']) {
+					handleUPCard(data);
+					return;
+				}
+
 				$("input[id$=extract]").each(function () {
 					var id = $(this).attr("id").replace("-extract", "");
 					if (id != "id-photo") {
@@ -364,6 +371,13 @@ $(document).ready(function () {
 			success: function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
+
+				// Handle the case involving a UP card, if a UP card
+				// was used as an input image
+				if (data['up_card']) {
+					handleUPCard(data);
+					return;
+				}
 
 				// Populate text fields
 				var cardComponents = jQuery.parseJSON(data);
@@ -460,7 +474,7 @@ function imageExists(image, remote, callback) {
 		img.src = image;
 		img.onload = function () {
 			// Image exists, therefore, proceed
-			callback(image)
+			callback(image);
 		}
 	} else {
 		var url = 'http://localhost:5000' + image;
@@ -469,8 +483,43 @@ function imageExists(image, remote, callback) {
 			type: 'HEAD',
 			success: function () {
 				// Image exists, therefore, proceed
-				callback(file)
+				callback(file);
 			}
 		});
 	}
+}
+
+// Handle the extracted information from a UP card
+function handleUPCard(data) {
+	// The regex used to find the student/staff number
+	// used mostly to sift through the garbage and find 
+	// what we actually want
+	var re = /[0-9]{6,10}/
+	// Split text_dump on newline
+	var textDump = data['text_dump'].split('\n');
+	// Sift through the noise
+	for (var i = 0; i < textDump.length; i++) {
+		if (re.test(textDump[i])) {
+			// Get student/staff number
+			var upNumber = data['barcode_dump']? data['barcode_dump']: textDump[i];
+			$('#identity_number-extract').focus();
+			$('#identity_number-extract').val(upNumber);
+			$('#identity_number-extract').blur();
+			// Get initials and surname if possible
+			if (i - 1 > 0) {
+				var nameLine = textDump[i - 1].split(' ');
+				nameLine.shift();
+				$('#names-extract').focus();
+				$('#names-extract').val(nameLine[0]);
+				$('#names-extract').blur();
+				nameLine.shift();
+				nameLine = nameLine.join(' ');
+				$('#surname-extract').focus();
+				$('#surname-extract').val(nameLine);
+				$('#surname-extract').blur();
+			}
+		}
+	}
+
+	// $('#identity_number-extract').text(text_dump[]);
 }
