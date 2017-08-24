@@ -85,7 +85,21 @@ class FaceVerify:
         logger.info('Calculating the euclidean distance between the two faces')
         match_distance = distance.euclidean(face_descriptor1, face_descriptor2)
         logger.info('Matching distance: ' + str(match_distance))
+
+        # Any distance below our threshold of of 0.55 is a very good match.
+        # We map 0.55 to 85% and 0 to 100%.
         if match_distance < threshold:
-            return True, (1 - match_distance) * 100
+            match_distance = 1 - match_distance
+            threshold = 1 - threshold + 0.05
+            percentage_match = ((match_distance-threshold)*15/50)*100 + 85
+            return True, percentage_match
+        elif match_distance < threshold + 0.05:
+            # In this if we map (0.55-0.60] we map 0.549 to 70% match
+            match_distance = 1 - match_distance
+            threshold = 1 - threshold + 0.05
+            percentage_match = ((match_distance-threshold)*30/55)*100 + 70
+            return True, percentage_match
         else:
-            return False, (1 - match_distance) * 100
+            # If the distance is higher than 0.65 we map it to 60% and below
+            percentage_match = 60 - ((match_distance-threshold)*60/40)*100
+            return False, percentage_match

@@ -30,15 +30,15 @@ FACE_RECOGNITION_PATH = "{base}/../image_preprocessing/trained_data/dlib_face_re
 @verify.route('/verifyID', methods=['POST'])
 def verify_id():
     """
-        ----------------------------------------------------------------------
-        Authors: Nicolai van Niekerk, Stephan Nell
-        ----------------------------------------------------------------------
-        Sample function to return a match percentage of an ID image and
-        provided personal information and picture of face
-        ----------------------------------------------------------------------
-        URL: http://localhost:5000/verifyID
-        ----------------------------------------------------------------------
-        """
+    ----------------------------------------------------------------------
+    Authors: Nicolai van Niekerk, Stephan Nell, Marthinus Hermann
+    ----------------------------------------------------------------------
+    Sample function to return a match percentage of an ID image and
+    provided personal information and picture of face
+    ----------------------------------------------------------------------
+    URL: http://localhost:5000/verifyID
+    ----------------------------------------------------------------------
+    """
     data = {"success": False}
     # Get id image as numpy array
     # Check to see if an image was uploaded.
@@ -103,7 +103,8 @@ def verify_id():
     (is_pass, text_match_percentage) = text_verifier.verify(extracted_text, entered_details)
 
     result = {
-        "total_match": 95,
+        # text verification contributes to 40% of the total and face likeness for 60%
+        "total_match": text_match_percentage*0.4 + distance*0.6,
         "text_match": text_match_percentage,
         "face_match": distance,
         "is_match": is_match,
