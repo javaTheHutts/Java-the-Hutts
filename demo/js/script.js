@@ -69,6 +69,10 @@ $(document).ready(function () {
 				$(this).children('.carets').text('expand_more');
 				// Refresh slick carousels
 				$('.pipeline').slick('setPosition');
+				// Clear ID previews
+				clearIDPreviews();
+				// Clear extract fields
+				clearExtractFields();
 			});
 		},
 		onClose: function () {
@@ -236,6 +240,11 @@ $(document).ready(function () {
 		$('.duo-card').removeClass('duo-card-hover');
 	});
 
+	// Clear all extracted fields when an extract button is clicked
+	$('.extraction-options button').on('click', function() {
+		clearExtractFields();
+	});
+
 	// Extract text
 	$('#extract-text-btn').on('click', function (e) {
 		e.preventDefault();
@@ -289,17 +298,17 @@ $(document).ready(function () {
 				// was used as an input image
 				if (data['up_card']) {
 					handleUPCard(data);
-					return;
+				} else {
+					$("input[id$=extract]").each(function () {
+						var id = $(this).attr("id").replace("-extract", "");
+						if (id != "id-photo") {
+							$(this).focus();
+							$(this).val(data[id]);
+							$(this).blur();
+						}
+					});
 				}
 
-				$("input[id$=extract]").each(function () {
-					var id = $(this).attr("id").replace("-extract", "");
-					if (id != "id-photo") {
-						$(this).focus();
-						$(this).val(data[id]);
-						$(this).blur();
-					}
-				});
 				// Populate and unhide pipeline
 				populatePipeline(true, 8);
 				$('#text-pipeline').show(600);
@@ -371,24 +380,24 @@ $(document).ready(function () {
 			success: function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
-
+				
+				// Parse the response
+				var cardComponents = jQuery.parseJSON(data);
 				// Handle the case involving a UP card, if a UP card
 				// was used as an input image
-				if (data['up_card']) {
-					handleUPCard(data);
-					return;
+				if (cardComponents['text_extract_result']['up_card']) {
+					handleUPCard(cardComponents['text_extract_result'], cardComponents['extracted_face']);
+				} else {
+					// Populate text fields
+					$("input[id$=extract]").each(function () {
+						var id = $(this).attr("id").replace("-extract", "");
+						if (id != "id-photo") {
+							$(this).focus();
+							$(this).val(cardComponents.text_extract_result[id]);
+							$(this).blur();
+						}
+					});
 				}
-
-				// Populate text fields
-				var cardComponents = jQuery.parseJSON(data);
-				$("input[id$=extract]").each(function () {
-					var id = $(this).attr("id").replace("-extract", "");
-					if (id != "id-photo") {
-						$(this).focus();
-						$(this).val(cardComponents.text_extract_result[id]);
-						$(this).blur();
-					}
-				});
 
 				// Show face
 				document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
@@ -431,10 +440,15 @@ $(document).ready(function () {
 function readURL(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
-		reader.onload = function (e) {
-			$('#id-preview-verify').attr('src', e.target.result);
-			$('#id-preview-extract').attr('src', e.target.result);
-		};
+		if ($(input).attr('id') == 'id-photo-extract') {
+			reader.onload = function (e) {
+				$('#id-preview-extract').attr('src', e.target.result);
+			};
+		} else {
+			reader.onload = function (e) {
+				$('#id-preview-verify').attr('src', e.target.result);
+			};
+		}
 		reader.readAsDataURL(input.files[0]);
 	}
 }
@@ -489,19 +503,43 @@ function imageExists(image, remote, callback) {
 	}
 }
 
+// Clears ID previews
+function clearIDPreviews() {
+	$('#id-preview-extract').attr('src', 'img/id-card.png');
+	$('#id-preview-verify').attr('src', 'img/id-card.png');
+	$('#id-photo-extract').val('');
+	$('#id-photo-verify').val('');
+	$('.file-path-wrapper input').val('');
+}
+
+// Clears extract fields
+function clearExtractFields() {
+	// Clear text
+	$('input[id$=extract]').each(function () {
+		var id = $(this).attr('id').replace('-extract', '');
+		if (id != 'id-photo') {
+			$(this).focus();
+			$(this).val('');
+			$(this).blur();
+		}
+	});
+	// Clear the face image
+	document.getElementById("face-preview-extract").src = 'img/profile.png';
+}
+
 // Handle the extracted information from a UP card
-function handleUPCard(data) {
+function handleUPCard(extracted_text) {
 	// The regex used to find the student/staff number
 	// used mostly to sift through the garbage and find 
 	// what we actually want
 	var re = /[0-9]{6,10}/
 	// Split text_dump on newline
-	var textDump = data['text_dump'].split('\n');
+	var textDump = extracted_text['text_dump'].split('\n');
 	// Sift through the noise
 	for (var i = 0; i < textDump.length; i++) {
 		if (re.test(textDump[i])) {
 			// Get student/staff number
-			var upNumber = data['barcode_dump']? data['barcode_dump']: textDump[i];
+			var upNumber = extracted_text['barcode_dump']? extracted_text['barcode_dump']: textDump[i];
 			$('#identity_number-extract').focus();
 			$('#identity_number-extract').val(upNumber);
 			$('#identity_number-extract').blur();
@@ -520,6 +558,4 @@ function handleUPCard(data) {
 			}
 		}
 	}
-
-	// $('#identity_number-extract').text(text_dump[]);
 }
