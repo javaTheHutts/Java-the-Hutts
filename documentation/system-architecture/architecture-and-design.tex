@@ -66,7 +66,71 @@ The following Deployment diagram depicts the architecture of the system as deplo
 	    	\caption{Deployment Diagram}
 	    \end{figure}
 	    \pagebreak
+	 
+\section{Services}
+This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
 
+\subsection{Image Preprocessing}
+The Image Preprocessing service is a crucial module of the system that requires a heavy emphasis. This service creates the image preprocessing pipeline for the application of all the necessary preprocessing techniques on incoming images to yield better results further down the system pipeline, specifically for further processing. This service is mostly used to prepare the image for OCR and facial recognition. 
+\subsubsection{Class Diagram}
+The class diagram of the Image Preprocessing module makes use of a well-known design pattern: 
+\begin{itemize}
+	\item \textbf{Builder:} Allows us to separate the representation of the pipeline from its construction. As a result, we can use the same construction process to create different pipelines, depending on the situation and type of ID document.
+\end{itemize}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/imageProcessingClassDiagram.png}
+	    \caption{Image Preprocessing Class Diagram}
+	 \end{figure}
+	 \pagebreak
+\subsubsection{Activity Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/process_activity.png}
+	    \caption{Image Processing Activity Diagram}
+	 \end{figure}
+	 \pagebreak
+
+\subsection{Image Processing}
+The Image Processing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used to process the information contained within an incoming image into a workable format. 
+\subsubsection{Class Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/extractClassDiagram.png}
+	    \caption{Image Processing Class Diagram}
+	 \end{figure}
+	 \pagebreak
+\subsubsection{Activity Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/process_activity.png}
+	    \caption{Image Processing Activity Diagram}
+	 \end{figure}
+	 \pagebreak
+\subsubsection{Sequence Diagram}
+\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/image_processing_sequence.png}
+	    \caption{Image Preprocessing Sequence Diagram}
+	 \end{figure}
+	 \pagebreak
+	 
+\subsection{Verification}
+The Verification service is the part of the system that is responsible for all the logic releated to verifying a form of ID against given information. It performs the required checks and calculations to determine a likeness percentage that forms the ultimate verfier.
+\subsubsection{Class Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/VerifyClass.png}
+	    \caption{Verification Class Diagram}
+	 \end{figure}
+	 \pagebreak
+\subsubsection{Activity Diagram}
+	\begin{figure}[H]
+	    \centering
+	    \includegraphics[scale=0.5]{img/verify_activity.png}
+	    \caption{Verification Activity Diagram}
+	 \end{figure}
+	 \pagebreak
 \section{High Level Diagrams}
 
 \subsection{State Diagram}
@@ -115,55 +179,4 @@ The following Deployment diagram depicts the architecture of the system as deplo
 		\caption{Extract Face Activity Diagram}
 	\end{figure}
 \pagebreak
-	 
-\section{Services}
-This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
-
-\subsection{Image Preprocessing}
-The Image Preprocessing service is a crucial module of the system that requires a heavy emphasis. This service creates the image preprocessing pipeline for the application of all the necessary preprocessing techniques on incoming images to yield better results further down the system pipeline, specifically for further processing. This service is mostly used to prepare the image for OCR and facial recognition. 
-\subsubsection{Class Diagram}
-The class diagram of the Image Preprocessing module makes use of a well-known design pattern: 
-\begin{itemize}
-	\item \textbf{Builder:} Allows us to separate the representation of the pipeline from its construction. As a result, we can use the same construction process to create different pipelines, depending on the situation and type of ID document.
-\end{itemize}
-	\begin{figure}[H]
-	    \centering
-	    \includegraphics[scale=0.5]{img/imageProcessingClassDiagram.png}
-	    \caption{Image Preprocessing Class Diagram}
-	 \end{figure}
-	 \pagebreak
-\subsubsection{Activity Diagram}
-	\begin{figure}[H]
-	    \centering
-	    \includegraphics[scale=0.5]{img/process_activity.png}
-	    \caption{Image Processing Activity Diagram}
-	 \end{figure}
-	 \pagebreak
-
-\subsection{Image Processing}
-The Image Processing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used to process the information contained within an incoming image into a workable format. 
-\subsubsection{Activity Diagram}
-	\begin{figure}[H]
-	    \centering
-	    \includegraphics[scale=0.5]{img/process_activity.png}
-	    \caption{Image Processing Activity Diagram}
-	 \end{figure}
-	 \pagebreak
-\subsubsection{Sequence Diagram}
-\begin{figure}[H]
-	    \centering
-	    \includegraphics[scale=0.5]{img/image_processing_sequence.png}
-	    \caption{Image Preprocessing Sequence Diagram}
-	 \end{figure}
-	 \pagebreak
-	 
-\subsection{Verification}
-The Verification service is the part of the system that is responsible for all the logic releated to verifying a form of ID against given information. It performs the required checks and calculations to determine a likeness percentage that forms the ultimate verfier.
-\subsubsection{Activity Diagram}
-	\begin{figure}[H]
-	    \centering
-	    \includegraphics[scale=0.5]{img/verify_activity.png}
-	    \caption{Verification Activity Diagram}
-	 \end{figure}
-	 \pagebreak
 \end{document}
