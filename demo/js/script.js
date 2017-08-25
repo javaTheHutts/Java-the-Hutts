@@ -73,6 +73,8 @@ $(document).ready(function () {
 				clearIDPreviews();
 				// Clear extract fields
 				clearExtractFields();
+				// Clear verification fields
+				clearVerificationFields();
 			});
 		},
 		onClose: function () {
@@ -105,6 +107,10 @@ $(document).ready(function () {
 	// Modal trigger
 	$('#verify-btn').on('click', function (e) {
 		e.preventDefault();
+
+		// Clear verification fields
+		clearVerificationFields();
+
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-verify').files[0];
 		var userImage = document.getElementById('profile-photo').files[0];
@@ -518,13 +524,25 @@ function clearExtractFields() {
 	$('input[id$=extract]').each(function () {
 		var id = $(this).attr('id').replace('-extract', '');
 		if (id != 'id-photo') {
-			$(this).focus();
 			$(this).val('');
 			$(this).blur();
 		}
 	});
 	// Clear the face image
 	document.getElementById("face-preview-extract").src = 'img/profile.png';
+}
+
+// Clears verification fields
+function clearVerificationFields() {
+	// Clear text
+	$('input[id$=verify]').each(function () {
+		console.log(this);
+		var id = $(this).attr('id').replace('-verify', '');
+		if (id != 'id-photo') {
+			$(this).val('');
+			$(this).blur();
+		}
+	});
 }
 
 // Handle the extracted information from a UP card
