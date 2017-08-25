@@ -107,10 +107,6 @@ $(document).ready(function () {
 	// Modal trigger
 	$('#verify-btn').on('click', function (e) {
 		e.preventDefault();
-
-		// Clear verification fields
-		clearVerificationFields();
-
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-verify').files[0];
 		var userImage = document.getElementById('profile-photo').files[0];
