@@ -211,11 +211,10 @@ def face_extraction_response(image, text_extract_result=None):
     jpg_img = 'data:image/jpg;base64' + jpg_img
     # cleanup interference
     jpg_img = jpg_img.replace("'", "")
-    data = jsonify(
-        {
-            "extracted_face": jpg_img,
-            "text_extract_result": text_extract_result
-        })
+    tempdict = {"extracted_face": jpg_img}
+    if text_extract_result:
+        tempdict["text_extract_result"] = text_extract_result
+    data = jsonify(tempdict)
     # prepare response
     response = make_response(data)
     response.mimetype = 'multipart/form-data'
