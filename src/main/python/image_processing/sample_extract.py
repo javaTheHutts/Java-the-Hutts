@@ -7,14 +7,14 @@ import pytesseract
 from PIL import Image
 import cv2
 import os
-from hutts_utils.hutts_logger import logger
+from hutts_utils.hutts_logger import logger, prettify_json_message
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
 class TextExtractor:
     """
-        The TextExtractor extracts text from the ID image
+    The TextExtractor extracts text from the ID image
     """
 
     def __init__(self, preferences):
@@ -37,7 +37,7 @@ class TextExtractor:
         Author(s):
             Nicolai van Niekerk
         Args:
-            image: The image of the ID that contains the text to be extracted
+            img: The image of the ID that contains the text to be extracted
         Returns:
             id_details: JSON obj (The extracted information)
         """
@@ -77,16 +77,25 @@ class TextExtractor:
 
         text_manager = TextManager()
         logger.info('Cleaning up text...')
-        clean_text = text_manager.clean_up(text, ['_'])
-        logger.debug(clean_text)
+        clean_text = text_manager.clean_up(text)
+        logger.debug('Clean text:')
+        [logger.debug(text_line) for text_line in clean_text.split('\n')]
+        # Cater for UP student/staff cards.
+        if identification_type == 'studentcard':
+            return {
+                'up_card': True,  # Used to be able to reliably check if a response is a UP card from client-side.
+                'text_dump': clean_text,  # Dump extracted and cleaned text.
+                'barcode_dump': data['identity_number'] if data else None  # Dump the barcode data.
+            }
         id_details = text_manager.dictify(clean_text, data)
-        logger.debug(id_details)
+        logger.debug('Extracted ID details:')
+        [logger.debug(id_details_line) for id_details_line in prettify_json_message(id_details).split('\n')]
         return id_details
 
 
 class FaceExtractor:
     """
-        The FaceExtractor extracts the face region for the image passed.
+    The FaceExtractor extracts the face region for the image passed.
     """
     def extract(self, img):
         """
@@ -94,7 +103,7 @@ class FaceExtractor:
         Author(s):
             Stephan Nell
         Args:
-            image: The image of the ID that contains the face that must be extracted.
+            img: The image of the ID that contains the face that must be extracted.
         Returns:
             image: The extracted and aligned facial image.
         """
