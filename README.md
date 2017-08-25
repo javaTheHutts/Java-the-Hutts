@@ -75,3 +75,9 @@ Once you are finished, execute the command `deactivate` in order to exit your vi
 ## Important files
 - `build.py` contains the configuration used by PyBuilder to build the project. Any plugins and customized build settings are contained in this file.
 - `README.md`. This file explains how the entire system should be built and used. Refer to it before asking any questions about the build process.
+
+## Examples:
+- Extraction of a South African ID card
+
+
+![alt text](documentation/media/ExtractAll.gif "Extract All Example ID Card")
