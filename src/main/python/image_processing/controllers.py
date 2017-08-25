@@ -62,7 +62,7 @@ def extract_text():
         if 'color' in request.form:
             preferences['color'] = request.form['color']
 
-        # Extract test from image
+        # Extract text from image
         extractor = TextExtractor(preferences)
         result = extractor.extract(image)
     return jsonify(result)

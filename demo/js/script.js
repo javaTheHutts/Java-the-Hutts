@@ -69,6 +69,12 @@ $(document).ready(function () {
 				$(this).children('.carets').text('expand_more');
 				// Refresh slick carousels
 				$('.pipeline').slick('setPosition');
+				// Clear ID previews
+				clearIDPreviews();
+				// Clear extract fields
+				clearExtractFields();
+				// Clear verification fields
+				clearVerificationFields();
 			});
 		},
 		onClose: function () {
@@ -236,6 +242,11 @@ $(document).ready(function () {
 		$('.duo-card').removeClass('duo-card-hover');
 	});
 
+	// Clear all extracted fields when an extract button is clicked
+	$('.extraction-options button').on('click', function() {
+		clearExtractFields();
+	});
+
 	// Extract text
 	$('#extract-text-btn').on('click', function (e) {
 		e.preventDefault();
@@ -285,14 +296,21 @@ $(document).ready(function () {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
 
-				$("input[id$=extract]").each(function () {
-					var id = $(this).attr("id").replace("-extract", "");
-					if (id != "id-photo") {
-						$(this).focus();
-						$(this).val(data[id]);
-						$(this).blur();
-					}
-				});
+				// Handle the case involving a UP card, if a UP card
+				// was used as an input image
+				if (data['up_card']) {
+					handleUPCard(data);
+				} else {
+					$("input[id$=extract]").each(function () {
+						var id = $(this).attr("id").replace("-extract", "");
+						if (id != "id-photo") {
+							$(this).focus();
+							$(this).val(data[id]);
+							$(this).blur();
+						}
+					});
+				}
+
 				// Populate and unhide pipeline
 				populatePipeline(true, 8);
 				$('#text-pipeline').show(600);
@@ -364,17 +382,24 @@ $(document).ready(function () {
 			success: function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
-
-				// Populate text fields
+				
+				// Parse the response
 				var cardComponents = jQuery.parseJSON(data);
-				$("input[id$=extract]").each(function () {
-					var id = $(this).attr("id").replace("-extract", "");
-					if (id != "id-photo") {
-						$(this).focus();
-						$(this).val(cardComponents.text_extract_result[id]);
-						$(this).blur();
-					}
-				});
+				// Handle the case involving a UP card, if a UP card
+				// was used as an input image
+				if (cardComponents['text_extract_result']['up_card']) {
+					handleUPCard(cardComponents['text_extract_result'], cardComponents['extracted_face']);
+				} else {
+					// Populate text fields
+					$("input[id$=extract]").each(function () {
+						var id = $(this).attr("id").replace("-extract", "");
+						if (id != "id-photo") {
+							$(this).focus();
+							$(this).val(cardComponents.text_extract_result[id]);
+							$(this).blur();
+						}
+					});
+				}
 
 				// Show face
 				document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
@@ -417,10 +442,15 @@ $(document).ready(function () {
 function readURL(input) {
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
-		reader.onload = function (e) {
-			$('#id-preview-verify').attr('src', e.target.result);
-			$('#id-preview-extract').attr('src', e.target.result);
-		};
+		if ($(input).attr('id') == 'id-photo-extract') {
+			reader.onload = function (e) {
+				$('#id-preview-extract').attr('src', e.target.result);
+			};
+		} else {
+			reader.onload = function (e) {
+				$('#id-preview-verify').attr('src', e.target.result);
+			};
+		}
 		reader.readAsDataURL(input.files[0]);
 	}
 }
@@ -460,7 +490,7 @@ function imageExists(image, remote, callback) {
 		img.src = image;
 		img.onload = function () {
 			// Image exists, therefore, proceed
-			callback(image)
+			callback(image);
 		}
 	} else {
 		var url = 'http://localhost:5000' + image;
@@ -469,8 +499,76 @@ function imageExists(image, remote, callback) {
 			type: 'HEAD',
 			success: function () {
 				// Image exists, therefore, proceed
-				callback(file)
+				callback(file);
 			}
 		});
+	}
+}
+
+// Clears ID previews
+function clearIDPreviews() {
+	$('#id-preview-extract').attr('src', 'img/id-card.png');
+	$('#id-preview-verify').attr('src', 'img/id-card.png');
+	$('#id-photo-extract').val('');
+	$('#id-photo-verify').val('');
+	$('.file-path-wrapper input').val('');
+}
+
+// Clears extract fields
+function clearExtractFields() {
+	// Clear text
+	$('input[id$=extract]').each(function () {
+		var id = $(this).attr('id').replace('-extract', '');
+		if (id != 'id-photo') {
+			$(this).val('');
+			$(this).blur();
+		}
+	});
+	// Clear the face image
+	document.getElementById("face-preview-extract").src = 'img/profile.png';
+}
+
+// Clears verification fields
+function clearVerificationFields() {
+	// Clear text
+	$('input[id$=verify]').each(function () {
+		var id = $(this).attr('id').replace('-verify', '');
+		if (id != 'id-photo') {
+			$(this).val('');
+			$(this).blur();
+		}
+	});
+}
+
+// Handle the extracted information from a UP card
+function handleUPCard(extracted_text) {
+	// The regex used to find the student/staff number
+	// used mostly to sift through the garbage and find 
+	// what we actually want
+	var re = /[0-9]{6,10}/
+	// Split text_dump on newline
+	var textDump = extracted_text['text_dump'].split('\n');
+	// Sift through the noise
+	for (var i = 0; i < textDump.length; i++) {
+		if (re.test(textDump[i])) {
+			// Get student/staff number
+			var upNumber = extracted_text['barcode_dump']? extracted_text['barcode_dump']: textDump[i];
+			$('#identity_number-extract').focus();
+			$('#identity_number-extract').val(upNumber);
+			$('#identity_number-extract').blur();
+			// Get initials and surname if possible
+			if (i - 1 > 0) {
+				var nameLine = textDump[i - 1].split(' ');
+				nameLine.shift();
+				$('#names-extract').focus();
+				$('#names-extract').val(nameLine[0]);
+				$('#names-extract').blur();
+				nameLine.shift();
+				nameLine = nameLine.join(' ');
+				$('#surname-extract').focus();
+				$('#surname-extract').val(nameLine);
+				$('#surname-extract').blur();
+			}
+		}
 	}
 }
