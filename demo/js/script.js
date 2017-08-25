@@ -532,7 +532,6 @@ function clearExtractFields() {
 function clearVerificationFields() {
 	// Clear text
 	$('input[id$=verify]').each(function () {
-		console.log(this);
 		var id = $(this).attr('id').replace('-verify', '');
 		if (id != 'id-photo') {
 			$(this).val('');
