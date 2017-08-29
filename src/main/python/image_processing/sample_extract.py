@@ -61,9 +61,15 @@ class TextExtractor:
             }
 
         # Process image
-        template_match = TemplateMatching()
-        logger.info('Performing template matching...')
-        identification_type = template_match.identify(barcoded_image)
+        if 'id_type' in self.preferences:
+            identification_type = self.preferences['id_type']
+            logger.info("No template matching required")
+            logger.info("Identification type: " + identification_type)
+        else:
+            template_match = TemplateMatching()
+            logger.info('Performing template matching...')
+            identification_type = template_match.identify(barcoded_image)
+
         logger.info('Constructing text extraction pipeline')
         pipeline = BuildDirector.construct_text_extract_pipeline(self.preferences, identification_type)
         image = pipeline.process_text_extraction(barcoded_image, self.remove_face)

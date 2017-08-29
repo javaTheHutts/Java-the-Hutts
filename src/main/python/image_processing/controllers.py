@@ -61,6 +61,8 @@ def extract_text():
             preferences['remove_barcode'] = request.form['remove_barcode']
         if 'color' in request.form:
             preferences['color'] = request.form['color']
+        if 'id_type' in preferences:
+            preferences['id_type'] = request.form['id_type']
 
         # Extract text from image
         extractor = TextExtractor(preferences)
