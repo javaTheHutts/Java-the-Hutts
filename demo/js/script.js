@@ -3,7 +3,7 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 */
 
 /* global $ */
-var PATH_TO_PIPELINE = '/home/justin/Desktop/output/';
+var PATH_TO_PIPELINE = '/home/minion/Desktop/output/';
 
 $(document).ready(function () {
 
@@ -378,10 +378,33 @@ $(document).ready(function () {
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
 		formData.append('idPhoto', idPhoto);
 
+		var blurTechnique = $('#blur_technique').val();
+		var thresholdTechnique = $('#threshold_technique').val();
+		var profileSwitch = $('#profile_switch').is(':checked');
+		var barcodeSwitch = $('#barcode_switch').is(':checked');
+		var extractRed = $('#extract_red').is(':checked');
+		var extractGreen = $('#extract_green').is(':checked');
+		var extractBlue = $('#extract_blue').is(':checked');
+
 		// Add id type to preferences if selected
 		var idType = $('#id-type-extract').val();
 		if(idType != 'default')
 			formData.append('id_type', idType);
+
+		// Send preferences if auto settings is off
+		if (!$('#auto_settings').is(':checked')) {
+			formData.append('blur_technique', blurTechnique);
+			formData.append('threshold_technique', thresholdTechnique);
+			formData.append('remove_face', profileSwitch);
+			formData.append('remove_barcode', barcodeSwitch);
+
+			if (extractBlue)
+				formData.append('color', "blue");
+			else if (extractGreen)
+				formData.append('color', "green");
+			else if (extractRed)
+				formData.append('color', "red");
+		}
 
 		$.ajax({
 			type: "POST",

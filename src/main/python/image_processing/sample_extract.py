@@ -43,7 +43,7 @@ class TextExtractor:
         """
         if 'remove_face' in self.preferences:
             self.remove_face = self.preferences['remove_face'] == 'true'
-        logger.debug('self.remove_face: ' + self.remove_face)
+        logger.debug('self.remove_face: ' + str(self.remove_face))
 
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
