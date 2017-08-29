@@ -130,33 +130,8 @@ $(document).ready(function () {
 		formData.append('gender', gender);
 		formData.append('dob', dob);
 
-		var blurTechnique = $('#blur_technique').val();
-		var thresholdTechnique = $('#threshold_technique').val();
-		var profileSwitch = $('#profile_switch').is(':checked');
-		var barcodeSwitch = $('#barcode_switch').is(':checked');
-		var extractRed = $('#extract_red').is(':checked');
-		var extractGreen = $('#extract_green').is(':checked');
-		var extractBlue = $('#extract_blue').is(':checked');
-
-		// Add id type to preferences if selected
-		var idType = $('#id-type-verify').val();
-		if(idType != 'default')
-			formData.append('id_type', idType);
-
-		// Send preferences if auto settings is off
-		if (!$('#auto_settings').is(':checked')) {
-			formData.append('blur_technique', blurTechnique);
-			formData.append('threshold_technique', thresholdTechnique);
-			formData.append('remove_face', profileSwitch);
-			formData.append('remove_barcode', barcodeSwitch);
-
-			if (extractBlue)
-				formData.append('color', "blue");
-			else if (extractGreen)
-				formData.append('color', "green");
-			else if (extractRed)
-				formData.append('color', "red");
-		}
+		// Add preferences and ID type
+		addPreferences(formData, 'verify');
 
 		// Ensure that the pre-loader spinner is visible
 		$('.circle-result').html('');
@@ -288,36 +263,11 @@ $(document).ready(function () {
 		$('.loader-overlay').show(600);
 
 		var formData = new FormData();
-		var blurTechnique = $('#blur_technique').val();
-		var thresholdTechnique = $('#threshold_technique').val();
-		var profileSwitch = $('#profile_switch').is(':checked');
-		var barcodeSwitch = $('#barcode_switch').is(':checked');
-		var extractRed = $('#extract_red').is(':checked');
-		var extractGreen = $('#extract_green').is(':checked');
-		var extractBlue = $('#extract_blue').is(':checked');
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
-
 		formData.append('idPhoto', idPhoto);
 
-		// Add id type to preferences if selected
-		var idType = $('#id-type-extract').val();
-		if(idType != 'default')
-			formData.append('id_type', idType);
-
-		// Send preferences if auto settings is off
-		if (!$('#auto_settings').is(':checked')) {
-			formData.append('blur_technique', blurTechnique);
-			formData.append('threshold_technique', thresholdTechnique);
-			formData.append('remove_face', profileSwitch);
-			formData.append('remove_barcode', barcodeSwitch);
-
-			if (extractBlue)
-				formData.append('color', "blue");
-			else if (extractGreen)
-				formData.append('color', "green");
-			else if (extractRed)
-				formData.append('color', "red");
-		}
+		// Add preferences and ID type
+		addPreferences(formData, 'extract');
 
 		$.ajax({
 			type: "POST",
@@ -406,33 +356,8 @@ $(document).ready(function () {
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
 		formData.append('idPhoto', idPhoto);
 
-		var blurTechnique = $('#blur_technique').val();
-		var thresholdTechnique = $('#threshold_technique').val();
-		var profileSwitch = $('#profile_switch').is(':checked');
-		var barcodeSwitch = $('#barcode_switch').is(':checked');
-		var extractRed = $('#extract_red').is(':checked');
-		var extractGreen = $('#extract_green').is(':checked');
-		var extractBlue = $('#extract_blue').is(':checked');
-
-		// Add id type to preferences if selected
-		var idType = $('#id-type-extract').val();
-		if(idType != 'default')
-			formData.append('id_type', idType);
-
-		// Send preferences if auto settings is off
-		if (!$('#auto_settings').is(':checked')) {
-			formData.append('blur_technique', blurTechnique);
-			formData.append('threshold_technique', thresholdTechnique);
-			formData.append('remove_face', profileSwitch);
-			formData.append('remove_barcode', barcodeSwitch);
-
-			if (extractBlue)
-				formData.append('color', "blue");
-			else if (extractGreen)
-				formData.append('color', "green");
-			else if (extractRed)
-				formData.append('color', "red");
-		}
+		// Add preferences and ID type
+		addPreferences(formData, 'extract');
 
 		$.ajax({
 			type: "POST",
@@ -631,5 +556,35 @@ function handleUPCard(extracted_text) {
 				$('#surname-extract').blur();
 			}
 		}
+	}
+}
+function addPreferences(formData, type)
+{
+	var blurTechnique = $('#blur_technique').val();
+	var thresholdTechnique = $('#threshold_technique').val();
+	var profileSwitch = $('#profile_switch').is(':checked');
+	var barcodeSwitch = $('#barcode_switch').is(':checked');
+	var extractRed = $('#extract_red').is(':checked');
+	var extractGreen = $('#extract_green').is(':checked');
+	var extractBlue = $('#extract_blue').is(':checked');
+
+	// Add id type to preferences if selected
+	var idType = $('#id-type-' + type).val();
+	if(idType != 'default')
+		formData.append('id_type', idType);
+
+	// Send preferences if auto settings is off
+	if (!$('#auto_settings').is(':checked')) {
+		formData.append('blur_technique', blurTechnique);
+		formData.append('threshold_technique', thresholdTechnique);
+		formData.append('remove_face', profileSwitch);
+		formData.append('remove_barcode', barcodeSwitch);
+
+		if (extractBlue)
+			formData.append('color', "blue");
+		else if (extractGreen)
+			formData.append('color', "green");
+		else if (extractRed)
+			formData.append('color', "red");
 	}
 }
