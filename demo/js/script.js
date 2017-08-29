@@ -104,7 +104,7 @@ $(document).ready(function () {
 		endingTop: '20%',
 	});
 
-	// Modal trigger
+	// Verify
 	$('#verify-btn').on('click', function (e) {
 		e.preventDefault();
 		var formData = new FormData();
@@ -271,6 +271,11 @@ $(document).ready(function () {
 
 		formData.append('idPhoto', idPhoto);
 
+		// Add id type to preferences if selected
+		var idType = $('#id-type-extract').val();
+		if(idType != 'default')
+			formData.append('id_type', idType);
+
 		// Send preferences if auto settings is off
 		if (!$('#auto_settings').is(':checked')) {
 			formData.append('blur_technique', blurTechnique);
@@ -372,6 +377,11 @@ $(document).ready(function () {
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
 		formData.append('idPhoto', idPhoto);
+
+		// Add id type to preferences if selected
+		var idType = $('#id-type-extract').val();
+		if(idType != 'default')
+			formData.append('id_type', idType);
 
 		$.ajax({
 			type: "POST",
