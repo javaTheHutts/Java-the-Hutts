@@ -31,7 +31,7 @@ class Pipeline:
 
         """
         # Remove face from image.
-        logger.info("Removing face: " + remove_face)
+        logger.info("Removing face: " + str(remove_face))
         if remove_face:
             logger.info("REMOVING FACE...")
             image = self.face_detector.blur_face(image)

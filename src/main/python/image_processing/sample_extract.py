@@ -43,7 +43,7 @@ class TextExtractor:
         """
         if 'remove_face' in self.preferences:
             self.remove_face = self.preferences['remove_face'] == 'true'
-        logger.debug('self.remove_face: ' + self.remove_face)
+        logger.debug('self.remove_face: ' + str(self.remove_face))
 
         simplification_manager = SimplificationManager()
         barcode_manager = BarCodeManager()
@@ -61,9 +61,15 @@ class TextExtractor:
             }
 
         # Process image
-        template_match = TemplateMatching()
-        logger.info('Performing template matching...')
-        identification_type = template_match.identify(barcoded_image)
+        if 'id_type' in self.preferences:
+            identification_type = self.preferences['id_type']
+            logger.info("No template matching required")
+            logger.info("Identification type: " + identification_type)
+        else:
+            template_match = TemplateMatching()
+            logger.info('Performing template matching...')
+            identification_type = template_match.identify(barcoded_image)
+
         logger.info('Constructing text extraction pipeline')
         pipeline = BuildDirector.construct_text_extract_pipeline(self.preferences, identification_type)
         image = pipeline.process_text_extraction(barcoded_image, self.remove_face)
