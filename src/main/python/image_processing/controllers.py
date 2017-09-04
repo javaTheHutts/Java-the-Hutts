@@ -5,9 +5,14 @@ Author(s): Nicolai van Niekerk, Stephan Nell
 Handles all requests relevant to the extraction service of the API.
 ----------------------------------------------------------------------
 """
+import base64
+import cv2
 from image_processing.sample_extract import TextExtractor
-from flask import Blueprint, jsonify, request
-from hutts_utils.image_handling import grab_image, face_extraction_response
+from flask import Blueprint, jsonify, request, make_response
+from hutts_utils.image_handling import grab_image
+from image_processing.sample_extract import FaceExtractor
+from hutts_utils.hutts_logger import logger
+
 
 extract = Blueprint('extract', __name__)
 
@@ -153,3 +158,37 @@ def extract_all():
         response = face_extraction_response(image, result)
 
         return response
+
+
+def face_extraction_response(image, text_extract_result=None):
+    """
+    This function converts the extracted cv2 image and converts it
+    to a jpg image. Furthermore, the jpg image is converted to
+    Base64 jpg type and returned. If text extraction results are provided
+    the response will contain the data of text extraction result as well.
+    Author(s):
+        Stephan Nell
+    Args:
+        image: The cv2 (numpy) image that should be converted to jpg
+        text_extract_result (dict) the extracted text results
+    Returns:
+        (:obj:'Response'): The response object that contains the information for HTTP transmission
+    """
+    extractor = FaceExtractor()
+    result = extractor.extract(image)
+    _, buffer = cv2.imencode('.jpg', result)
+    # replace base64 indicator for the first occurrence and apply apply base64 jpg encoding
+    logger.info("Converting to Base64")
+    jpg_img = ('data:image/jpg;base64' + str(base64.b64encode(buffer)).replace("b", ",", 1)).replace("'", "")
+    temp_dict = {"extracted_face": jpg_img}
+    if text_extract_result:
+        temp_dict["text_extract_result"] = text_extract_result
+    data = jsonify(temp_dict)
+    # prepare response
+    logger.info("Preparing Response")
+    response = make_response(data)
+    response.mimetype = 'multipart/form-data'
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+
+    return response

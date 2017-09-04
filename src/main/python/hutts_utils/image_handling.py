@@ -1,9 +1,6 @@
 import cv2
-import base64
 import numpy as np
-from image_processing.sample_extract import FaceExtractor
 from imutils.convenience import url_to_image
-from flask import jsonify, make_response
 from hutts_utils.hutts_logger import logger
 
 
@@ -40,37 +37,3 @@ def grab_image(path=None, stream=None, url=None):
             image = np.asarray(bytearray(data), dtype="uint8")
             image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     return image
-
-
-def face_extraction_response(image, text_extract_result=None):
-    """
-    This function converts the extracted cv2 image and converts it
-    to a jpg image. Furthermore, the jpg image is converted to
-    Base64 jpg type and returned. If text extraction results are provided
-    the response will contain the data of text extraction result as well.
-    Author(s):
-        Stephan Nell
-    Args:
-        image: The cv2 (numpy) image that should be converted to jpg
-        text_extract_result (dict) the extracted text results
-    Returns:
-        (:obj:'Response'): The response object that contains the information for HTTP transmission
-    """
-    extractor = FaceExtractor()
-    result = extractor.extract(image)
-    _, buffer = cv2.imencode('.jpg', result)
-    # replace base64 indicator for the first occurrence and apply apply base64 jpg encoding
-    logger.info("Converting to Base64")
-    jpg_img = ('data:image/jpg;base64' + str(base64.b64encode(buffer)).replace("b", ",", 1)).replace("'", "")
-    temp_dict = {"extracted_face": jpg_img}
-    if text_extract_result:
-        temp_dict["text_extract_result"] = text_extract_result
-    data = jsonify(temp_dict)
-    # prepare response
-    logger.info("Preparing Response")
-    response = make_response(data)
-    response.mimetype = 'multipart/form-data'
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    response.headers['Pragma'] = 'no-cache'
-
-    return response
