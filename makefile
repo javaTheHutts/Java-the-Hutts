@@ -1,6 +1,9 @@
 all:
 	pyb analyze publish install
 
+full:
+	pyb analyze full publish install
+
 lint:
 	pyb analyze
 
@@ -18,9 +21,6 @@ build:
 
 run:
 	cd target/dist/Java-the-Hutts-1.0.dev0/scripts/ && python run.py
-
-setup:
-	python setup.py install
 
 buildrun:
 	pyb analyze publish install

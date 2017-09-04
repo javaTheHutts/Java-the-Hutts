@@ -16,6 +16,7 @@ default_task = "publish"
 @init
 def init(project):
     project.plugin_depends_on("flake8", "~=3.2")
+    project.depends_on_requirements("requirements.txt")
 
     # directory with pytest modules
     project.set_property("dir_source_pytest_python", "src/unittest/python")
@@ -45,6 +46,19 @@ def assert_flake8_is_executable(logger):
     assert_can_execute(command_and_arguments=["flake8", "--version"],
                        prerequisite="flake8",
                        caller="plugin python.flake8")
+
+@task("full", description="Includes all of the data files in the installation process.")
+@after("prepare")
+def full_setup(project, logger):
+    # include the training data in the correct package
+    logger.info("Including the data files in the installation...")
+    img_pre_trained_data_path = "lib/python3.5/site-packages/image_preprocessing/trained_data/"
+    img_pre_templates_path = "lib/python3.5/site-packages/image_preprocessing/templates/"
+    project.install_file(img_pre_trained_data_path, "image_preprocessing/trained_data/dlib_face_recognition_resnet_model_v1.dat")
+    project.install_file(img_pre_trained_data_path, "image_preprocessing/trained_data/shape_predictor_face_landmarks.dat")
+    project.install_file(img_pre_templates_path, "image_preprocessing/templates/pp2.jpg")
+    project.install_file(img_pre_templates_path, "image_preprocessing/templates/temp_flag.jpg")
+    project.install_file(img_pre_templates_path, "image_preprocessing/templates/wap.jpg")
 
 @task
 @depends("prepare")
