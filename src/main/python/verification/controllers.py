@@ -5,15 +5,13 @@ Author: Nicolai van Niekerk
 Handles all requests relevant to the validation service of the API
 ----------------------------------------------------------------------
 """
-import cv2
-import numpy as np
-from imutils.convenience import url_to_image
 from image_processing.sample_extract import TextExtractor
 from image_preprocessing.face_manager import FaceDetector
 from verification.text_verify import TextVerify
 from verification.face_verify import FaceVerify
 from flask import jsonify, request, Blueprint
 from hutts_utils.hutts_logger import logger
+from hutts_utils.image_handling import grab_image
 import os
 
 
@@ -44,7 +42,7 @@ def verify_id():
     # Check to see if an image was uploaded.
     if request.files.get("id_img", None) is not None:
         # Grab the uploaded image.
-        image_of_id = _grab_image(stream=request.files["id_img"])
+        image_of_id = grab_image(stream=request.files["id_img"])
     # Otherwise, assume that a URL was passed in.
     else:
         # Grab the URL from the request.
@@ -54,13 +52,13 @@ def verify_id():
             data["error"] = "No URL provided."
             return jsonify(data)
             # Load the image and convert.
-        image_of_id = _grab_image(url=url)
+        image_of_id = grab_image(url=url)
 
     # Get face image as numpy array
     # Check to see if an image was uploaded.
     if request.files.get("face_img", None) is not None:
         # Grab the uploaded image.
-        face = _grab_image(stream=request.files["face_img"])
+        face = grab_image(stream=request.files["face_img"])
     # Otherwise, assume that a URL was passed in.
     else:
         # Grab the URL from the request.
@@ -70,7 +68,7 @@ def verify_id():
             data["error"] = "No URL provided."
             return jsonify(data)
             # Load the image and convert.
-        face = _grab_image(url=url)
+        face = grab_image(url=url)
 
     entered_details = {
         "names": request.form['names'],
@@ -91,12 +89,11 @@ def verify_id():
     # Verify faces
     face_verifier = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
     (is_match, distance) = face_verifier.verify(extracted_face1, extracted_face2)
-    logger.info('Distance: ' + str(distance))
 
     # Extract text
     # Grab additional parameters specifying techniques
     preferences = {}
-
+    logger.info("Setting Preferences")
     if 'blur_technique' in request.form:
         preferences['blur_method'] = request.form['blur_technique']
     if 'threshold_technique' in request.form:
@@ -117,6 +114,7 @@ def verify_id():
     text_verifier = TextVerify()
     (is_pass, text_match_percentage) = text_verifier.verify(extracted_text, entered_details)
 
+    logger.info("Preparing Results...")
     result = {
         # text verification contributes to 40% of the total and face likeness for 60%
         "total_match": text_match_percentage*0.4 + distance*0.6,
@@ -179,35 +177,3 @@ def verify_info():
         "percent_match": 63
     }
     return jsonify(result)
-
-
-def _grab_image(path=None, stream=None, url=None):
-    """
-    This function grabs the image from URL, or image path and applies necessary changes to the grabbed
-    images so that the image is compatible with OpenCV operation.
-    Author(s):
-        Stephan Nell
-    Args:
-        path (str): The path to the image if it reside on disk
-        stream (str): A stream of text representing where on the internet the image resides
-        url(str): Url representing a path to where an image should be fetched.
-    Returns:
-        (:obj:'OpenCV image'): Image that is now compatible with OpenCV operations
-    TODO:
-        Return a Json error indicating file not found
-    """
-    # If the path is not None, then load the image from disk. Example: payload = {"image": open("id.jpg", "rb")}
-    if path is not None:
-        image = cv2.imread(path)
-    # otherwise, the image does not reside on disk
-    else:
-        # if the URL is not None, then download the image
-        if url is not None:
-            return url_to_image(url)
-        # if the stream is not None, then the image has been uploaded
-        elif stream is not None:
-            # Example: "http://www.pyimagesearch.com/wp-content/uploads/2015/05/obama.jpg"
-            data = stream.read()
-            image = np.asarray(bytearray(data), dtype="uint8")
-            image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-    return image
