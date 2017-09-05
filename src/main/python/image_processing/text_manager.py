@@ -210,7 +210,7 @@ class TextManager:
                 )
         return sanitised
 
-    def dictify(self, id_string, barcode_data=None, fuzzy_min_ratio=65, max_multi_line=2):
+    def dictify(self, id_string, barcode_data=None, fuzzy_min_ratio=60.0, max_multi_line=2):
         """
         This function is responsible for generating a dictionary object containing the relevant ID information,
         such as names, surname, ID number, etc., from a given input string containing said relevant information.
@@ -221,7 +221,7 @@ class TextManager:
         Args:
             id_string (str): A string containing some ID information.
             barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
-            fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
+            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
                 two strings.
             max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
                 noted as running onto multiple lines.
@@ -243,6 +243,16 @@ class TextManager:
             raise TypeError(
                 'Bad type for arg barcode_data - expected dictionary. Received type "%s".' %
                 type(barcode_data).__name__
+            )
+        if type(fuzzy_min_ratio) is not float:
+            raise TypeError(
+                'Bad type for arg fuzzy_min_ratio - expected float. Received type "%s".' %
+                type(fuzzy_min_ratio).__name__
+            )
+        if type(max_multi_line) is not int:
+            raise TypeError(
+                'Bad type for arg max_multi_line - expected int. Received type "%s".' %
+                type(max_multi_line).__name__
             )
         # Given a string containing extracted ID text,
         # create a dictionary object and populate it with
@@ -312,7 +322,7 @@ class TextManager:
         Args:
             id_string (str): A string containing some ID information.
             id_info (dict): A dictionary object used to house extracted ID information.
-            fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
+            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
                 two strings.
             max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
                 noted as running onto multiple lines.
@@ -350,7 +360,7 @@ class TextManager:
         Args:
             id_string_list (list): An ID string that has been broken down into a list of individual lines.
             match_context (dict): A dictionary object that provides context for the information that is to be extracted.
-            fuzzy_min_ratio (int): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
+            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
                 two strings.
             max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
                 noted as running onto multiple lines.
@@ -481,7 +491,10 @@ class TextManager:
                 id_info['date_of_birth'] = datetime.strftime(standardised_date_of_birth, '%Y-%m-%d')
             except ValueError:
                 # Could not parse the date so log and keep it as is.
-                logger.warning('Could not parse date "%s" for formatting. Keeping date as is.')
+                logger.warning(
+                    'Could not parse date "%s" for formatting. Keeping date as is.' %
+                    id_info['date_of_birth']
+                )
         if 'sex' in id_info and id_info['sex']:
             # Generally, South African IDs indicate sex with a single character, however, our use requires
             # the full, explicit word for the individual's sex.

@@ -618,7 +618,7 @@ def test_dictify_fuzzy_min_ratio():
         'Nahonallly\n'
         'RSA\n'
     )
-    assert txt_man.dictify(in_str, fuzzy_min_ratio=90) == {
+    assert txt_man.dictify(in_str, fuzzy_min_ratio=90.00) == {
         'identity_number': None,
         'surname': 'Doe',
         'names': 'John-Michael Robert',
@@ -651,6 +651,30 @@ def test_dictify_bare():
     }
 
 
+def test_dictify_invalid_date_of_birth():
+    """
+    Test the dictify function's behaviour when an invalid date of birth is given for formatting.
+    We expect it return the malformed 'date'.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'date of birth\n'
+        '123 Jin 1971\n'
+        'country of birth\n'
+        'RSA'
+    )
+    assert txt_man.dictify(in_str) == {
+        'identity_number': None,
+        'surname': None,
+        'names': None,
+        'sex': None,
+        'date_of_birth': '123 Jin 1971',
+        'country_of_birth': 'RSA',
+        'status': None,
+        'nationality': None
+    }
+
+
 def test_dictify_invalid_arg_in_str():
     """
     Test to see if dictify raises the correct exception when an incorrect type for the in_str arg is passed.
@@ -667,3 +691,21 @@ def test_dictify_invalid_arg_barcode_data():
     txt_man = TextManager()
     with pytest.raises(TypeError):
         txt_man.dictify('seems legit', 'nope')
+
+
+def test_dictify_invalid_arg_min_fuzzy_ratio():
+    """
+    Test to see if dictify raises the correct exception when an incorrect type for the min_fuzzy_ratio arg is passed.
+    """
+    txt_man = TextManager()
+    with pytest.raises(TypeError):
+        txt_man.dictify('good so far...', {}, '...fail')
+
+
+def test_dictify_invalid_arg_max_multi_line():
+    """
+    Test to see if dictify raises the correct exception when an incorrect type for the max_multi_line arg is passed.
+    """
+    txt_man = TextManager()
+    with pytest.raises(TypeError):
+        txt_man.dictify('good so far...', {}, 100.0, ['...nevermind'])
