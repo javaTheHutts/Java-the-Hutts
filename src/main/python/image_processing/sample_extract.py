@@ -82,10 +82,21 @@ class TextExtractor:
         os.remove(filename)
 
         text_manager = TextManager()
+        # Log the uncleaned string to terminal.
+        # This is for demonstration purposes.
+        logger.debug('String to clean:')
+        logger.debug('-' * 10)
+        [logger.debug(log_line) for log_line in text.split('\n')]
+        logger.debug('-' * 10)
         logger.info('Cleaning up text...')
+        # Clean the OCR output text.
         clean_text = text_manager.clean_up(text)
-        logger.debug('Clean text:')
-        [logger.debug(text_line) for text_line in clean_text.split('\n')]
+        # Log the cleaned string to terminal.
+        # This is for demonstration purposes.
+        logger.debug('Cleaned text:')
+        logger.debug('-' * 10)
+        [logger.debug(log_line) for log_line in clean_text.split('\n')]
+        logger.debug('-' * 10)
         # Cater for UP student/staff cards.
         if identification_type == 'studentcard':
             return {

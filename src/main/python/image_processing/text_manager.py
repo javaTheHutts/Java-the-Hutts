@@ -10,6 +10,7 @@ extraction of OCR output.
 import re
 from fuzzywuzzy import fuzz
 from datetime import datetime
+from hutts_utils.hutts_logger import logger
 
 
 class TextManager:
@@ -45,6 +46,8 @@ class TextManager:
         """
         Responsible for initialising the TextManager object.
         """
+        # Logging for debugging purposes.
+        logger.debug('Initialising TextManager...')
         # Specify initial list of undesirable characters.
         self._deplorables = ['_']
         # Specify initial list of contexts for string image_processing when populating
@@ -139,8 +142,10 @@ class TextManager:
         clean_text = re.sub(r'(\s*\n\s*)', '\n', stripped_and_sanitised)
         # Remove multiple spaces in-between text-filled line.
         clean_text = re.sub(r'( +)', ' ', clean_text)
-        # Return cleaned text with additional stripping for good measure.
-        return clean_text.strip()
+        # Lastly, strip the trailing and leading spaces.
+        clean_text = clean_text.strip()
+        # Return cleaned text.
+        return clean_text
 
     def _compile_deplorables(self, deplorables):
         """
@@ -244,15 +249,18 @@ class TextManager:
         # relevant information from said text.
         id_info = {}
         # Attempt to populate id_info.
+        logger.debug('Extracting details from the given text string...')
         self._populate_id_information(id_string, id_info, fuzzy_min_ratio, max_multi_line)
         # Check if barcode data, containing the id number, exists and
         # if so, save it and extract some relevant information from it.
         # It should overwrite any existing fields that can be extracted from the id number, since
         # the information embedded within the id number is more reliable, at least theoretically.
         if barcode_data:
+            logger.debug('Extracting details from barcode data...')
             id_info['identity_number'] = barcode_data['identity_number']
             self._id_number_information_extraction(id_info, barcode_data['identity_number'])
         # Perform some custom post-processing on the information that was extracted.
+        logger.debug('Standardising some field values...')
         self._post_process(id_info)
         # Return the info that was found.
         return id_info
@@ -313,12 +321,15 @@ class TextManager:
         id_string_list = id_string.split('\n')
         # Attempt to retrieve matches.
         for match_context in self.match_contexts:
+            # Logging for debugging purposes.
+            logger.debug('Searching for field value for "%s"' % match_context['field'])
             # Extract desired field name from context as key.
             key = match_context['field']
             # Only retrieve information if it does not exist or it could not previously
             # be determined.
             id_info[key] = self._get_match(id_string_list, match_context, fuzzy_min_ratio, max_multi_line)
-            #
+            # Logging for debugging purposes.
+            logger.debug('%s value found for "%s"' % ('Field' if id_info[key] else 'No field', match_context['field']))
         # If the ID number has been retrieved, use it to extract other useful information.
         # It should overwrite any existing fields that can be extracted from the id number, since
         # the information embedded within the id number is more reliable, at least theoretically.
@@ -430,7 +441,7 @@ class TextManager:
                     elif 'to_uppercase' in match_context and not match_context['to_uppercase']:
                         # Convert to lowercase and capitalise the character of each new word.
                         match = match.lower().title()
-        # Final check to see if an empty string is the match found, return none if this is the case.
+        # Final check to see if an empty string ('', not None) is the match found, return None if this is the case.
         if not match:
             return None
         # Otherwise return what we have found.
@@ -455,6 +466,7 @@ class TextManager:
             # the ocr output, there tends to be a discrepancy in the date format retrieved, therefore,
             # standardise it for future use.
             try:
+                # Attempt to parse the different dates that could appear for formatting.
                 current_date_of_birth = re.sub(' ', '', id_info['date_of_birth'])
                 # If the current date contains a '-', then it was extracted from the id number, therefore,
                 # parse it in the format 'YY-MM-DD'
@@ -467,9 +479,9 @@ class TextManager:
                 # Standardise the date by formatting it according to ISO date format standard,
                 # which is 'YYYY-MM-DD'
                 id_info['date_of_birth'] = datetime.strftime(standardised_date_of_birth, '%Y-%m-%d')
-            except:
+            except ValueError:
                 # Could not parse the date so log and keep it as is.
-                pass
+                logger.warning('Could not parse date "%s" for formatting. Keeping date as is.')
         if 'sex' in id_info and id_info['sex']:
             # Generally, South African IDs indicate sex with a single character, however, our use requires
             # the full, explicit word for the individual's sex.
