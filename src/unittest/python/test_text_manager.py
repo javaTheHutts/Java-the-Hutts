@@ -141,31 +141,6 @@ def test_clean_up_remove_specified():
     )
 
 
-def test_clean_up_remove_specified_overwrite():
-    """
-    Test the clean up function's removal with a specified list of characters that overwrites the default list.
-    """
-    txt_man = TextManager()
-    in_str = (
-        'Identity Number\n'
-        '123456789\n'
-        'Surname\n'
-        'Döe_\n'
-        'Names\n'
-        'John-Michael\n'
-        'Robert'
-    )
-    assert txt_man.clean_up(in_str, ['ö', '-'], False) == (
-        'Identity Number\n'
-        '123456789\n'
-        'Surname\n'
-        'De_\n'
-        'Names\n'
-        'JohnMichael\n'
-        'Robert'
-    )
-
-
 def test_clean_up_remove_specified_sanitise():
     """
     Test the clean up function's removal with an additional list of characters to remove, but tests to see if certain
@@ -229,15 +204,6 @@ def test_clean_up_invalid_arg_deplorables_3():
     txt_man = TextManager()
     with pytest.raises(TypeError):
         txt_man.clean_up('', ['almost', 'but not quite', 3.3])
-
-
-def test_clean_up_invalid_arg_append_deplorables():
-    """
-    Test that the clean up function raises the correct exception for an invalid append_deplorables type.
-    """
-    txt_man = TextManager()
-    with pytest.raises(TypeError):
-        txt_man.clean_up('', ['quite', 'legit'], None)
 
 
 def test_dictify_empty_in_str():

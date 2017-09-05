@@ -97,7 +97,7 @@ class TextManager:
             'multi_line': False
         }]
 
-    def clean_up(self, in_string, deplorables=None, append_to_deplorables=True):
+    def clean_up(self, in_string, deplorables=None):
         """
         This function serves to receive an input string, clean it up through removing undesirable characters and
         unnecessary whitespace, and to return the cleaned string.
@@ -108,8 +108,6 @@ class TextManager:
         Args:
             in_string (str): The input string that is to be cleaned.
             deplorables (list, Optional): A list of characters that are to be filtered from the input string.
-            append_to_deplorables (bool, Optional): Indicates whether the list of exclusions should be appended to the
-                existing list of exclusions in the class if true, if false it will overwrite the existing list.
 
         Returns:
             str: A string that has been stripped of undesirable characters and unnecessary whitespace.
@@ -117,7 +115,6 @@ class TextManager:
         Raises:
             TypeError: If in_string is not a string.
             TypeError: If deplorables is not a list of strings.
-            TypeError: If append_to_deplorables is not a bool.
         """
         # Check if the correct argument types have been passed in.
         if type(in_string) is not str:
@@ -125,11 +122,8 @@ class TextManager:
         if deplorables and (type(deplorables) is not list or type(deplorables[0]) is not str):
             raise TypeError('Bad type for arg deplorables - expected list of strings. Received type '
                             + str(type(deplorables)))
-        if type(append_to_deplorables) is not bool:
-            raise TypeError('Bad type for arg append_to_deplorables - expected bool. Received type '
-                            + str(type(append_to_deplorables)))
         # Remove undesirable characters, spaces and newlines.
-        compiled_deplorable_re = self._compile_deplorables(deplorables, append_to_deplorables)
+        compiled_deplorable_re = self._compile_deplorables(deplorables)
         sanitised = re.sub(compiled_deplorable_re, '', in_string)
         # Remove empty lines in between text-filled lines.
         stripped_and_sanitised = re.sub(r'(\n\s*\n)', '\n', sanitised)
@@ -140,7 +134,7 @@ class TextManager:
         # Return cleaned text with additional stripping for good measure.
         return clean_text.strip()
 
-    def _compile_deplorables(self, deplorables, append_to_deplorables):
+    def _compile_deplorables(self, deplorables):
         """
         This function is responsible for compiling a regex pattern that is used to filter out the characters that
         were deemed undesirable from a string.
@@ -150,21 +144,14 @@ class TextManager:
 
         Args:
             deplorables (list): A list of characters that are to be filtered from the input string.
-            append_to_deplorables (bool): Indicates whether the list of characters to be should be appended to the
-                existing list of characters to be excluded in the class if true, if false it will overwrite the
-                existing list.
 
         Returns:
             A compiled regex pattern used to match undesirable characters in a string.
         """
         # Append to existing list of undesirable characters if there is a given list of
-        # undesirable characters and append_to_deplorables is true.
-        if deplorables is not None and append_to_deplorables is True:
+        # undesirable characters
+        if deplorables is not None:
             self._deplorables += self._sanitise_deplorables(deplorables)
-        # Overwrite existing list of undesirable characters if there is a given list of
-        # undesirable characters and append_to_deplorables is false.
-        elif deplorables is not None and append_to_deplorables is False:
-            self._deplorables = deplorables
         # Define a class of characters that we wish to keep for the regex
         # that is to be compiled.
         reg_exp = r'[^\w\d\s-]'
