@@ -130,9 +130,9 @@ class TextManager:
         # Remove undesirable characters, spaces and newlines.
         compiled_deplorable_re = self._compile_deplorables(deplorables)
         sanitised = re.sub(compiled_deplorable_re, '', in_string)
-        # Remove empty lines in between text-filled lines.
+        # Remove empty lines in-between text-filled lines.
         stripped_and_sanitised = re.sub(r'(\n\s*\n)', '\n', sanitised)
-        # Remove multiple spaces before text-filled line.
+        # Remove multiple spaces before and after text-filled line.
         clean_text = re.sub(r'(\s*\n\s*)', '\n', stripped_and_sanitised)
         # Remove multiple spaces in-between text-filled line.
         clean_text = re.sub(r'( +)', ' ', clean_text)
@@ -160,15 +160,16 @@ class TextManager:
         # Define a class of characters that we wish to keep for the regex
         # that is to be compiled.
         reg_exp = r'[^\w\d\s-]'
-        # If the existing list undesirable characters is not empty,
+        # If the existing list of undesirable characters is not empty,
         # add the list of undesirable characters to the regex that is to be compiled.
         reg_exp += r'|[' + ''.join(self._deplorables) + ']'
         # Returned a compiled regular expression pattern to use for matching.
         return re.compile(reg_exp, re.UNICODE)
 
-    def _sanitise_deplorables(self, deplorables):
+    @staticmethod
+    def _sanitise_deplorables(deplorables):
         """
-        This function serves as a helper function which sanitises a list of characters that is to be removed.
+        This function serves as a helper function, which sanitises a list of characters that is to be removed.
         It escapes or removes characters that may impede a regex pattern that is compiled within this class.
 
         Authors:
@@ -239,17 +240,20 @@ class TextManager:
         # create a dictionary object and populate it with
         # relevant information from said text.
         id_info = {}
+        # Attempt to populate id_info.
+        self._populate_id_information(id_string, id_info, fuzzy_min_ratio, max_multi_line)
         # Check if barcode data, containing the id number, exists and
         # if so, save it and extract some relevant information from it.
+        # It should overwrite any existing fields that can be extracted from the id number, since
+        # the information embedded within the id number is more reliable, at least theoretically.
         if barcode_data:
             id_info['identity_number'] = barcode_data['identity_number']
             self._id_number_information_extraction(id_info, barcode_data['identity_number'])
-        # Attempt to populate id_info.
-        self._populate_id_information(id_string, id_info, fuzzy_min_ratio, max_multi_line)
         # Return the info that was found.
         return id_info
 
-    def _id_number_information_extraction(self, id_info, id_number):
+    @staticmethod
+    def _id_number_information_extraction(id_info, id_number):
         """
         This function is responsible for extracting information from a given ID number and populating a given
         dictionary object with said information.
@@ -306,14 +310,15 @@ class TextManager:
             key = match_context['field']
             # Only retrieve information if it does not exist or it could not previously
             # be determined.
-            if key not in id_info or not id_info[key]:
-                id_info[key] = self._get_match(id_string_list, match_context, fuzzy_min_ratio, max_multi_line)
-                # If the ID number has been retrieved, use it to extract other useful
-                # information.
-                if key == 'identity_number' and id_info[key]:
-                    self._id_number_information_extraction(id_info, id_info[key])
+            id_info[key] = self._get_match(id_string_list, match_context, fuzzy_min_ratio, max_multi_line)
+        # If the ID number has been retrieved, use it to extract other useful information.
+        # It should overwrite any existing fields that can be extracted from the id number, since
+        # the information embedded within the id number is more reliable, at least theoretically.
+        if id_info['identity_number']:
+            self._id_number_information_extraction(id_info, id_info['identity_number'])
 
-    def _get_match(self, id_string_list, match_context, fuzzy_min_ratio, max_multi_line):
+    @staticmethod
+    def _get_match(id_string_list, match_context, fuzzy_min_ratio, max_multi_line):
         """
         This function is responsible for searching through a list of lines from an ID string, and extracting the
         relevant ID information based on some context for image_processing that is provided as input. Fuzzy string
@@ -352,25 +357,26 @@ class TextManager:
         # Iterate over the id_string list to find fuzzy matches.
         for current_index, current_line in enumerate(id_string_list):
             move_to_next_field = False
+            # Check to see if we can jump ahead and ignore the current index.
             if skip_to_index > current_index:
                 continue
             for match_check in match_context['find']:
                 # Is there a match?
                 match_ratio = fuzz.token_set_ratio(current_line, match_check)
                 if match_ratio >= best_match_ratio:
-                    # Only interested in field value, not field name.
-                    # e.g: Surname\n
-                    #      Smith\n
-                    #      ...
-                    # ignore 'Surname' so as to be able to manually specify field name
-                    # in the context settings.
                     best_match_ratio = match_ratio
                     # If we are looking for the ID number and the last few characters of the line
                     # are numeric, then the ID number is on the same line instead of a new line.
                     if match_context['field'] == 'identity_number' and current_line[-3:].isnumeric():
                         match = current_line
-                    # The field value is on a seperate line or lines.
+                    # The field value is on a separate line or separate lines.
                     elif current_index + 1 < id_num_lines:
+                        # We are only interested in field value, not field name.
+                        # e.g: Surname\n
+                        #      Smith\n
+                        #      ...
+                        # ignore 'Surname' so as to be able to manually specify field name
+                        # in the context settings.
                         # Retrieve the field value on the very next line.
                         match = id_string_list[current_index + 1]
                         # If the field value exists over multiple lines.
@@ -378,10 +384,12 @@ class TextManager:
                             # Determine the lower bound index for field values that span multiple lines.
                             lower_index = current_index + 2
                             if lower_index >= id_num_lines:
+                                # There is nothing to find in this case.
                                 continue
                             # Determine the upper bound index for field values that span multiple lines.
                             upper_index = current_index + max_multi_line + 1
                             if upper_index > id_num_lines:
+                                # Don't go out of bounds.
                                 upper_index = id_num_lines
                             # Iterate ahead to retrieve the field value that spans over multiple lines.
                             for forward_index in range(lower_index, upper_index):
@@ -393,11 +401,11 @@ class TextManager:
                                         move_to_next_field = True
                                         skip_to_index = forward_index
                                         break
-                                # Break out of the current loop if an endpoint was found.
+                                # Break out of the current look ahead loop if an endpoint was found.
                                 if move_to_next_field:
                                     break
                                 # Otherwise, add the line to the field value.
-                                match += ' ' + id_string_list[forward_index].strip()
+                                match += ' %s' % id_string_list[forward_index].strip()
                     # Check if a match was found during the current iteration before processing further.
                     if not match:
                         continue
