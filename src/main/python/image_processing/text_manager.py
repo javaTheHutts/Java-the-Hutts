@@ -118,10 +118,15 @@ class TextManager:
         """
         # Check if the correct argument types have been passed in.
         if type(in_string) is not str:
-            raise TypeError('Bad type for arg in_string - expected string. Received type ' + str(type(in_string)))
+            raise TypeError(
+                'Bad type for arg in_string - expected string. Received type "%s".' %
+                type(in_string).__name__
+            )
         if deplorables and (type(deplorables) is not list or type(deplorables[0]) is not str):
-            raise TypeError('Bad type for arg deplorables - expected list of strings. Received type '
-                            + str(type(deplorables)))
+            raise TypeError(
+                'Bad type for arg deplorables - expected list of strings. Received type "%s".' %
+                type(deplorables).__name__
+            )
         # Remove undesirable characters, spaces and newlines.
         compiled_deplorable_re = self._compile_deplorables(deplorables)
         sanitised = re.sub(compiled_deplorable_re, '', in_string)
@@ -190,8 +195,10 @@ class TextManager:
                 deplorable = re.sub(re.compile(r'^'), '\^', deplorable)
                 sanitised.append(deplorable)
             else:
-                raise TypeError('Bad type for arg deplorables - expected list of strings. Received type '
-                                + str(type(deplorables)))
+                raise TypeError(
+                    'Bad type for arg deplorables - expected list of strings. Received type "%s".' %
+                    type(deplorables).__name__
+                )
         return sanitised
 
     def dictify(self, id_string, barcode_data=None, fuzzy_min_ratio=65, max_multi_line=2):
@@ -219,10 +226,15 @@ class TextManager:
         """
         # Check if arguments passed in are the correct type.
         if type(id_string) is not str:
-            raise TypeError('Bad type for arg id_string - expected string. Received type ' + str(type(id_string)))
+            raise TypeError(
+                'Bad type for arg id_string - expected string. Received type "%s".' %
+                type(id_string).__name__
+            )
         if barcode_data and type(barcode_data) is not dict:
-            raise TypeError('Bad type for arg id_string - expected dictionary. Received type '
-                            + str(type(barcode_data)))
+            raise TypeError(
+                'Bad type for arg barcode_data - expected dictionary. Received type "%s".' %
+                type(barcode_data).__name__
+            )
         # Given a string containing extracted ID text,
         # create a dictionary object and populate it with
         # relevant information from said text.
