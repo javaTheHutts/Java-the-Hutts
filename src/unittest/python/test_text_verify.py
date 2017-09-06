@@ -158,7 +158,7 @@ def test_verify_threshold():
         'status': 'Citizen',
         'nationality': 'RSA'
     }
-    assert verifier.verify(extracted_info, verifier_info, threshold=0.9) == (False, 87.5)
+    assert verifier.verify(extracted_info, verifier_info, threshold=90.0) == (False, 87.5)
 
 
 def test_verify_min_matches():

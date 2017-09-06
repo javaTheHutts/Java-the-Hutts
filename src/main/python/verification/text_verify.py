@@ -29,7 +29,7 @@ class TextVerify:
         # Logging for debugging purposes.
         logger.debug('Initialising TextVerify...')
 
-    def verify(self, extracted, verifier, threshold=0.75, min_matches=4, verbose=False):
+    def verify(self, extracted, verifier, threshold=75.00, min_matches=4, verbose=False):
         """
         This function is responsible for the verification of text that is extracted from an ID and is passed in,
         along with information that is to be used to verify the extracted text.
@@ -38,8 +38,8 @@ class TextVerify:
             extracted (dict): A dictionary containing the information that was extracted from an ID.
             verifier (dict): A dictionary containing the information against which the extracted data is to be
                 verified.
-            threshold (float): A threshold decimal value that is used to determine whether or not the final match
-                percentage is accepted as verified.
+            threshold (float): A threshold percentage (out of 100) that is used to determine whether or not the
+                final match percentage is accepted as verified.
             min_matches (int): The minimum number of matches that have to be calculated for the final result to be
                 considered as verified.
             verbose (bool): Indicates whether or not to return all of the calculated match percentages.
@@ -77,9 +77,8 @@ class TextVerify:
             )
         # Set minimum number of matches, if zero or less set to one.
         min_matches = min_matches if min_matches > 0 else 1
-        min_percentage = threshold * 100
         # Logging for debugging and verbose purposes.
-        logger.debug('Threshold for verification set as: %.2f' % min_percentage)
+        logger.debug('Threshold for verification set as: %.2f' % threshold)
         logger.debug('Minimum number of matches for verification set as: %d' % min_matches)
         logger.debug('Simplified percentages to be returned' if not verbose else 'Verbose percentages to be returned')
         logger.debug('-' * 50)
@@ -115,7 +114,7 @@ class TextVerify:
         else:
             logger.warning('A total of %d matches were found, which is less than the minimum' % num_scores)
         # Determine whether or not the text is verified.
-        is_verified = total_match_percentage >= min_percentage
+        is_verified = total_match_percentage >= threshold
         # Logging for debugging purposes.
         logger.debug('-' * 50)
         logger.debug('Intermediate match percentages:')
@@ -123,7 +122,7 @@ class TextVerify:
         [logger.debug(log_line) for log_line in prettify_json_message(match_percentages).split('\n')]
         logger.debug('-' * 50)
         logger.debug('Final match percentage: %.2f' % total_match_percentage)
-        logger.debug('Threshold to pass: %.2f' % min_percentage)
+        logger.debug('Threshold to pass: %.2f' % threshold)
         logger.debug('Result: ' + 'Passed' if is_verified else 'Failed')
         # Return the final result.
         if not verbose:
