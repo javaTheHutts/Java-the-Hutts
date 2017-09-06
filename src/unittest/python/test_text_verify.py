@@ -288,3 +288,57 @@ def test_verify_invalid_arg_verbose():
     verifier = TextVerify()
     with pytest.raises(TypeError):
         verifier.verify({}, {}, verbose='nah fam')
+
+
+def test_validate_id_number_valid():
+    """
+    Tests to see if the validate_id_number function correctly validates the given id number.
+    This case tests whether it deems a valid id number as valid.
+    """
+    verifier = TextVerify()
+    assert verifier.validate_id_number('7209170838080')
+
+
+def test_validate_id_number_invalid():
+    """
+    Tests to see if the validate_id_number function correctly validates the given id number.
+    This case tests whether it deems a invalid id number as invalid.
+    """
+    verifier = TextVerify()
+    assert not verifier.validate_id_number('1234567891011')
+
+
+def test_validate_id_number_valid_length_specified():
+    """
+    Tests to see if the validate_id_number function correctly validates the given id number.
+    This case tests the behaviour of specifying the valid_length arg
+    """
+    verifier = TextVerify()
+    assert not verifier.validate_id_number('1234567891011', valid_length=15)
+
+
+def test_validate_id_number_invalid_arg_id_number_1():
+    """
+    Tests to see if the validate_id_number function raises the correct exception for an invalid id_number arg.
+    """
+    verifier = TextVerify()
+    with pytest.raises(TypeError):
+        verifier.validate_id_number(123456)
+
+
+def test_validate_id_number_invalid_arg_id_number_2():
+    """
+    Tests to see if the validate_id_number function raises the correct exception for an invalid id_number arg.
+    """
+    verifier = TextVerify()
+    with pytest.raises(TypeError):
+        verifier.validate_id_number('1234Almost56')
+
+
+def test_validate_id_number_invalid_arg_valid_length():
+    """
+    Tests to see if the validate_id_number function raises the correct exception for an invalid valid_length arg.
+    """
+    verifier = TextVerify()
+    with pytest.raises(TypeError):
+        verifier.validate_id_number('1234567891011', False)
