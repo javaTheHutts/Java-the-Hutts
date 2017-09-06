@@ -270,7 +270,7 @@ class TextManager:
             id_info['identity_number'] = barcode_data['identity_number']
             self._id_number_information_extraction(id_info, barcode_data['identity_number'])
         # Perform some custom post-processing on the information that was extracted.
-        logger.debug('Standardising some field values...')
+        logger.debug('Post-processing some field values...')
         self._post_process(id_info)
         # Return the info that was found.
         return id_info
@@ -457,10 +457,11 @@ class TextManager:
         # Otherwise return what we have found.
         return match
 
-    @staticmethod
-    def _post_process(id_info):
+    def _post_process(self, id_info):
         """
-        A function for standardising and formatting id_info values for custom, or future, use.
+        Used to perform custom processing after extraction has taken place.
+        All custom operations that are required after all the extraction has taken place, should be
+        called from within this function.
 
         Authors:
             Jan-Justin van Tonder
@@ -469,36 +470,47 @@ class TextManager:
             id_info (dict): A dictionary object used to house extracted ID information.
 
         Returns:
-            (dict): The original id_info, with some customised field values.
+            (dict): The original id_info, with some post-processed field values.
         """
         if 'date_of_birth' in id_info and id_info['date_of_birth']:
-            # Due to the preference of extracting the date of birth from the id number as opposed to
-            # the ocr output, there tends to be a discrepancy in the date format retrieved, therefore,
-            # standardise it for future use.
-            try:
-                # Attempt to parse the different dates that could appear for formatting.
-                current_date_of_birth = re.sub(' ', '', id_info['date_of_birth'])
-                # If the current date contains a '-', then it was extracted from the id number, therefore,
-                # parse it in the format 'YY-MM-DD'
-                if '-' in current_date_of_birth:
-                    standardised_date_of_birth = datetime.strptime(current_date_of_birth, '%y-%m-%d')
-                # Otherwise it was extracted from the OCR output, therefore, parse it in the
-                # format 'DD MMM YYYY'
-                else:
-                    standardised_date_of_birth = datetime.strptime(current_date_of_birth, '%d%b%Y')
-                # Standardise the date by formatting it according to ISO date format standard,
-                # which is 'YYYY-MM-DD'
-                id_info['date_of_birth'] = datetime.strftime(standardised_date_of_birth, '%Y-%m-%d')
-            except ValueError:
-                # Could not parse the date so log and keep it as is.
-                logger.warning(
-                    'Could not parse date "%s" for formatting. Keeping date as is.' %
-                    id_info['date_of_birth']
-                )
-        if 'sex' in id_info and id_info['sex']:
-            # Generally, South African IDs indicate sex with a single character, however, our use requires
-            # the full, explicit word for the individual's sex.
-            id_info['sex'] = 'Female' if id_info['sex'] == 'F' else 'Male'
+            id_info['date_of_birth'] = self._standardise_date_of_birth(id_info['date_of_birth'])
+
+    @staticmethod
+    def _standardise_date_of_birth(date_of_birth):
+        """
+        Standardises the date of birth field value due to a mixture of formats that can be extracted.
+        Due to the preference of extracting the date of birth from the id number as opposed to
+        the ocr output, there tends to be a discrepancy in the date format retrieved, therefore,
+        standardise it for future use.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            date_of_birth (str): The date of birth to be standardised.
+
+        Returns:
+            (str): A standardised date of birth field value if the extracted format could be parsed, else the
+                extracted format is kept.
+        """
+        try:
+            # Attempt to parse the different dates that could appear for formatting.
+            current_date_of_birth = re.sub(' ', '', date_of_birth)
+            # If the current date contains a '-', then it was extracted from the id number, therefore,
+            # parse it in the format 'YY-MM-DD'
+            if '-' in current_date_of_birth:
+                standardised_date_of_birth = datetime.strptime(current_date_of_birth, '%y-%m-%d')
+            # Otherwise it was extracted from the OCR output, therefore, parse it in the
+            # format 'DD MMM YYYY'
+            else:
+                standardised_date_of_birth = datetime.strptime(current_date_of_birth, '%d%b%Y')
+            # Standardise the date by formatting it according to ISO date format standard,
+            # which is 'YYYY-MM-DD'
+            return datetime.strftime(standardised_date_of_birth, '%Y-%m-%d')
+        except ValueError:
+            # Could not parse the date so log and keep it as is.
+            logger.warning('Could not parse date "%s" for formatting. Keeping date as is.' % date_of_birth)
+            return date_of_birth
 
 
 class FieldType(enumerate):
