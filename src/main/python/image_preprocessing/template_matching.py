@@ -4,7 +4,7 @@ import numpy as np
 import imutils
 from hutts_utils.hutts_logger import logger
 
-DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+TEMPLATE_DIR = "{base_path}/templates/".format(base_path=os.path.abspath(os.path.dirname(__file__)))
 
 
 class TemplateMatching:
@@ -15,9 +15,9 @@ class TemplateMatching:
     """
 
     def __init__(self):
-        self.template = [(1034, cv2.imread(DESKTOP + "/templates/temp_flag.jpg"), 0.75, "idcard"),
-                         (875, cv2.imread(DESKTOP + "/templates/wap.jpg"), 0.60, "idbook"),
-                         (1280, cv2.imread(DESKTOP + "/templates/pp2.jpg"), 0.60, "studentcard")]
+        self.template = [(1034, cv2.imread(TEMPLATE_DIR + "temp_flag.jpg"), 0.75, "idcard"),
+                         (875, cv2.imread(TEMPLATE_DIR + "wap.jpg"), 0.60, "idbook"),
+                         (1280, cv2.imread(TEMPLATE_DIR + "pp2.jpg"), 0.60, "studentcard")]
 
     def identify(self, source):
         """
