@@ -113,6 +113,7 @@ class BuildDirector:
         Returns:
             :Pipeline (Constructed pipeline)
         """
+        logger.debug("Shape Predictor path: " + SHAPE_PREDICTOR_PATH)
         builder = PipelineBuilder()
 
         face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
