@@ -141,31 +141,6 @@ def test_clean_up_remove_specified():
     )
 
 
-def test_clean_up_remove_specified_overwrite():
-    """
-    Test the clean up function's removal with a specified list of characters that overwrites the default list.
-    """
-    txt_man = TextManager()
-    in_str = (
-        'Identity Number\n'
-        '123456789\n'
-        'Surname\n'
-        'Döe_\n'
-        'Names\n'
-        'John-Michael\n'
-        'Robert'
-    )
-    assert txt_man.clean_up(in_str, ['ö', '-'], False) == (
-        'Identity Number\n'
-        '123456789\n'
-        'Surname\n'
-        'De_\n'
-        'Names\n'
-        'JohnMichael\n'
-        'Robert'
-    )
-
-
 def test_clean_up_remove_specified_sanitise():
     """
     Test the clean up function's removal with an additional list of characters to remove, but tests to see if certain
@@ -231,15 +206,6 @@ def test_clean_up_invalid_arg_deplorables_3():
         txt_man.clean_up('', ['almost', 'but not quite', 3.3])
 
 
-def test_clean_up_invalid_arg_append_deplorables():
-    """
-    Test that the clean up function raises the correct exception for an invalid append_deplorables type.
-    """
-    txt_man = TextManager()
-    with pytest.raises(TypeError):
-        txt_man.clean_up('', ['quite', 'legit'], None)
-
-
 def test_dictify_empty_in_str():
     """
     Test the case in which an empty string is passed to the dictify function.
@@ -288,7 +254,7 @@ def test_dictify_default_skip_unnecessary():
         'surname': 'Doe',
         'names': 'John-Michael Robert',
         'sex': 'M',
-        'date_of_birth': '13 Jan 1971',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': 'RSA',
         'status': 'Citizen',
         'nationality': 'RSA'
@@ -325,7 +291,7 @@ def test_dictify_default_id_num_found():
         'surname': 'Doe',
         'names': 'John-Michael Robert',
         'sex': 'M',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': 'RSA',
         'status': 'Citizen',
         'nationality': 'RSA'
@@ -361,7 +327,7 @@ def test_dictify_default_id_num_found_same_line():
         'surname': 'Doe',
         'names': 'John-Michael Robert',
         'sex': 'M',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': 'RSA',
         'status': 'Citizen',
         'nationality': 'RSA'
@@ -401,7 +367,7 @@ def test_dictify_default_id_num_not_found():
         'surname': 'Doe',
         'names': 'John-Michael Robert',
         'sex': 'M',
-        'date_of_birth': '13 Jan 1971',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': 'RSA',
         'status': 'Hungry',
         'nationality': 'RSA'
@@ -428,7 +394,7 @@ def test_dictify_id_in_barcode():
         'surname': 'Doe',
         'names': 'Jane-Michael Robert',
         'sex': 'F',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': None,
         'status': 'Non Citizen',
         'nationality': None
@@ -458,7 +424,7 @@ def test_dictify_multi_line_1():
         'surname': 'Doe',
         'names': 'John-Michael Robert',
         'sex': 'M',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': None,
         'status': 'Citizen',
         'nationality': None
@@ -486,7 +452,7 @@ def test_dictify_multi_line_2():
         'surname': 'Doe',
         'names': 'John-Michael',
         'sex': 'M',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': None,
         'status': 'Citizen',
         'nationality': None
@@ -565,7 +531,7 @@ def test_dictify_max_multi_line():
         'surname': 'Doe',
         'names': 'John-Michael Robert Douglas',
         'sex': 'M',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': None,
         'status': 'Citizen',
         'nationality': None
@@ -596,7 +562,7 @@ def test_dictify_fuzzy_1():
         'surname': 'Doe',
         'names': 'John-Michael Robert',
         'sex': 'M',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': None,
         'status': 'Citizen',
         'nationality': 'RSA'
@@ -627,7 +593,7 @@ def test_dictify_fuzzy_2():
         'surname': 'Doe',
         'names': 'John-Michael Robert',
         'sex': 'M',
-        'date_of_birth': '71-01-13',
+        'date_of_birth': '1971-01-13',
         'country_of_birth': None,
         'status': 'Citizen',
         'nationality': 'RSA'
@@ -652,7 +618,7 @@ def test_dictify_fuzzy_min_ratio():
         'Nahonallly\n'
         'RSA\n'
     )
-    assert txt_man.dictify(in_str, fuzzy_min_ratio=90) == {
+    assert txt_man.dictify(in_str, fuzzy_min_ratio=90.00) == {
         'identity_number': None,
         'surname': 'Doe',
         'names': 'John-Michael Robert',
@@ -685,6 +651,30 @@ def test_dictify_bare():
     }
 
 
+def test_dictify_invalid_date_of_birth():
+    """
+    Test the dictify function's behaviour when an invalid date of birth is given for formatting.
+    We expect it return the malformed 'date'.
+    """
+    txt_man = TextManager()
+    in_str = (
+        'date of birth\n'
+        '123 Jin 1971\n'
+        'country of birth\n'
+        'RSA'
+    )
+    assert txt_man.dictify(in_str) == {
+        'identity_number': None,
+        'surname': None,
+        'names': None,
+        'sex': None,
+        'date_of_birth': '123 Jin 1971',
+        'country_of_birth': 'RSA',
+        'status': None,
+        'nationality': None
+    }
+
+
 def test_dictify_invalid_arg_in_str():
     """
     Test to see if dictify raises the correct exception when an incorrect type for the in_str arg is passed.
@@ -701,3 +691,21 @@ def test_dictify_invalid_arg_barcode_data():
     txt_man = TextManager()
     with pytest.raises(TypeError):
         txt_man.dictify('seems legit', 'nope')
+
+
+def test_dictify_invalid_arg_min_fuzzy_ratio():
+    """
+    Test to see if dictify raises the correct exception when an incorrect type for the min_fuzzy_ratio arg is passed.
+    """
+    txt_man = TextManager()
+    with pytest.raises(TypeError):
+        txt_man.dictify('good so far...', {}, '...fail')
+
+
+def test_dictify_invalid_arg_max_multi_line():
+    """
+    Test to see if dictify raises the correct exception when an incorrect type for the max_multi_line arg is passed.
+    """
+    txt_man = TextManager()
+    with pytest.raises(TypeError):
+        txt_man.dictify('good so far...', {}, 100.0, ['...nevermind'])

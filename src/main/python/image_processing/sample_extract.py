@@ -82,10 +82,23 @@ class TextExtractor:
         os.remove(filename)
 
         text_manager = TextManager()
+        # Log the uncleaned string to terminal.
+        # This is for demonstration purposes.
+        logger.debug('-' * 50)
+        logger.debug('String to clean:')
+        logger.debug('-' * 50)
+        [logger.debug(log_line) for log_line in text.split('\n')]
+        logger.debug('-' * 50)
         logger.info('Cleaning up text...')
+        # Clean the OCR output text.
         clean_text = text_manager.clean_up(text)
-        logger.debug('Clean text:')
-        [logger.debug(text_line) for text_line in clean_text.split('\n')]
+        # Log the cleaned string to terminal.
+        # This is for demonstration purposes.
+        logger.debug('-' * 50)
+        logger.debug('Cleaned text:')
+        logger.debug('-' * 50)
+        [logger.debug(log_line) for log_line in clean_text.split('\n')]
+        logger.debug('-' * 50)
         # Cater for UP student/staff cards.
         if identification_type == 'studentcard':
             return {
@@ -93,9 +106,17 @@ class TextExtractor:
                 'text_dump': clean_text,  # Dump extracted and cleaned text.
                 'barcode_dump': data['identity_number'] if data else None  # Dump the barcode data.
             }
+        # Dictify cleaned text.
+        logger.info('Placing extracted text in a dictionary...')
         id_details = text_manager.dictify(clean_text, data)
+        # Log the dictified extracted text to terminal.
+        # This is for demonstration purposes.
+        logger.debug('-' * 50)
         logger.debug('Extracted ID details:')
+        logger.debug('-' * 50)
         [logger.debug(id_details_line) for id_details_line in prettify_json_message(id_details).split('\n')]
+        logger.debug('-' * 50)
+        # Return the extracted ID information.
         return id_details
 
 
