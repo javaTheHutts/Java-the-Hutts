@@ -15,6 +15,7 @@ class TemplateMatching:
     """
 
     def __init__(self):
+        logger.debug("Looking for the templates in directory: " + TEMPLATE_DIR)
         self.template = [(1034, cv2.imread(TEMPLATE_DIR + "temp_flag.jpg"), 0.75, "idcard"),
                          (875, cv2.imread(TEMPLATE_DIR + "wap.jpg"), 0.60, "idbook"),
                          (1280, cv2.imread(TEMPLATE_DIR + "pp2.jpg"), 0.60, "studentcard")]
