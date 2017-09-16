@@ -59,18 +59,18 @@ class TextManager:
             'multi_line': False
         }, {
             'field': 'surname',
-            'find': ['surname'],
+            'find': ['surname', 'vansurname'],
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
             'multi_line': True,
-            'multi_line_end': ['names', 'fore names']
+            'multi_line_end': ['forenames', 'names', 'voornameforenames']
         }, {
             'field': 'names',
-            'find': ['names', 'fore names'],
+            'find': ['forenames', 'names', 'voornameforenames'],
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
             'multi_line': True,
-            'multi_line_end': ['sex', 'country of birth']
+            'multi_line_end': ['country of birth', 'sex', 'geboortedistrik of-land']
         }, {
             'field': 'sex',
             'find': ['sex'],
@@ -85,7 +85,7 @@ class TextManager:
             'multi_line': False
         }, {
             'field': 'country_of_birth',
-            'find': ['country of birth'],
+            'find': ['country of birth', 'district or country of birth'],
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': True,
             'multi_line': False
