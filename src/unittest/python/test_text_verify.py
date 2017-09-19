@@ -189,7 +189,7 @@ def test_verify_min_matches():
     assert verifier.verify(extracted_info, verifier_info, min_matches=6) == (False, 0.0)
 
 
-def test_verify_verbose():
+def test_verify_verbose_1():
     """
     Tests the return value of the verify function with a specified verbose arg.
     """
@@ -215,15 +215,115 @@ def test_verify_verbose():
         'nationality': 'RSA'
     }
     assert verifier.verify(extracted_info, verifier_info, verbose=True) == (True, {
-        'identity_number': 100.0,
-        'surname': 57.14,
-        'names': 100.0,
-        'sex': 100.0,
-        'date_of_birth': 100.0,
-        'country_of_birth': 66.67,
-        'status': 53.33,
-        'nationality': 100.0,
+        'identity_number': {
+            'match_percentage': 100.0,
+            'verifier_field_value': '7101135111011',
+            'extracted_field_value': '7101135111011'
+        },
+        'surname': {
+            'match_percentage': 57.14,
+            'verifier_field_value': 'Doe',
+            'extracted_field_value': 'Door'
+        },
+        'names': {
+            'match_percentage': 100.0,
+            'verifier_field_value': 'John-Michael Robert',
+            'extracted_field_value': 'John-Michael Robert'
+        },
+        'sex': {
+            'match_percentage': 100.0,
+            'verifier_field_value': 'M',
+            'extracted_field_value': 'M'
+        },
+        'date_of_birth': {
+            'match_percentage': 100.0,
+            'verifier_field_value': '71-01-13',
+            'extracted_field_value': '71-01-13'
+        },
+        'country_of_birth': {
+            'match_percentage': 66.67,
+            'verifier_field_value': 'RSA',
+            'extracted_field_value': 'GRSAGT'
+        },
+        'status': {
+            'match_percentage': 53.33,
+            'verifier_field_value': 'Citizen',
+            'extracted_field_value': 'Cytyziny'
+        },
+        'nationality': {
+            'match_percentage': 100.0,
+            'verifier_field_value': 'RSA',
+            'extracted_field_value': 'RSA'
+        },
         'total': 84.64
+    })
+
+
+def test_verify_verbose_2():
+    """
+    Tests the return value of the verify function with a specified verbose arg.
+    """
+    verifier = TextVerify()
+    extracted_info = {
+        'identity_number': '7101135111011',
+        'surname': 'Door',
+        'names': 'John-Michael Robert',
+        'sex': 'M',
+        'date_of_birth': '71-01-13',
+        'country_of_birth': 'GRSAGT',
+        'nationality': 'RSA'
+    }
+    verifier_info = {
+        'identity_number': '7101135111011',
+        'surname': 'Doe',
+        'names': 'John-Michael Robert',
+        'sex': 'M',
+        'date_of_birth': '71-01-13',
+        'country_of_birth': 'RSA',
+        'status': 'Citizen',
+    }
+    assert verifier.verify(extracted_info, verifier_info, verbose=True) == (True, {
+        'identity_number': {
+            'match_percentage': 100.0,
+            'verifier_field_value': '7101135111011',
+            'extracted_field_value': '7101135111011'
+        },
+        'surname': {
+            'match_percentage': 57.14,
+            'verifier_field_value': 'Doe',
+            'extracted_field_value': 'Door'
+        },
+        'names': {
+            'match_percentage': 100.0,
+            'verifier_field_value': 'John-Michael Robert',
+            'extracted_field_value': 'John-Michael Robert'
+        },
+        'sex': {
+            'match_percentage': 100.0,
+            'verifier_field_value': 'M',
+            'extracted_field_value': 'M'
+        },
+        'date_of_birth': {
+            'match_percentage': 100.0,
+            'verifier_field_value': '71-01-13',
+            'extracted_field_value': '71-01-13'
+        },
+        'country_of_birth': {
+            'match_percentage': 66.67,
+            'verifier_field_value': 'RSA',
+            'extracted_field_value': 'GRSAGT'
+        },
+        'status': {
+            'match_percentage': None,
+            'verifier_field_value': 'Citizen',
+            'extracted_field_value': None
+        },
+        'nationality': {
+            'match_percentage': None,
+            'verifier_field_value': None,
+            'extracted_field_value': 'RSA'
+        },
+        'total': 87.3
     })
 
 
