@@ -72,16 +72,29 @@
 				<!-- Settings 1 -->
 				<ul class="collapsible" data-collapsible="accordion">
 					<li>
-						<div class="collapsible-header waves-effect waves-teal">
+						<div class="collapsible-header waves-effect waves-teal active">
 							<i class="material-icons carets">chevron_right</i>
 							General
 						</div>
 						<div class="collapsible-body">
-
+							<div class="row">
+								<div class="col s6">
+									<p class="special">ID document</p>
+								</div>
+								<div class="col s12 input-field">
+									<select id="id-type">
+										<option value="default" selected>auto-detect</option>
+										<option value="idbook">ID book</option>
+										<option value="idcard">ID card</option>
+										<option value="studentcard">student card</option>
+									</select>
+									<label for="id-type">Identification Document Type</label>
+								</div>
+							</div>
 						</div>
 					</li>
 					<li>
-						<div class="collapsible-header waves-effect waves-teal active">
+						<div class="collapsible-header waves-effect waves-teal">
 							<i class="material-icons carets">expand_more</i>
 							Text Extraction
 						</div>
@@ -98,7 +111,7 @@
 												<input type="checkbox" id="auto_settings" checked="checked">
 												<span class="lever"></span>
 												On
-												</label>
+											</label>
 										</div>
 									</div>
 								</div>
@@ -134,7 +147,7 @@
 												<input type="checkbox" id="profile_switch" disabled class="text-switch text-extract-settings">
 												<span class="lever"></span>
 												Yes
-												</label>
+											</label>
 										</div>
 									</div>
 								</div>
@@ -150,7 +163,7 @@
 											<input type="checkbox" id="barcode_switch" disabled class="text-switch text-extract-settings">
 											<span class="lever"></span>
 											Yes
-											</label>
+										</label>
 									</div>
 								</div>
 							</div>
@@ -167,7 +180,7 @@
 												<input type="checkbox" disabled id="extract_red" class="text-switch channel_extractors text-extract-settings">
 												<span class="lever"></span>
 												Yes
-												</label>
+											</label>
 										</div>
 									</div>
 									<div class="col s6">
@@ -180,7 +193,7 @@
 												<input type="checkbox" id="extract_green" class="text-switch channel_extractors text-extract-settings" disabled>
 												<span class="lever"></span>
 												Yes
-												</label>
+											</label>
 										</div>
 									</div>
 									<div class="col s6">
@@ -193,7 +206,7 @@
 												<input type="checkbox" id="extract_blue" class="text-switch channel_extractors text-extract-settings" disabled>
 												<span class="lever"></span>
 												Yes
-												</label>
+											</label>
 										</div>
 									</div>
 								</div>
@@ -313,16 +326,6 @@
 													<div class="file-path-wrapper">
 														<input class="file-path validate" type="text">
 													</div>
-												</div>
-												<div class="col s12 l6 offset-l6 input-field">
-													<i class=" material-icons prefix fa fa-id-badge" aria-hidden="true"></i>
-													<select id="id-type-extract">
-														<option value="default" selected>DEFAULT</option>
-														<option value="idbook">ID BOOK</option>
-														<option value="idcard">ID CARD</option>
-														<option value="studentcard">STUDENT CARD</option>
-													</select>
-													<label for="id-type-extract">Identification Type</label>
 												</div>
 											</div>
 										</div>
@@ -541,16 +544,6 @@
 														<input class="file-path validate" type="text">
 													</div>
 												</div>
-											</div>
-											<div class="col s12 l6 offset-l6 input-field">
-												<i class=" material-icons prefix fa fa-id-badge" aria-hidden="true"></i>
-												<select id="id-type-verify">
-													<option value="default" selected>DEFAULT</option>
-													<option value="idbook">ID BOOK</option>
-													<option value="idcard">ID CARD</option>
-													<option value="studentcard">STUDENT CARD</option>
-												</select>
-												<label for="id-type-verify">Identification Type</label>
 											</div>
 										</div>
 									</div>

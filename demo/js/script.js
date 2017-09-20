@@ -131,7 +131,7 @@ $(document).ready(function () {
 		formData.append('dob', dob);
 
 		// Add preferences and ID type
-		addPreferences(formData, 'verify');
+		addPreferences(formData);
 
 		// Ensure that the pre-loader spinner is visible
 		$('.circle-result').html('');
@@ -267,7 +267,7 @@ $(document).ready(function () {
 		formData.append('idPhoto', idPhoto);
 
 		// Add preferences and ID type
-		addPreferences(formData, 'extract');
+		addPreferences(formData);
 
 		$.ajax({
 			type: "POST",
@@ -357,7 +357,7 @@ $(document).ready(function () {
 		formData.append('idPhoto', idPhoto);
 
 		// Add preferences and ID type
-		addPreferences(formData, 'extract');
+		addPreferences(formData);
 
 		$.ajax({
 			type: "POST",
@@ -558,7 +558,7 @@ function handleUPCard(extracted_text) {
 		}
 	}
 }
-function addPreferences(formData, type)
+function addPreferences(formData)
 {
 	var blurTechnique = $('#blur_technique').val();
 	var thresholdTechnique = $('#threshold_technique').val();
@@ -569,7 +569,7 @@ function addPreferences(formData, type)
 	var extractBlue = $('#extract_blue').is(':checked');
 
 	// Add id type to preferences if selected
-	var idType = $('#id-type-' + type).val();
+	var idType = $('#id-type').val();
 	if(idType != 'default')
 		formData.append('id_type', idType);
 
