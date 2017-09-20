@@ -435,10 +435,24 @@ function readURL(input) {
 			reader.onload = function (e) {
 				$('#id-preview-extract').attr('src', e.target.result);
 			};
-		} else {
+		} else if ($(input).attr('id') == 'id-photo-verify') {
 			reader.onload = function (e) {
 				$('#id-preview-verify').attr('src', e.target.result);
 			};
+		} else {
+			reader.onload = function (e) {
+				var preview = $('<img>', {
+					'class': 'photo-preview-tooltip',
+					'src': e.target.result
+				});
+				$('.photo-preview').tooltip('remove');
+				$('.photo-preview').tooltip({
+					delay: 50,
+					position: 'top',
+					html: true,
+					tooltip: preview.prop('outerHTML')
+				});
+			}
 		}
 		reader.readAsDataURL(input.files[0]);
 	}
@@ -501,6 +515,8 @@ function clearIDPreviews() {
 	$('#id-photo-extract').val('');
 	$('#id-photo-verify').val('');
 	$('.file-path-wrapper input').val('');
+	$('#profile-photo').val('');
+	$('.photo-preview').tooltip('remove');
 }
 
 // Clears extract fields

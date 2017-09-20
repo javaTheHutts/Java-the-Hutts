@@ -675,6 +675,15 @@ button.picker__close {
   }
 }
 
+/* Tooltips */
+.photo-preview-tooltip {
+  max-height: 300px;
+  margin-left: -7px;
+  margin-right: -7px;
+  margin-top: -9px;
+  margin-bottom: -12px;
+}
+
 /* Tests */
 .test-circle {
   height: 150px;
