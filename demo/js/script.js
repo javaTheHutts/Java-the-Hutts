@@ -31,10 +31,29 @@ $(document).ready(function () {
 	$('select').material_select();
 
 	$('.datepicker').pickadate({
-		selectMonths: true, // Creates a dropdown to control month
-		selectYears: 110, // Creates a dropdown of 15 years to control year,
-		format: 'dd/mm/yyyy',
-		closeOnSelect: false // Close upon selecting a date,
+		selectMonths: true,		 // Creates a dropdown to control month
+		selectYears: 120, 		 // Creates a dropdown of n years to control year,
+		format: 'yyyy-mm-dd',	 //	Date format,
+		closeOnSelect: false, 	 // Close upon selecting a date,
+		max: new Date() 		 // Set the max date to today to get only previous dates. 
+	});
+
+	// Testing -- Remove
+	$('.test-circle').circliful({
+		percent: 88.8,
+		text: 'Profile',
+		textBelow: true,
+		decimals: 2,
+		alwaysDecimals: true,
+		foregroundColor: '#80cbc4',
+		backgroundColor: 'none',
+		fillColor: '#eee',
+		foregroundBorderWidth: 4,
+		iconColor: '#80cbc4',
+		icon: 'f007',
+		iconSize: '30',
+		iconPosition: 'middle',
+		targetPercent: $('#verification-threshold').val()
 	});
 
 	// Image pipeline initialisation
@@ -214,11 +233,12 @@ $(document).ready(function () {
 		$('#verify-result').modal('open');
 	});
 
-	// View detailed results click
-	$('#verify-result.modal .modal-footer').on('click', function () {
-		$('.collapsible-main').collapsible('close', 1);
+	// View detailed results button click event
+	$('.btn-details').on('click', function() {
 		$('.collapsible-main').collapsible('open', 4);
-		$('body').scrollTo($('#detailed-results > .collapsiblebody'), 1000);
+		setTimeout(function() {
+			$('html, body').animate({ scrollTop: $('#details-anchor').offset().top}, 800);
+		}, 200);
 	});
 
 	// Hover compare cards on compare button hover

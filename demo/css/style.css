@@ -445,7 +445,7 @@ button.picker__close {
 @media (min-width: 993px) {
   .duo-card,
   .col.duo-button-wrapper {
-    min-height: 40.4em;
+    min-height: 42em;
   }
 
   .col.duo-button-wrapper {
@@ -453,7 +453,7 @@ button.picker__close {
   }
 
   .id-preview {
-    max-height: 28em;
+    max-height: 395px;
   }
 
   #verify-btn {
@@ -468,13 +468,6 @@ button.picker__close {
 .duo-card.duo-card-hover {
   transition:box-shadow .25s;
   box-shadow:0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)
-}
-
-@media (min-width: 1500px) {
-  .duo-card,
-  .col.duo-button-wrapper {
-    min-height: 42em;
-  }
 }
 
 /* Collapsible 2 */
@@ -637,6 +630,10 @@ button.picker__close {
   text-align: center;
 }
 
+#verify-result {
+  width: 80%;
+}
+
 /* Loader overlay */
 .loader-overlay {
   background: none repeat scroll 0 0 black;
@@ -659,6 +656,10 @@ button.picker__close {
 }
 
 /*Footer styling */
+.page-footer > .container {
+  width: 85%;
+}
+
 .page-footer,
 .page-footer .footer-copyright {
   background-color: #131515;
@@ -666,6 +667,12 @@ button.picker__close {
 
 .social {
   margin: 0.3em;
+}
+
+@media (min-width: 1700) {
+  .page-footer > .container {
+    width: 100%;
+  }
 }
 
 /* Tests */
