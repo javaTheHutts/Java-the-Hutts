@@ -209,23 +209,6 @@ $(document).ready(function () {
 			}
 		});
 
-		// Testing -- Remove
-		$('.test-circle').circliful({
-			percent: 88.8,
-			text: 'Profile',
-			textBelow: true,
-			decimals: 2,
-			alwaysDecimals: true,
-			foregroundColor: '#80cbc4',
-			backgroundColor: 'none',
-			fillColor: '#eee',
-			foregroundBorderWidth: 4,
-			iconColor: '#80cbc4',
-			icon: 'f007',
-			iconSize: '30',
-			iconPosition: 'middle'
-		});
-
 		// Open up result modal
 		$('#verify-result.modal .modal-footer').hide();
 		$('#verify-result').modal('open');

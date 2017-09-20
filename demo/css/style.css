@@ -169,6 +169,11 @@ nav,
   color: #26a69a;
 }
 
+.slide-out .range-field > .thumb > .value {
+  margin-top: -2px !important;
+  padding-left: 2.5px;
+}
+
 #mobile-slide .team-logo,
 #mobile-slide .team-logo > img {
   height: 150px;
