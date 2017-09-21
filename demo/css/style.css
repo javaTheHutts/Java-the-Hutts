@@ -620,6 +620,13 @@ button.picker__close {
 }
 
 /* Colapsible 5 */
+@media (min-width: 993px) {
+  .total-row {
+    border-top: 1px solid rgb(208, 208, 208);
+    font-weight: bold;
+  }
+}
+
 
 /* Result modal */
 .spinner {

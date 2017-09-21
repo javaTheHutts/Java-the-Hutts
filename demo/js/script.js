@@ -152,8 +152,13 @@ $(document).ready(function () {
 		// Add preferences and ID type
 		addPreferences(formData);
 
-		// Ensure that the pre-loader spinner is visible
+		// Clear circliful graphs
 		$('.circle-result').html('');
+
+		// Hide previous detailed results
+		$('#detailed-results').hide();
+
+		// Ensure that the pre-loader spinner is visible
 		$('#verify-result .modal-content .spinner').show();
 
 		$.ajax({
@@ -164,7 +169,10 @@ $(document).ready(function () {
 			contentType: false,
 			success: function (data) {
 				$('.result-total').data('percentage', data.total_match);
-				$('.result-text').data('percentage', data.text_match);
+				$('.result-text').data(
+					'percentage', 
+					typeof data.text_match === 'object'? data.text_match.total: data.text_match
+				);
 				$('.result-profile').data('percentage', data.face_match);
 
 				// Results circliful
@@ -217,14 +225,23 @@ $(document).ready(function () {
 				});
 
 				$('#verify-result .modal-content .spinner').hide();
-				$('.circle-results-wrapper, #verify-result.modal .modal-footer')
-				.show(500);
 
 				// Populate and unhide pipeline
 				populatePipeline(true, 8);
 				populatePipeline(false, 6);
 				$('#text-pipeline').show(600);
 				$('#profile-pipeline').show(600);
+				
+				// Populate the detailed results section
+				if (typeof data.text_match === 'object') {
+					// Show the view details button
+					$('.circle-results-wrapper, #verify-result.modal .modal-footer')
+					.show(500);
+					// Populate the detailed results
+					populateDetailedResults(data.text_match);
+					// Unhide the detailed results section
+					$('#detailed-results').show(600);
+				}
 			}
 		});
 
@@ -577,8 +594,8 @@ function handleUPCard(extracted_text) {
 		}
 	}
 }
-function addPreferences(formData)
-{
+
+function addPreferences(formData) {
 	var blurTechnique = $('#blur_technique').val();
 	var thresholdTechnique = $('#threshold_technique').val();
 	var profileSwitch = $('#profile_switch').is(':checked');
@@ -606,4 +623,44 @@ function addPreferences(formData)
 		else if (extractRed)
 			formData.append('color', "red");
 	}
+
+	// Verbose outpuut for verification
+	var verboseVerify = $('#verbose_switch').is(':checked');
+	formData.append('verbose_verify', verboseVerify);
+}
+
+function populateDetailedResults(textMatch) {
+	// Clear any previous data
+	$('#text-verify-details').html('');
+	// Populate the table data with the textMatch data
+	for (var field in textMatch) {
+		if (field !== 'total') {
+			var row = $('<tr>');
+			row.append('<td>' + titleCase(field.replace(/_/g, ' ')) +  '</td>');
+			row.append('<td>' + textMatch[field].extracted_field_value + '</td>');
+			row.append('<td>' + textMatch[field].verifier_field_value + '</td>');
+			row.append(
+				'<td class="right-align">' + 
+				parseFloat(textMatch[field].match_percentage).toFixed(2) + 
+				'%</td>'
+			);
+			// Append the newly created row to the table
+			$('#text-verify-details').append(row);
+		}
+	}
+	// Append the total as a special row
+	var row = $('<tr class="total-row">');
+	row.append('<td></td>');
+	row.append('<td></td>');
+	row.append('<td></td>');
+	row.append('<td class="right-align">' + parseFloat(textMatch[field]).toFixed(2) + '%</td>');
+	$('#text-verify-details').append(row);
+}
+
+function titleCase(str) {
+    return str.split(' ').map(
+        function (s) {
+            return s[0].toUpperCase() + s.substring(1).toLowerCase()      
+		}
+	).join(' ');
 }
