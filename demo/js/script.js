@@ -24,9 +24,6 @@ $(document).ready(function () {
 		}
 	});
 
-	// Initialise all modals
-	$('.modal').modal();
-
 	// Materialise component initialization
 	$('select').material_select();
 
@@ -119,7 +116,7 @@ $(document).ready(function () {
 	});
 
 	// Result modal initialisation
-	$('.verify-result').modal({
+	$('.modal').modal({
 		endingTop: '20%',
 	});
 
@@ -160,6 +157,7 @@ $(document).ready(function () {
 
 		// Ensure that the pre-loader spinner is visible
 		$('#verify-result .modal-content .spinner').show();
+		var ditto = ellipses('#verify-ditto');
 
 		$.ajax({
 			type: "POST",
@@ -225,6 +223,7 @@ $(document).ready(function () {
 				});
 
 				$('#verify-result .modal-content .spinner').hide();
+				clearInterval(ditto);
 
 				// Populate and unhide pipeline
 				populatePipeline(true, 8);
@@ -242,6 +241,12 @@ $(document).ready(function () {
 					// Unhide the detailed results section
 					$('#detailed-results').show(600);
 				}
+			},
+			error: function() {
+				$('#verify-result').modal('close');
+				$('#verify-result .modal-content .spinner').hide();
+				clearInterval(ditto);
+				$('#error').modal('open');
 			}
 		});
 
@@ -272,15 +277,9 @@ $(document).ready(function () {
 
 	// Extract text
 	$('#extract-text-btn').on('click', function (e) {
-		e.preventDefault();
-
 		// Display a pre-loader while waiting
-		$('.loader-overlay .spinner').css({
-			position:'absolute',
-			left: ($(window).width() - $(this).outerWidth()) / 2,
-			top: ($(window).height() - $(this).outerHeight()) / 2
-		});
-		$('.loader-overlay').show(600);
+		var ditto = ellipses('#extract-ditto');
+		$('#extract-loader').modal('open');
 
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
@@ -298,6 +297,7 @@ $(document).ready(function () {
 			success: function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
+				clearInterval(ditto);
 
 				// Handle the case involving a UP card, if a UP card
 				// was used as an input image
@@ -319,8 +319,10 @@ $(document).ready(function () {
 				$('#text-pipeline').show(600);
 			},
 			error: function() {
-				// Hide pre-loader
-				$('.loader-overlay').hide(600);
+				// Hide loader
+				$('#extract-loader').modal('close');
+				clearInterval(ditto);
+				$('#error').modal('open');
 			}
 		});
 	});
@@ -328,12 +330,8 @@ $(document).ready(function () {
 	// Extract profile
 	$('#extract-photo-btn').on('click', function (e) {
 		// Display a pre-loader while waiting
-		$('.loader-overlay .spinner').css({
-			position:'absolute',
-			left: ($(window).width() - $(this).outerWidth()) / 2,
-			top: ($(window).height() - $(this).outerHeight()) / 2
-		});
-		$('.loader-overlay').show(600);
+		var ditto = ellipses('#extract-ditto');
+		$('#extract-loader').modal('open');
 
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
@@ -348,6 +346,7 @@ $(document).ready(function () {
 			success: function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
+				clearInterval(ditto);
 
 				var face = jQuery.parseJSON(data)
 				document.getElementById("face-preview-extract").src = face.extracted_face;
@@ -356,8 +355,10 @@ $(document).ready(function () {
 				$('#profile-pipeline').show(600);
 			},
 			error: function() {
-				// Hide pre-loader
-				$('.loader-overlay').hide(600);
+				// Hide loader
+				$('#extract-loader').modal('close');
+				clearInterval(ditto);
+				$('#error').modal('open');
 			}
 		});
 	});
@@ -365,12 +366,8 @@ $(document).ready(function () {
 	// Extract all
 	$('#extract-all-btn').on('click', function (e) {
 		// Display a pre-loader while waiting
-		$('.loader-overlay .spinner').css({
-			position:'absolute',
-			left: ($(window).width() - $(this).outerWidth()) / 2,
-			top: ($(window).height() - $(this).outerHeight()) / 2
-		});
-		$('.loader-overlay').show(600);
+		var ditto = ellipses('#extract-ditto');
+		$('#extract-loader').modal('open');
 
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
@@ -388,6 +385,7 @@ $(document).ready(function () {
 			success: function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
+				clearInterval(ditto);
 				
 				// Parse the response
 				var cardComponents = jQuery.parseJSON(data);
@@ -417,8 +415,10 @@ $(document).ready(function () {
 				$('#profile-pipeline').show(600);
 			},
 			error: function() {
-				// Hide pre-loader
-				$('.loader-overlay').hide(600);
+				// Hide loader
+				$('#extract-loader').modal('close');
+				clearInterval(ditto);
+				$('#error').modal('open');
 			}
 		});
 	});
@@ -442,6 +442,7 @@ $(document).ready(function () {
 			$('.text-extract-settings').prop('disabled', false);
 		$('select').material_select();
 	});
+	
 });
 
 // Show ID Image preview
@@ -663,4 +664,23 @@ function titleCase(str) {
             return s[0].toUpperCase() + s.substring(1).toLowerCase()      
 		}
 	).join(' ');
+}
+
+function ellipses(selector) {
+	// Timer for ellipses dots underneath waiting spinners
+	$(selector).text('');
+	return setInterval(function() {
+		$(selector).text(function() {
+			switch($(selector).text()){
+				case '':
+					return '.';
+				case '.':
+					return '..';
+				case '..':
+					return '...';
+				default:
+					return '';
+			}
+		});
+	}, 800);
 }

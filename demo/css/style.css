@@ -628,7 +628,13 @@ button.picker__close {
 }
 
 
-/* Result modal */
+/* Modals */
+.preloader-wrapper.big {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
 .spinner {
   padding-top: 4em;
 }
@@ -641,25 +647,23 @@ button.picker__close {
   width: 80%;
 }
 
-/* Loader overlay */
-.loader-overlay {
-  background: none repeat scroll 0 0 black;
-  position: fixed;
-  display: block;
-  opacity: 0.7;
-  z-index: 1000001;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
+.loader-text {
+  font-size: 22px;
 }
 
-.loader-overlay .spinner {
-  padding: 0;
+.ditto {
+  display: inline-block;
+  text-align: left;
+  width: 20px;
 }
 
-.loader-overlay .spinner div p {
-  color: white;
+#error img {
+  height: 180px;
+}
+
+.bold {
+  font-size: 22px;
+  font-weight: bold;
 }
 
 /*Footer styling */

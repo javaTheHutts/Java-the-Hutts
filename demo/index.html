@@ -681,8 +681,8 @@
 									</div>
 								</div>
 							</div>
-							<div>
-								<p>Verifying...</p>
+							<div id="verify-loader-text" class="loader-text">
+								<p>Verifying<span id='verify-ditto' class="ditto"></span></p>
 							</div>
 						</div>
 						<div class="row circle-results-wrapper">
@@ -698,36 +698,50 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-			      <a href="#!" class="modal-action modal-close waves-effect waves-teal btn-flat btn-details">
-			      	View Detailed Results
-			      </a>
-			    </div>
+						<a href="#!" class="modal-action modal-close waves-effect waves-teal btn-flat btn-details">
+							View Detailed Results
+						</a>
+					</div>
 				</div>
 				<!-- End result modal -->
-			</ul>
-		</div>
 
-		<!-- Loader overlay -->
-		<div class="loader-overlay" style="display: none">
-			<div class="row center-align spinner">
-				<div class="preloader-wrapper big active">
-					<div class="spinner-layer spinner-teal-only">
-						<div class="circle-clipper left">
-						<div class="circle"></div>
-						</div><div class="gap-patch">
-						<div class="circle"></div>
-						</div><div class="circle-clipper right">
-						<div class="circle"></div>
+				<!-- Extract loader modal -->
+				<div id="extract-loader" class="modal">
+					<div class="modal-content">
+						<div class="row center-align spinner">
+							<div class="preloader-wrapper big active">
+								<div class="spinner-layer spinner-teal-only">
+									<div class="circle-clipper left">
+									<div class="circle"></div>
+									</div><div class="gap-patch">
+									<div class="circle"></div>
+									</div><div class="circle-clipper right">
+									<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+							<div id="extract-loader-text" class="loader-text">
+								<p>Extracting<span id='extract-ditto' class="ditto"></span></p>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div>
-					<p>Extracting...</p>
-				</div>
-			</div>
-		</div>
-		<!-- End Loader overlay -->
+				<!-- End loader modal -->
 
+				<!-- Error modal -->
+				<div id="error" class="modal">
+					<div class="modal-content">
+						<div class="row center-align">
+							<img src="img/jabba.gif">
+							<p class="bold">Oops!</p>
+							<p>Something went wrong...</p>
+						</div>
+					</div>
+				</div>
+				<!-- End Error modal -->
+
+			</ul>
+		</div>
 	</main>
 
 	<footer class="page-footer">
