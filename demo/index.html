@@ -29,29 +29,28 @@
 		<!-- Fixed Side Navbar -->
 		<div class="navbar">
 			<div class="side-nav fixed">
-				<div class="navlogo">
-					<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank">
-						<img class="circle hoverable tooltipped" src="img/Java-Hutts2.png"
-						data-position="right" data-delay="50" data-tooltip="Java the Hutts">
-					</a>
-				</div>
+				<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank"
+					class="tooltipped"
+					data-position="right" data-delay="50" data-tooltip="Java the Hutts">
+						<div class="navlogo">&nbsp;</div>
+				</a>
 				<div class="nav-options">
 					<a href="#" data-activates="settings-slide"
 					data-position="right" data-delay="50" data-tooltip="Settings"
-					class="waves-effect tooltipped hoverable slide-btn">
+					class="waves-effect tooltipped slide-btn">
 						<i class="material-icons">settings</i>
 					</a>
-					<a href="#" class="waves-effect tooltipped scroll-top hoverable"
+					<a href="#" class="waves-effect tooltipped scroll-top"
 					data-position="right" data-delay="50" data-tooltip="To Top">
 						<i class="material-icons prefix fa fa-angle-double-up"></i>
 					</a>
-					<a href="#" class="waves-effect tooltipped scroll-bottom hoverable"
+					<a href="#" class="waves-effect tooltipped scroll-bottom"
 					data-position="right" data-delay="50" data-tooltip="To Bottom">
 						<i class="material-icons prefix fa fa-angle-double-down"></i>
 					</a>
 					<a href="#" data-activates="info-slide"
 					data-position="right" data-delay="50" data-tooltip="Info"
-					class="waves-effect tooltipped hoverable slide-btn">
+					class="waves-effect tooltipped slide-btn">
 						<i class="material-icons">info_outline</i>
 					</a>
 				</div>
@@ -263,47 +262,53 @@
   	<!-- Mobile Slide Out -->
 		<ul id="mobile-slide" class="side-nav slide-out">
 			<li>
-				<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank"
-				class="team-logo">
-					<img class="circle z-depth-1" src="img/Java-Hutts2.png">
+				<div class="slide-head-wrapper">
+					<p>
+						<i class="material-icons prefix">menu</i>
+						Menu
+					</p>
+				</div>
+			</li>
+			<li>
+				<div class="product-logo">
+					<img src="img/hutts-verification.png">
+				</div>
+			</li>
+			<li>
+				<a class="waves-effect waves-teal slide-btn" href="#"
+				data-activates="settings-slide">
+					<i class="material-icons">settings</i>Settings
 				</a>
 			</li>
-			<li><div class="divider"></div></li>
-	    <li>
-	    	<a class="waves-effect waves-teal slide-btn" href="#"
-	    	data-activates="settings-slide">
-	    		<i class="material-icons">settings</i>Settings
-	    	</a>
-	    </li>
-	    <li>
-	    	<a class="waves-effect waves-teal" target="_blank"
-	    	href="https://github.com/javaTheHutts/Java-the-Hutts">
-	    		<i class="material-icons fa fa-github"></i>GitHub Repository
-	    	</a>
-	    </li>
-	    <li>
-	    	<a class="waves-effect waves-teal" target="_blank"
-	    	href="https://javathehutts.github.io/Java-the-Hutts/">
-	    		<i class="material-icons fa fa-users"></i>The Team
-	    	</a>
-	    </li>
-	    <li>
-	    	<a class="waves-effect waves-teal slide-btn" href="#"
-	    	data-activates="info-slide">
-	    		<i class="material-icons">info_outline</i>Info
-	    	</a>
-	    </li>
+			<li>
+				<a class="waves-effect waves-teal" target="_blank"
+				href="https://github.com/javaTheHutts/Java-the-Hutts">
+					<i class="material-icons fa fa-github"></i>GitHub Repository
+				</a>
+			</li>
+			<li>
+				<a class="waves-effect waves-teal" target="_blank"
+				href="https://javathehutts.github.io/Java-the-Hutts/">
+					<i class="material-icons fa fa-users"></i>The Team
+				</a>
+			</li>
+			<li>
+				<a class="waves-effect waves-teal slide-btn" href="#"
+				data-activates="info-slide">
+					<i class="material-icons">info_outline</i>Info
+				</a>
+			</li>
 		</ul>
 	</header>
 
 	<nav class="hide-on-large-only auto-hide-header">
     <div class="nav-wrapper">
-			<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank">
-				<img class="circle z-depth-1" src="img/Java-Hutts2.png">
-			</a>
-			<a href="#" data-activates="mobile-slide" class="slide-btn right">
-				<i class="material-icons">menu</i>
-			</a>
+		<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank">
+			<img id="mobile-logo" src="img/java-the-hutts-text-logo-light.png">
+		</a>
+		<a href="#" data-activates="mobile-slide" class="slide-btn right">
+			<i class="material-icons">menu</i>
+		</a>
     </div>
   </nav>
 
@@ -744,13 +749,12 @@
 		</div>
 	</main>
 
+	<img id="footer-image" class="responsive-img" src="img/java-the-hutts-footer.png">
+
 	<footer class="page-footer">
 		<div class="container">
 			<div class="row">
-				<div class="col s7">
-					<p class="white-text">© 2017 Java the Hutts</p>
-				</div>
-				<div class="col s5 right-align">
+				<div class="col s12 center-align">
 					<a class="waves-effect waves-light social btn-floating btn tooltipped"
 					href="https://github.com/javaTheHutts/Java-the-Hutts"
 					target="_blank" data-position="top" data-delay="50" data-tooltip="GitHub">
@@ -758,9 +762,17 @@
 					</a>
 					<a class="waves-effect waves-light social btn-floating btn tooltipped"
 					href="https://javathehutts.github.io/Java-the-Hutts/"
-					target="_blank" data-position="top" data-delay="50" data-tooltip="The team">
+					target="_blank" data-position="top" data-delay="50" data-tooltip="The Team">
 						<i class="material-icons prefix fa fa-users"></i> Team
 					</a>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col s6">© 2017 Java the Hutts</div>
+						<div class="col s6 right-align">BSD License</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 /*
 --------------------------------------------------------------------------------
 Author(s): Nicolai van  Niekerk, Justin van  Tonder
-Colour scheme: https://coolors.co/131515-2b2c28-5c8983-80cbc4-fffafb
+Colour scheme: https://coolors.co/202020-2b2c28-5c8983-80cbc4-fffafb
 --------------------------------------------------------------------------------
 */
 
@@ -40,13 +40,21 @@ nav,
 
 /* Side navbar */
 .navbar > .fixed,
-.nav-options {
+.nav-options,
+.navlogo {
   width: 4em;
 }
 
 .navlogo {
-  margin-top: 0.4em;
-  padding: 0.4em;
+  margin-top: 1em;
+  height: 50px;
+  background: url('../img/java-the-hutts-logo-dark.png') no-repeat 60% 50%;
+  background-size: 6em 45px;
+}
+
+.navlogo:hover {
+  background: url('../img/java-the-hutts-logo-light.png') no-repeat 60% 50%;
+  background-size: 6em 45px;
 }
 
 .navlogo a img {
@@ -65,7 +73,7 @@ nav,
   text-align: center;
   margin-bottom: 0.8em;
   font-size: 2em;
-  color: #131515;
+  color: #202020;
 }
 
 .nav-options a:hover {
@@ -88,9 +96,9 @@ nav,
 }
 
 .nav-wrapper a img {
-  height: 64px;
-  width: 64px;
-  margin: 22px 12px 12px 0;
+  height: 20px;
+  width: 160px;
+  margin: 20px 0 0 0;
 }
 
 /* Slide Outs */
@@ -116,7 +124,7 @@ nav,
   font-weight: 300;
   height: 48px;
   line-height: 48px;
-  color: #333;
+  color: #202020;
 }
 
 .slide-head-wrapper p i{
@@ -174,14 +182,14 @@ nav,
   padding-left: 2.5px;
 }
 
-#mobile-slide .team-logo,
-#mobile-slide .team-logo > img {
-  height: 150px;
-  width: 150px;
+#mobile-slide .product-logo > img {
+  width: 200px;
+  height: 75px;
   padding: 0;
 }
 
-#mobile-slide .team-logo {
+#mobile-slide .product-logo {
+  text-align: center;
   margin: 32px auto 32px auto;
 }
 
@@ -667,17 +675,41 @@ button.picker__close {
 }
 
 /*Footer styling */
+#footer-image {
+  width: 350px;
+  position: static;
+  margin: auto;
+  transform: translateY(62px);
+}
+
 .page-footer > .container {
   width: 85%;
+  padding-top: 70px;
 }
 
 .page-footer,
 .page-footer .footer-copyright {
-  background-color: #131515;
+  background-color: #202020;
 }
 
 .social {
   margin: 0.3em;
+}
+
+.footer-copyright .container {
+  width: 100%;
+}
+
+@media (max-width: 360px) {
+  #footer-image {
+    width: 260px;
+    transform: translateY(48px);
+  }
+
+  .footer-copyright .container .s6 {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 @media (min-width: 1700) {
