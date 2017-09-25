@@ -3,6 +3,7 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 */
 
 /* global $ */
+var SERVER_BASE_URL = 'http://localhost:5000';
 var PATH_TO_PIPELINE = '/home/minion/Desktop/output/';
 
 $(document).ready(function () {
@@ -161,7 +162,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:5000/verifyID",
+			url: SERVER_BASE_URL + "/verifyID",
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -290,7 +291,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:5000/extractText",
+			url: SERVER_BASE_URL + "/extractText",
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -339,7 +340,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:5000/extractFace",
+			url: SERVER_BASE_URL + "/extractFace",
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -378,7 +379,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:5000/extractAll",
+			url: SERVER_BASE_URL + "/extractAll",
 			data: formData,
 			processData: false,
 			contentType: false,
@@ -514,7 +515,7 @@ function imageExists(image, remote, callback) {
 			callback(image);
 		}
 	} else {
-		var url = 'http://localhost:5000' + image;
+		var url = SERVER_BASE_URL + image;
 		$.ajax({
 			url: '',
 			type: 'HEAD',
