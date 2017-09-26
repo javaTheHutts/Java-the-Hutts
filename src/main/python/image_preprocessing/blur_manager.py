@@ -13,6 +13,8 @@ class BlurManager:
         Args:
             blur_type (str): Indicates the type of blur operation that should be applied to the image.
             kernel_size (integer tuple): Indicates the kernel size for blurring operations.
+        Raises:
+            TypeError: If a none string value is passed for blur_type
         Returns:
             None
 

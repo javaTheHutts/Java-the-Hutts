@@ -6,13 +6,9 @@ Unit tests for the Blur Manager
 ----------------------------------------------------------------------
 """
 import pytest
-import numpy as np
 import cv2
 import os
 from image_preprocessing.blur_manager import BlurManager
-
-# blank image to test with Height set 1 Width set at 1
-blank_image = np.zeros((1, 1), dtype=np.uint8)
 
 TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/temp_flag.jpg".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
