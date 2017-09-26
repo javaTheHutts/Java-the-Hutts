@@ -14,6 +14,9 @@ class ThresholdingManager:
         Args:
             thresholding_type (str): Indicates the type of thresholding that
                 should be applied.
+        Raises:
+            TypeError: If an parameter is passed that is not of type String
+            NameError: If the thresholding type is not Adaptive or Otsu.
         Returns:
             None
 
@@ -61,12 +64,14 @@ class ThresholdingManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which thresholding should be applied.
+        Raises:
+            TypeError: If an parameter is passed that is not of type Numpy array.
         Returns:
             obj:'OpenCV image': The Threshold image.
         """
         if type(image) is not np.ndarray:
             raise TypeError(
-                'Bad type for arg image - expected string. Received type "%s".' %
+                'Bad type for arg image - expected image in numpy array. Received type "%s".' %
                 type(image).__name__
             )
 
@@ -79,12 +84,14 @@ class ThresholdingManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which thresholding should be applied.
+        Raises:
+            TypeError: If an parameter is passed that is not of type Numpy array.
         Returns:
             obj:'OpenCV image': The Threshold image.
         """
         if type(image) is not np.ndarray:
             raise TypeError(
-                'Bad type for arg image - expected string. Received type "%s".' %
+                'Bad type for arg image - expected image in numpy array. Received type "%s".' %
                 type(image).__name__
             )
 

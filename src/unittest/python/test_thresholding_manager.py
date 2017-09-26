@@ -19,6 +19,13 @@ def test_thresholding_constructor_incorrect_type():
     with pytest.raises(TypeError):
         ThresholdingManager(123)
 
+def test_thresholding_constructor_paramter_number():
+    """
+    Tests with incorrect number of parameters
+    """
+    with pytest.raises(TypeError):
+        ThresholdingManager("adaptive", 1)
+
 
 def test_thresholding_type():
     """
@@ -142,8 +149,3 @@ def test_adaptive_thresholding_3():
     manager = ThresholdingManager("adaptive")
     with pytest.raises(TypeError):
         manager.adaptiveThresholding(100)
-
-
-
-
-

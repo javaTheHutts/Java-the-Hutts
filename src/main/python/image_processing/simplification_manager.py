@@ -1,6 +1,7 @@
 import cv2
 import os
 import imutils
+import numpy as np
 from imutils.perspective import four_point_transform
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
@@ -25,10 +26,18 @@ class SimplificationManager:
         Returns:
             obj:'OpenCV image': Returns as warped image where just the identification document
                 is present and the identification document is now in a perspective view.
+        Raises:
+            TypeError: If an parameter is passed that is not of type Numpy array.
         Todo:
             Determine a better solution to this problem when detecting smaller edge.
                 at the moment this is hardcoded contour_area_threshold = 100000
         """
+        if type(image) is not np.ndarray:
+            raise TypeError(
+                'Bad type for arg image - expected image in numpy array. Received type "%s".' %
+                type(image).__name__
+            )
+
         ratio = image.shape[0] / 500.0
         orig = image.copy()
         image = imutils.resize(image, height=500)
