@@ -18,8 +18,24 @@ class FaceVerify:
             trained data.
             face_recognition_path (str): Describes the path the face recognition
             trained data.
+        Raises:
+            TypeError: If a none string value is passed for shape_predictor_path
+            TypeError: If a none string value is passed for face_recognition_path
         """
         logger.info("Initialise FaceVerify")
+
+        if type(shape_predictor_path) is not str:
+            raise TypeError(
+                'Bad type for arg shape_predictor_path - expected string. Received type "%s".' %
+                type(shape_predictor_path).__name__
+            )
+
+        if type(face_recognition_path) is not str:
+            raise TypeError(
+                'Bad type for arg face_recognition_path - expected string. Received type "%s".' %
+                type(face_recognition_path).__name__
+            )
+
         self.shape_predictor_path = shape_predictor_path
         self.face_recognition_path = face_recognition_path
 
@@ -64,7 +80,7 @@ class FaceVerify:
 
         logger.info('Getting face in first image')
         face_detections = detector(face1, 1)
-        if face_detections is None:
+        if len(face_detections) == 0:
             logger.error('Could not find a face in the first image')
             raise ValueError('Face could not be detected')
         logger.debug('Getting the shape')
@@ -74,7 +90,7 @@ class FaceVerify:
 
         logger.info('Getting face in second image')
         face_detections = detector(face2, 1)
-        if face_detections is None:
+        if len(face_detections) == 0:
             logger.error('Could not find a face in the first image')
             raise ValueError('Face could not be detected')
         logger.debug('Getting the shape')
