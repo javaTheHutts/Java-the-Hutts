@@ -21,6 +21,7 @@ def test_grab_image():
     with pytest.raises(ValueError):
         grab_image()
 
+@pytest.mark.skip(reason="Need Stable Internet Connection to test")
 def test_grab_image_2():
     """
     Test image handling with url
