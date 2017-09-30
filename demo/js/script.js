@@ -167,62 +167,10 @@ $(document).ready(function () {
 			processData: false,
 			contentType: false,
 			success: function (data) {
-				$('.result-total').data('percentage', data.total_match);
-				$('.result-text').data(
-					'percentage', 
-					typeof data.text_match === 'object'? data.text_match.total: data.text_match
-				);
-				$('.result-profile').data('percentage', data.face_match);
+				// Populate circular graphs
+				populateCircleGraphs(data);
 
-				// Results circliful
-				$('.result-total').circliful({
-					percent: $('.result-total').data('percentage'),
-					text: 'Total',
-					textBelow: true,
-					decimals: 2,
-					alwaysDecimals: true,
-					foregroundColor: '#80cbc4',
-					backgroundColor: 'none',
-					fillColor: '#eee',
-					foregroundBorderWidth: 4,
-					iconColor: '#80cbc4',
-					icon: 'f2c3',
-					iconSize: '30',
-					iconPosition: 'middle'
-				});
-
-				$('.result-text').circliful({
-					percent: $('.result-text').data('percentage'),
-					text: 'Text',
-					textBelow: true,
-					decimals: 2,
-					alwaysDecimals: true,
-					foregroundColor: '#80cbc4',
-					backgroundColor: 'none',
-					fillColor: '#eee',
-					foregroundBorderWidth: 4,
-					iconColor: '#80cbc4',
-					icon: 'f022',
-					iconSize: '30',
-					iconPosition: 'middle'
-				});
-
-				$('.result-profile').circliful({
-					percent: $('.result-profile').data('percentage'),
-					text: 'Profile',
-					textBelow: true,
-					decimals: 2,
-					alwaysDecimals: true,
-					foregroundColor: '#80cbc4',
-					backgroundColor: 'none',
-					fillColor: '#eee',
-					foregroundBorderWidth: 4,
-					iconColor: '#80cbc4',
-					icon: 'f007',
-					iconSize: '30',
-					iconPosition: 'middle'
-				});
-
+				// Hide loader and stop loader timer
 				$('#verify-result .modal-content .spinner').hide();
 				clearInterval(ditto);
 
@@ -684,4 +632,91 @@ function ellipses(selector) {
 			}
 		});
 	}, 800);
+}
+
+function populateCircleGraphs(data) {
+	// Assign data attributes for future usage
+	$('.result-total').data('percentage', data.total_match);
+	$('.result-text').data(
+		'percentage', 
+		typeof data.text_match === 'object'? data.text_match.total: data.text_match
+	);
+	$('.result-profile').data('percentage', data.face_match);
+
+	// Results circliful
+	$('.result-total').circliful({
+		percent: $('.result-total').data('percentage'),
+		text: 'Total',
+		textBelow: true,
+		decimals: 2,
+		alwaysDecimals: true,
+		foregroundColor: '#80cbc4',
+		backgroundColor: 'none',
+		fillColor: '#eee',
+		foregroundBorderWidth: 4,
+		iconColor: '#80cbc4',
+		icon: 'f2c3',
+		iconSize: '30',
+		iconPosition: 'middle'
+	});
+
+	$('.result-text').circliful({
+		percent: $('.result-text').data('percentage'),
+		text: 'Text',
+		textBelow: true,
+		decimals: 2,
+		alwaysDecimals: true,
+		foregroundColor: '#80cbc4',
+		backgroundColor: 'none',
+		fillColor: '#eee',
+		foregroundBorderWidth: 4,
+		iconColor: '#80cbc4',
+		icon: 'f022',
+		iconSize: '30',
+		iconPosition: 'middle'
+	});
+
+	$('.result-profile').circliful({
+		percent: $('.result-profile').data('percentage'),
+		text: 'Profile',
+		textBelow: true,
+		decimals: 2,
+		alwaysDecimals: true,
+		foregroundColor: '#80cbc4',
+		backgroundColor: 'none',
+		fillColor: '#eee',
+		foregroundBorderWidth: 4,
+		iconColor: '#80cbc4',
+		icon: 'f007',
+		iconSize: '30',
+		iconPosition: 'middle'
+	});
+
+	// Combined result - for smaller displays
+	$(".result-total-sm").circliful({
+		backgroundBorderWidth: 1,
+		foregroundBorderWidth: 4,
+		textStyle: 'font-size: 2px;',
+		textColor: '#202020',
+		multiPercentage: 1,
+		percentages: [{
+				'percent': parseFloat($('.result-text').data('percentage')).toFixed(2), 
+				'color': '#3180B8', 
+				'title': 'Text'
+			 }, {
+				'percent': parseFloat($('.result-profile').data('percentage')).toFixed(2), 
+				'color': '#49EBA8', 
+				'title': 'Profile' 
+			}, {
+				'percent': parseFloat($('.result-total').data('percentage')).toFixed(2), 
+				'color': '#80cbc4', 
+				'title': 'Total' 
+		}],
+		multiPercentageLegend: 1,
+		replacePercentageByText: '',
+		backgroundColor: 'none',
+		icon: 'f2c3',
+		iconPosition: 'middle',
+		iconColor: '#202020',
+	});
 }

@@ -658,12 +658,38 @@ button.picker__close {
   padding-top: 4em;
 }
 
+@media (max-width: 600px) {
+  .spinner {
+    padding-top: 3.5em;
+  }
+}
+
 #verify-result.modal .modal-footer {
   text-align: center;
 }
 
 #verify-result {
   width: 80%;
+}
+
+@media (max-width: 480px) {
+  .result-total-sm {
+    margin-left: -15px;
+  }
+
+  .legend-line {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-total-sm {
+    margin-left: -30px;
+  }
+
+  .legend-line {
+    font-size: 12px;
+  }
 }
 
 .loader-text {
