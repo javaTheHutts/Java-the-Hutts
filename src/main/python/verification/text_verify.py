@@ -104,10 +104,18 @@ class TextVerify:
         # Iterate over the verifier and calculate a percentage match for the values,
         # if the keys match and the corresponding values exist.
         for key, value in verifier.items():
-            if key in extracted and extracted[key]:
+            if key in extracted and extracted[key] is not None:
+                # Compute the match percentage.
                 logger.debug('Computing match "%s" and "%s"...' % (value, extracted[key]))
-                match_percentages[key] = self._match_percentage(value, extracted[key])
-                logger.debug('"%s" and "%s" match percentage: %.2f' % (value, extracted[key], match_percentages[key]))
+                match_percentages[key] = {
+                    'match_percentage': self._match_percentage(value, extracted[key]),
+                    'verifier_field_value': value,
+                    'extracted_field_value': extracted[key]
+                }
+                logger.debug(
+                    '"%s" and "%s" match percentage: %.2f' %
+                    (value, extracted[key], match_percentages[key]['match_percentage'])
+                )
             else:
                 logger.warning('Could not find corresponding field "%s" in extracted information to verify' % key)
         # Determine the number of percentages calculated and initialise a default value for the total match score.
@@ -134,7 +142,9 @@ class TextVerify:
         # Return the final result.
         if not verbose:
             return is_verified, total_match_percentage
-        # Append the total to the existing percentages for verbose, and return all percentage values.
+        # Append the total and non-matches to the existing percentages for verbose purposes,
+        # and return all percentage values.
+        match_percentages.update(self._get_non_matches(extracted, verifier))
         match_percentages['total'] = total_match_percentage
         return is_verified, match_percentages
 
@@ -188,7 +198,44 @@ class TextVerify:
         Todo:
             Investigate the proposal of calculating a weighted total.
         """
-        return round(sum(matches.values()) / len(matches), 2)
+        return round(sum(value['match_percentage'] for value in matches.values()) / len(matches), 2)
+
+    @staticmethod
+    def _get_non_matches(extracted, verifier):
+        """
+        Creates a dictionary containing fields for which matches could not be computed, due to non-existence
+        of fields or field values.
+
+        Author:
+            Jan-Justin van Tonder
+
+        Args:
+            extracted (dict): A dictionary containing the information that was extracted from an ID.
+            verifier (dict): A dictionary containing the information against which the extracted data is to be
+                verified.
+
+        Returns:
+            (dict): A dictionary containing fields for which no matches can be found.
+        """
+        non_matches = {}
+        # Iterate over the extracted and verifier dictionaries to determine the field values for which match
+        # percentages cannot be computed due to non-existence of values.
+        for (verify_key, verify_value), (extract_key, extract_value) in zip(verifier.items(), extracted.items()):
+            # There exists no corresponding field or field value for the verifier in the extracted ID info.
+            if verify_key not in extracted or extracted[verify_key] is None:
+                non_matches[verify_key] = {
+                    'match_percentage': None,
+                    'verifier_field_value': verify_value,
+                    'extracted_field_value': None
+                }
+            # There exists no corresponding field or field value for the extracted ID info in the verifier.
+            if extract_key not in verifier or verifier[extract_key] is None:
+                non_matches[extract_key] = {
+                    'match_percentage': None,
+                    'verifier_field_value': None,
+                    'extracted_field_value': extract_value
+                }
+        return non_matches
 
     def validate_id_number(self, id_number, valid_length=13):
         """
