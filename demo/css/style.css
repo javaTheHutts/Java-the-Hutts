@@ -45,6 +45,10 @@ nav,
   width: 4em;
 }
 
+.navlogo-link {
+  display: block;
+}
+
 .navlogo {
   margin-top: 1em;
   height: 50px;
@@ -55,11 +59,6 @@ nav,
 .navlogo:hover {
   background: url('../img/java-the-hutts-logo-light.png') no-repeat 60% 50%;
   background-size: 6em 45px;
-}
-
-.navlogo a img {
-  max-width: 100%;
-  max-height: 100%;
 }
 
 .nav-options {
