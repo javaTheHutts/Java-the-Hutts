@@ -14,12 +14,14 @@ TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/temp
     base_path=os.path.abspath(os.path.dirname(__file__)))
 test_image_colour = cv2.imread(TEMPLATE_DIR)
 
+
 def test_grab_image():
     """
     Test image handling with no paramters
     """
     with pytest.raises(ValueError):
         grab_image()
+
 
 @pytest.mark.skip(reason="Need Stable Internet Connection to test")
 def test_grab_image_2():
@@ -28,10 +30,9 @@ def test_grab_image_2():
     """
     grab_image(url="http://www.pyimagesearch.com/wp-content/uploads/2015/05/obama.jpg")
 
+
 def test_grab_image_3():
     """
-    Test image handling with url
+    Test image handling with path specified
     """
     grab_image(path=TEMPLATE_DIR)
-
-

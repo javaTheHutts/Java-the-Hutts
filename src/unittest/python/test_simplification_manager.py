@@ -14,9 +14,16 @@ from image_processing.simplification_manager import SimplificationManager
 # blank image to test with Height set 1 Width set at 1
 blank_image = np.zeros((1, 1), dtype=np.uint8)
 
-TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/temp_flag.jpg".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
-test_image_colour = cv2.imread(TEMPLATE_DIR)
+
+test_image_colour = cv2.imread(TEMPLATE_DIR + "temp_flag.jpg")
+
+thanks_obama = cv2.imread(TEMPLATE_DIR + "obama.jpg")
+
+# Soap Joe official example for Fraud Detection for South African ID books
+soap_joe = cv2.imread(TEMPLATE_DIR + "soapJoeExample.jpg")
+
 
 def test_simplification_constructor():
     """
@@ -24,12 +31,14 @@ def test_simplification_constructor():
     """
     SimplificationManager()
 
+
 def test_simplification_constructor_1():
     """
     Tests with incorrect number of parameters
     """
     with pytest.raises(TypeError):
         SimplificationManager(1)
+
 
 def test_perspective_transform():
     """
@@ -39,6 +48,7 @@ def test_perspective_transform():
     with pytest.raises(TypeError):
         simp_manager.perspectiveTransformation()
 
+
 def test_perspective_transform_2():
     """
     Tests with incorrect number of parameters
@@ -46,6 +56,7 @@ def test_perspective_transform_2():
     simp_manager = SimplificationManager()
     with pytest.raises(TypeError):
         simp_manager.perspectiveTransformation(blank_image, 1)
+
 
 def test_perspective_type():
     """
@@ -55,13 +66,38 @@ def test_perspective_type():
     with pytest.raises(TypeError):
         simp_manager.perspectiveTransformation(1)
 
+
 def test_perspective_thresholding():
     """
-    Tests perspective thresholding
+    Tests perspective thresholding with plain colour image
     """
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
     simp_manager = SimplificationManager()
     simp_manager.perspectiveTransformation(test_image_colour)
+    # enable multi-threading in OpenCV for child thread
+    cv2.setNumThreads(-1)
+
+
+def test_perspective_thresholding_2():
+    """
+    Tests perspective thresholding with soap joe book type
+    """
+    # disable multi-threading in OpenCV for main thread to avoid problems after fork
+    cv2.setNumThreads(0)
+    simp_manager = SimplificationManager()
+    simp_manager.perspectiveTransformation(soap_joe)
+    # enable multi-threading in OpenCV for child thread
+    cv2.setNumThreads(-1)
+
+
+def test_perspective_thresholding_3():
+    """
+    Tests perspective thresholding with Obama not card type
+    """
+    # disable multi-threading in OpenCV for main thread to avoid problems after fork
+    cv2.setNumThreads(0)
+    simp_manager = SimplificationManager()
+    simp_manager.perspectiveTransformation(thanks_obama)
     # enable multi-threading in OpenCV for child thread
     cv2.setNumThreads(-1)
