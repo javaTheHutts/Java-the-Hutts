@@ -57,6 +57,7 @@ The document begins with an explanation on the chosen architectural pattern and 
 
 \subsection{Architectural Pattern}
 The Hutts-Validation system will be designed as a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling. The API will consist of three independent services: Image Processing, Image Preprocessing and Verification. 
+The system also makes use of the famous GRASP Controller pattern to ensure loose coupling between the interface and services. The use of use case controllers allow the interface and services to change independently without affecting one another. It also allows the system to support multiple interfaces. A high-level sequence diagram depicting the use of the pattern will be evident in the descriptions of the individual services.
 
 \section{Deployment Diagram}
 The following Deployment diagram depicts the architecture of the system as deployment of artifacts to deployment targets.. This can be seen as an overall view on the system in a deployment scenario.
@@ -110,13 +111,13 @@ The Image Processing service is the core module of the system. This service crea
 \subsubsection{Sequence Diagram}
 \begin{figure}[H]
 	    \centering
-	    \includegraphics[scale=0.5]{img/image_processing_sequence.png}
-	    \caption{Image Preprocessing Sequence Diagram}
+	    \includegraphics[scale=0.5]{img/extract_sequence.png}
+	    \caption{Image Processing Sequence Diagram}
 	 \end{figure}
 	 \pagebreak
 	 
 \subsection{Verification}
-The Verification service is the part of the system that is responsible for all the logic releated to verifying a form of ID against given information. It performs the required checks and calculations to determine a likeness percentage that forms the ultimate verfier.
+The Verification service is the part of the system that is responsible for all the logic related to verifying a form of ID against given information. It performs the required checks and calculations to determine a likeness percentage that forms the ultimate verifier.
 \subsubsection{Class Diagram}
 	\begin{figure}[H]
 	    \centering
