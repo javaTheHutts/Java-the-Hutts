@@ -6,6 +6,12 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 var SERVER_BASE_URL = 'http://localhost:5000';
 var PATH_TO_PIPELINE = '/home/minion/Desktop/output/';
 
+// Enum for pipleine type
+PipelineType = {
+	TEXT: 0,
+	PROFILE: 1
+}
+
 $(document).ready(function () {
 
 	// Hide some content
@@ -175,8 +181,8 @@ $(document).ready(function () {
 				clearInterval(ditto);
 
 				// Populate and unhide pipeline
-				populatePipeline(true, 8);
-				populatePipeline(false, 6);
+				populatePipeline(PipelineType.TEXT, 8);
+				populatePipeline(PipelineType.PROFILE, 6);
 				$('#text-pipeline').show(600);
 				$('#profile-pipeline').show(600);
 				
@@ -186,7 +192,7 @@ $(document).ready(function () {
 					$('.circle-results-wrapper, #verify-result.modal .modal-footer')
 					.show(500);
 					// Populate the detailed results
-					populateDetailedResults(data.text_match);
+					populateDetailedResults(data);
 					// Unhide the detailed results section
 					$('#detailed-results').show(600);
 				}
@@ -264,7 +270,7 @@ $(document).ready(function () {
 				}
 
 				// Populate and unhide pipeline
-				populatePipeline(true, 8);
+				populatePipeline(PipelineType.TEXT, 8);
 				$('#text-pipeline').show(600);
 			},
 			error: function() {
@@ -300,7 +306,7 @@ $(document).ready(function () {
 				var face = jQuery.parseJSON(data)
 				document.getElementById("face-preview-extract").src = face.extracted_face;
 				// Populate and unhide pipeline
-				populatePipeline(false, 6);
+				populatePipeline(PipelineType.PROFILE, 6);
 				$('#profile-pipeline').show(600);
 			},
 			error: function() {
@@ -358,8 +364,8 @@ $(document).ready(function () {
 				document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
 
 				// Populate and unhide pipeline
-				populatePipeline(true, 8);
-				populatePipeline(false, 6);
+				populatePipeline(PipelineType.TEXT, 8);
+				populatePipeline(PipelineType.PROFILE, 6);
 				$('#text-pipeline').show(600);
 				$('#profile-pipeline').show(600);
 			},
@@ -391,7 +397,7 @@ $(document).ready(function () {
 			$('.text-extract-settings').prop('disabled', false);
 		$('select').material_select();
 	});
-	
+
 });
 
 // Show ID Image preview
@@ -426,9 +432,9 @@ function readURL(input) {
 }
 
 // Populate slides for pipeline carousel
-function populatePipeline(isTextPipeline, numImages) {
-	var attachTo = isTextPipeline ? $('#text-pipe') : $('#profile-pipe');
-	var imagePrepend = isTextPipeline ? '' : 'f';
+function populatePipeline(pipelineType, numImages) {
+	var attachTo = pipelineType == PipelineType.TEXT ? $('#text-pipe') : $('#profile-pipe');
+	var imagePrepend = pipelineType == PipelineType.TEXT ? '' : 'f';
 	// Clear existing pipeline slides
 	attachTo.slick('removeSlide', null, null, true);
 	for (var i = 1; i <= numImages; i++) {
@@ -577,16 +583,44 @@ function addPreferences(formData) {
 	// Verbose outpuut for verification
 	var verboseVerify = $('#verbose_switch').is(':checked');
 	formData.append('verbose_verify', verboseVerify);
+
+	// Verification threshold
+	var verificationThreshold = parseFloat($('#verification-threshold')).toFixed(2);
+	formData.append('verification_threshold', verificationThreshold);
 }
 
-function populateDetailedResults(textMatch) {
+function populateDetailedResults(data) {
 	// Clear any previous data
-	$('#text-verify-details').html('');
-	// Populate the table data with the textMatch data
+	$('#text-verify-details, #verify-details').html('');
+
+	// Populate the verify table
+	var row = $('<tr>');
+	row.append('<td>Profile</td>');
+	row.append('<td class="center-align">' + parseFloat(data.face_match).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">-</td>');
+	row.append('<td class="center-align">-</td>');
+	$('#verify-details').append(row);
+	row = $('<tr>');
+	row.append('<td>Text</td>');
+	row.append('<td class="center-align">' + parseFloat(data.text_match.total).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">-</td>');
+	row.append('<td class="center-align">-</td>');
+	$('#verify-details').append(row);
+	var threshold = parseFloat($('#verification-threshold').val()).toFixed(2);
+	var passResult = data['total'] >= threshold? 'pass': 'fail';
+	row = $('<tr>');
+	row.append('<td>Total</td>');
+	row.append('<td class="center-align">' + parseFloat(data.total_match).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">' + threshold + '</td>');
+	row.append('<td class="center-align">' + passResult + '</td>');
+	$('#verify-details').append(row);
+	
+	// Populate the text verify table data with the textMatch data
+	var textMatch = data.text_match;
 	for (var field in textMatch) {
 		if (field !== 'total') {
 			var row = $('<tr>');
-			row.append('<td>' + titleCase(field.replace(/_/g, ' ')) +  '</td>');
+			row.append('<td>' + titleCase(field.replace(/_/g, ' ')) + '</td>');
 			row.append('<td>' + textMatch[field].extracted_field_value + '</td>');
 			row.append('<td>' + textMatch[field].verifier_field_value + '</td>');
 			row.append(
@@ -598,6 +632,7 @@ function populateDetailedResults(textMatch) {
 			$('#text-verify-details').append(row);
 		}
 	}
+	
 	// Append the total as a special row
 	var row = $('<tr class="total-row">');
 	row.append('<td></td>');
@@ -636,12 +671,15 @@ function ellipses(selector) {
 
 function populateCircleGraphs(data) {
 	// Assign data attributes for future usage
-	$('.result-total').data('percentage', data.total_match);
-	$('.result-text').data(
-		'percentage', 
-		typeof data.text_match === 'object'? data.text_match.total: data.text_match
-	);
-	$('.result-profile').data('percentage', data.face_match);
+	var totalMatch = parseFloat(data.total_match).toFixed(2);
+	var textMatch = parseFloat(
+		typeof data.text_match === 'object'? 
+		data.text_match.total: data.text_match
+	).toFixed(2);
+	var profileMatch = parseFloat(data.face_match).toFixed(2);
+	$('.result-total').data('percentage', totalMatch);
+	$('.result-text').data('percentage', textMatch);
+	$('.result-profile').data('percentage', profileMatch);
 
 	// Results circliful
 	$('.result-total').circliful({
@@ -717,6 +755,28 @@ function populateCircleGraphs(data) {
 		backgroundColor: 'none',
 		icon: 'f2c3',
 		iconPosition: 'middle',
-		iconColor: '#202020',
+		iconColor: '#666',
+	});
+
+	// Detailed results circle for depicting threshold
+	var progressColor = {};
+	var threshold = parseFloat($('#verification-threshold').val()).toFixed(2);
+	progressColor[0] = '#E63B2E';
+	progressColor[threshold] = '#90DD44';
+	$('.result-detailed').circliful({
+		percent: $('.result-total').data('percentage'),
+		text: 'Total Match',
+		textBelow: true,
+		decimals: 2,
+		alwaysDecimals: true,
+		foregroundColor: '#80cbc4',
+		backgroundColor: 'none',
+		fillColor: '#eee',
+		foregroundBorderWidth: 4,
+		animateInView: true,
+		progressColor: progressColor,
+		icon: 'f2c3',
+		iconPosition: 'middle',
+		iconColor: '#666',
 	});
 }

@@ -639,6 +639,17 @@ button.picker__close {
 }
 
 /* Colapsible 5 */
+.result-detailed  {
+  margin-bottom: 25px;
+}
+
+@media (min-width: 800px) {
+  .verify-details-table {
+    margin-left: 30px;
+    margin-top: 25px;
+  }
+}
+
 @media (min-width: 993px) {
   .total-row {
     border-top: 1px solid rgb(208, 208, 208);
