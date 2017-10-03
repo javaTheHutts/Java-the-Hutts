@@ -100,6 +100,12 @@ nav,
   margin: 20px 0 0 0;
 }
 
+@media (min-width: 601px) {
+  .nav-wrapper a img {
+    margin: 24px 0 0 0;
+  }
+}
+
 /* Slide Outs */
 .side-nav li {
   line-height: 40px;
@@ -480,6 +486,13 @@ button.picker__close {
   }
 }
 
+@media (max-width: 993px) {
+  .id-preview {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+}
+
 .duo-card {
   transition:box-shadow .25s;
 }
@@ -522,6 +535,20 @@ button.picker__close {
 
 #extract-photo-btn {
   left: 60%;
+}
+
+label[id$=-error] {
+  color: #F44336;
+}
+
+#id-photo-extract-file-path-error,
+#id-photo-verify-file-path-error {
+  left: 142px;
+  width: 200px;
+}
+
+#profile-photo-file-path-error {
+  left: 124px;
 }
 
 @media (min-width: 993px) {

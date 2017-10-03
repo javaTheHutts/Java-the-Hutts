@@ -129,7 +129,9 @@ $(document).ready(function () {
 
 	// Verify
 	$('#verify-btn').on('click', function (e) {
-		e.preventDefault();
+		// Check if inputs are valid
+		if (!verifyInputCheck()) return;
+
 		var formData = new FormData();
 		var idPhoto = document.getElementById('id-photo-verify').files[0];
 		var userImage = document.getElementById('profile-photo').files[0];
@@ -232,6 +234,9 @@ $(document).ready(function () {
 
 	// Extract text
 	$('#extract-text-btn').on('click', function (e) {
+		// Check if inputs are valid
+		if (!extractInputCheck()) return;
+
 		// Display a pre-loader while waiting
 		var ditto = ellipses('#extract-ditto');
 		$('#extract-loader').modal('open');
@@ -272,6 +277,8 @@ $(document).ready(function () {
 				// Populate and unhide pipeline
 				populatePipeline(PipelineType.TEXT, 8);
 				$('#text-pipeline').show(600);
+
+				$('#extract-loader').modal('close');
 			},
 			error: function() {
 				// Hide loader
@@ -284,6 +291,9 @@ $(document).ready(function () {
 
 	// Extract profile
 	$('#extract-photo-btn').on('click', function (e) {
+		// Check if inputs are valid
+		if (!extractInputCheck()) return;
+
 		// Display a pre-loader while waiting
 		var ditto = ellipses('#extract-ditto');
 		$('#extract-loader').modal('open');
@@ -308,6 +318,8 @@ $(document).ready(function () {
 				// Populate and unhide pipeline
 				populatePipeline(PipelineType.PROFILE, 6);
 				$('#profile-pipeline').show(600);
+
+				$('#extract-loader').modal('close');
 			},
 			error: function() {
 				// Hide loader
@@ -320,6 +332,9 @@ $(document).ready(function () {
 
 	// Extract all
 	$('#extract-all-btn').on('click', function (e) {
+		// Check if inputs are valid
+		if (!extractInputCheck()) return;
+
 		// Display a pre-loader while waiting
 		var ditto = ellipses('#extract-ditto');
 		$('#extract-loader').modal('open');
@@ -368,6 +383,8 @@ $(document).ready(function () {
 				populatePipeline(PipelineType.PROFILE, 6);
 				$('#text-pipeline').show(600);
 				$('#profile-pipeline').show(600);
+
+				$('#extract-loader').modal('close');
 			},
 			error: function() {
 				// Hide loader
@@ -407,10 +424,12 @@ function readURL(input) {
 		if ($(input).attr('id') == 'id-photo-extract') {
 			reader.onload = function (e) {
 				$('#id-preview-extract').attr('src', e.target.result);
+				$('#id-photo-extract-file-path-error').remove();
 			};
 		} else if ($(input).attr('id') == 'id-photo-verify') {
 			reader.onload = function (e) {
 				$('#id-preview-verify').attr('src', e.target.result);
+				$('#id-photo-verify-file-path-error').remove();
 			};
 		} else {
 			reader.onload = function (e) {
@@ -425,6 +444,7 @@ function readURL(input) {
 					html: true,
 					tooltip: preview.prop('outerHTML')
 				});
+				$('#profile-photo-file-path-error').remove();
 			}
 		}
 		reader.readAsDataURL(input.files[0]);
@@ -490,6 +510,8 @@ function clearIDPreviews() {
 	$('.file-path-wrapper input').val('');
 	$('#profile-photo').val('');
 	$('.photo-preview').tooltip('remove');
+	$('label[id$=-error]').remove();
+	$('.invalid').removeClass('invalid');
 }
 
 // Clears extract fields
@@ -611,7 +633,7 @@ function populateDetailedResults(data) {
 	row = $('<tr>');
 	row.append('<td>Total</td>');
 	row.append('<td class="center-align">' + parseFloat(data.total_match).toFixed(2) + '%</td>');
-	row.append('<td class="center-align">' + threshold + '</td>');
+	row.append('<td class="center-align">' + threshold + '%</td>');
 	row.append('<td class="center-align">' + passResult + '</td>');
 	$('#verify-details').append(row);
 	
@@ -800,4 +822,54 @@ function populateCircleGraphs(data) {
 			$('.result-detailed .number').text(totalMatch);
 		}, 50);
 	});
+}
+
+// Peform checks and notifications regarding valid input for
+// verification use case.
+function verifyInputCheck() {
+	$('#verify-form').validate({
+		focusInvalid: false,
+		focusCleanup: true,
+		errorClass: 'invalid',
+		submitHandler: function(form) {}, // Set empty handler otherwise form is submitted
+		rules: {
+			'id-photo-verify-file-path': {
+				required: true
+			},
+			'profile-photo-file-path': {
+				required: true
+			}
+		},
+		messages: {
+			'id-photo-verify-file-path': {
+				required: '*Required'
+			}, 
+			'profile-photo-file-path': {
+				required: '*Required'
+			}
+		}
+	});
+	return $('#id-photo-verify').val() != '' && $('#profile-photo').val() != '';
+}
+
+// Peform checks and notifications regarding valid input for
+// extraction use cases.
+function extractInputCheck() {
+	$('#extract-form').validate({
+		focusInvalid: false,
+		focusCleanup: true,
+		errorClass: 'invalid',
+		submitHandler: function(form) {}, // Set empty handler otherwise form is submitted
+		rules: {
+			'id-photo-extract-file-path': {
+				required: true
+			}
+		},
+		messages: {
+			'id-photo-extract-file-path': {
+				required: '*Required'
+			}
+		}
+	});
+	return $('#id-photo-extract').val() != '';
 }

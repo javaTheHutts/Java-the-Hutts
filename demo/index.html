@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="css/jquery.circliful.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/slick.min.js"></script>
 	<script type="text/javascript" src="js/slick.min.js"></script>
@@ -353,6 +354,7 @@
 						Extraction
 					</div>
 					<div class="collapsible-body">
+						<form id="extract-form">
 						<!-- Card 1 -->
 						<div class="row">
 							<div class="col s12 l5 card-wrapper card1-wrapper">
@@ -375,7 +377,9 @@
 														id="id-photo-extract" accept="image/*">
 													</div>
 													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
+														<input id="id-photo-extract-file-path"
+														name="id-photo-extract-file-path"
+														class="file-path validate" type="text">
 													</div>
 												</div>
 											</div>
@@ -472,6 +476,7 @@
 							</div>
 							<!-- End Card 2 -->
 						</div>
+					</form>
 					</div>
 				</li>
 				<!-- End Expandable 1 -->
@@ -484,6 +489,7 @@
 						Verification
 					</div>
 					<div class="collapsible-body">
+						<form id="verify-form">
 						<div class="row">
 							<div class="col s12 l6 card-wrapper card1-wrapper">
 								<!-- Card 1 -->
@@ -550,7 +556,9 @@
 														onchange="readURL(this);">
 													</div>
 													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
+														<input id="profile-photo-file-path"
+														name="profile-photo-file-path"
+														class="file-path validate" type="text">
 													</div>
 												</div>
 											</div>
@@ -592,7 +600,9 @@
 														id="id-photo-verify" accept="image/*">
 													</div>
 													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
+														<input id="id-photo-verify-file-path"
+														name="id-photo-verify-file-path"
+														class="file-path validate" type="text">
 													</div>
 												</div>
 											</div>
@@ -602,6 +612,7 @@
 								<!-- End Card 2 -->
 							</div>
 						</div>
+					</form>
 					</div>
 				</li>
 				<!-- End Expandable 2 -->
