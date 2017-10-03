@@ -672,18 +672,15 @@ function ellipses(selector) {
 function populateCircleGraphs(data) {
 	// Assign data attributes for future usage
 	var totalMatch = parseFloat(data.total_match).toFixed(2);
+	var profileMatch = parseFloat(data.face_match).toFixed(2);
 	var textMatch = parseFloat(
 		typeof data.text_match === 'object'? 
 		data.text_match.total: data.text_match
 	).toFixed(2);
-	var profileMatch = parseFloat(data.face_match).toFixed(2);
-	$('.result-total').data('percentage', totalMatch);
-	$('.result-text').data('percentage', textMatch);
-	$('.result-profile').data('percentage', profileMatch);
 
 	// Results circliful
 	$('.result-total').circliful({
-		percent: $('.result-total').data('percentage'),
+		percent: totalMatch,
 		text: 'Total',
 		textBelow: true,
 		decimals: 2,
@@ -696,10 +693,16 @@ function populateCircleGraphs(data) {
 		icon: 'f2c3',
 		iconSize: '30',
 		iconPosition: 'middle'
+	}, function() {
+		// Manually re-assign percentages as there is a bug with
+		// the circliful library
+		setTimeout(function(){
+			$('.result-total .number').text(totalMatch);
+		}, 50);
 	});
 
 	$('.result-text').circliful({
-		percent: $('.result-text').data('percentage'),
+		percent: textMatch,
 		text: 'Text',
 		textBelow: true,
 		decimals: 2,
@@ -712,10 +715,16 @@ function populateCircleGraphs(data) {
 		icon: 'f022',
 		iconSize: '30',
 		iconPosition: 'middle'
+	}, function() {
+		// Manually re-assign percentages as there is a bug with
+		// the circliful library
+		setTimeout(function(){
+			$('.result-text .number').text(textMatch);
+		}, 50);
 	});
 
 	$('.result-profile').circliful({
-		percent: $('.result-profile').data('percentage'),
+		percent: profileMatch,
 		text: 'Profile',
 		textBelow: true,
 		decimals: 2,
@@ -728,6 +737,12 @@ function populateCircleGraphs(data) {
 		icon: 'f007',
 		iconSize: '30',
 		iconPosition: 'middle'
+	}, function() {
+		// Manually re-assign percentages as there is a bug with
+		// the circliful library
+		setTimeout(function(){
+			$('.result-profile .number').text(profileMatch);
+		}, 50);
 	});
 
 	// Combined result - for smaller displays
@@ -738,15 +753,15 @@ function populateCircleGraphs(data) {
 		textColor: '#202020',
 		multiPercentage: 1,
 		percentages: [{
-				'percent': parseFloat($('.result-text').data('percentage')).toFixed(2), 
+				'percent': textMatch, 
 				'color': '#3180B8', 
 				'title': 'Text'
 			 }, {
-				'percent': parseFloat($('.result-profile').data('percentage')).toFixed(2), 
+				'percent': profileMatch, 
 				'color': '#49EBA8', 
 				'title': 'Profile' 
 			}, {
-				'percent': parseFloat($('.result-total').data('percentage')).toFixed(2), 
+				'percent': totalMatch, 
 				'color': '#80cbc4', 
 				'title': 'Total' 
 		}],
@@ -764,7 +779,7 @@ function populateCircleGraphs(data) {
 	progressColor[0] = '#E63B2E';
 	progressColor[threshold] = '#90DD44';
 	$('.result-detailed').circliful({
-		percent: $('.result-total').data('percentage'),
+		percent: totalMatch,
 		text: 'Total Match',
 		textBelow: true,
 		decimals: 2,
@@ -778,5 +793,11 @@ function populateCircleGraphs(data) {
 		icon: 'f2c3',
 		iconPosition: 'middle',
 		iconColor: '#666',
+	}, function() {
+		// Manually re-assign percentages as there is a bug with
+		// the circliful library
+		setTimeout(function(){
+			$('.result-detailed .number').text(totalMatch);
+		}, 50);
 	});
 }

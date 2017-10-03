@@ -651,6 +651,11 @@ button.picker__close {
 }
 
 @media (min-width: 993px) {
+  .result-detailed,
+  .verify-details-table {
+    margin-left: -30px;
+  }
+
   .total-row {
     border-top: 1px solid rgb(208, 208, 208);
     font-weight: bold;
@@ -683,19 +688,22 @@ button.picker__close {
   width: 80%;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 993px) {
   .result-total-sm {
-    margin-left: -15px;
+    margin-bottom: -30px;
   }
 
   .legend-line {
-    font-size: 12px;
+    top: 50% !important;
+    left: 100% !important;
+    transform: translateY(-45%);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .result-total-sm {
-    margin-left: -30px;
+    margin-left: -15px;
+    margin-bottom: -30px;
   }
 
   .legend-line {
