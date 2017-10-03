@@ -75,3 +75,24 @@ Once you are finished, execute the command `deactivate` in order to exit your vi
 ## Important files
 - `build.py` contains the configuration used by PyBuilder to build the project. Any plugins and customized build settings are contained in this file.
 - `README.md`. This file explains how the entire system should be built and used. Refer to it before asking any questions about the build process.
+
+## Examples:
+# Extraction of a South African ID card.
+
+Hutts Verification allows for easy extraction of identification details from either a South African ID book or card.
+
+When a South African Identification document is provided to Hutts Verification a profile picture with all the necessary text is extracted from the card provided.
+
+![alt text](documentation/media/ExtractAll.gif "Extract All Example ID Card")
+
+# Verify Details.
+
+Hutts Verification focuses on two main verification attributes:
+1. Verify face details.
+2. Verify text details.
+
+When details are being verified a South African ID book or card should be sent to Hutts Verification. Additionally, a clear and well-lit photo of the individual that should be verified must be provided, with the additional text details that must be verified with that of the card.
+
+After Hutts Verification has finished verification, three scores representing the text verification score, face verification score, and the overall weighted score is returned.
+
+![alt text](documentation/media/Verify.gif "Verify Details")

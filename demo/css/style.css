@@ -632,6 +632,27 @@ button.picker__close {
   text-align: center;
 }
 
+/* Loader overlay */
+.loader-overlay {
+  background: none repeat scroll 0 0 black;
+  position: fixed;
+  display: block;
+  opacity: 0.7;
+  z-index: 1000001;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.loader-overlay .spinner {
+  padding: 0;
+}
+
+.loader-overlay .spinner div p {
+  color: white;
+}
+
 /*Footer styling */
 .page-footer,
 .page-footer .footer-copyright {
