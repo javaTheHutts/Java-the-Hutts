@@ -58,18 +58,9 @@ def test_perspective_transform_2():
         simp_manager.perspectiveTransformation(blank_image, 1)
 
 
-def test_perspective_type():
+def test_perspective_transform_3():
     """
-    Tests if incorrect type i.e not Num array will be rejected
-    """
-    simp_manager = SimplificationManager()
-    with pytest.raises(TypeError):
-        simp_manager.perspectiveTransformation(1)
-
-
-def test_perspective_thresholding():
-    """
-    Tests perspective thresholding with plain colour image
+    Tests perspective thresholding and transformation with plain colour image
     """
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
@@ -79,9 +70,9 @@ def test_perspective_thresholding():
     cv2.setNumThreads(-1)
 
 
-def test_perspective_thresholding_2():
+def test_perspective_transform_4():
     """
-    Tests perspective thresholding with soap joe book type
+    Tests perspective thresholding and transformation with soap joe book type
     """
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
@@ -91,9 +82,9 @@ def test_perspective_thresholding_2():
     cv2.setNumThreads(-1)
 
 
-def test_perspective_thresholding_3():
+def test_perspective_transform_5():
     """
-    Tests perspective thresholding with Obama not card type
+    Tests perspective thresholding and transformation with Obama not card type
     """
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
@@ -101,3 +92,12 @@ def test_perspective_thresholding_3():
     simp_manager.perspectiveTransformation(thanks_obama)
     # enable multi-threading in OpenCV for child thread
     cv2.setNumThreads(-1)
+
+
+def test_perspective_type():
+    """
+    Tests if incorrect type i.e not Num array will be rejected
+    """
+    simp_manager = SimplificationManager()
+    with pytest.raises(TypeError):
+        simp_manager.perspectiveTransformation(1)

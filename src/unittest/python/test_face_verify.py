@@ -3,7 +3,7 @@
 Authors: Stephan Nell
 ----------------------------------------------------------------------
 Unit tests for the Face Verify
-All the image used are from public domain and are copyright free
+All the images used are from public domain and are copyright free
 ----------------------------------------------------------------------
 """
 import pytest
@@ -132,7 +132,8 @@ def test_face_verify_6():
 
 def test_face_verify_7():
     """
-    Provides different faces no a percentage match should be found but not perfect.
+    Provides different faces to verification module.
+    Face should return a low result percentage.
     """
     face_verf = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
     face_verf.verify(thanks_obama, soap_joe)
@@ -140,10 +141,12 @@ def test_face_verify_7():
 
 def test_face_verify_8():
     """
-    Test with one correct value provided with both faces correct but slight damage to one should reduce accuracy a bit
+    Test with the same face for both images.
+    One of the images will be slightly damage.
+    The  damage test is to establish if the face verification can compensate for lower quality images.
     """
     face_verf = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
-    blur_manger = BlurManager("median", [7])
+    blur_manager = BlurManager("median", [7])
     damaged_obama = thanks_obama.copy()
-    damaged_obama = blur_manger.apply(damaged_obama)
+    damaged_obama = blur_manager.apply(damaged_obama)
     face_verf.verify(thanks_obama, damaged_obama)

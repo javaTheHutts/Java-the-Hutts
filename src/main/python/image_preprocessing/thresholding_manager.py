@@ -15,7 +15,7 @@ class ThresholdingManager:
             thresholding_type (str): Indicates the type of thresholding that
                 should be applied.
         Raises:
-            TypeError: If an parameter is passed that is not of type String
+            TypeError: If a parameter is passed that is not of type String.
             NameError: If the thresholding type is not Adaptive or Otsu.
         Returns:
             None
@@ -31,10 +31,6 @@ class ThresholdingManager:
             self.thresholding_type = thresholding_type
         elif thresholding_type == "otsu":
             self.thresholding_type = thresholding_type
-        elif thresholding_type == "Adaptive":
-            self.thresholding_type = "adaptive"
-        elif thresholding_type == "Otsu":
-            self.thresholding_type = "otsu"
         else:
             raise NameError('Invalid Thresholding Selection! Try "adaptive" or "otsu" thresholding types.')
 
@@ -65,7 +61,7 @@ class ThresholdingManager:
         Args:
             image (:obj:'OpenCV image'): Image to which thresholding should be applied.
         Raises:
-            TypeError: If an parameter is passed that is not of type Numpy array.
+            TypeError: If a parameter is passed that is not of type Numpy array.
         Returns:
             obj:'OpenCV image': The Threshold image.
         """
@@ -85,7 +81,7 @@ class ThresholdingManager:
         Args:
             image (:obj:'OpenCV image'): Image to which thresholding should be applied.
         Raises:
-            TypeError: If an parameter is passed that is not of type Numpy array.
+            TypeError: If a parameter is passed that is not of type Numpy array.
         Returns:
             obj:'OpenCV image': The Threshold image.
         """

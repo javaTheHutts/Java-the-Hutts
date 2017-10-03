@@ -8,11 +8,17 @@ Unit tests for the Image Handling
 import pytest
 import cv2
 import os
+import numpy as np
 from hutts_utils.image_handling import grab_image
 
-TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/temp_flag.jpg".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
-test_image_colour = cv2.imread(TEMPLATE_DIR)
+
+test_image_colour = cv2.imread(TEMPLATE_DIR + "temp_flag.jpg")
+
+# Face that is not fully aligned with the center of the image.
+obama_skew = cv2.imread(TEMPLATE_DIR + "obamaSkew.jpg")
+
 
 
 def test_grab_image():
@@ -28,11 +34,13 @@ def test_grab_image_2():
     """
     Test image handling with url
     """
-    grab_image(url="http://www.pyimagesearch.com/wp-content/uploads/2015/05/obama.jpg")
+    test_path_image = grab_image(url="http://www.pyimagesearch.com/wp-content/uploads/2015/05/obama.jpg")
+    assert np.array_equal(obama_skew, test_path_image)
 
 
 def test_grab_image_3():
     """
     Test image handling with path specified
     """
-    grab_image(path=TEMPLATE_DIR)
+    test_path_image = grab_image(path=TEMPLATE_DIR + "temp_flag.jpg")
+    assert np.array_equal(test_image_colour, test_path_image)

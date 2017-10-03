@@ -48,7 +48,7 @@ class BlurManager:
         elif self.blur_type == "median":
             return self.medianBlur(image, self.kernel_size)
         else:
-            raise NameError('Invalid Blur Selection! Try "normal", "gaussain" or "median" thresholding types.')
+            raise NameError('Invalid Blur Selection! Try "normal", "gaussian" or "median" thresholding types.')
 
     def blur(self, image, blur_kernel=[(3, 3)]):
         """

@@ -27,7 +27,7 @@ class SimplificationManager:
             obj:'OpenCV image': Returns as warped image where just the identification document
                 is present and the identification document is now in a perspective view.
         Raises:
-            TypeError: If an parameter is passed that is not of type Numpy array.
+            TypeError: If a parameter is passed that is not of type Numpy array.
         Todo:
             Determine a better solution to this problem when detecting smaller edge.
                 at the moment this is hardcoded contour_area_threshold = 100000

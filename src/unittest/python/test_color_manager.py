@@ -10,9 +10,11 @@ import cv2
 import os
 from image_preprocessing.color_manager import ColorManager
 
-TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/temp_flag.jpg".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
-test_image_colour = cv2.imread(TEMPLATE_DIR)
+
+test_image_colour = cv2.imread(TEMPLATE_DIR + "temp_flag.jpg")
+thanks_obama = cv2.imread(TEMPLATE_DIR + "obama.jpg")
 
 
 def test_color_manager_constructor():
@@ -21,29 +23,6 @@ def test_color_manager_constructor():
     """
     with pytest.raises(TypeError):
         ColorManager()
-
-
-def test_color_manager_constructor_2():
-    """
-    Test constructor with two parameters missing
-    Default value should take over
-    """
-    ColorManager("extract")
-
-
-def test_color_manager_constructor_3():
-    """
-    Test constructor with one parameters missing
-    Default value should take over
-    """
-    ColorManager("extract", "red_blue")
-
-
-def test_color_manager_constructor_4():
-    """
-    Test constructor with two parameters missing
-    """
-    ColorManager("extract", "red", (17, 7))
 
 
 def test_color_manager_apply():
@@ -58,9 +37,8 @@ def test_color_manager_apply_2():
     """
     Test Color manager apply histogram Equalisation type
     """
-    test_image_grey = cv2.cvtColor(test_image_colour, cv2.COLOR_BGR2GRAY)
-    manager = ColorManager("histogram", "blue", (17, 7))
-    manager.apply(test_image_grey)
+    manager = ColorManager("histogram")
+    manager.apply(thanks_obama)
 
 
 def test_color_manager_apply_3():

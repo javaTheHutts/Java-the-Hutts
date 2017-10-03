@@ -65,7 +65,8 @@ class ColorManager:
         Returns:
             obj:'OpenCV image': The Histogram equalised image.
         """
-        return cv2.equalizeHist(image)
+        image_grey = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        return cv2.equalizeHist(image_grey)
 
     def extractChannel(self, image, image_channel="green"):
         """
