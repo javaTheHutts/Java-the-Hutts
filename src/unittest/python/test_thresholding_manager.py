@@ -51,6 +51,7 @@ def test_apply():
     """
     manager = ThresholdingManager("adaptive")
     manager.apply(blank_image)
+    assert manager.thresholding_type is "adaptive"
 
 
 def test_apply_2():
@@ -69,6 +70,7 @@ def test_apply_3():
     """
     manager = ThresholdingManager("otsu")
     manager.apply(blank_image)
+    assert manager.thresholding_type is "otsu"
 
 
 def test_apply_4():

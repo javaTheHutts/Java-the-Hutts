@@ -28,7 +28,8 @@ def test_thresholding_constructor_correct_type():
     """
     Test to see if constructor valid type
     """
-    BlurManager("gaussian", (1, 1))
+    manager = BlurManager("gaussian", (1, 1))
+    assert manager.blur_type is "gaussian"
 
 
 def test_apply():
@@ -37,6 +38,8 @@ def test_apply():
     """
     blur_manger = BlurManager("gaussian", [(7, 7)])
     blur_manger.apply(test_image_colour)
+    assert blur_manger.blur_type is "gaussian"
+    assert blur_manger.kernel_size == [(7, 7)]
 
 
 def test_apply_2():
@@ -45,6 +48,8 @@ def test_apply_2():
     """
     blur_manger = BlurManager("median", [3])
     blur_manger.apply(test_image_colour)
+    assert blur_manger.blur_type is "median"
+    assert blur_manger.kernel_size == [3]
 
 
 def test_apply_3():
@@ -53,6 +58,8 @@ def test_apply_3():
     """
     blur_manger = BlurManager("normal", [(3, 3)])
     blur_manger.apply(test_image_colour)
+    assert blur_manger.blur_type is "normal"
+    assert blur_manger.kernel_size == [(3, 3)]
 
 
 def test_apply_4():
