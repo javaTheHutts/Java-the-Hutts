@@ -1,0 +1,104 @@
+"""
+----------------------------------------------------------------------
+Authors: Jan-Justin van Tonder
+----------------------------------------------------------------------
+This file contains the logic for South African ID book (post 1994)
+context.
+----------------------------------------------------------------------
+"""
+
+from id_contexts.id_context import FieldType
+from id_contexts.sa_id import SAID
+from hutts_utils.hutts_logger import logger
+from fuzzywuzzy import fuzz
+
+
+class SAIDBook(SAID):
+    """
+    A class that represents an ID context for a South African ID book (post 1994).
+    It supplies some of the concrete information, such as the match contexts, to the classes higher up in inheritance
+    hierarchy and implements abstract methods defined by its parent.
+    """
+    def __init__(self):
+        """
+        Initialises the SAIDBook object.
+        """
+        # Logging for debugging purposes.
+        logger.debug('Initialising %s...' % type(self).__name__)
+        # Specify initial list of contexts for string image_processing when populating
+        # the ID information dictionary to send as output.
+        match_contexts = [{
+            'field': 'identity_number',
+            'find': 'id no',
+            'field_type': FieldType.NUMERIC_ONLY,
+            'multi_line': False
+        }, {
+            'field': 'surname',
+            'find': 'surname',
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': False,
+            'multi_line': True,
+            'multi_line_end': 'forenames'
+        }, {
+            'field': 'names',
+            'find': 'forenames',
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': False,
+            'multi_line': True,
+            'multi_line_end': 'country of birth'
+        }, {
+            'field': 'sex',
+            'find': 'sex',
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': False,
+            'multi_line': False
+        }, {
+            'field': 'date_of_birth',
+            'find': 'date of birth',
+            'field_type': FieldType.DATE_HYPHENATED,
+            'to_uppercase': False,
+            'multi_line': False
+        }, {
+            'field': 'country_of_birth',
+            'find': 'country of birth',
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': False,
+            'multi_line': False
+        }, {
+            'field': 'status',
+            'find': 'sacitizen',
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': False,
+            'multi_line': False
+        }]
+        # Initialise parent
+        SAID.__init__(self, match_contexts)
+
+    def _get_idiosyncratic_match(self, match_context, id_string_list, current_index):
+        """
+        Identifies and returns matches that ar specific to the current ID context.
+
+        Authors:
+            Jan-Justin van Tonder
+
+        Args:
+            match_context (dict): A dictionary object that provides context for the information that is to be extracted.
+            id_string_list (list): An ID string that has been broken down into a list of individual lines.
+            current_index (int): The current index within the ID string list.
+
+        Returns:
+            (str): A string containing the match value of a context-specific case.
+            (None): Used to indicate that no special case was identified.
+        """
+        # If we are looking for the ID number and the last few characters of the line
+        # are numeric, then the ID number is on the same line instead of a new line.
+        if match_context['field'] == 'identity_number':
+            return id_string_list[current_index]
+        # Check for the status special case.
+        if match_context['field'] == 'status':
+            citizen_match_ratio = fuzz.token_set_ratio(id_string_list[current_index], 'sacitizen')
+            non_citizen_match_ratio = fuzz.token_set_ratio(id_string_list[current_index], 'nonsacitizen')
+            match = 'citizen' if citizen_match_ratio > non_citizen_match_ratio else 'non citizen'
+            return match
+        # Otherwise return an empty string to indicate that a special case was not identified.
+        return None

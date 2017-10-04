@@ -27,7 +27,7 @@ class TextVerify:
             Jan-Justin van Tonder
         """
         # Logging for debugging purposes.
-        logger.debug('Initialising TextVerify...')
+        logger.debug('Initialising %s...' % type(self).__name__)
 
     def verify(self, extracted, verifier, threshold=75.00, min_matches=4, verbose=False):
         """
