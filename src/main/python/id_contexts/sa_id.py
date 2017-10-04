@@ -42,6 +42,8 @@ class SAID(IDContext):
             Jan-Justin van Tonder
 
         Args:
+            match_contexts (list): A list of dictionaries that contain the contextual information used in the process
+                of retrieving field values from the OCR output string.
             id_string (str): A string containing some ID information.
             barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
             fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
