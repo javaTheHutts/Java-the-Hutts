@@ -262,8 +262,13 @@ class SAID(IDContext):
         Returns:
             (dict): The original id_info, with some post-processed field values.
         """
+        # Check if date of birth field exists for post-processing.
         if 'date_of_birth' in id_info and id_info['date_of_birth']:
             id_info['date_of_birth'] = self._standardise_date_of_birth(id_info['date_of_birth'])
+        # Check if country of birth field exists for post-processing.
+        if 'country_of_birth' in id_info and id_info['country_of_birth']:
+            if id_info['country_of_birth'] == 'SUID-AFRIKA':
+                id_info['country_of_birth'] = 'South Africa'
 
     @staticmethod
     def _standardise_date_of_birth(date_of_birth):
@@ -286,10 +291,14 @@ class SAID(IDContext):
         try:
             # Attempt to parse the different dates that could appear for formatting.
             current_date_of_birth = re.sub(' ', '', date_of_birth)
-            # If the current date contains a '-', then it was extracted from the id number, therefore,
-            # parse it in the format 'YY-MM-DD'
-            if '-' in current_date_of_birth:
+            # If the current date contains a '-', then it was extracted from the id number and '-' is the
+            # third character in, parse it in the format 'YY-MM-DD'
+            if '-' in current_date_of_birth and current_date_of_birth.index('-') == 2:
                 standardised_date_of_birth = datetime.strptime(current_date_of_birth, '%y-%m-%d')
+            # If the current date contains a '-', then it was extracted from the id number, parse it in the
+            # format 'YYYY-MM-DD' based on elimination of possibilities for this specific ID context.
+            elif '-' in current_date_of_birth:
+                standardised_date_of_birth = datetime.strptime(current_date_of_birth, '%Y-%m-%d')
             # Otherwise it was extracted from the OCR output, therefore, parse it in the
             # format 'DD MMM YYYY'
             else:

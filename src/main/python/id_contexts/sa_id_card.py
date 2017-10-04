@@ -1,10 +1,26 @@
+"""
+----------------------------------------------------------------------
+Authors: Jan-Justin van Tonder
+----------------------------------------------------------------------
+This file contains the logic for South African ID card context.
+----------------------------------------------------------------------
+"""
+
 from id_contexts.id_context import FieldType
 from id_contexts.sa_id import SAID
 from hutts_utils.hutts_logger import logger
 
 
 class SAIDCard(SAID):
+    """
+    A class that represents an ID context for a South African ID card.
+    It supplies some of the concrete information, such as the match contexts, to the classes higher up in inheritance
+    hierarchy and implements abstract methods defined by its parent.
+    """
     def __init__(self):
+        """
+        Initialises the SAIDCard object.
+        """
         # Logging for debugging purposes.
         logger.debug('Initialising %s...' % type(self).__name__)
         # Specify initial list of contexts for string image_processing when populating

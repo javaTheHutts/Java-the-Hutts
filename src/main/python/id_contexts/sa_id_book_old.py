@@ -19,6 +19,9 @@ class SAIDBookOld(SAID):
     hierarchy and implements abstract methods defined by its parent.
     """
     def __init__(self):
+        """
+        Initialises the SAIDBookOld object.
+        """
         # Specify initial list of contexts for string image_processing when populating
         # the ID information dictionary to send as output.
         match_contexts = [{
