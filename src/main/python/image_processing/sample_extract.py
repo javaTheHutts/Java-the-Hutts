@@ -101,11 +101,11 @@ class TextExtractor:
         logger.debug('-' * 50)
         [logger.debug(log_line) for log_line in clean_text.split('\n')]
         logger.debug('-' * 50)
-        # Dictify cleaned text.
+        # Get ID information from cleaned text.
         logger.info('Placing extracted text in a dictionary...')
         id_context = self._context_manager.get_id_context(identification_type)
-        id_details = id_context.dictify(clean_text, barcode_data=data)
-        # Log the dictified extracted text to terminal.
+        id_details = id_context.get_id_info(clean_text, barcode_data=data)
+        # Log the retrieved ID information extracted text to terminal.
         # This is for demonstration purposes.
         logger.debug('-' * 50)
         logger.debug('Extracted ID details:')

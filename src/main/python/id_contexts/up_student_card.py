@@ -72,16 +72,21 @@ class UPStudentCard(IDContext):
         """
         id_info = {}
         regexp = re.compile(r'[0-9]{6,10}')
+        # Check if barcode data is available.
+        if barcode_data and barcode_data['identity_number']:
+            id_info['identity_number'] = barcode_data['identity_number']
         for line_index, line in enumerate(id_string.split('\n')):
-            is_match = re.match(regexp, line)
+            is_match = re.match(regexp, re.sub('[^\d]', '', line))
+            # Check if ID number was already extracted from barcode data.
             if is_match:
-                # Populate id_info with the student/staff number.
-                id_info['identity_number'] = re.sub('[^\d]', '', line)
+                if 'identity_number' not in id_info:
+                    # Populate id_info with the student/staff number.
+                    id_info['identity_number'] = re.sub('[^\d]', '', line)
                 # Retrieve some more information from the previous line.
                 if line_index - 1 >= 0:
                     try:
                         # Split the line on spaces.
-                        id_line = id_string[line_index - 1].split(' ')
+                        id_line = id_string.split('\n')[line_index - 1].split(' ')
                         # Attempt to extrapolate sex.
                         sex = 'M' if id_line[0] == 'Mr' else None
                         sex = 'M' if id_line[0] == 'Ms' else sex
@@ -101,7 +106,4 @@ class UPStudentCard(IDContext):
                         logger.warning('Failed to extract some ID information...')
                         return id_info
                 break
-        # Check if barcode data is available.
-        if barcode_data and barcode_data['identity_number']:
-            id_info['identity_number'] = barcode_data['identity_number']
         return id_info
