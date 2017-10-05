@@ -33,7 +33,7 @@ class ContextManager:
         self._sa_id_book_old = SAIDBookOld()
         self._up_card = UPStudentCard()
 
-    def get_context(self, id_type):
+    def get_id_context(self, id_type):
         """
         Returns an ID context based on the ID type that is passed in as an arg.
 
