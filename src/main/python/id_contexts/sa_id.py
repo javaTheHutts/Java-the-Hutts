@@ -65,7 +65,7 @@ class SAID(IDContext):
         if barcode_data:
             logger.debug('Extracting details from barcode data...')
             id_info['identity_number'] = barcode_data['identity_number']
-            self._id_number_information_extraction(id_info, barcode_data['identity_number'])
+            self._id_number_information_extraction(match_contexts, id_info, barcode_data['identity_number'])
         # Attempt to populate id_info with information from the given ID string.
         logger.debug('Extracting details from the given text string...')
         self._populate_id_information(match_contexts, id_string, id_info, fuzzy_min_ratio, max_multi_line)
@@ -105,7 +105,7 @@ class SAID(IDContext):
                 # It should overwrite any existing fields that can be extracted from the id number, since
                 # the information embedded within the id number is more reliable, at least theoretically.
                 if key == 'identity_number' and id_info[key]:
-                    self._id_number_information_extraction(id_info, id_info[key])
+                    self._id_number_information_extraction(match_contexts, id_info, id_info[key])
 
     def _get_match(self, id_string_list, match_context, fuzzy_min_ratio, max_multi_line):
         """
@@ -224,7 +224,7 @@ class SAID(IDContext):
         pass
 
     @staticmethod
-    def _id_number_information_extraction(id_info, id_number):
+    def _id_number_information_extraction(match_contexts, id_info, id_number):
         """
         This function is responsible for extracting information from a given ID number and populating a given
         dictionary object with the extracted information.
@@ -235,26 +235,32 @@ class SAID(IDContext):
             Jan-Justin van Tonder
 
         Args:
+            match_contexts (list): A list of dictionaries that contain the contextual information used in the process
+                of retrieving field values from the OCR output string.
             id_info (dict): A dictionary object containing extracted ID information.
             id_number (str): An ID number.
         """
-        # Extract date of birth digits from ID number.
-        yy = id_number[:2]
-        mm = id_number[2:4]
-        dd = id_number[4:6]
-        # Populate id_info with date of birth.
-        date_of_birth = '%s-%s-%s' % (yy, mm, dd)
-        id_info['date_of_birth'] = date_of_birth
-        # Extract gender digit from ID Number.
-        gender_digit = id_number[6:7]
-        # Populate id_info with gender info.
-        # Currently, the genders on South African IDs are binary, meaning an individual is
-        # either male or female.
-        id_info['sex'] = 'F' if gender_digit < '5' else 'M'
-        # Extract status digit from ID Number.
-        status_digit = id_number[10:11]
-        # Populate id_info with status info.
-        id_info['status'] = 'Citizen' if status_digit == '0' else 'Non Citizen'
+        for match_context in match_contexts:
+            if match_context['field'] == 'date_of_birth':
+                # Extract date of birth digits from ID number.
+                yy = id_number[:2]
+                mm = id_number[2:4]
+                dd = id_number[4:6]
+                # Populate id_info with date of birth.
+                date_of_birth = '%s-%s-%s' % (yy, mm, dd)
+                id_info['date_of_birth'] = date_of_birth
+            if match_context['field'] == 'sex':
+                # Extract gender digit from ID Number.
+                gender_digit = id_number[6:7]
+                # Populate id_info with gender info.
+                # Currently, the genders on South African IDs are binary, meaning an individual is
+                # either male or female.
+                id_info['sex'] = 'F' if gender_digit < '5' else 'M'
+            if match_context['field'] == 'status':
+                # Extract status digit from ID Number.
+                status_digit = id_number[10:11]
+                # Populate id_info with status info.
+                id_info['status'] = 'Citizen' if status_digit == '0' else 'Non Citizen'
 
     def _post_process(self, id_info):
         """

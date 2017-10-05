@@ -401,39 +401,3 @@ def test_get_id_info_invalid_date_of_birth():
         'country_of_birth': 'South Africa',
         'status': None
     }
-
-
-def test_get_id_info_invalid_arg_in_str():
-    """
-    Test to see if get_id_info raises the correct exception when an incorrect type for the in_str arg is passed.
-    """
-    sa_id_book = SAIDBookOld()
-    with pytest.raises(TypeError):
-        sa_id_book.get_id_info(['not legit'])
-
-
-def test_get_id_info_invalid_arg_barcode_data():
-    """
-    Test to see if get_id_info raises the correct exception when an incorrect type for the barcode_data arg is passed.
-    """
-    sa_id_book = SAIDBookOld()
-    with pytest.raises(TypeError):
-        sa_id_book.get_id_info('seems legit', 'nope')
-
-
-def test_get_id_info_invalid_arg_min_fuzzy_ratio():
-    """
-    Test to see if get_id_info raises the correct exception when an incorrect type for the min_fuzzy_ratio arg is passed.
-    """
-    sa_id_book = SAIDBookOld()
-    with pytest.raises(TypeError):
-        sa_id_book.get_id_info('good so far...', {}, '...fail')
-
-
-def test_get_id_info_invalid_arg_max_multi_line():
-    """
-    Test to see if get_id_info raises the correct exception when an incorrect type for the max_multi_line arg is passed.
-    """
-    sa_id_book = SAIDBookOld()
-    with pytest.raises(TypeError):
-        sa_id_book.get_id_info('good so far...', {}, 100.0, ['...nevermind'])
