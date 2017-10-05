@@ -54,6 +54,7 @@ class SAIDBook(SAID):
             'find': 'sex',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'date_of_birth',
@@ -100,7 +101,7 @@ class SAIDBook(SAID):
         if match_context['field'] == 'status':
             citizen_match_ratio = fuzz.token_set_ratio(id_string_list[current_index], 'sacitizen')
             non_citizen_match_ratio = fuzz.token_set_ratio(id_string_list[current_index], 'nonsacitizen')
-            match = 'citizen' if citizen_match_ratio > non_citizen_match_ratio else 'non citizen'
+            match = 'Citizen' if citizen_match_ratio > non_citizen_match_ratio else 'Non Citizen'
             return match
         # Otherwise return an empty string to indicate that a special case was not identified.
         return None

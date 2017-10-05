@@ -143,13 +143,17 @@ class SAID(IDContext):
         match = None
         skip_to_index = -1
         id_num_lines = len(id_string_list)
+        # Set the most suitable fuzzy matching function based on line type.
+        get_match_ratio = fuzz.token_set_ratio
+        if match_context['line_type'] == LineType.TITLED_ADJACENT:
+            get_match_ratio = fuzz.partial_token_set_ratio
         # Iterate over the id_string list to find fuzzy matches.
         for current_index, current_line in enumerate(id_string_list):
             # Check to see if we can jump ahead and ignore the current index.
             if skip_to_index > current_index:
                 continue
             # Is there a match?
-            match_ratio = fuzz.token_set_ratio(current_line, match_context['find'])
+            match_ratio = get_match_ratio(current_line, match_context['find'])
             if match_ratio >= best_match_ratio:
                 # Set new best match ratio and retrieve the info if possible
                 best_match_ratio = match_ratio
@@ -195,11 +199,11 @@ class SAID(IDContext):
                                 break
                             # Otherwise, add the line to the field value.
                             match += ' %s' % id_string_list[forward_index].strip()
-                    # Check if a legitimate match was found before proceeding.
-                    if not match:
-                        continue
-                    # Normalise the match found.
-                    match = self._normalise_match(match_context, match)
+                # Check if a legitimate match was found before proceeding.
+                if not match:
+                    continue
+                # Normalise the match found.
+                match = self._normalise_match(match_context, match)
         # Final check to see if an empty string ('', not None) is the match found, return None if this is the case.
         if not match:
             return None
