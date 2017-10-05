@@ -2,8 +2,8 @@
 ----------------------------------------------------------------------
 Authors: Jan-Justin van Tonder
 ----------------------------------------------------------------------
-This file contains the logic used to manage the text cleanup of
-OCR output.
+This file contains the logic used to manage the removal of characters
+from an input string.
 ----------------------------------------------------------------------
 """
 
@@ -89,7 +89,8 @@ class TextCleaner:
         # Append to existing list of undesirable characters if there is a given list of
         # undesirable characters
         if deplorables is not None:
-            self._deplorables += self._sanitise_deplorables(deplorables)
+            # Escape and append the list of undesirable characters.
+            self._deplorables += re.escape(''.join(deplorables))
         # Define a class of characters that we wish to keep for the regex
         # that is to be compiled.
         reg_exp = r'[^\w\d\s-]'
@@ -98,39 +99,3 @@ class TextCleaner:
         reg_exp += r'|[' + ''.join(self._deplorables) + ']'
         # Returned a compiled regular expression pattern to use for matching.
         return re.compile(reg_exp, re.UNICODE)
-
-    @staticmethod
-    def _sanitise_deplorables(deplorables):
-        """
-        This function serves as a helper function, which sanitises a list of characters that is to be removed.
-        It escapes or removes characters that may impede a regex pattern that is compiled within this class.
-
-        Authors:
-            Jan-Justin van Tonder
-
-        Args:
-            deplorables (list): A list of characters that are to be filtered from an input string.
-
-        Returns:
-            (list): A list of sanitised characters.
-
-        Raises:
-            TypeError: If deplorables is not a list of strings.
-        """
-        # List of sanitised deplorables
-        sanitised = []
-        for deplorable in deplorables:
-            # Filter for valid inputs.
-            if type(deplorable) is str and deplorable:
-                # Escape ], [, - and ^ so as not to break the regex pattern.
-                deplorable = re.sub(re.compile(r']'), '\]', deplorable)
-                deplorable = re.sub(re.compile(r'\['), '\[', deplorable)
-                deplorable = re.sub(re.compile(r'-'), '\-', deplorable)
-                deplorable = re.sub(re.compile(r'^'), '\^', deplorable)
-                sanitised.append(deplorable)
-            else:
-                raise TypeError(
-                    'Bad type for arg deplorables - expected list of strings. Received type "%s".' %
-                    type(deplorables).__name__
-                )
-        return sanitised
