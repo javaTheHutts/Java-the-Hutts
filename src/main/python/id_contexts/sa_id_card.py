@@ -6,7 +6,7 @@ This file contains the logic for South African ID card context.
 ----------------------------------------------------------------------
 """
 
-from id_contexts.id_context import FieldType
+from id_contexts.id_context import FieldType, LineType
 from id_contexts.sa_id import SAID
 from hutts_utils.hutts_logger import logger
 
@@ -29,12 +29,14 @@ class SAIDCard(SAID):
             'field': 'identity_number',
             'find': 'identity number',
             'field_type': FieldType.NUMERIC_ONLY,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'surname',
             'find': 'surname',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': True,
             'multi_line_end': 'names',
         }, {
@@ -42,6 +44,7 @@ class SAIDCard(SAID):
             'find': 'names',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': True,
             'multi_line_end': 'sex',
         }, {
@@ -49,30 +52,35 @@ class SAIDCard(SAID):
             'find': 'sex',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': True,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'date_of_birth',
             'find': 'date of birth',
             'field_type': FieldType.MIXED,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'country_of_birth',
             'find': 'country of birth',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': True,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'status',
             'find': 'status',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'nationality',
             'find': 'nationality',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': True,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }]
         # Initialise parent.
@@ -94,4 +102,5 @@ class SAIDCard(SAID):
             (str): A string containing the match value of a context-specific case.
             (None): Used to indicate that no special case was identified.
         """
+        # No special cases to consider.
         return None

@@ -7,7 +7,7 @@ context.
 ----------------------------------------------------------------------
 """
 
-from id_contexts.id_context import FieldType
+from id_contexts.id_context import FieldType, LineType
 from id_contexts.sa_id import SAID
 from fuzzywuzzy import fuzz
 
@@ -28,12 +28,14 @@ class SAIDBookOld(SAID):
             'field': 'identity_number',
             'find': 'id no',
             'field_type': FieldType.NUMERIC_ONLY,
+            'line_type': LineType.TITLED_ADJACENT,
             'multi_line': False
         }, {
             'field': 'surname',
             'find': 'vansurname',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': True,
             'multi_line_end': 'voornameforenames'
         }, {
@@ -41,6 +43,7 @@ class SAIDBookOld(SAID):
             'find': 'voornameforenames',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': True,
             'multi_line_end': 'geboortedistrik of-land'
         }, {
@@ -48,18 +51,21 @@ class SAIDBookOld(SAID):
             'find': 'geboortedatum',
             'field_type': FieldType.DATE_HYPHENATED,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_ADJACENT,
             'multi_line': False
         }, {
             'field': 'country_of_birth',
             'find': 'district or country of birth',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': True,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'status',
             'find': 'saburgersacitizen',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.UNTITLED_ADJACENT,
             'multi_line': False
         }]
         # Initialise parent

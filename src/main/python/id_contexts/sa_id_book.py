@@ -7,7 +7,7 @@ context.
 ----------------------------------------------------------------------
 """
 
-from id_contexts.id_context import FieldType
+from id_contexts.id_context import FieldType, LineType
 from id_contexts.sa_id import SAID
 from hutts_utils.hutts_logger import logger
 from fuzzywuzzy import fuzz
@@ -31,12 +31,14 @@ class SAIDBook(SAID):
             'field': 'identity_number',
             'find': 'id no',
             'field_type': FieldType.NUMERIC_ONLY,
+            'line_type': LineType.TITLED_ADJACENT,
             'multi_line': False
         }, {
             'field': 'surname',
             'find': 'surname',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': True,
             'multi_line_end': 'forenames'
         }, {
@@ -44,6 +46,7 @@ class SAIDBook(SAID):
             'find': 'forenames',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': True,
             'multi_line_end': 'country of birth'
         }, {
@@ -57,18 +60,21 @@ class SAIDBook(SAID):
             'find': 'date of birth',
             'field_type': FieldType.DATE_HYPHENATED,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'country_of_birth',
             'find': 'country of birth',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
             'multi_line': False
         }, {
             'field': 'status',
             'find': 'sacitizen',
             'field_type': FieldType.TEXT_ONLY,
             'to_uppercase': False,
+            'line_type': LineType.UNTITLED_ADJACENT,
             'multi_line': False
         }]
         # Initialise parent
@@ -90,10 +96,6 @@ class SAIDBook(SAID):
             (str): A string containing the match value of a context-specific case.
             (None): Used to indicate that no special case was identified.
         """
-        # If we are looking for the ID number and the last few characters of the line
-        # are numeric, then the ID number is on the same line instead of a new line.
-        if match_context['field'] == 'identity_number':
-            return id_string_list[current_index]
         # Check for the status special case.
         if match_context['field'] == 'status':
             citizen_match_ratio = fuzz.token_set_ratio(id_string_list[current_index], 'sacitizen')

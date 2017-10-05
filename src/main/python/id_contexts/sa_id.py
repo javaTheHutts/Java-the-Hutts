@@ -11,7 +11,7 @@ import re
 from abc import abstractmethod
 from fuzzywuzzy import fuzz
 from datetime import datetime
-from id_contexts.id_context import IDContext
+from id_contexts.id_context import IDContext, LineType
 from hutts_utils.hutts_logger import logger
 
 
@@ -157,8 +157,11 @@ class SAID(IDContext):
                 idiosyncratic_match = self._get_idiosyncratic_match(match_context, id_string_list, current_index)
                 if idiosyncratic_match is not None:
                     match = idiosyncratic_match
+                # Check to see if we are dealing with a field value on single line adjacent to the field name.
+                elif match_context['line_type'] == LineType.TITLED_ADJACENT:
+                    match = re.sub(match_context['find'], '', current_line).strip()
                 # Check to see if we are going out of bounds of the string before proceeding.
-                elif current_index + 1 < id_num_lines:
+                elif match_context['line_type'] == LineType.TITLED_NEWLINE and current_index + 1 < id_num_lines:
                     # We are only interested in field value, not field name.
                     # e.g: Surname\n
                     #      Smith\n
@@ -269,7 +272,10 @@ class SAID(IDContext):
             id_info['date_of_birth'] = self._standardise_date_of_birth(id_info['date_of_birth'])
         # Check if country of birth field exists for post-processing.
         if 'country_of_birth' in id_info and id_info['country_of_birth']:
-            if id_info['country_of_birth'] == 'SUID-AFRIKA':
+            fuzz_ratio = fuzz.token_set_ratio(id_info['country_of_birth'], 'SUID-AFRIKA')
+            # We should be fairly certain, with a margin for error, that we have a match.
+            if fuzz_ratio >= 70.0:
+                # Translate from Afrikaans to English
                 id_info['country_of_birth'] = 'South Africa'
 
     @staticmethod

@@ -8,7 +8,7 @@ card context. It is mainly intended for demonstration purposes.
 """
 
 import re
-from id_contexts.id_context import IDContext
+from id_contexts.id_context import IDContext, FieldType, LineType
 from hutts_utils.hutts_logger import logger
 
 
@@ -22,8 +22,31 @@ class UPStudentCard(IDContext):
         """
         # Logging for debugging purposes.
         logger.debug('Initialising %s...' % type(self).__name__)
+        # Specify initial list of contexts for string image_processing when populating
+        # the ID information dictionary to send as output.
+        match_contexts = [{
+            'field': 'identity_number',
+            'find': None,
+            'field_type': FieldType.NUMERIC_ONLY,
+            'line_type': LineType.UNTITLED_ADJACENT,
+            'multi_line': False
+        }, {
+            'field': 'surname',
+            'find': None,
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': False,
+            'line_type': LineType.UNTITLED_ADJACENT,
+            'multi_line': False
+        }, {
+            'field': 'names',
+            'find': None,
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': True,
+            'line_type': LineType.TITLED_NEWLINE,
+            'multi_line': False,
+        }]
         # Initialise parent
-        IDContext.__init__(self, [])
+        IDContext.__init__(self, match_contexts)
 
     def _dictify(self, match_contexts, id_string, barcode_data, fuzzy_min_ratio, max_multi_line):
         """
@@ -56,22 +79,27 @@ class UPStudentCard(IDContext):
                 id_info['identity_number'] = re.sub('[^\d]', '', line)
                 # Retrieve some more information from the previous line.
                 if line_index - 1 >= 0:
-                    # Split the line on spaces.
-                    id_line = id_string[line_index - 1].split(' ')
-                    # Attempt to extrapolate sex.
-                    sex = 'M' if id_line[0] == 'Mr' else None
-                    sex = 'M' if id_line[0] == 'Ms' else sex
-                    # Attempt to get initials
-                    id_line.pop(0)
-                    initials = id_line[0]
-                    # Re-combine the rest of the list to get the surname.
-                    id_line.pop(0)
-                    surname = ' '.join(id_line)
-                    # Populate the id_info list to be returned.
-                    if sex is not None:
-                        id_info['sex'] = sex
-                    id_info['names'] = initials
-                    id_info['surname'] = surname
+                    try:
+                        # Split the line on spaces.
+                        id_line = id_string[line_index - 1].split(' ')
+                        # Attempt to extrapolate sex.
+                        sex = 'M' if id_line[0] == 'Mr' else None
+                        sex = 'M' if id_line[0] == 'Ms' else sex
+                        # Attempt to get initials
+                        id_line.pop(0)
+                        initials = id_line[0]
+                        # Re-combine the rest of the list to get the surname.
+                        id_line.pop(0)
+                        surname = ' '.join(id_line)
+                        # Populate the id_info list to be returned.
+                        if sex is not None:
+                            id_info['sex'] = sex
+                        id_info['names'] = initials
+                        id_info['surname'] = surname
+                    except IndexError:
+                        # Log error and return with what we have.
+                        logger.warning('Failed to extract some ID information...')
+                        return id_info
                 break
         # Check if barcode data is available.
         if barcode_data and barcode_data['identity_number']:

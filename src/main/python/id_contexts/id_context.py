@@ -21,21 +21,25 @@ class IDContext(ABC):
     document type for operations such as extracting information from an ID OCR string.
 
     Attributes:
-       match_contexts (list): A list of dictionaries that contain the contextual information used in the process of
-           retrieving field values from the OCR output string.
-           e.g. {
-                   'field': 'surname',          // The field name - can be set to any string one desires.
-                   'find': 'surname',           // A string to be used for matching field names
-                                                // in the OCR output string (used to know what to look for).
-                   'field_type':                // Indicates if the field value is to be treated as alphanumeric or
-                       FieldType.TEXT_ONLY      // just numeric or just alphabetical characters
-                                                // (e.g. indicates that all numbers from field value should be removed
-                                                //  if the field type is TEXT_ONLY).
-                   'to_uppercase': False,       // (Optional) Indicates that the retrieved field value must be
-                                                // converted to uppercase.
-                   'multi_line': True,          // Indicates that the field value spans multiple lines.
-                   'multi_line_end': 'names'    // (Optional, unless multi_line is true) A string identifying the next
-                                                // field name that indicates the end of the multi-line field value.
+        match_contexts (list): A list of dictionaries that contain the contextual information used in the process of
+            retrieving field values from the OCR output string.
+            e.g. {
+                    'field': 'surname',          // The field name - can be set to any string one desires.
+                    'find': 'surname',           // A string to be used for matching field names.
+                                                 // in the OCR output string (used to know what to look for).
+                    'field_type':                // Indicates if the field value is to be treated as alphanumeric or
+                       FieldType.TEXT_ONLY       // just numeric or just alphabetical characters.
+                                                 // (e.g. indicates that all numbers from field value should be removed
+                                                 // if the field type is TEXT_ONLY).
+                    'line_type': TITLED_NEWLINE  // Indicates the type of line to be considered when looking for the
+                                                 // field value relative to the 'find' value.
+                                                 // (e.g. TITLED_NEWLINE indicates that the field value is preceded
+                                                 // by a field name/title and a newline).
+                    'multi_line': True,          // Indicates that the field value spans multiple lines.
+                    'multi_line_end': 'names'    // (Optional, unless multi_line is true) A string identifying the next
+                                                 // field name that indicates the end of the multi-line field value.
+                    'to_uppercase': False,       // (Optional) Indicates that the retrieved field value must be
+                                                 // converted to uppercase.
                }
     """
     def __init__(self, match_contexts):
@@ -184,9 +188,19 @@ class IDContext(ABC):
 
 class FieldType(Enum):
     """
-    An enumerator used to specify the field type for extracted id information.
+    An enumerator used to specify the field type for extracted ID information.
     """
-    TEXT_ONLY = 1
-    NUMERIC_ONLY = 2
-    MIXED = 3
-    DATE_HYPHENATED = 4
+    TEXT_ONLY = 0
+    NUMERIC_ONLY = 1
+    MIXED = 2
+    DATE_HYPHENATED = 3
+
+
+class LineType(Enum):
+    """
+    An enumerator used to specify the line type for extracted ID information.
+    """
+    TITLED_NEWLINE = 0
+    TITLED_ADJACENT = 1
+    UNTITLED_NEWLINE = 2
+    UNTITLED_ADJACENT = 3
