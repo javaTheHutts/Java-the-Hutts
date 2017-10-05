@@ -47,6 +47,13 @@ class SAIDBookOld(SAID):
             'multi_line': True,
             'multi_line_end': 'geboortedistrik of-land'
         }, {
+            'field': 'sex',
+            'find': 'sex',
+            'field_type': FieldType.TEXT_ONLY,
+            'to_uppercase': False,
+            'line_type': LineType.TITLED_NEWLINE,
+            'multi_line': False
+        }, {
             'field': 'date_of_birth',
             'find': 'geboortedatum',
             'field_type': FieldType.DATE_HYPHENATED,
