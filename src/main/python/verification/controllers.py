@@ -106,19 +106,27 @@ def verify_id():
         preferences['color'] = request.form['color']
     if 'id_type' in request.form:
         preferences['id_type'] = request.form['id_type']
+    if 'verbose_verify' in request.form:
+        preferences['verbose_verify'] = True if request.form['verbose_verify'] == 'true' else False
+    else:
+        preferences['verbose_verify'] = False
 
     extractor = TextExtractor(preferences)
     extracted_text = extractor.extract(image_of_id)
 
     # Verify text
     text_verifier = TextVerify()
-    (is_pass, text_match_percentage) = text_verifier.verify(extracted_text, entered_details)
+    verbose_verify = preferences['verbose_verify']
+    logger.debug('%s text verifiction requested' % ('Verbose' if verbose_verify else 'Non-verbose'))
+    (is_pass, text_match) = text_verifier.verify(extracted_text, entered_details, verbose=verbose_verify)
+    # Check if we are working with verbose output for text verification
+    text_match_percentage = text_match if not verbose_verify else text_match['total']
 
     logger.info("Preparing Results...")
     result = {
         # text verification contributes to 40% of the total and face likeness for 60%
         "total_match": text_match_percentage*0.4 + distance*0.6,
-        "text_match": text_match_percentage,
+        "text_match": text_match,
         "face_match": distance,
         "is_match": is_match,
         "is_pass": is_pass
