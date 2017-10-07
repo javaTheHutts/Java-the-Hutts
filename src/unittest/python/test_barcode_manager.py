@@ -48,7 +48,7 @@ def test_barcode_detect_3():
     """
     cv2.setNumThreads(0)
     bar_manager = BarCodeManager()
-    bar_manager.detect(test_image_colour)
+    assert bar_manager.detect(test_image_colour)
     cv2.setNumThreads(-1)
 
 
@@ -58,7 +58,7 @@ def test_barcode_detect_4():
     """
     cv2.setNumThreads(0)
     bar_manager = BarCodeManager()
-    bar_manager.detect(thanks_obama)
+    assert bar_manager.detect(thanks_obama)
     cv2.setNumThreads(-1)
 
 
@@ -68,7 +68,7 @@ def test_barcode_detect_5():
     """
     cv2.setNumThreads(0)
     bar_manager = BarCodeManager()
-    bar_manager.detect(soap_joe)
+    assert bar_manager.detect(soap_joe)
     cv2.setNumThreads(-1)
 
 
@@ -78,7 +78,9 @@ def test_get_barcode():
     """
     cv2.setNumThreads(0)
     bar_manager = BarCodeManager()
-    bar_manager.get_barcode_info(thanks_obama)
+    barcode_info_extracted, text,_ = (bar_manager.get_barcode_info(thanks_obama))
+    assert barcode_info_extracted is False
+    assert text is ''
     cv2.setNumThreads(-1)
 
 
@@ -88,7 +90,9 @@ def test_get_barcode_2():
     """
     cv2.setNumThreads(0)
     bar_manager = BarCodeManager()
-    bar_manager.get_barcode_info(soap_joe)
+    barcode_info_extracted, text, _ = bar_manager.get_barcode_info(soap_joe)
+    assert barcode_info_extracted is False
+    assert text is ''
     cv2.setNumThreads(-1)
 
 
@@ -100,7 +104,9 @@ def test_get_barcode_3():
     bar_manager = BarCodeManager()
     (_, _, box) = bar_manager.detect(soap_joe)
     soap_joe_damaged = bar_manager.apply_barcode_blur(soap_joe, box)
-    bar_manager.get_barcode_info(soap_joe_damaged)
+    barcode_info_extracted, text, _ = bar_manager.get_barcode_info(soap_joe_damaged)
+    assert barcode_info_extracted is False
+    assert text is ''
     cv2.setNumThreads(-1)
 
 
@@ -111,5 +117,6 @@ def test_apply_barcode_blur():
     cv2.setNumThreads(0)
     bar_manager = BarCodeManager()
     (_, _, box) = bar_manager.detect(thanks_obama)
-    bar_manager.apply_barcode_blur(thanks_obama, box)
+    img = bar_manager.apply_barcode_blur(thanks_obama, box)
+    assert np.array_equal(thanks_obama, img)
     cv2.setNumThreads(-1)

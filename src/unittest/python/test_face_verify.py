@@ -125,18 +125,26 @@ def test_face_verify_5():
 def test_face_verify_6():
     """
     Test with one correct value provided with both faces correct must be 100% since it is the same face
+
+    NOTE: these values may differ from Python-OpenCV from PyPi and building OpenCV from source
     """
     face_verf = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
-    face_verf.verify(thanks_obama, thanks_obama)
+    match, percentage = face_verf.verify(thanks_obama, thanks_obama)
+    assert match
+    assert percentage > 94
 
 
 def test_face_verify_7():
     """
     Provides different faces to verification module.
     Face should return a low result percentage.
+
+    NOTE: these values may differ from Python-OpenCV from PyPi and building OpenCV from source
     """
     face_verf = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
-    face_verf.verify(thanks_obama, soap_joe)
+    match, percentage = face_verf.verify(thanks_obama, soap_joe)
+    assert not match
+    assert percentage < 40
 
 
 def test_face_verify_8():
@@ -144,9 +152,13 @@ def test_face_verify_8():
     Test with the same face for both images.
     One of the images will be slightly damage.
     The  damage test is to establish if the face verification can compensate for lower quality images.
+
+    NOTE: these values may differ from Python-OpenCV from PyPi and building OpenCV from source
     """
     face_verf = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
     blur_manager = BlurManager("median", [7])
     damaged_obama = thanks_obama.copy()
     damaged_obama = blur_manager.apply(damaged_obama)
-    face_verf.verify(thanks_obama, damaged_obama)
+    match, percentage = face_verf.verify(thanks_obama, damaged_obama)
+    assert match
+    assert percentage > 85

@@ -50,8 +50,9 @@ def test_apply():
     Tests for apply function with Adaptive type
     """
     manager = ThresholdingManager("adaptive")
-    manager.apply(blank_image)
+    img = manager.apply(blank_image)
     assert manager.thresholding_type is "adaptive"
+    assert np.array_equal(blank_image, img)
 
 
 def test_apply_2():
@@ -69,8 +70,9 @@ def test_apply_3():
     Tests for apply function with Otsu type
     """
     manager = ThresholdingManager("otsu")
-    manager.apply(blank_image)
+    img = manager.apply(blank_image)
     assert manager.thresholding_type is "otsu"
+    assert not np.array_equal(blank_image, img)
 
 
 def test_apply_4():

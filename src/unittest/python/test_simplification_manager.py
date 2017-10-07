@@ -65,8 +65,8 @@ def test_perspective_transform_3():
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
     simp_manager = SimplificationManager()
-    simp_manager.perspectiveTransformation(test_image_colour)
-    # enable multi-threading in OpenCV for child thread
+    img = simp_manager.perspectiveTransformation(test_image_colour)
+    assert np.array_equal(test_image_colour, img)
     cv2.setNumThreads(-1)
 
 
@@ -77,7 +77,8 @@ def test_perspective_transform_4():
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
     simp_manager = SimplificationManager()
-    simp_manager.perspectiveTransformation(soap_joe)
+    img = simp_manager.perspectiveTransformation(soap_joe)
+    assert np.array_equal(soap_joe, img)
     # enable multi-threading in OpenCV for child thread
     cv2.setNumThreads(-1)
 
@@ -89,7 +90,8 @@ def test_perspective_transform_5():
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
     simp_manager = SimplificationManager()
-    simp_manager.perspectiveTransformation(thanks_obama)
+    img = simp_manager.perspectiveTransformation(thanks_obama)
+    assert np.array_equal(thanks_obama, img)
     # enable multi-threading in OpenCV for child thread
     cv2.setNumThreads(-1)
 

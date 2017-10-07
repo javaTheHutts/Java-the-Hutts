@@ -30,7 +30,7 @@ def test_thresholding_constructor_correct_type():
     """
     manager = BlurManager("gaussian", (1, 1))
     assert manager.blur_type is "gaussian"
-
+    assert manager.kernel_size == (1, 1)
 
 def test_apply():
     """
