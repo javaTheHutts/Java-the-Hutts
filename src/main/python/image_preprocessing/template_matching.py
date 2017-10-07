@@ -29,17 +29,17 @@ class TemplateMatching:
             Image : The image that needs to be identified
 
         Returns:
-            dict obj: Returns a type if no type could be identified, None is returned
+            string : Returns a string if no type could be identified, None is returned
         Todo:
             Explain to others how to use and sort the thresholds in descending order.
 
         Example usage:
         identify(args["image"]])
         """
-
+        if hasattr(source, 'shape') is False:
+            raise TypeError("Must be an image")
         # load the source and template image
         for (original_template_image_width, template_image, threshold, object_identifier) in self.template:
-
             ratio = original_template_image_width / source.shape[1]
             dimension = (original_template_image_width, int(source.shape[0] * ratio))
             resized = cv2.resize(source, dimension, interpolation=cv2.INTER_AREA)
