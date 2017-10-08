@@ -83,7 +83,7 @@ class SAIDBook(SAID):
 
     def _get_idiosyncratic_match(self, match_context, id_string_list, current_index):
         """
-        Identifies and returns matches that ar specific to the current ID context.
+        Identifies and returns matches that are specific to the current ID context.
 
         Authors:
             Jan-Justin van Tonder

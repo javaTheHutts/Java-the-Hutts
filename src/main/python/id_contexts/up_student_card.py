@@ -89,7 +89,7 @@ class UPStudentCard(IDContext):
                         id_line = id_string.split('\n')[line_index - 1].split(' ')
                         # Attempt to extrapolate sex.
                         sex = 'M' if id_line[0] == 'Mr' else None
-                        sex = 'M' if id_line[0] == 'Ms' else sex
+                        sex = 'F' if id_line[0] == 'Ms' else sex
                         # Attempt to get initials
                         id_line.pop(0)
                         initials = id_line[0]

@@ -20,6 +20,12 @@ class SAID(IDContext):
     An abstract class for South African IDs.
     Contains the high-level logic that is relevant to all South African IDs.
     """
+    # Define a class-level constant for a minimum fuzzy ratio during post-processing.
+    POST_PROCESS_MIN_FUZZY_RATIO = 70.0
+
+    # Define a class-level constant for a valid ID number length.
+    VALID_ID_LENGTH = 13
+
     def __init__(self, match_contexts):
         """
         Initialises the SAID object.
@@ -284,7 +290,7 @@ class SAID(IDContext):
         if 'country_of_birth' in id_info and id_info['country_of_birth']:
             fuzz_ratio = fuzz.token_set_ratio(id_info['country_of_birth'], 'SUID-AFRIKA')
             # We should be fairly certain, with a margin for error, that we have a match.
-            if fuzz_ratio >= 70.0:
+            if fuzz_ratio >= SAID.POST_PROCESS_MIN_FUZZY_RATIO:
                 # Translate from Afrikaans to English
                 id_info['country_of_birth'] = 'South Africa'
 
@@ -329,48 +335,41 @@ class SAID(IDContext):
             logger.warning('Could not parse date "%s" for formatting. Keeping date as is.' % date_of_birth)
             return date_of_birth
 
-    def validate_id_number(self, id_number, valid_length=13):
+    def validate_id_number(self, id_number):
         """
         Determines whether a given id number is valid or not.
 
         Args:
-            id_number (str):
-            valid_length (int): Specifies the length of a given id number to be considered as valid.
+            id_number (str): An ID number that is to be validated.
 
         Returns:
             (bool): True if the id number is valid, False otherwise.
 
         Raises:
             TypeError: If id_number is not a string containing only numeric characters.
-            TypeError: If valid_length is not an integer.
         """
         if (type(id_number) is not str) or (type(id_number) is str and not id_number.isnumeric()):
             raise TypeError(
                 'Bad type for arg id_number - expected string of ONLY numeric characters. Received type "%s"' %
                 type(id_number).__name__
             )
-        if type(valid_length) is not int:
-            raise TypeError(
-                'Bad type for arg valid_length - expected integer. Received type "%s"' %
-                type(valid_length).__name__
-            )
         # Logging for debugging purposes.
-        logger.debug('Checking if extracted id number is valid...')
+        logger.debug('Checking if ID number is valid...')
         # Determine if the id number is of a valid length.
-        is_valid_length = len(id_number) == valid_length
-        logger.debug('Extracted id number length appears %s' % ('valid' if is_valid_length else 'invalid'))
+        is_valid_length = len(id_number) == SAID.VALID_ID_LENGTH
+        logger.debug('ID number length appears %s' % ('valid' if is_valid_length else 'invalid'))
         # Return early since the result will be false anyways.
         # Do not calculate the checksum if it is not required.
         if not is_valid_length:
-            logger.debug('Extracted id number appears invalid')
+            logger.debug('ID number appears invalid')
             return False
         # Determine if the id number checksum is valid.
         is_valid_id_checksum = self._compute_checksum(id_number) == 0
         # Both the length and the checksum must be valid for the entire id number to be valid.
         is_valid_id_number = is_valid_length and is_valid_id_checksum
         # Logging for debugging purposes.
-        logger.debug('Extracted id number checksum appears %s' % ('valid' if is_valid_id_checksum else 'invalid'))
-        logger.debug('Extracted id number appears %s' % ('valid' if is_valid_id_number else 'invalid'))
+        logger.debug('ID number checksum appears %s' % ('valid' if is_valid_id_checksum else 'invalid'))
+        logger.debug('ID number appears %s' % ('valid' if is_valid_id_number else 'invalid'))
         # Return final result of validation.
         return is_valid_id_number
 
@@ -388,8 +387,8 @@ class SAID(IDContext):
         Returns:
             (int): Luhn checksum value for validation.
         """
-        # Map the digits of the given id number to new integers and create a list from said mapping.
-        digits = list(map(int, id_number))
+        # Create a list of ID number digits parsed as integers.
+        digits = [int(digit) for digit in id_number]
         # Create a sum of the even digits by multiplying each digit by 2, performing mod 10 division and summing
         # the resultant digits.
         even_partial_sum = [sum(divmod(2 * digit, 10)) for digit in digits[-2::-2]]
