@@ -1,12 +1,13 @@
+import os
+import cv2
+import pytesseract
+from PIL import Image
 from image_preprocessing.build_director import BuildDirector
-from image_processing.text_manager import TextManager
+from image_processing.text_cleaner import TextCleaner
 from image_processing.simplification_manager import SimplificationManager
 from image_processing.barcode_manager import BarCodeManager
 from image_preprocessing.template_matching import TemplateMatching
-import pytesseract
-from PIL import Image
-import cv2
-import os
+from image_processing.context_manager import ContextManager
 from hutts_utils.hutts_logger import logger, prettify_json_message
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
@@ -30,6 +31,8 @@ class TextExtractor:
         """
         self.preferences = preferences
         self.remove_face = 'false'
+        self._context_manager = ContextManager()
+        self._text_cleaner = TextCleaner()
 
     def extract(self, img):
         """
@@ -81,7 +84,6 @@ class TextExtractor:
         text = pytesseract.image_to_string(Image.open(filename))
         os.remove(filename)
 
-        text_manager = TextManager()
         # Log the uncleaned string to terminal.
         # This is for demonstration purposes.
         logger.debug('-' * 50)
@@ -91,7 +93,7 @@ class TextExtractor:
         logger.debug('-' * 50)
         logger.info('Cleaning up text...')
         # Clean the OCR output text.
-        clean_text = text_manager.clean_up(text)
+        clean_text = self._text_cleaner.clean_up(text)
         # Log the cleaned string to terminal.
         # This is for demonstration purposes.
         logger.debug('-' * 50)
@@ -99,17 +101,11 @@ class TextExtractor:
         logger.debug('-' * 50)
         [logger.debug(log_line) for log_line in clean_text.split('\n')]
         logger.debug('-' * 50)
-        # Cater for UP student/staff cards.
-        if identification_type == 'studentcard':
-            return {
-                'up_card': True,  # Used to be able to reliably check if a response is a UP card from client-side.
-                'text_dump': clean_text,  # Dump extracted and cleaned text.
-                'barcode_dump': data['identity_number'] if data else None  # Dump the barcode data.
-            }
-        # Dictify cleaned text.
+        # Get ID information from cleaned text.
         logger.info('Placing extracted text in a dictionary...')
-        id_details = text_manager.dictify(clean_text, data)
-        # Log the dictified extracted text to terminal.
+        id_context = self._context_manager.get_id_context(identification_type)
+        id_details = id_context.get_id_info(clean_text, barcode_data=data)
+        # Log the retrieved ID information extracted text to terminal.
         # This is for demonstration purposes.
         logger.debug('-' * 50)
         logger.debug('Extracted ID details:')
