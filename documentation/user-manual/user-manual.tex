@@ -1,0 +1,328 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{eso-pic}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\AddToShipoutPictureBG{%
+    \AtPageLowerLeft{
+        % \hspace{1cm}
+        \includegraphics[width=4.5cm]{img/Java-Hutts2.png}
+    }
+}
+\title{User Manual}
+\date{2017}
+\def \project{Electronic ID Verification }
+\def \system{Hutts Verification}
+\begin{document}
+
+\makeatletter
+    \begin{titlepage}
+        \begin{center}
+            {\includegraphics[width=0.7\linewidth]{img/hutts-verification.png}}\\[2ex]
+            \vspace{3cm}
+            {\huge \bfseries \@title }\\[2ex]
+            {\LARGE \textbf{System:} \system}\\[2ex]
+            {\LARGE \textbf{Team:} Java the Hutts}\\[2ex]
+            {\LARGE \@date}\\[2ex]
+            \vspace{3cm}
+            {\large  Nicolai van Niekerk\\ \texttt{nicvaniek@gmail.com}}\\[2ex]
+            {\large  Marno Hermann\\ \texttt{marno@barnton-consulting.co.za}}\\[2ex]
+            {\large  Stephan Nell\\ \texttt{nellstephanj@gmail.com}}\\[2ex]
+            {\large  Jan-Justin van Tonder\\ \texttt{J.vanTonder@tuks.co.za}}\\[2ex]
+            {\large  Andreas Nel\\ \texttt{nel.andreas1@gmail.com}}\\[2ex]
+        \end{center}
+        
+    \end{titlepage}
+\makeatother
+
+\cleardoublepage
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+\setcounter{page}{1}
+\section{Introduction}
+This document serves as a user manual for the {\system} system. It contains information about the product description as well as a detailed explanation of how to use the system. The explanation is split into two (2) parts - an explanation of using the included website to test the system (for general usage) and an explanation of how the API can be integrated with an existing system (for developers).
+
+\section{Product Description}
+{\system} is a WebAPI that serves as an electronic ID verification system. The purpose of the system is to extract, process and validate information from a photo of a South African ID book (new) or ID card. By providing the system with personal information (name, surname, ID number, etc.), a current photo of a person's face and a photo of the chosen form of identification documentation, the system will be able to return a percentage match score for each provided element against the information on the identification documentation. Additionally, the system can also be used to extract data from the identification documentation, including a face, an ID number and fields such as the name and surname of the person whose identification documentation is presented.
+
+The {\system} system consists of two (2) separate parts in order to cater for two (2) types of users - general users and developers. The part for general users is a website where the user can upload images, enter data and change system settings in order to see how it affects the extraction and/or verification process. The second and most important part, which is aimed at developers, is the API of the system. The API is set up in such a way that the developer can easily integrate it into an existing system without changing its architecture or design. The API is set up in such a way that the developer can choose to simply start the provided server and make requests to it, or the developer can choose to manually call the provided methods of the API in a manner of their own choosing.
+
+\section{Configuration}
+% TODO update
+The settings of the system can be changed on the web interface.
+
+\section{Installation}
+% TODO docker
+
+\section{General Usage}
+TODO: insert screenshots, GIFs (it is a very big possibility) and step by step instructions.
+
+\section{For Developers}
+    \subsection{Using the Server}
+    This section aims to show the developer how to start the server and how to structure the requests that the server is able to handle. All requests are made using the HTTP POST method, in order to add a level of security to the system.
+    
+    \subsection{Extraction}
+        \lstset{
+            string=[s]{"}{"},
+            stringstyle=\color{codepurple},
+            comment=[l]{:},
+            commentstyle=\color{black},
+        }
+        This section aims to explain the format of the requests that can be made to the server in order to extract data from the identification documentation.
+        \subsubsection{Extract Text}
+        \begin{enumerate}
+        	\item \textbf{Description:} Extracts textual information from the photo of the ID and returns it.
+        	\item \textbf{URL:} \textit{/extractText}
+        	\item \textbf{Method:} POST
+        	\item \textbf{URL Parameters:} None
+        	\item \textbf{Data Parameters:}
+        
+        	\begin{lstlisting}
+        {
+           "idPhoto" : <stream|URL|path>
+        }
+        	\end{lstlisting}
+        
+        	\textbf{Example:}
+        
+        	\begin{lstlisting}
+        {
+           "idPhoto" : idDocument.jpg
+        }
+        	\end{lstlisting}
+        	
+        	\item \textbf{Success Response:} 
+        		\begin{itemize}
+        			\item \textbf{Code:} 200
+        			\item \textbf{Content:}
+        			\begin{lstlisting}
+        {
+            "country_of_birth": "RSA", 
+            "date_of_birth": "72-09-17", 
+            "identity_number": "7209170838080", 
+            "names": null, 
+            "nationality": null, 
+            "sex": "F", 
+            "status": "Citizen", 
+            "surname": null
+        }
+        			\end{lstlisting}
+        		\end{itemize}
+        		\item \textbf{Error Response:} TODO
+        		\item \textbf{Sample Call:}
+        		\begin{lstlisting}
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/extractText",
+            data: {
+                    "idPhoto" : idDocument.jpg
+                  },
+            success: function(data){
+                console.log(data);
+            }
+        });
+        		\end{lstlisting}
+        \end{enumerate}
+        
+        \subsubsection{Extract Face}
+        \begin{enumerate}
+        	\item \textbf{Description:} Extracts the face from the photo of the ID and returns it.
+        	\item \textbf{URL:} \textit{/extractFace}
+        	\item \textbf{Method:} POST
+        	\item \textbf{URL Parameters:} None
+        	\item \textbf{Data Parameters:}
+        
+        	\begin{lstlisting}
+        {
+           "idPhoto" : <stream|URL|path>
+        }
+        	\end{lstlisting}
+        
+        	\textbf{Example:}
+        
+        	\begin{lstlisting}
+        {
+           "idPhoto" : idDocument.jpg
+        }
+        	\end{lstlisting}
+        	
+        	\item \textbf{Success Response:} 
+        		\begin{itemize}
+        			\item \textbf{Code:} 200
+        			\item \textbf{Content:}
+        			\begin{lstlisting}
+        {
+           "extracted_face": "data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."
+        }
+        			\end{lstlisting}
+        		\end{itemize}
+        		\item \textbf{Error Response:} TODO
+        		\item \textbf{Sample Call:}
+        		\begin{lstlisting}
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/extractFace",
+            data: {
+                    "idPhoto" : idDocument.jpg
+                  },
+            success: function(data){
+                console.log(data);
+            }
+        });
+        		\end{lstlisting}
+        \end{enumerate}
+        
+        \subsubsection{Extract All}
+        \begin{enumerate}
+        	\item \textbf{Description:} Extracts textual information and face from the photo of the ID and returns it.
+        	\item \textbf{URL:} \textit{/extractAll}
+        	\item \textbf{Method:} POST
+        	\item \textbf{URL Parameters:} None
+        	\item \textbf{Data Parameters:}
+        
+        	\begin{lstlisting}
+        {
+           "idPhoto" : <stream|URL|path>
+        }
+        	\end{lstlisting}
+        
+        	\textbf{Example:}
+        
+        	\begin{lstlisting}
+        {
+           "idPhoto" : idDocument.jpg
+        }
+        	\end{lstlisting}
+        	
+        	\item \textbf{Success Response:} 
+        		\begin{itemize}
+        			\item \textbf{Code:} 200
+        			\item \textbf{Content:}
+        			\begin{lstlisting}
+       {
+          "extracted_face": "data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...", 
+          "text_extract_result": {
+                "country_of_birth": "RSA", 
+                "date_of_birth": "72-09-17", 
+                "identity_number": "7209170838080", 
+                "names": null, 
+                "nationality": null, 
+                "sex": "F", 
+                "status": "Citizen", 
+                "surname": null
+            }
+        }
+        			\end{lstlisting}
+        		\end{itemize}
+        		\item \textbf{Error Response:} TODO
+        		\item \textbf{Sample Call:}
+        		\begin{lstlisting}
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/extractAll",
+            data: {
+                    "idPhoto" : idDocument.jpg
+                  },
+            success: function(data){
+                console.log(data);
+            }
+        });
+        		\end{lstlisting}
+        \end{enumerate}
+    
+    \subsection{Verification}
+    This section aims to explain the format of the requests that can be made to the server in order to verify the provided data and face with the data on the identification document.
+        \subsubsection{Verify ID}
+        \begin{enumerate}
+        	\item \textbf{Description:} Verifies the similarity between the text and image on the form of identification and the provided personal information with a photo of the individual's face.
+        	\item \textbf{URL:} \textit{/verifyID}
+        	\item \textbf{Method:} POST
+        	\item \textbf{URL Parameters:} None
+        	\item \textbf{Data Parameters:}
+        
+        	\begin{lstlisting}
+        {
+            "face_img": <stream|URL|path>,
+            "id_img": <stream|URL|path>,
+            "surname": <string>,
+            "names": <string>,
+            "gender": <string>,
+            "nationality": <string>,
+            "idNumber": <string>,
+            "dob": <date>,
+            "cob": <string>,
+            "status": <string>
+        }
+        	\end{lstlisting}
+        
+        	\textbf{Example:}
+        
+        	\begin{lstlisting}
+        {   
+            "face_img": profilePic.png,
+            "id_img": myId.jpg,
+            "surname": "Doe",
+            "names": "John Joe",
+            "gender": "M",
+            "nationality": "South African",
+            "idNumber": "9877452008082",
+            "dob": "1998-07-06",
+            "cob": "RSA",
+            "status": "Citizen"
+        }
+        	\end{lstlisting}
+        	
+        	\item \textbf{Success Response:} 
+        		\begin{itemize}
+        			\item \textbf{Code:} 200
+        			\item \textbf{Content:}
+        			\begin{lstlisting}
+        {
+            "face_match": 100.0, 
+            "is_match": true, 
+            "is_pass": false, 
+            "text_match": 0.0, 
+            "total_match": 60.0
+        }
+        			\end{lstlisting}
+        		\end{itemize}
+        		\item \textbf{Error Response:} TODO
+        		\item \textbf{Sample Call:}
+        		\begin{lstlisting}
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/verifyInfo",
+            data: {
+                    "face_img": profilePic.png,
+                    "id_img": myId.jpg,
+                    "surname": "Doe",
+                    "names": "John Joe",
+                    "gender": "M",
+                    "nationality": "South African",
+                    "idNumber": "9877452008082",
+                    "dob": "1998-07-06",
+                    "cob": "RSA",
+                    "status": "Citizen"
+                  },
+            success: function(data){
+                console.log(data);
+            }
+        });
+        		\end{lstlisting}
+        \end{enumerate}
+
+\end{document}

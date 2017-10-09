@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<title>Hutts verification</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="img/hutts-verification-icon.png">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/slick.css">
+	<link rel="stylesheet" href="css/slick-theme.css">
+	<link rel="stylesheet" href="css/lightbox.css">
+	<link rel="stylesheet" href="css/jquery.circliful.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/slick.min.js"></script>
+	<script type="text/javascript" src="js/slick.min.js"></script>
+	<script type="text/javascript" src="js/lightbox.js"></script>
+	<script type="text/javascript" src="js/sticky-nav.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/jquery.circliful.min.js"></script>
+</head>
+
+<body>
+	<header>
+		<!-- Fixed Side Navbar -->
+		<div class="navbar">
+			<div class="side-nav fixed">
+				<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank"
+					class="navlogo-link tooltipped"
+					data-position="right" data-delay="50" data-tooltip="Java the Hutts">
+						<div class="navlogo">&nbsp;</div>
+				</a>
+				<div class="nav-options">
+					<a href="#" data-activates="settings-slide"
+					data-position="right" data-delay="50" data-tooltip="Settings"
+					class="waves-effect tooltipped slide-btn">
+						<i class="material-icons">settings</i>
+					</a>
+					<a href="#" class="waves-effect tooltipped scroll-top"
+					data-position="right" data-delay="50" data-tooltip="To Top">
+						<i class="material-icons prefix fa fa-angle-double-up"></i>
+					</a>
+					<a href="#" class="waves-effect tooltipped scroll-bottom"
+					data-position="right" data-delay="50" data-tooltip="To Bottom">
+						<i class="material-icons prefix fa fa-angle-double-down"></i>
+					</a>
+					<a href="#" data-activates="info-slide"
+					data-position="right" data-delay="50" data-tooltip="Info"
+					class="waves-effect tooltipped slide-btn">
+						<i class="material-icons">info_outline</i>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!-- End Fixed Side Navbar -->
+		<!-- Settings Slide Out -->
+		<ul id="settings-slide" class="side-nav slide-out">
+			<li>
+				<div class="slide-head-wrapper">
+					<p>
+						<i class="material-icons prefix">settings</i>
+						Settings
+					</p>
+				</div>
+			</li>
+			<li>
+				<!-- Settings 1 -->
+				<ul class="collapsible" data-collapsible="accordion">
+					<li>
+						<div class="collapsible-header waves-effect waves-teal active">
+							<i class="material-icons carets">chevron_right</i>
+							General
+						</div>
+						<div class="collapsible-body">
+							<div class="row">
+								<div class="col s6">
+									<p class="special">ID document</p>
+								</div>
+								<div class="col s12 input-field">
+									<select id="id-type">
+										<option value="default" selected>auto-detect</option>
+										<option value="idbook">ID book</option>
+										<option value="idcard">ID card</option>
+										<option value="studentcard">student card</option>
+									</select>
+									<label for="id-type">Identification Document Type</label>
+								</div>
+								<div class="col s12">
+									<p class="special">Verification</p>
+								</div>
+								<div class="col s12 range-field">
+									<label for="verification-threshold">Verification Threshold</label>
+									<input type="range" id="verification-threshold" min="0" max="100" value="75" />
+								</div>
+								<div class="col s12">
+									<div class="col s6">
+										<p class="light">Verbose</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox" id="verbose_switch"
+												class="text-switch text-extract-settings" checked="checked">
+												<span class="lever"></span>
+												Yes
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="collapsible-header waves-effect waves-teal">
+							<i class="material-icons carets">expand_more</i>
+							Text Extraction
+						</div>
+						<div class="collapsible-body">
+							<div class="row">
+								<div class="col s12">
+									<div class="col s6">
+										<p><b>Auto Settings</b></p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												Off
+												<input type="checkbox" id="auto_settings" checked="checked">
+												<span class="lever"></span>
+												On
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col s6">
+									<p class="special">Techniques</p>
+								</div>
+								<div class="input-field col s12">
+									<select id="blur_technique" disabled class="text-extract-settings">
+										<option value="normal">Conventional</option>
+										<option value="gaussian">Gaussian</option>
+										<option value="median" selected="selected">Median</option>
+									</select>
+									<label>Blur Technique</label>
+								</div>
+								<div class="input-field col s12">
+									<select id="threshold_technique" disabled class="text-extract-settings">
+										<option value="adaptive" selected="selected">Adaptive</option>
+										<option value="otsu">Otsu</option>
+									</select>
+									<label>Threshold Technique</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">Noise Reduction</div>
+								<div class="col s12">
+									<div class="col s6">
+										<p class="light">Profile</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox" id="profile_switch" disabled class="text-switch text-extract-settings">
+												<span class="lever"></span>
+												Yes
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s6">
+									<p class="light">Barcode</p>
+								</div>
+								<div class="col s6">
+									<div class="switch">
+										<label>
+											No
+											<input type="checkbox" id="barcode_switch" disabled class="text-switch text-extract-settings">
+											<span class="lever"></span>
+											Yes
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col s12">Remove Channel</div>
+								<div class="col s12">
+									<div class="col s6">
+										<p class="light">Red</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox" disabled id="extract_red" class="text-switch channel_extractors text-extract-settings">
+												<span class="lever"></span>
+												Yes
+											</label>
+										</div>
+									</div>
+									<div class="col s6">
+										<p class="light">Green</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox" id="extract_green" class="text-switch channel_extractors text-extract-settings" disabled>
+												<span class="lever"></span>
+												Yes
+											</label>
+										</div>
+									</div>
+									<div class="col s6">
+										<p class="light">Blue</p>
+									</div>
+									<div class="col s6">
+										<div class="switch">
+											<label>
+												No
+												<input type="checkbox" id="extract_blue" class="text-switch channel_extractors text-extract-settings" disabled>
+												<span class="lever"></span>
+												Yes
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="collapsible-header waves-effect waves-teal">
+							<i class="material-icons carets">expand_more</i>Profile Extraction
+						</div>
+						<div class="collapsible-body">
+
+						</div>
+					</li>
+				</ul>
+				<!-- End Settings 1 -->
+			</li>
+	  </ul>
+  	<!-- End Settings Slide Out -->
+	<!-- Info Slide Out -->
+	<ul id="info-slide" class="side-nav slide-out">
+		<li>
+			<div class="slide-head-wrapper">
+				<p>
+					<i class="material-icons prefix">info_outline</i>More Information
+				</p>
+			</div>
+		</li>
+		<li>
+			<div class="product-logo">
+				<img src="img/java-the-hutts-logo-dark.png">
+				<img class="text-logo" src="img/java-the-hutts-text-logo-dark.png">
+			</div>
+		</li>
+		<li>
+			<a class="waves-effect waves-teal" target="_blank"
+			href="https://github.com/javaTheHutts/Java-the-Hutts">
+				<i class="material-icons fa fa-github"></i>GitHub Repository
+			</a>
+		</li>
+		<li>
+			<a class="waves-effect waves-teal" target="_blank"
+			href="https://javathehutts.github.io/Java-the-Hutts/">
+				<i class="material-icons fa fa-users"></i>The Team
+			</a>
+		</li>
+		<li>
+			<a class="waves-effect waves-teal modal-trigger" href="#disclaimer">
+				<i class="material-icons fa fa-list-alt"></i>Disclaimer
+			</a>
+		</li>
+	  </ul>
+  	<!-- End Info Slide Out -->
+  	<!-- Mobile Slide Out -->
+		<ul id="mobile-slide" class="side-nav slide-out">
+			<li>
+				<div class="slide-head-wrapper">
+					<p>
+						<i class="material-icons prefix">menu</i>
+						Menu
+					</p>
+				</div>
+			</li>
+			<li>
+				<div class="product-logo">
+					<img src="img/hutts-verification.png">
+				</div>
+			</li>
+			<li>
+				<a class="waves-effect waves-teal slide-btn" href="#"
+				data-activates="settings-slide">
+					<i class="material-icons">settings</i>Settings
+				</a>
+			</li>
+			<li>
+				<a class="waves-effect waves-teal" target="_blank"
+				href="https://github.com/javaTheHutts/Java-the-Hutts">
+					<i class="material-icons fa fa-github"></i>GitHub Repository
+				</a>
+			</li>
+			<li>
+				<a class="waves-effect waves-teal" target="_blank"
+				href="https://javathehutts.github.io/Java-the-Hutts/">
+					<i class="material-icons fa fa-users"></i>The Team
+				</a>
+			</li>
+			<li>
+				<a class="waves-effect waves-teal slide-btn" href="#"
+				data-activates="info-slide">
+					<i class="material-icons">info_outline</i>Info
+				</a>
+			</li>
+		</ul>
+	</header>
+
+	<nav class="hide-on-large-only auto-hide-header">
+		<div class="nav-wrapper">
+			<a href="https://javathehutts.github.io/Java-the-Hutts/" target="_blank">
+				<img id="mobile-logo" src="img/java-the-hutts-text-logo-light.png">
+			</a>
+			<a href="#" data-activates="mobile-slide" class="slide-btn right">
+				<i class="material-icons">menu</i>
+			</a>
+		</div>
+	</nav>
+
+	<main>
+		<div class="row">
+			<div class="col s8 offset-s2 m4 offset-m4 l4 offset-l4 center-align">
+				<img id="product" class="responsive-img" src="img/hutts-verification.png">
+			</div>
+		</div>
+		<!-- Expandable selection content -->
+		<div class="expandable-body">
+			<ul class="collapsible collapsible-main">
+
+				<!-- Expandable 1 -->
+				<li>
+					<div class="collapsible-header active waves-effect hoverable">
+						<i class="material-icons carets">chevron_right</i>
+						<i class="material-icons" aria-hidden="true">content_copy</i>
+						Extraction
+					</div>
+					<div class="collapsible-body">
+						<form id="extract-form">
+						<!-- Card 1 -->
+						<div class="row">
+							<div class="col s12 l5 card-wrapper card1-wrapper">
+								<!-- Card 1 -->
+								<div class="card duo-card">
+									<div class="card-content">
+										<span class="card-title">Photo of ID</span>
+										<div class="row">
+											<div class="col s12">
+												<img src="img/id-card.png" alt="ID Photo"
+												class="id-preview" id="id-preview-extract">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<div class="file-field input-field">
+													<div class="btn hoverable">
+														<span>ID Photo</span>
+														<input type="file" onchange="readURL(this);"
+														id="id-photo-extract" accept="image/*">
+													</div>
+													<div class="file-path-wrapper">
+														<input id="id-photo-extract-file-path"
+														name="id-photo-extract-file-path"
+														class="file-path validate" type="text">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Card 1 -->
+							<!-- Extract Buttons -->
+							<div class="col s12 l1 valign-wrapper duo-button-wrapper extraction-options">
+								<div class="vline vline-top hide-on-med-and-down"></div>
+								<div class="vline vline-bottom hide-on-med-and-down"></div>
+								<button id="extract-text-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract Text">
+									<i class="material-icons prefix fa fa-list"></i>
+								</button>
+								<button id="extract-all-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract All">
+									<i class="material-icons prefix fa fa-id-card-o"></i>
+								</button>
+								<button id="extract-photo-btn"
+								class="btn btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Extract Photo">
+									<i class="material-icons prefix fa fa-user"></i>
+								</button>
+								<div class="hline hide-on-large-only"></div>
+							</div>
+							<!-- End Extract Buttons -->
+							<div class="col s12 l6 card-wrapper card2-wrapper">
+								<!-- Card 2 -->
+								<div class="card duo-card">
+									<div class="card-content">
+										<span class="card-title">Extracted Details</span>
+										<div class="row">
+											<div class="col s12 l6 input-field center-align">
+												<img src="img/profile.png" alt="face-extract"
+												class="face-preview" id="face-preview-extract">
+											</div>
+											<div class="col s12 l6">
+												<div class="row nested-cols">
+													<div class="col s12 input-field">
+														<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
+														<input id="names-extract" type="text" class="validate">
+														<label for="names-extract">Names</label>
+													</div>
+													<div class="col s12 input-field">
+														<i class="material-icons prefix">account_circle</i>
+														<input id="surname-extract" type="text" class="validate">
+														<label for="surname-extract">Surname</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12 l6 input-field">
+												<i class="material-icons prefix fa fa-id-card" aria-hidden="true"></i>
+												<input id="identity_number-extract" type="text" class="validate">
+												<label for="identity_number-extract">Identity Number</label>
+											</div>
+											<div class="col s12 l6 input-field">
+												<i class="material-icons prefix fa fa-flag" aria-hidden="true"></i>
+												<input id="nationality-extract" type="text" class="validate">
+												<label for="nationality-extract">Nationality</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
+												<input id="country_of_birth-extract" type="text" class="validate">
+												<label for="country_of_birth-extract">Country of Birth</label>
+											</div>
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
+												<input id="status-extract" type="text" class="validate">
+												<label for="status-extract">Status</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
+												<input id="sex-extract" type="text" class="validate">
+												<label for="sex-extract">Gender</label>
+											</div>
+											<div class="col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
+												<input id="date_of_birth-extract" type="text" class="validate">
+												<label for="date_of_birth-extract">Date of Birth</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Card 2 -->
+						</div>
+					</form>
+					</div>
+				</li>
+				<!-- End Expandable 1 -->
+
+				<!-- Expandable 2 -->
+				<li>
+					<div class="collapsible-header waves-effect hoverable">
+						<i class="material-icons carets">expand_more</i>
+						<i class="material-icons" aria-hidden="true">verified_user</i>
+						Verification
+					</div>
+					<div class="collapsible-body">
+						<form id="verify-form">
+						<div class="row">
+							<div class="col s12 l6 card-wrapper card1-wrapper">
+								<!-- Card 1 -->
+								<div class="card duo-card">
+									<div class="card-content">
+										<span class="card-title">Verification Details</span>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class="material-icons prefix fa fa-user" aria-hidden="true"></i>
+												<input id="names-verify" type="text" class="validate">
+												<label for="names-verify">Names</label>
+											</div>
+											<div class=" col s12 l6 input-field">
+												<i class="material-icons prefix">account_circle</i>
+												<input id="surname-verify" type="text" class="validate">
+												<label for="surname-verify">Surname</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-id-card" aria-hidden="true"></i>
+												<input id="identity_number-verify" type="text" class="validate">
+												<label for="identity_number-verify">Identity Number</label>
+											</div>
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-flag" aria-hidden="true"></i>
+												<input id="nationality-verify" type="text" class="validate">
+												<label for="nationality-verify">Nationality</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-globe" aria-hidden="true"></i>
+												<input id="country_of_birth-verify" type="text" class="validate">
+												<label for="country_of_birth-verify">Country of Birth</label>
+											</div>
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-question-circle" aria-hidden="true"></i>
+												<input id="status-verify" type="text" class="validate">
+												<label for="status-verify">Status</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class=" col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-calendar" aria-hidden="true"></i>
+												<input type="text" class="datepicker" id="date_of_birth-verify">
+												<label for="date_of_birth-verify">Date of Birth</label>
+											</div>
+											<div class="col s12 l6 input-field">
+												<i class=" material-icons prefix fa fa-venus-mars" aria-hidden="true"></i>
+												<select id="sex-verify">
+													<option value="M">Male</option>
+													<option value="F">Female</option>
+												</select>
+												<label for="sex-verify">Gender</label>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<div class="file-field input-field">
+													<div class="btn hoverable photo-preview">
+														<span>Photo</span>
+														<input type="file" id="profile-photo" accept="image/*"
+														onchange="readURL(this);">
+													</div>
+													<div class="file-path-wrapper">
+														<input id="profile-photo-file-path"
+														name="profile-photo-file-path"
+														class="file-path validate" type="text">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Card 1 -->
+							<!-- Verify Button -->
+							<div class="col s12 l1 valign-wrapper duo-button-wrapper">
+								<div class="vline vline-top hide-on-med-and-down"></div>
+								<div class="vline vline-bottom hide-on-med-and-down"></div>
+								<button
+								class="btn-floating btn-large waves-effect waves-light tooltipped hoverable"
+								data-position="top" data-delay="50" data-tooltip="Verify"
+								id="verify-btn">
+									<i class="material-icons">compare</i>
+								</button>
+								<div class="hline hide-on-large-only"></div>
+							</div>
+							<!-- End Verify Button -->
+							<div class="col s12 l5 card-wrapper card2-wrapper">
+								<!-- Card 2 -->
+								<div class="card duo-card">
+									<div class="card-content">
+										<span class="card-title">Photo of ID</span>
+										<div class="row">
+											<div class="col s12">
+												<img src="img/id-card.png" alt="ID Photo"
+												class="id-preview" id="id-preview-verify">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col s12">
+												<div class="file-field input-field">
+													<div class="btn hoverable">
+														<span>ID Photo</span>
+														<input type="file" onchange="readURL(this);"
+														id="id-photo-verify" accept="image/*">
+													</div>
+													<div class="file-path-wrapper">
+														<input id="id-photo-verify-file-path"
+														name="id-photo-verify-file-path"
+														class="file-path validate" type="text">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Card 2 -->
+							</div>
+						</div>
+					</form>
+					</div>
+				</li>
+				<!-- End Expandable 2 -->
+
+				<!-- Expandable 3 -->
+				<li id="text-pipeline" class="initially-hidden">
+					<div class="collapsible-header waves-effect hoverable">
+						<i class="material-icons carets">expand_more</i>
+						<i class="material-icons" aria-hidden="true">burst_mode</i>
+						ID Personal Details Pipeline 
+					</div>
+					<div class="collapsible-body">
+						<div class="row">
+							<div class="col s12 card-wrapper">
+								<div class="card">
+									<div class="card-content">
+										<div class="pipe-gallery">
+											<div id="text-pipe" class="pipeline">
+												<!-- Example -->
+												<!--<a href="img/output/cannay.png" data-lightbox="pipelet-slide">-->
+												<!--<div class="pipe-slide" 
+														style="background-image: url(../../hutts/_build/img/cannay.png);">
+												-->
+												<!--</div>-->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+				<!-- End Expandable 3 -->
+
+				<!-- Expandable 4 -->
+				<li id="profile-pipeline" class="initially-hidden">
+					<div class="collapsible-header waves-effect hoverable">
+						<i class="material-icons carets">expand_more</i>
+						<i class="material-icons" aria-hidden="true">recent_actors</i>
+						ID Image Pipeline
+					</div>
+					<div class="collapsible-body">
+						<div class="row">
+							<div class="col s12 card-wrapper">
+								<div class="card">
+									<div class="card-content">
+										<div class="pipe-gallery">
+											<div id="profile-pipe" class="pipeline">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+				<!-- End Expandable 4 -->
+
+				<!-- Expandable 5 -->
+				<span id="details-anchor"></span>
+				<li id="detailed-results" class="initially-hidden">
+					<div class="collapsible-header waves-effect hoverable">
+						<i class="material-icons carets">expand_more</i>
+						<i class="material-icons" aria-hidden="true">show_chart</i>
+						Detailed Results
+					</div>
+					<div class="collapsible-body">
+						<div class="row">
+							<div class="col s12 card-wrapper">
+								<div class="card">
+									<div class="card-content">
+										<span class="card-title">Verification results</span>
+										<div class="row">
+											<div class="col s10 offset-s1 m5 l3">
+												<div class="circle-result result-detailed"></div>
+											</div>
+											<div class="col s12 m7 l8 offset-l1">
+												<table class="responsive-table verify-details-table">
+													<thead>
+														<tr>
+															<th>Verification</th>
+															<th class="center-align">Match Percentage</th>
+															<th class="center-align">Threshold</th>
+															<th class="center-align">Result</th>
+														</tr>
+													</thead>
+													<tbody id="verify-details">
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 card-wrapper">
+								<div class="card">
+									<div class="card-content">
+										<span class="card-title">Text Verification results</span>
+										<table class="responsive-table">
+											<thead>
+												<tr>
+													<th>Field</th>
+													<th>Extracted field value</th>
+													<th>Verifier field value</th>
+													<th class="right-align">Match percentage</th>
+												</tr>
+											</thead>
+											<tbody id="text-verify-details">
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+				<!-- End Expandable 5 -->
+
+				<!-- Result modal -->
+				<div id="verify-result" class="modal">
+					<div class="modal-content">
+						<div class="row center-align spinner">
+							<div class="preloader-wrapper big active">
+								<div class="spinner-layer spinner-teal-only">
+									<div class="circle-clipper left">
+									<div class="circle"></div>
+									</div><div class="gap-patch">
+									<div class="circle"></div>
+									</div><div class="circle-clipper right">
+									<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+							<div id="verify-loader-text" class="loader-text">
+								<p>Verifying<span id='verify-ditto' class="ditto"></span></p>
+							</div>
+						</div>
+						<div class="row circle-results-wrapper">
+							<div class="hide-on-med-and-down">
+								<div class="col s6 m5 offset-m1 l3 offset-l1">
+									<div class="circle-result result-text"></div>
+								</div>
+								<div class="col s6 m5 l3 push-l4">
+									<div class="circle-result result-profile"></div>
+								</div>
+								<div class="col s10 offset-s1 m8 offset-m2 l4 pull-l3">
+									<div class="circle-result result-total"></div>
+								</div>
+							</div>
+							<div class="hide-on-large-only">
+								<div class="col s8 m6 offset-m1">
+									<div class="circle-result result-total-sm"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="#!" class="modal-action modal-close waves-effect waves-teal btn-flat btn-details">
+							View Detailed Results
+						</a>
+					</div>
+				</div>
+				<!-- End result modal -->
+
+				<!-- Extract loader modal -->
+				<div id="extract-loader" class="modal">
+					<div class="modal-content">
+						<div class="row center-align spinner">
+							<div class="preloader-wrapper big active">
+								<div class="spinner-layer spinner-teal-only">
+									<div class="circle-clipper left">
+									<div class="circle"></div>
+									</div><div class="gap-patch">
+									<div class="circle"></div>
+									</div><div class="circle-clipper right">
+									<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+							<div id="extract-loader-text" class="loader-text">
+								<p>Extracting<span id='extract-ditto' class="ditto"></span></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End loader modal -->
+
+				<!-- Disclaimer modal -->
+				<div id="disclaimer" class="modal modal-fixed-footer">
+					<div class="modal-content">
+						<h4>Disclaimer</h4>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+							tempor incididunt ut labore et dolore magna aliqua. 
+							Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+							ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+							reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+							pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+							in culpa qui officia deserunt mollit anim id est laborum
+						</p>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+							tempor incididunt ut labore et dolore magna aliqua. 
+							Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+							ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+							reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+							pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+							in culpa qui officia deserunt mollit anim id est laborum
+						</p>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+							tempor incididunt ut labore et dolore magna aliqua. 
+							Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+							ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+							reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+							pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
+							in culpa qui officia deserunt mollit anim id est laborum
+						</p>
+					</div>
+					<div class="modal-footer">
+						<a href="#!" class="modal-action modal-close waves-effect waves-teal btn-flat">
+							Got it
+						</a>
+					</div>
+				</div>
+				<!-- End Disclaimer modal -->
+
+				<!-- Error modal -->
+				<div id="error" class="modal">
+					<div class="modal-content">
+						<div class="row center-align">
+							<img src="img/jabba.gif">
+							<p class="bold">Oops!</p>
+							<p>Something went wrong...</p>
+						</div>
+					</div>
+				</div>
+				<!-- End Error modal -->
+
+			</ul>
+		</div>
+	</main>
+
+	<img id="footer-image" class="responsive-img" src="img/java-the-hutts-footer.png">
+
+	<footer class="page-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col s12 center-align">
+					<a class="waves-effect waves-light social btn-floating btn tooltipped"
+					href="https://github.com/javaTheHutts/Java-the-Hutts"
+					target="_blank" data-position="top" data-delay="50" data-tooltip="GitHub">
+						<i class="material-icons prefix fa fa-github"></i> GitHub
+					</a>
+					<a class="waves-effect waves-light social btn-floating btn tooltipped"
+					href="https://javathehutts.github.io/Java-the-Hutts/"
+					target="_blank" data-position="top" data-delay="50" data-tooltip="The Team">
+						<i class="material-icons prefix fa fa-users"></i> Team
+					</a>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col s6">© 2017 Java the Hutts</div>
+						<div class="col s6 right-align">BSD License</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>
