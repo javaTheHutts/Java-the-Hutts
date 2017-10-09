@@ -16,7 +16,7 @@ RUN apt-get install build-essential cmake pkg-config \
 RUN apt-get install python2.7-dev python3.5-dev -y && apt-get install python3-pip -y
 RUN pip3 install numpy
 # Download OpenCV
-RUN wget -0 opencv.zip https://github.com/Itseez/opencv/archive/3.2.0.zip
+RUN wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.2.0.zip
 RUN unzip opencv.zip
 WORKDIR opencv-3.2.0
 RUN mkdir build
