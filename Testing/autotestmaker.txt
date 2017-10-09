@@ -1,2 +1,0 @@
-fancy.py sum pytester summation 4 5#sumValue?9
-fancy.py sub pytester subtraction 4 5#subValue?-1
