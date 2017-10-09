@@ -3,14 +3,14 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 */
 
 /* global $ */
-var SERVER_BASE_URL = 'http://localhost:5000';
-var PATH_TO_PIPELINE = '/home/minion/Desktop/output/';
+var SERVER_BASE_URL = "http://localhost:5000";
+var PATH_TO_PIPELINE = "/home/minion/Desktop/output/";
 
 // Enum for pipleine type
 PipelineType = {
 	TEXT: 0,
 	PROFILE: 1
-}
+};
 
 $(document).ready(function () {
 
@@ -26,13 +26,13 @@ $(document).ready(function () {
 	// Hide existing side navs
 	$('.slide-btn').on('click', function () {
 		// Not the best fix... but workable
-		if ($('#sidenav-overlay').css('opacity') == '1') {
+		if ($('#sidenav-overlay').css('opacity') === '1') {
 			$('#sidenav-overlay').trigger('click');
 		}
 	});
 
 	// Materialise component initialization
-	$('select').material_select();
+	$("select").material_select();
 
 	$('.datepicker').pickadate({
 		selectMonths: true,		 // Creates a dropdown to control month
@@ -87,8 +87,8 @@ $(document).ready(function () {
 		onOpen: function () {
 			// Change caret symbol when expanding collapsibles
 			$('.collapsible-header').each(function (el) {
-				$(this).hasClass('active') ?
-				$(this).children('.carets').text('chevron_right') :
+				$(this).hasClass("active") ?
+				$(this).children('.carets').text("chevron_right") :
 				$(this).children('.carets').text('expand_more');
 				// Refresh slick carousels
 				$('.pipeline').slick('setPosition');
@@ -133,27 +133,27 @@ $(document).ready(function () {
 		if (!verifyInputCheck()) return;
 
 		var formData = new FormData();
-		var idPhoto = document.getElementById('id-photo-verify').files[0];
-		var userImage = document.getElementById('profile-photo').files[0];
-		var names = $('#names-verify').val();
-		var surname = $('#surname-verify').val();
-		var idNumber = $('#identity_number-verify').val();
-		var nationality = $('#nationality-verify').val();
-		var cob = $('#country_of_birth-verify').val();
-		var status = $('#status-verify').val();
-		var gender = $('#sex-verify').val();
-		var dob = $('#date_of_birth-verify').val();
+		var idPhoto = document.getElementById("id-photo-verify").files[0];
+		var userImage = document.getElementById("profile-photo").files[0];
+		var names = $("#names-verify").val();
+		var surname = $("#surname-verify").val();
+		var idNumber = $("#identity_number-verify").val();
+		var nationality = $("#nationality-verify").val();
+		var cob = $("#country_of_birth-verify").val();
+		var status = $("#status-verify").val();
+		var gender = $("#sex-verify").val();
+		var dob = $("#date_of_birth-verify").val();
 
-		formData.append('id_img', idPhoto);
-		formData.append('face_img', userImage);
-		formData.append('names', names);
-		formData.append('surname', surname);
-		formData.append('idNumber', idNumber);
-		formData.append('nationality', nationality);
-		formData.append('cob', cob);
-		formData.append('status', status);
-		formData.append('gender', gender);
-		formData.append('dob', dob);
+		formData.append("id_img", idPhoto);
+		formData.append("face_img", userImage);
+		formData.append("names", names);
+		formData.append("surname", surname);
+		formData.append("idNumber", idNumber);
+		formData.append("nationality", nationality);
+		formData.append("cob", cob);
+		formData.append("status", status);
+		formData.append("gender", gender);
+		formData.append("dob", dob);
 
 		// Add preferences and ID type
 		addPreferences(formData);

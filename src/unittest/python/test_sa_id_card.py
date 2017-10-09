@@ -6,7 +6,6 @@ Unit tests for the SA ID card module.
 ----------------------------------------------------------------------
 """
 
-import pytest
 from id_contexts.sa_id_card import SAIDCard
 
 
