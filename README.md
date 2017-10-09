@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/javaTheHutts/Java-the-Hutts.svg?branch=Develop)](https://travis-ci.org/javaTheHutts/Java-the-Hutts)
 ![](https://reposs.herokuapp.com/?path=javaTheHutts/Java-the-Hutts&style=flat)
 [![PyPI](https://img.shields.io/pypi/l/Django.svg)]()
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc2e310ab55a4b9fb63b823a31b4adff)](https://www.codacy.com/app/nellstephanj/Java-the-Hutts?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=javaTheHutts/Java-the-Hutts&amp;utm_campaign=Badge_Grade)
 
 Repository for the Java the Hutts team for COS301.
 
