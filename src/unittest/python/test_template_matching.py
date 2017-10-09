@@ -6,7 +6,6 @@ Unit tests for the Template Matching
 ----------------------------------------------------------------------
 """
 import pytest
-import numpy as np
 import cv2
 import os
 from image_preprocessing.template_matching import TemplateMatching

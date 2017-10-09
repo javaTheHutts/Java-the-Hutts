@@ -91,7 +91,7 @@ def verify_info():
         URL: http://localhost:5000/verifyInfo
         ----------------------------------------------------------------------
         """
-    image_of_id, face = receive_faces(match_face=False)
+    image_of_id, _ = receive_faces(match_face=False)
     entered_details = receive_details()
 
     extracted_text, preferences = manage_text_extractor(image_of_id)
