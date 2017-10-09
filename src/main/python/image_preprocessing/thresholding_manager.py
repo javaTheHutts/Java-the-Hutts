@@ -21,7 +21,7 @@ class ThresholdingManager:
             None
 
         """
-        if type(thresholding_type) is not str:
+        if not isinstance(thresholding_type, str):
             raise TypeError(
                 'Bad type for arg thresholding_type - expected string. Received type "%s".' %
                 type(thresholding_type).__name__
@@ -53,7 +53,8 @@ class ThresholdingManager:
         else:
             raise NameError('Invalid Thresholding Selection! Could not Apply Thresholding')
 
-    def adaptiveThresholding(self, image):
+    @staticmethod
+    def adaptiveThresholding(image):
         """
         This function applies a simple adaptive thresholding to the image passed.
         Author(s):
@@ -65,7 +66,7 @@ class ThresholdingManager:
         Returns:
             obj:'OpenCV image': The Threshold image.
         """
-        if type(image) is not np.ndarray:
+        if not isinstance(image, np.ndarray):
             raise TypeError(
                 'Bad type for arg image - expected image in numpy array. Received type "%s".' %
                 type(image).__name__
@@ -73,7 +74,8 @@ class ThresholdingManager:
 
         return cv2.adaptiveThreshold(image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 25, 10)
 
-    def otsuThresholding(self, image):
+    @staticmethod
+    def otsuThresholding(image):
         """
         This function applies a simple Binary Inverse Otso thresholding to the image passed.
         Author(s):
@@ -85,7 +87,7 @@ class ThresholdingManager:
         Returns:
             obj:'OpenCV image': The Threshold image.
         """
-        if type(image) is not np.ndarray:
+        if not isinstance(image, np.ndarray):
             raise TypeError(
                 'Bad type for arg image - expected image in numpy array. Received type "%s".' %
                 type(image).__name__

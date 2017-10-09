@@ -32,7 +32,7 @@ class SimplificationManager:
             Determine a better solution to this problem when detecting smaller edge.
                 at the moment this is hardcoded contour_area_threshold = 100000
         """
-        if type(image) is not np.ndarray:
+        if not isinstance(image, np.ndarray):
             raise TypeError(
                 'Bad type for arg image - expected image in numpy array. Received type "%s".' %
                 type(image).__name__
