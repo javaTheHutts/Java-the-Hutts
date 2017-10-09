@@ -65,7 +65,8 @@ class ColorManager:
         Returns:
             obj:'OpenCV image': The Histogram equalised image.
         """
-        return cv2.equalizeHist(image)
+        image_grey = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        return cv2.equalizeHist(image_grey)
 
     def extractChannel(self, image, image_channel="green"):
         """
@@ -92,6 +93,10 @@ class ColorManager:
             return cv2.merge([B, G, zeros])
         elif image_channel == "red_blue":
             return cv2.merge([zeros, G, zeros])
+        elif image_channel == "green_blue":
+            return cv2.merge([zeros, zeros, R])
+        elif image_channel == "green_red":
+            return cv2.merge([B, zeros, zeros])
         else:
             raise NameError('Invalid Colour Selection! Only red, green, blue are valid colour selections')
 

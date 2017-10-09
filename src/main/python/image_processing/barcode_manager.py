@@ -32,11 +32,18 @@ class BarCodeManager:
             obj:'OpenCV image': If a Barcode was successfully detected the detected barcode is returned.
                 If a barcode was not detected return the original image.
             Integer List: This list contains the box coordinates for the region in which the barcode resides.
+        Raises:
+            TypeError: If a none numpy array value has been passed
         Todo:
             Find a way to support PDF417 format.
             Find a way to remove the hardcoded 200 value.
             Add additional checks for invalid Barcodes.
         """
+        if type(image) is not np.ndarray:
+            raise TypeError(
+                'Bad type for arg image - expected image in numpy array. Received type "%s".' %
+                type(image).__name__
+            )
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         grad_x = cv2.Sobel(gray, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)

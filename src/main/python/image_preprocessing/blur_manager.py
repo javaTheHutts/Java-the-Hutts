@@ -13,10 +13,18 @@ class BlurManager:
         Args:
             blur_type (str): Indicates the type of blur operation that should be applied to the image.
             kernel_size (integer tuple): Indicates the kernel size for blurring operations.
+        Raises:
+            TypeError: If a none string value is passed for blur_type
         Returns:
             None
 
         """
+        if type(blur_type) is not str:
+            raise TypeError(
+                'Bad type for arg blur_type - expected string. Received type "%s".' %
+                type(blur_type).__name__
+            )
+
         self.blur_type = blur_type
         self.kernel_size = kernel_size
 
@@ -40,7 +48,7 @@ class BlurManager:
         elif self.blur_type == "median":
             return self.medianBlur(image, self.kernel_size)
         else:
-            raise NameError('Invalid Blur Selection! Try "Normal", "Gaussain" or "Median" thresholding types.')
+            raise NameError('Invalid Blur Selection! Try "normal", "gaussian" or "median" thresholding types.')
 
     def blur(self, image, blur_kernel=[(3, 3)]):
         """
