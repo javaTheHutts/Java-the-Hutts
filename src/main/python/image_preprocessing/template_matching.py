@@ -2,9 +2,11 @@ import cv2
 import os
 import numpy as np
 import imutils
+from pathlib import Path
 from hutts_utils.hutts_logger import logger
+from hutts_utils.pypath import correct_path
 
-TEMPLATE_DIR = "{base_path}/templates/".format(base_path=os.path.abspath(os.path.dirname(__file__)))
+TEMPLATE_DIR = correct_path(Path(os.path.abspath(os.path.dirname(__file__)), 'templates'))
 
 
 class TemplateMatching:
@@ -15,10 +17,10 @@ class TemplateMatching:
     """
 
     def __init__(self):
-        logger.debug("Looking for the templates in directory: " + TEMPLATE_DIR)
-        self.template = [(1034, cv2.imread(TEMPLATE_DIR + "temp_flag.jpg"), 0.75, "idcard"),
-                         (875, cv2.imread(TEMPLATE_DIR + "wap.jpg"), 0.60, "idbook"),
-                         (1280, cv2.imread(TEMPLATE_DIR + "pp2.jpg"), 0.60, "studentcard")]
+        logger.debug("Looking for the templates in directory: " + str(TEMPLATE_DIR))
+        self.template = [(1034, cv2.imread(TEMPLATE_DIR + "/temp_flag.jpg"), 0.75, "idcard"),
+                         (875, cv2.imread(TEMPLATE_DIR + "/wap.jpg"), 0.60, "idbook"),
+                         (1280, cv2.imread(TEMPLATE_DIR + "/pp2.jpg"), 0.60, "studentcard")]
 
     def identify(self, source):
         """
