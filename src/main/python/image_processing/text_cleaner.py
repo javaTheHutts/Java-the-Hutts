@@ -48,12 +48,12 @@ class TextCleaner:
             TypeError: If deplorables is not a list of strings.
         """
         # Check if the correct argument types have been passed in.
-        if type(in_string) is not str:
+        if not isinstance(in_string, str):
             raise TypeError(
                 'Bad type for arg in_string - expected string. Received type "%s".' %
                 type(in_string).__name__
             )
-        if deplorables and (type(deplorables) is not list or type(deplorables[0]) is not str):
+        if deplorables and (not isinstance(deplorables, list) or not isinstance(deplorables[0], str)):
             raise TypeError(
                 'Bad type for arg deplorables - expected list of strings. Received type "%s".' %
                 type(deplorables).__name__

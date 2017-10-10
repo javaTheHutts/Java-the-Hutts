@@ -19,7 +19,7 @@ class BlurManager:
             None
 
         """
-        if type(blur_type) is not str:
+        if not isinstance(blur_type, str):
             raise TypeError(
                 'Bad type for arg blur_type - expected string. Received type "%s".' %
                 type(blur_type).__name__
@@ -57,7 +57,7 @@ class BlurManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which basic blurring should be applied to.
-            Integer list: Represent the kernel dimension by which basic blurring should be applied to.
+            blur_kernel (Integer list): Represent the kernel dimension by which basic blurring should be applied to.
         Returns:
             obj:'OpenCV image': A modified copy of the image where basic blurring was applied to the image.
         Todo:
@@ -75,7 +75,7 @@ class BlurManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which Gaussian blurring should be applied to.
-            Integer list: Represent the kernel dimension by which basic blurring should be applied to.
+            blur_kernel (Integer list): Represent the kernel dimension by which basic blurring should be applied to.
         Returns:
             obj:'OpenCV image': A modified copy of the image where Gaussian blurring was applied to the image.
         Todo:
@@ -93,7 +93,7 @@ class BlurManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which Median blurring should be applied to.
-            Integer array: Represent the kernel dimension by which median blurring should be applied to.
+            blur_kernel (Integer array): Represent the kernel dimension by which median blurring should be applied to.
         Returns:
             obj:'OpenCV image': A modified copy of the image where Median blurring was applied to the image.
         Todo:
