@@ -183,10 +183,12 @@ $(document).ready(function () {
 				clearInterval(ditto);
 
 				// Populate and unhide pipeline
-				populatePipeline(PipelineType.TEXT, 8);
-				populatePipeline(PipelineType.PROFILE, 6);
-				$('#text-pipeline').show(600);
-				$('#profile-pipeline').show(600);
+				if($('#pipeline_switch').is(':checked')){
+					populatePipeline(PipelineType.TEXT, 8);
+					populatePipeline(PipelineType.PROFILE, 6);
+					$('#text-pipeline').show(600);
+					$('#profile-pipeline').show(600);
+				}
 				
 				// Populate the detailed results section
 				if (typeof data.text_match === 'object') {
@@ -275,9 +277,10 @@ $(document).ready(function () {
 				}
 
 				// Populate and unhide pipeline
-				populatePipeline(PipelineType.TEXT, 8);
-				$('#text-pipeline').show(600);
-
+				if($('#pipeline_switch').is(':checked')){
+					populatePipeline(PipelineType.TEXT, 8);
+					$('#text-pipeline').show(600);
+				}
 				$('#extract-loader').modal('close');
 			},
 			error: function() {
@@ -315,10 +318,12 @@ $(document).ready(function () {
 
 				var face = jQuery.parseJSON(data)
 				document.getElementById("face-preview-extract").src = face.extracted_face;
-				// Populate and unhide pipeline
-				populatePipeline(PipelineType.PROFILE, 6);
-				$('#profile-pipeline').show(600);
 
+				// Populate and unhide pipeline
+				if($('#pipeline_switch').is(':checked')){
+					populatePipeline(PipelineType.PROFILE, 6);
+					$('#profile-pipeline').show(600);
+				}
 				$('#extract-loader').modal('close');
 			},
 			error: function() {
@@ -379,11 +384,12 @@ $(document).ready(function () {
 				document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
 
 				// Populate and unhide pipeline
-				populatePipeline(PipelineType.TEXT, 8);
-				populatePipeline(PipelineType.PROFILE, 6);
-				$('#text-pipeline').show(600);
-				$('#profile-pipeline').show(600);
-
+				if($('#pipeline_switch').is(':checked')){
+					populatePipeline(PipelineType.TEXT, 8);
+					populatePipeline(PipelineType.PROFILE, 6);
+					$('#text-pipeline').show(600);
+					$('#profile-pipeline').show(600);
+				}
 				$('#extract-loader').modal('close');
 			},
 			error: function() {
