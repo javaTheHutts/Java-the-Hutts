@@ -63,6 +63,8 @@ def extract_text():
             preferences['color'] = request.form['color']
         if 'id_type' in request.form:
             preferences['id_type'] = request.form['id_type']
+        if 'useIO' in request.form:
+            preferences['useIO'] = request.form['useIO'] == 'true'
 
         # Extract text from image
         extractor = TextExtractor(preferences)
@@ -100,8 +102,13 @@ def extract_face():
                 return jsonify(data)
             # load the image and convert
             image = grab_image(url=url)
+
+    # Add preferences
+    preferences = {}
+    if 'useIO' in request.form:
+        preferences['useIO'] = request.form['useIO'] == 'true'
     # Call open CV commands here with the extracted image
-    response = face_extraction_response(image)
+    response = face_extraction_response(preferences['useIO'], image)
     return response
 
 
@@ -150,17 +157,19 @@ def extract_all():
             preferences['color'] = request.form['color']
         if 'id_type' in request.form:
             preferences['id_type'] = request.form['id_type']
+        if 'useIO' in request.form:
+            preferences['useIO'] = request.form['useIO'] == 'true'
 
         # Extract test from image
         extractor = TextExtractor(preferences)
         result = extractor.extract(image)
 
-        response = face_extraction_response(image, result)
+        response = face_extraction_response(preferences['useIO'], image, result)
 
         return response
 
 
-def face_extraction_response(image, text_extract_result=None):
+def face_extraction_response(use_io, image, text_extract_result=None):
     """
     This function converts the extracted cv2 image and converts it
     to a jpg image. Furthermore, the jpg image is converted to
@@ -169,13 +178,14 @@ def face_extraction_response(image, text_extract_result=None):
     Author(s):
         Stephan Nell
     Args:
+        use_io (boolean): Whether or not images should be written to disk
         image: The cv2 (numpy) image that should be converted to jpg
         text_extract_result (dict) the extracted text results
     Returns:
         (:obj:'Response'): The response object that contains the information for HTTP transmission
     """
     extractor = FaceExtractor()
-    result = extractor.extract(image)
+    result = extractor.extract(image, use_io)
     _, buffer = cv2.imencode('.jpg', result)
     # replace base64 indicator for the first occurrence and apply apply base64 jpg encoding
     logger.info("Converting to Base64")

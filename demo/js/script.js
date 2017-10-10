@@ -158,6 +158,10 @@ $(document).ready(function () {
 		// Add preferences and ID type
 		addPreferences(formData);
 
+		// Toggle I/O
+		var io = $('#pipeline_switch').is(':checked');
+		formData.append('useIO', io);
+
 		// Clear circliful graphs
 		$('.circle-result').html('');
 
@@ -309,6 +313,10 @@ $(document).ready(function () {
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
 		formData.append('idPhoto', idPhoto);
 
+		// Toggle I/O
+		var io = $('#pipeline_switch').is(':checked');
+		formData.append('useIO', io);
+
 		$.ajax({
 			type: "POST",
 			url: SERVER_BASE_URL + "/extractFace",
@@ -354,6 +362,10 @@ $(document).ready(function () {
 
 		// Add preferences and ID type
 		addPreferences(formData);
+
+		// Toggle I/O
+		var io = $('#pipeline_switch').is(':checked');
+		formData.append('useIO', io);
 
 		$.ajax({
 			type: "POST",

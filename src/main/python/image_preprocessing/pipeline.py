@@ -17,12 +17,13 @@ class Pipeline:
         self.face_detector = face_detector
         self.threshold_manager = threshold_manager
 
-    def process_text_extraction(self, image, remove_face=False):
+    def process_text_extraction(self, useIO, image, remove_face=False):
         """
         This function applies all the processing needed to extract text from a image.
         Author(s):
             Nicolai van Niekerk
         Args:
+            useIO (boolean): Wheteher or not to write images to disk
             image (:obj:'OpenCV image'): Image to which processing should be applied to.
             remove_face :boolean: If the remove face flag is set to true extra processes will
                 be activated during the pre-processing phase to remove the face from the image.
@@ -30,32 +31,40 @@ class Pipeline:
             image: The processed image.
 
         """
+        print("-------------------------------------------------------")
+        print(useIO)
+        print("-------------------------------------------------------")
         # Remove face from image.
         logger.info("Removing face: " + str(remove_face))
         if remove_face:
             logger.info("REMOVING FACE...")
             image = self.face_detector.blur_face(image)
-            cv2.imwrite(DESKTOP + "/output/4.png", image)
+            if useIO:
+                cv2.imwrite(DESKTOP + "/output/4.png", image)
 
         # Blur image.
         logger.info("Blurring image...")
         blur_image = self.blur_manager.apply(image)
-        cv2.imwrite(DESKTOP + "/output/5.png", blur_image)
+        if useIO:
+            cv2.imwrite(DESKTOP + "/output/5.png", blur_image)
 
         # Apply channel image_processing, tophat, blackhat or histogram equalization.
         logger.info("Removing color channel...")
         color_image = self.color_manager.apply(blur_image)
-        cv2.imwrite(DESKTOP + "/output/6.png", color_image)
+        if useIO:
+            cv2.imwrite(DESKTOP + "/output/6.png", color_image)
 
         # Convert image to grayscale.
         logger.info("Converting image to grayscale...")
         gray_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
-        cv2.imwrite(DESKTOP + "/output/7.png", gray_image)
+        if useIO:
+            cv2.imwrite(DESKTOP + "/output/7.png", gray_image)
 
         # Apply thresholding.
         logger.info("Applying thresholding...")
         thresholded_image = self.threshold_manager.apply(gray_image)
-        cv2.imwrite(DESKTOP + "/output/8.png", thresholded_image)
+        if useIO:
+            cv2.imwrite(DESKTOP + "/output/8.png", thresholded_image)
 
         return thresholded_image
 

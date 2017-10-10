@@ -221,6 +221,8 @@ def manage_text_extractor(image_of_id):
         preferences['verbose_verify'] = True if request.form['verbose_verify'] == 'true' else False
     else:
         preferences['verbose_verify'] = False
+    if 'useIO' in request.form:
+        preferences['useIO'] = request.form['useIO'] == 'true'
 
     extractor = TextExtractor(preferences)
     extracted_text = extractor.extract(image_of_id)

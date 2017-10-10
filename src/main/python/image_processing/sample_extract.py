@@ -54,8 +54,9 @@ class TextExtractor:
 
         # Perform perspective transformation and read from barcode.
         logger.info('Performing perspective transformation...')
-        image = simplification_manager.perspectiveTransformation(img)
-        cv2.imwrite(DESKTOP + "/output/3.png", image)
+        image = simplification_manager.perspectiveTransformation(img, self.preferences['useIO'])
+        if self.preferences['useIO']:
+            cv2.imwrite(DESKTOP + "/output/3.png", image)
         barcode_data_found, barcode_scan_data, barcoded_image = barcode_manager.get_barcode_info(image)
         if barcode_data_found:
             logger.info('Barcode successfully scanned')
@@ -75,7 +76,7 @@ class TextExtractor:
 
         logger.info('Constructing text extraction pipeline')
         pipeline = BuildDirector.construct_text_extract_pipeline(self.preferences, identification_type)
-        image = pipeline.process_text_extraction(barcoded_image, self.remove_face)
+        image = pipeline.process_text_extraction(self.preferences['useIO'], barcoded_image, self.remove_face)
 
         # Extract and return text
         filename = "{}.png".format(os.getpid())
@@ -120,13 +121,14 @@ class FaceExtractor:
     """
     The FaceExtractor extracts the face region for the image passed.
     """
-    def extract(self, img):
+    def extract(self, img, use_io):
         """
         This function is a sample that demonstrates how the face would be extracted.
         Author(s):
             Stephan Nell
         Args:
             img: The image of the ID that contains the face that must be extracted.
+            use_io (boolean): Whether or not images should be written to disk
         Returns:
             image: The extracted and aligned facial image.
         """
@@ -134,8 +136,9 @@ class FaceExtractor:
 
         # Perform perspective transformation
         logger.info('Performing perspective transformation...')
-        perspective_image = simplification_manager.perspectiveTransformation(img)
-        cv2.imwrite(DESKTOP + "/output/10.png", perspective_image)
+        perspective_image = simplification_manager.perspectiveTransformation(img, use_io)
+        if use_io:
+            cv2.imwrite(DESKTOP + "/output/10.png", perspective_image)
 
         # Process image
         logger.info('Constructing facial extraction pipeline...')
