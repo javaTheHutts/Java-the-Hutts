@@ -13,6 +13,10 @@ class SimplificationManager:
     simplifying process like OCR and facial comparisons.
     """
 
+    def __init__(self):
+        # The minimum contour area must be to be transformed.
+        self.CONTOUR_AREA_THRESHOLD = 100000
+
     def perspectiveTransformation(self, image):
         """
         The perspective transformation takes the image passed and applies edge detection and
@@ -28,9 +32,6 @@ class SimplificationManager:
                 is present and the identification document is now in a perspective view.
         Raises:
             TypeError: If a parameter is passed that is not of type Numpy array.
-        Todo:
-            Determine a better solution to this problem when detecting smaller edge.
-                at the moment this is hardcoded contour_area_threshold = 100000
         """
         if not isinstance(image, np.ndarray):
             raise TypeError(
@@ -50,8 +51,7 @@ class SimplificationManager:
         contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
         warped = orig
         # Used to prevent false positive detection
-        contour_area_threshold = 100000
-        if cv2.contourArea(contours[0]) > contour_area_threshold:
+        if cv2.contourArea(contours[0]) > self.CONTOUR_AREA_THRESHOLD:
             for c in contours:
                 peri = cv2.arcLength(c, True)
                 approx = cv2.approxPolyDP(c, 0.02 * peri, True)

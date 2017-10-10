@@ -11,6 +11,11 @@ class BarCodeManager:
     3. Applying blurring to the detected barcode to reduce noise.
     """
 
+    def __init__(self):
+        # The minimum area a rectangle must be to be considered a barcode.
+        self.BOUNDING_RECTANGLE_THRESHOLD = 200
+        self.scanner = zbar.Scanner()
+
     def detect(self, image):
         """
         This function detects a region containing a Barcode if a Barcode is present in the image passed
@@ -36,8 +41,6 @@ class BarCodeManager:
             TypeError: If a none numpy array value has been passed
         Todo:
             Find a way to support PDF417 format.
-            Find a way to remove the hardcoded 200 value.
-            Add additional checks for invalid Barcodes.
         """
         if type(image) is not np.ndarray:
             raise TypeError(
@@ -71,7 +74,7 @@ class BarCodeManager:
         # The Difference between the upper and lower Y-value is calculated to ensure a Barcode is detected.
         # This reduces the chance of a false positive detection.
         diff = y - (y+h)
-        if abs(diff) < 200:
+        if abs(diff) < self.BOUNDING_RECTANGLE_THRESHOLD:
             return True, image[y:y + h, x:x + w], box
         else:
             return False, image, box
@@ -95,8 +98,7 @@ class BarCodeManager:
         (detection, detected_image, box) = self.detect(image.copy())
         if detection:
             gray = cv2.cvtColor(detected_image, cv2.COLOR_BGR2GRAY)
-            scanner = zbar.Scanner()
-            results = scanner.scan(gray)
+            results = self.scanner.scan(gray)
             if not results:
                 return False, "", image
             else:

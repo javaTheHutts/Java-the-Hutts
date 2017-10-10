@@ -29,8 +29,8 @@ def test_simplification_constructor():
     """
     Tests with no parameters
     """
-    SimplificationManager()
-
+    manager = SimplificationManager()
+    assert manager.CONTOUR_AREA_THRESHOLD == 100000
 
 def test_simplification_constructor_1():
     """
