@@ -1,0 +1,10 @@
+__pycache__
+.cache
+.vscode
+demo
+documentation
+log
+src
+build.py
+target/reports
+Testing
