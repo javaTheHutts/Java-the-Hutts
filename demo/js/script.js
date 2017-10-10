@@ -3,7 +3,7 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 */
 
 /* global $ */
-var SERVER_BASE_URL = 'http://localhost:5000';
+var SERVER_BASE_URL = 'http://0.0.0.0:5000';
 var PATH_TO_PIPELINE = '/home/minion/Desktop/output/';
 
 // Enum for pipleine type
