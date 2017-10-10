@@ -48,16 +48,16 @@ def test_perspective_transform():
     with pytest.raises(TypeError):
         simp_manager.perspectiveTransformation()
 
-@pytest.mark.skip(reason="Fails for no reason")
+
 def test_perspective_transform_2():
     """
     Tests with incorrect number of parameters
     """
     simp_manager = SimplificationManager()
     with pytest.raises(TypeError):
-        simp_manager.perspectiveTransformation(blank_image, 1)
+        simp_manager.perspectiveTransformation(blank_image, False, 1)
 
-@pytest.mark.skip(reason="Fails for no reason")
+
 def test_perspective_transform_3():
     """
     Tests perspective thresholding and transformation with plain colour image
@@ -65,11 +65,11 @@ def test_perspective_transform_3():
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
     simp_manager = SimplificationManager()
-    img = simp_manager.perspectiveTransformation(test_image_colour)
+    img = simp_manager.perspectiveTransformation(test_image_colour, False)
     assert np.array_equal(test_image_colour, img)
     cv2.setNumThreads(-1)
 
-@pytest.mark.skip(reason="Fails for no reason")
+
 def test_perspective_transform_4():
     """
     Tests perspective thresholding and transformation with soap joe book type
@@ -77,12 +77,12 @@ def test_perspective_transform_4():
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
     simp_manager = SimplificationManager()
-    img = simp_manager.perspectiveTransformation(soap_joe)
+    img = simp_manager.perspectiveTransformation(soap_joe, False)
     assert np.array_equal(soap_joe, img)
     # enable multi-threading in OpenCV for child thread
     cv2.setNumThreads(-1)
 
-@pytest.mark.skip(reason="Fails for no reason")
+
 def test_perspective_transform_5():
     """
     Tests perspective thresholding and transformation with Obama not card type
@@ -90,7 +90,7 @@ def test_perspective_transform_5():
     # disable multi-threading in OpenCV for main thread to avoid problems after fork
     cv2.setNumThreads(0)
     simp_manager = SimplificationManager()
-    img = simp_manager.perspectiveTransformation(thanks_obama)
+    img = simp_manager.perspectiveTransformation(thanks_obama, False)
     assert np.array_equal(thanks_obama, img)
     # enable multi-threading in OpenCV for child thread
     cv2.setNumThreads(-1)
@@ -102,4 +102,4 @@ def test_perspective_type():
     """
     simp_manager = SimplificationManager()
     with pytest.raises(TypeError):
-        simp_manager.perspectiveTransformation(1)
+        simp_manager.perspectiveTransformation(1, False)
