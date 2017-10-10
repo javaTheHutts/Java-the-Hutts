@@ -24,13 +24,13 @@ class FaceVerify:
         """
         logger.info("Initialise FaceVerify")
 
-        if type(shape_predictor_path) is not str:
+        if not isinstance(shape_predictor_path, str):
             raise TypeError(
                 'Bad type for arg shape_predictor_path - expected string. Received type "%s".' %
                 type(shape_predictor_path).__name__
             )
 
-        if type(face_recognition_path) is not str:
+        if not isinstance(face_recognition_path, str):
             raise TypeError(
                 'Bad type for arg face_recognition_path - expected string. Received type "%s".' %
                 type(face_recognition_path).__name__
