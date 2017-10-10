@@ -55,7 +55,8 @@ class ColorManager:
             raise NameError('Invalid Color extraction type! \n'
                             'Try: "histrogram", "extract", "blackhat", "topHat" or "whiteHat"')
 
-    def histEqualisation(self, image):
+    @staticmethod
+    def histEqualisation(image):
         """
         This function applies histogram equalisation to the image passed.
         Author(s):
@@ -110,13 +111,18 @@ class ColorManager:
                 applied to
             Integer list: Represent the kernel dimension by which blackHat morphology
                 changes should be applied to.
+        Raises:
+            TypeError: If Invalid type of kernel size provided. Not type tuple.
+            ValueError: If an invalid length kernel size provided. Tuple longer than length 2.
         Returns:
             obj:'OpenCV image': A modified copy of the image where blackHat morphology was
                 applied to an image.
-        Todo:
-            Add additional checks for invalid kernel sizes.
 
         """
+        if not (isinstance(rect_kernel_size, tuple)):
+            raise TypeError('Invalid Kernel Size Provided. Black Hat Kernel Support tuple type')
+        if not len(rect_kernel_size) == 2:
+            raise ValueError('Invalid Kernel Size list length can be no longer than length 2.')
         rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
         return cv2.morphologyEx(image.copy(), cv2.MORPH_BLACKHAT, rectangle_kernel)
 
@@ -132,9 +138,10 @@ class ColorManager:
                 changes should be applied to.
         Returns:
                 Applied to an image.
-        Todo:
-            Add additional checks for invalid kernel sizes.
-
         """
+        if not (isinstance(rect_kernel_size, tuple)):
+            raise TypeError('Invalid Kernel Size Provided. Top Hat Kernel Support tuple type')
+        if not len(rect_kernel_size) == 2:
+            raise ValueError('Invalid Kernel Size list length can be no longer than length 2.')
         rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
         return cv2.morphologyEx(image, cv2.MORPH_TOPHAT, rectangle_kernel)
