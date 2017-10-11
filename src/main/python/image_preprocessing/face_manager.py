@@ -9,7 +9,7 @@ import cv2
 
 TEMPLATE_DIR = correct_path(Path(os.path.abspath(os.path.dirname(__file__)), 'templates'))
 
-FACE_NOT_FOUND_PLACE_HOLDER = cv2.imread(TEMPLATE_DIR + "profile.jpg")
+FACE_NOT_FOUND_PLACE_HOLDER = cv2.imread(TEMPLATE_DIR + "/profile.jpg")
 
 
 class FaceDetector:
