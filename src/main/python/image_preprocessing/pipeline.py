@@ -10,7 +10,7 @@ class Pipeline:
     """
     def __init__(self, blur_manager=None, color_manager=None, face_detector=None, threshold_manager=None):
         """
-        Initialize Pipeline with parameters passed from the Builder.
+        Initialize Pipeline with parameters passed from t￼￼￼￼￼￼he Builder.
         """
         self.blur_manager = blur_manager
         self.color_manager = color_manager
@@ -31,9 +31,7 @@ class Pipeline:
             image: The processed image.
 
         """
-        print("-------------------------------------------------------")
-        print(useIO)
-        print("-------------------------------------------------------")
+
         # Remove face from image.
         logger.info("Removing face: " + str(remove_face))
         if remove_face:
