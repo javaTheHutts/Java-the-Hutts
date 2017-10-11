@@ -8,7 +8,7 @@ import cv2
 TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
-face_not_found_place_holder = cv2.imread(TEMPLATE_DIR + "profile.jpg")
+FACE_NOT_FOUND_PLACE_HOLDER = cv2.imread(TEMPLATE_DIR + "profile.jpg")
 
 
 class FaceDetector:
@@ -77,7 +77,7 @@ class FaceDetector:
         """
         rectangle = self.detect(image)
         if rectangle is None:
-            return face_not_found_place_holder
+            return FACE_NOT_FOUND_PLACE_HOLDER
         face_aligned = self.face_aligner.align(image, image, rectangle)
         return face_aligned
 
@@ -100,12 +100,10 @@ class FaceDetector:
             Remove hard coded y and h adjustment values.
 
         """
-        # We make a deep copy of an image to avoid problems with shallow copies.
-        image_copy = image.copy()
         rectangle = self.detect(image)
         if rectangle is None:
             logger.warning('No face found. Facial Blur ignored.')
-            return image_copy
+            return image
         (x, y, w, h) = rect_to_bb(rectangle)
         # To Extend the entire region of face since face detector does not include upper head.
         y = y-75
@@ -113,5 +111,5 @@ class FaceDetector:
         sub_face = image[y:y + h, x:x + w]
         sub_face = cv2.dilate(sub_face, None, iterations=3)
         sub_face = cv2.GaussianBlur(sub_face, (31, 31), 0)
-        image_copy[y:y + sub_face.shape[0], x:x + sub_face.shape[1]] = sub_face
-        return image_copy
+        image[y:y + sub_face.shape[0], x:x + sub_face.shape[1]] = sub_face
+        return image

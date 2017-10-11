@@ -3,10 +3,11 @@ import os
 import imutils
 import numpy as np
 from imutils.perspective import four_point_transform
+from hutts_utils.hutts_logger import logger
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 # The minimum contour area must be to be transformed.
-CONTOUR_AREA_THRESHOLD = 100000
+CONTOUR_AREA_THRESHOLD = 150000
 
 
 class SimplificationManager:
@@ -49,6 +50,7 @@ class SimplificationManager:
         contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
         warped = orig
         # Used to prevent false positive detection
+        logger.debug('Contour area Threshold: ' + str(cv2.contourArea(contours[0])))
         if cv2.contourArea(contours[0]) > CONTOUR_AREA_THRESHOLD:
             for c in contours:
                 peri = cv2.arcLength(c, True)
@@ -60,5 +62,6 @@ class SimplificationManager:
 
             cv2.drawContours(image, [screen_contours], -1, (0, 255, 0), 2)
             cv2.imwrite(DESKTOP + "/output/2.png", image)
+            logger.debug('Performing four point simplification')
             warped = four_point_transform(orig, screen_contours.reshape(4, 2) * ratio)
         return warped
