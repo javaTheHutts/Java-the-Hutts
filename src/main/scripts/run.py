@@ -57,6 +57,6 @@ if __name__ == '__main__':
     app.register_blueprint(extract)
     # Run the server.
     hutts_logger.disable_flask_logging(app)
-    hutts_logger.logger.info('* Running on %s:%d/', 'http://127.0.0.1', 5000)
+    hutts_logger.logger.info('* Running on %s:%d/', 'http://0.0.0.0', 5000)
     app.debug = args['debug']
-    app.run()
+    app.run(host='0.0.0.0')
