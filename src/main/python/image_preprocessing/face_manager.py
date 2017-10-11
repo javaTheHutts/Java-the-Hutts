@@ -1,12 +1,13 @@
 from imutils.face_utils import FaceAligner
 from imutils.face_utils import rect_to_bb
 from hutts_utils.hutts_logger import logger
+from pathlib import Path
+from hutts_utils.pypath import correct_path
 import dlib
 import os
 import cv2
 
-TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
-    base_path=os.path.abspath(os.path.dirname(__file__)))
+TEMPLATE_DIR = correct_path(Path(os.path.abspath(os.path.dirname(__file__)), 'templates'))
 
 FACE_NOT_FOUND_PLACE_HOLDER = cv2.imread(TEMPLATE_DIR + "profile.jpg")
 
