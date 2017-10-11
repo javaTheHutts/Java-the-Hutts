@@ -12,9 +12,11 @@ from flask import Flask, request
 from hutts_utils import hutts_logger
 from verification.controllers import verify
 from image_processing.controllers import extract
+from flask_cors import CORS
 
 # Initialise flask application.
 app = Flask(__name__)
+CORS(app)
 
 
 @app.before_request
