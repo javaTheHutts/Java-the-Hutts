@@ -2,7 +2,13 @@ from imutils.face_utils import FaceAligner
 from imutils.face_utils import rect_to_bb
 from hutts_utils.hutts_logger import logger
 import dlib
+import os
 import cv2
+
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
+    base_path=os.path.abspath(os.path.dirname(__file__)))
+
+face_not_found_place_holder = cv2.imread(TEMPLATE_DIR + "profile.jpg")
 
 
 class FaceDetector:
@@ -51,8 +57,8 @@ class FaceDetector:
         """
         rectangles = self.detector(image, 1)
         if len(rectangles) == 0:
-            logger.warning('No valid face found. Original image will be returned')
-        return rectangles[0]
+            logger.warning('No valid face found. Returning None')
+        return rectangles[0] if rectangles else None
 
     def extract_face(self, image):
         """
@@ -70,9 +76,10 @@ class FaceDetector:
             obj:'OpenCV image': A copy of the original image is returned.
         """
         rectangle = self.detect(image)
+        if rectangle is None:
+            return face_not_found_place_holder
         face_aligned = self.face_aligner.align(image, image, rectangle)
-        image_copy = image.copy()
-        return face_aligned, image_copy
+        return face_aligned
 
     def blur_face(self, image):
         """
@@ -96,6 +103,9 @@ class FaceDetector:
         # We make a deep copy of an image to avoid problems with shallow copies.
         image_copy = image.copy()
         rectangle = self.detect(image)
+        if rectangle is None:
+            logger.warning('No face found. Facial Blur ignored.')
+            return image_copy
         (x, y, w, h) = rect_to_bb(rectangle)
         # To Extend the entire region of face since face detector does not include upper head.
         y = y-75

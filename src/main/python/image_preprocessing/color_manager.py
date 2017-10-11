@@ -109,20 +109,20 @@ class ColorManager:
         Args:
             image (:obj:'OpenCV image'): Image to which black hat color changes should be
                 applied to
-            Integer list: Represent the kernel dimension by which blackHat morphology
+            rect_kernel_size (list): Represent the kernel dimension by which blackHat morphology
                 changes should be applied to.
         Raises:
-            TypeError: If Invalid type of kernel size provided. Not type tuple.
-            ValueError: If an invalid length kernel size provided. Tuple longer than length 2.
+            TypeError: If the kernel size type is not a tuple.
+            ValueError: If the kernel size tuple contains more than 2 items.
         Returns:
             obj:'OpenCV image': A modified copy of the image where blackHat morphology was
                 applied to an image.
 
         """
         if not (isinstance(rect_kernel_size, tuple)):
-            raise TypeError('Invalid Kernel Size Provided. Black Hat Kernel Support tuple type')
+            raise TypeError('Invalid Kernel type Provided. Black Hat Kernel Supports tuple type')
         if not len(rect_kernel_size) == 2:
-            raise ValueError('Invalid Kernel Size list length can be no longer than length 2.')
+            raise ValueError('Invalid Kernel Size - rect_kernel_size list can only contain 2 items.')
         rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
         return cv2.morphologyEx(image.copy(), cv2.MORPH_BLACKHAT, rectangle_kernel)
 
@@ -134,14 +134,18 @@ class ColorManager:
         Args:
             image (:obj:'OpenCV image'): Image to which top hat color changes should be
                 applied to.
-            Integer list: Represent the kernel dimension by which topHat  morphology
+            rect_kernel_size (list): Represent the kernel dimension by which topHat  morphology
                 changes should be applied to.
+        Raises:
+            TypeError: If the kernel size type is not a tuple.
+            ValueError: If the kernel size tuple contains more than 2 items.
         Returns:
-                Applied to an image.
+                obj:'OpenCV image': A modified copy of the image where topHat morphology was
+                applied to an image.
         """
         if not (isinstance(rect_kernel_size, tuple)):
-            raise TypeError('Invalid Kernel Size Provided. Top Hat Kernel Support tuple type')
+            raise TypeError('Invalid Kernel type Provided. Top Hat Kernel Supports tuple type')
         if not len(rect_kernel_size) == 2:
-            raise ValueError('Invalid Kernel Size list length can be no longer than length 2.')
+            raise ValueError('Invalid Kernel Size - rect_kernel_size list can only contain 2 items.')
         rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, rect_kernel_size)
         return cv2.morphologyEx(image, cv2.MORPH_TOPHAT, rectangle_kernel)

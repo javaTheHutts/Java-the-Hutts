@@ -199,7 +199,7 @@ def test_color_manager_apply_extract_9():
     """
     Test Extract Colour with incorrect value for blackhat extraction.
     """
-    manager = ColorManager("blackHat", "blue", (1, 3,4, 5))
+    manager = ColorManager("blackHat", "blue", (1, 3, 4, 5))
     with pytest.raises(ValueError):
         manager.apply(test_image_colour)
 

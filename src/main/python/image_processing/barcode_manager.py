@@ -2,6 +2,9 @@ import numpy as np
 import cv2
 import zbar.misc
 
+# The minimum area a rectangle must be to be considered a barcode.
+BOUNDING_RECTANGLE_THRESHOLD = 200
+
 
 class BarCodeManager:
     """
@@ -12,8 +15,6 @@ class BarCodeManager:
     """
 
     def __init__(self):
-        # The minimum area a rectangle must be to be considered a barcode.
-        self.BOUNDING_RECTANGLE_THRESHOLD = 200
         self.scanner = zbar.Scanner()
 
     def detect(self, image):
@@ -74,7 +75,7 @@ class BarCodeManager:
         # The Difference between the upper and lower Y-value is calculated to ensure a Barcode is detected.
         # This reduces the chance of a false positive detection.
         diff = y - (y+h)
-        if abs(diff) < self.BOUNDING_RECTANGLE_THRESHOLD:
+        if abs(diff) < BOUNDING_RECTANGLE_THRESHOLD:
             return True, image[y:y + h, x:x + w], box
         else:
             return False, image, box

@@ -66,9 +66,9 @@ class BlurManager:
             obj:'OpenCV image': A modified copy of the image where basic blurring was applied to the image.
         """
         if not (isinstance(blur_kernel, list)):
-            raise TypeError('Invalid Kernel Size Provided. Blur Kernel Support list type')
+            raise TypeError('Invalid Kernel type Provided for normal blurring. Blur Kernel Supports list type')
         if not len(blur_kernel[0]) == 2:
-            raise ValueError('Invalid Kernel Size list length can be no longer than length 2.')
+            raise ValueError('Invalid Kernel Size - blur_kernel list can only contain 2 items.')
         for (kX, kY) in blur_kernel:
             blurred = cv2.blur(image, (kX, kY))
         return blurred
@@ -89,9 +89,9 @@ class BlurManager:
             obj:'OpenCV image': A modified copy of the image where Gaussian blurring was applied to the image.
         """
         if not (isinstance(blur_kernel, list)):
-            raise TypeError('Invalid Kernel Size Provided. Blur Kernel Support list type')
+            raise TypeError('Invalid Kernel type Provided for gaussian blur. Blur Kernel Supports list type')
         if not len(blur_kernel[0]) == 2:
-            raise ValueError('Invalid Kernel Size list length can be no longer than length 2.')
+            raise ValueError('Invalid Kernel Size - blur_kernel list can only contain 2 items.')
         for (kX, kY) in blur_kernel:
             blurred = cv2.GaussianBlur(image, (kX, kY), 0)
         return blurred
@@ -112,9 +112,9 @@ class BlurManager:
             obj:'OpenCV image': A modified copy of the image where Median blurring was applied to the image.
         """
         if not (isinstance(blur_kernel[0], int)):
-            raise TypeError('Invalid Kernel Size Provided. Blur Kernel Support list type')
+            raise TypeError('Invalid Kernel type Provided for median blur. Blur Kernel Supports list type')
         if not len(blur_kernel) == 1:
-            raise ValueError('Invalid Kernel Size integer can only be of length 1.')
+            raise ValueError('Invalid Kernel Size only one integer value should be provided')
         for k in blur_kernel:
             blurred = cv2.medianBlur(image, k)
         return blurred

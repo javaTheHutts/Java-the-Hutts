@@ -5,6 +5,8 @@ import numpy as np
 from imutils.perspective import four_point_transform
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+# The minimum contour area must be to be transformed.
+CONTOUR_AREA_THRESHOLD = 100000
 
 
 class SimplificationManager:
@@ -12,10 +14,6 @@ class SimplificationManager:
     The Simplification manger is used to remove unwanted content in an image thus
     simplifying process like OCR and facial comparisons.
     """
-
-    def __init__(self):
-        # The minimum contour area must be to be transformed.
-        self.CONTOUR_AREA_THRESHOLD = 100000
 
     def perspectiveTransformation(self, image):
         """
@@ -51,7 +49,7 @@ class SimplificationManager:
         contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
         warped = orig
         # Used to prevent false positive detection
-        if cv2.contourArea(contours[0]) > self.CONTOUR_AREA_THRESHOLD:
+        if cv2.contourArea(contours[0]) > CONTOUR_AREA_THRESHOLD:
             for c in contours:
                 peri = cv2.arcLength(c, True)
                 approx = cv2.approxPolyDP(c, 0.02 * peri, True)

@@ -27,13 +27,6 @@ soap_joe = cv2.imread(TEMPLATE_DIR + "soapJoeExample.jpg")
 
 def test_simplification_constructor():
     """
-    Tests with no parameters
-    """
-    manager = SimplificationManager()
-    assert manager.CONTOUR_AREA_THRESHOLD == 100000
-
-def test_simplification_constructor_1():
-    """
     Tests with incorrect number of parameters
     """
     with pytest.raises(TypeError):

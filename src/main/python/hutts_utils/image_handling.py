@@ -26,7 +26,7 @@ def grab_image(path=None, stream=None, url=None):
 
         if image is None:
             raise ValueError('Invalid Path. No image could be found.'
-                             ' Either path is incorrect or image does not exists')
+                             ' Either path is incorrect or image does not exist')
     # otherwise, the image does not reside on disk
     else:
         # If the URL is not None, then download the image
@@ -43,9 +43,9 @@ def grab_image(path=None, stream=None, url=None):
             image = cv2.imdecode(image, cv2.IMREAD_COLOR)
             if image is None:
                 raise ValueError('Invalid Path. No image could be found.'
-                                 ' Either path is incorrect or image does not exists')
+                                 ' Either path is incorrect or image does not exist')
         else:
             raise ValueError('No valid method was found to grab image.'
-                             ' Either path is incorrect or image does not exists')
+                             ' Either path is incorrect or image does not exist')
 
     return image
