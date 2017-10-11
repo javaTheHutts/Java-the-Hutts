@@ -137,8 +137,8 @@ def match_faces(image_of_id, face):
     """
     # Extract face
     face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
-    extracted_face1, _ = face_detector.extract_face(image_of_id)
-    extracted_face2, _ = face_detector.extract_face(face)
+    extracted_face1 = face_detector.extract_face(image_of_id)
+    extracted_face2 = face_detector.extract_face(face)
 
     # Verify faces
     face_verifier = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)

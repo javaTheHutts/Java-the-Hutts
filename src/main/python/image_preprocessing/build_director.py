@@ -26,7 +26,7 @@ class BuildDirector:
             Nicolai van Niekerk and Marno Hermann
         Args:
             preferences (dict): User-specified techniques to use in pipeline.
-            identification_type (string): Containts the type of identification, this is used
+            identification_type (string): Contains the type of identification, this is used
                                         to determine which techniques are used.
         Returns:
             :Pipeline (Constructed pipeline)

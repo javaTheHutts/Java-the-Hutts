@@ -28,12 +28,10 @@ class TemplateMatching:
         Author(s):
             Marno Hermann
         Args:
-            Image : The image that needs to be identified
+            source (Image) : The image that needs to be identified
 
         Returns:
             string : Returns a string if no type could be identified, None is returned
-        Todo:
-            Explain to others how to use and sort the thresholds in descending order.
 
         Example usage:
         identify(args["image"]])
@@ -52,7 +50,7 @@ class TemplateMatching:
 
             (_, maximum_value, _, _) = cv2.minMaxLoc(result)
 
-            if (maximum_value > threshold):
+            if maximum_value > threshold:
                 logger.info(object_identifier)
                 return object_identifier
         # first two parameters create a range of [0.8;1.8]. 10 specifies that we want to split the
