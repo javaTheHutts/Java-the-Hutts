@@ -7,6 +7,7 @@ Initialises logging and starts the server.
 """
 
 import argparse
+import ssl
 from flask import Flask, request
 from hutts_utils import hutts_logger
 from verification.controllers import verify
@@ -57,6 +58,11 @@ if __name__ == '__main__':
     app.register_blueprint(extract)
     # Run the server.
     hutts_logger.disable_flask_logging(app)
-    hutts_logger.logger.info('* Running on %s:%d/', 'http://0.0.0.0', 5000)
+    hutts_logger.logger.info('* Running on %s:%d/', 'https://0.0.0.0', 5000)
     app.debug = args['debug']
+
+    # This is only for remote server
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    # context.load_cert_chain('yourserver.crt', 'yourserver.key')
+    # app.run(host='0.0.0.0', ssl_context=context)
     app.run(host='0.0.0.0')
