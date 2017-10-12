@@ -14,4 +14,4 @@ RUN pip3 install -U flask_cors
 ADD 301Cert/ /etc/ssl/certs/javathehutts/
 ADD target/dist/Java-the-Hutts-1.0.dev0/ /app
 RUN python3 setup.py install
-CMD [ "python3", "scripts/run.py" ]
+CMD [ "python3", "scripts/run.py", "--secure" ]

@@ -69,6 +69,8 @@ if __name__ == '__main__':
     if args['secure']:
         context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
         context.load_cert_chain('/etc/ssl/certs/javathehutts/javathehutts_me.crt', '/etc/ssl/certs/javathehutts/javathehutts_me.key')
+        hutts_logger.logger.info("Running server with SSL")
         app.run(host=HOST, port=PORT, threaded=True, ssl_context=context)
     else:
+        hutts_logger.logger.warning("Running server without SSL")
         app.run(host=HOST, port=PORT, threaded=True)
