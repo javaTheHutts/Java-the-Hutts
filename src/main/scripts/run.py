@@ -65,6 +65,6 @@ if __name__ == '__main__':
 
     # This is only for remote server
     # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    # context.load_cert_chain('yourserver.crt', 'yourserver.key')
+    # context.load_cert_chain('/etc/ssl/certs/javathehutts/javathehutts_me.crt', '/etc/ssl/certs/javathehutts/javathehutts_me.key')
     # app.run(host='0.0.0.0', ssl_context=context)
     app.run(host='0.0.0.0')
