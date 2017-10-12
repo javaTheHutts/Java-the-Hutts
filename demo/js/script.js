@@ -169,6 +169,9 @@ $(document).ready(function () {
 		// Hide previous detailed results
 		$('#detailed-results').hide();
 
+		// Hide previous verbose verify text results
+		$('#text-verify-details-card').hide();
+
 		// Ensure that the pre-loader spinner is visible
 		$('#verify-result .modal-content .spinner').show();
 		var ditto = ellipses('#verify-ditto');
@@ -190,20 +193,25 @@ $(document).ready(function () {
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
 					populatePipeline(PipelineType.TEXT, 8);
-					populatePipeline(PipelineType.PROFILE, 6);
+					// populatePipeline(PipelineType.PROFILE, 6);
 					$('#text-pipeline').show(600);
-					$('#profile-pipeline').show(600);
+					// $('#profile-pipeline').show(600);
 				}
+
+				// Show the view details button
+				$('.circle-results-wrapper, #verify-result.modal .modal-footer')
+				.show(500);
+				
+				// Populate the detailed results
+				populateDetailedResults(data);
+
+				// Unhide the detailed results section
+				$('#detailed-results').show(600);
 				
 				// Populate the detailed results section
 				if (typeof data.text_match === 'object') {
-					// Show the view details button
-					$('.circle-results-wrapper, #verify-result.modal .modal-footer')
-					.show(500);
-					// Populate the detailed results
-					populateDetailedResults(data);
-					// Unhide the detailed results section
-					$('#detailed-results').show(600);
+					// Show the verbose text verify results.
+					$('#text-verify-details-card').show(600);
 				}
 			},
 			error: function() {
@@ -582,7 +590,7 @@ function addPreferences(formData) {
 			formData.append('color', "red");
 	}
 
-	// Verbose outpuut for verification
+	// Verbose output for verification
 	var verboseVerify = $('#verbose_switch').is(':checked');
 	formData.append('verbose_verify', verboseVerify);
 
