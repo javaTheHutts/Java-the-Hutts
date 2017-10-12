@@ -1,7 +1,15 @@
 from imutils.face_utils import FaceAligner
 from imutils.face_utils import rect_to_bb
+from hutts_utils.hutts_logger import logger
+from pathlib import Path
+from hutts_utils.pypath import correct_path
 import dlib
+import os
 import cv2
+
+TEMPLATE_DIR = correct_path(Path(os.path.abspath(os.path.dirname(__file__)), 'templates'))
+
+FACE_NOT_FOUND_PLACE_HOLDER = cv2.imread(TEMPLATE_DIR + "/profile.jpg")
 
 
 class FaceDetector:
@@ -24,6 +32,9 @@ class FaceDetector:
 
         """
         self.shape_predictor_path = shape_predictor_path
+        self.predictor = dlib.shape_predictor(self.shape_predictor_path)
+        self.detector = dlib.get_frontal_face_detector()
+        self.face_aligner = FaceAligner(self.predictor, desiredFaceWidth=256)
 
     def detect(self, image):
         """
@@ -31,6 +42,11 @@ class FaceDetector:
         By making use of the dlib HOG feature image_preprocessing and linear classifier for frontal face detection
         we are able to detect the face with less false-positive results and without a major time penalty.
         More Information dlib frontal_face detection: http://dlib.net/imaging.html#get_frontal_face_detector
+
+        A check will be done to see if a face is present in the image.
+        If a face is not detected in the image the execution should log that the face was not found and continue
+        with execution. This is due to the fact that face detection might not be critical to
+        a function (like with text extraction) and rather be used to increase accuracy.
         Author(s):
             Stephan Nell
         Args:
@@ -39,13 +55,11 @@ class FaceDetector:
             ValueError: If no face can be detected.
         Returns:
             Integer List: This list contains the box coordinates for the region in which the face resides.
-        Todo:
-            Return error if no face detected
-
         """
-        detector = dlib.get_frontal_face_detector()
-        rectangles = detector(image, 1)
-        return rectangles[0]
+        rectangles = self.detector(image, 1)
+        if len(rectangles) == 0:
+            logger.warning('No valid face found. Returning None')
+        return rectangles[0] if rectangles else None
 
     def extract_face(self, image):
         """
@@ -61,16 +75,12 @@ class FaceDetector:
             obj:'OpenCV image': Any background and unnecessary components are removed and only
             the aligned face is returned.
             obj:'OpenCV image': A copy of the original image is returned.
-        Todo:
-            Return error if no face detected
-
         """
         rectangle = self.detect(image)
-        predictor = dlib.shape_predictor(self.shape_predictor_path)
-        face_aligner = FaceAligner(predictor, desiredFaceWidth=256)
-        face_aligned = face_aligner.align(image, image, rectangle)
-        image_copy = image.copy()
-        return face_aligned, image_copy
+        if rectangle is None:
+            return FACE_NOT_FOUND_PLACE_HOLDER
+        face_aligned = self.face_aligner.align(image, image, rectangle)
+        return face_aligned
 
     def blur_face(self, image):
         """
@@ -87,14 +97,14 @@ class FaceDetector:
         Returns:
             obj:'OpenCV image': A copy of the original image is returned but with the applied
             blurring to the face region.
-        Todo:
-            Return error if no face detected.
+
             Remove hard coded y and h adjustment values.
 
         """
-        # We make a deep copy of an image to avoid problems with shallow copies.
-        image_copy = image.copy()
         rectangle = self.detect(image)
+        if rectangle is None:
+            logger.warning('No face found. Facial Blur ignored.')
+            return image
         (x, y, w, h) = rect_to_bb(rectangle)
         # To Extend the entire region of face since face detector does not include upper head.
         y = y-75
@@ -102,5 +112,5 @@ class FaceDetector:
         sub_face = image[y:y + h, x:x + w]
         sub_face = cv2.dilate(sub_face, None, iterations=3)
         sub_face = cv2.GaussianBlur(sub_face, (31, 31), 0)
-        image_copy[y:y + sub_face.shape[0], x:x + sub_face.shape[1]] = sub_face
-        return image_copy
+        image[y:y + sub_face.shape[0], x:x + sub_face.shape[1]] = sub_face
+        return image

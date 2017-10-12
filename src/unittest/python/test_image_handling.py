@@ -44,3 +44,29 @@ def test_grab_image_3():
     """
     test_path_image = grab_image(path=TEMPLATE_DIR + "temp_flag.jpg")
     assert np.array_equal(test_image_colour, test_path_image)
+
+
+def test_grab_image_4():
+    """
+    Test image handling with incorrect path specified
+    """
+    with pytest.raises(ValueError):
+        grab_image(path=TEMPLATE_DIR + "temp_flagg.jpg")
+
+
+def test_grab_image_5():
+    """
+    Test image handling stream with incorrect Attribute type
+    """
+    with pytest.raises(AttributeError):
+        grab_image(stream=TEMPLATE_DIR + "temp_flagg.jpg")
+
+
+def test_grab_image_6():
+    """
+    Test image handling with path specified
+    """
+    test_path_image = grab_image(path=TEMPLATE_DIR + "temp_flag.jpg")
+    with pytest.raises(AttributeError):
+        grab_image(stream=test_path_image)
+

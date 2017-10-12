@@ -6,7 +6,6 @@ Unit tests for the SA ID book old module.
 ----------------------------------------------------------------------
 """
 
-import pytest
 from id_contexts.sa_id_book_old import SAIDBookOld
 
 

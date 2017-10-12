@@ -12,17 +12,30 @@ from verification.face_verify import FaceVerify
 from flask import jsonify, request, Blueprint
 from hutts_utils.hutts_logger import logger
 from hutts_utils.image_handling import grab_image
+from hutts_utils.pypath import correct_path
+from pathlib import Path
 import os
 
 
 verify = Blueprint('verify', __name__)
 
 # Constants path to trained data for Shape Predictor.
-SHAPE_PREDICTOR_PATH = "{base_path}/../image_preprocessing/trained_data/shape_predictor_face_landmarks.dat".format(
-    base_path=os.path.abspath(os.path.dirname(__file__)))
-
-FACE_RECOGNITION_PATH = "{base}/../image_preprocessing/trained_data/dlib_face_recognition_resnet_model_v1.dat".format(
-                                            base=os.path.abspath(os.path.dirname(__file__)))
+CURRENT_LOCATION = os.path.abspath(os.path.dirname(__file__))
+SHAPE_PREDICTOR_PATH = correct_path(Path(
+                                            Path(CURRENT_LOCATION),
+                                            Path(CURRENT_LOCATION).parent,
+                                            'image_preprocessing',
+                                            'trained_data',
+                                            'shape_predictor_face_landmarks.dat'
+                                        )
+                                    )
+FACE_RECOGNITION_PATH = correct_path(Path(
+                                            Path(CURRENT_LOCATION),
+                                            Path(CURRENT_LOCATION).parent,
+                                            'image_preprocessing',
+                                            'trained_data',
+                                            'dlib_face_recognition_resnet_model_v1.dat'
+                                         ))
 
 
 @verify.route('/verifyID', methods=['POST'])
@@ -124,8 +137,8 @@ def match_faces(image_of_id, face):
     """
     # Extract face
     face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
-    extracted_face1, _ = face_detector.extract_face(image_of_id)
-    extracted_face2, _ = face_detector.extract_face(face)
+    extracted_face1 = face_detector.extract_face(image_of_id)
+    extracted_face2 = face_detector.extract_face(face)
 
     # Verify faces
     face_verifier = FaceVerify(SHAPE_PREDICTOR_PATH, FACE_RECOGNITION_PATH)
