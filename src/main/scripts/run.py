@@ -51,6 +51,15 @@ def log_response(response):
     )
     return response
 
+
+@app.errorhandler(Exception)
+def error_handler(error):
+    """
+    A very general exception handler for unhandled exceptions.
+    """
+    return str(error), 500
+
+
 if __name__ == '__main__':
     # Parse args.
     parser = argparse.ArgumentParser(description='Starts the application server.')
