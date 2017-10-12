@@ -23,7 +23,7 @@ class Pipeline:
         Author(s):
             Nicolai van Niekerk
         Args:
-            useIO (boolean): Wheteher or not to write images to disk
+            useIO (boolean): Whether or not to write images to disk
             image (:obj:'OpenCV image'): Image to which processing should be applied to.
             remove_face :boolean: If the remove face flag is set to true extra processes will
                 be activated during the pre-processing phase to remove the face from the image.
