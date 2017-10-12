@@ -17,7 +17,8 @@ from flask_cors import CORS
 # Initialise flask application.
 app = Flask(__name__)
 CORS(app)
-
+HOST = '0.0.0.0'
+PORT = 5000
 
 @app.before_request
 def log_request():
@@ -54,17 +55,20 @@ if __name__ == '__main__':
     # Parse args.
     parser = argparse.ArgumentParser(description='Starts the application server.')
     parser.add_argument('-d', '--debug', action='store_true')
+    parser.add_argument('--secure', help='run the server with SSL enabled', action='store_true')
     args = vars(parser.parse_args())
     # Initialise blueprints
     app.register_blueprint(verify)
     app.register_blueprint(extract)
     # Run the server.
     hutts_logger.disable_flask_logging(app)
-    hutts_logger.logger.info('* Running on %s:%d/', 'https://0.0.0.0', 5000)
+    hutts_logger.logger.info('* Running on https://%s:%d/', HOST, PORT)
     app.debug = args['debug']
 
     # This is only for remote server
-    # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    # context.load_cert_chain('/etc/ssl/certs/javathehutts/javathehutts_me.crt', '/etc/ssl/certs/javathehutts/javathehutts_me.key')
-    # app.run(host='0.0.0.0', ssl_context=context)
-    app.run(host='0.0.0.0')
+    if args['secure']:
+        context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+        context.load_cert_chain('/etc/ssl/certs/javathehutts/javathehutts_me.crt', '/etc/ssl/certs/javathehutts/javathehutts_me.key')
+        app.run(host=HOST, port=PORT, threaded=True, ssl_context=context)
+    else:
+        app.run(host=HOST, port=PORT, threaded=True)
