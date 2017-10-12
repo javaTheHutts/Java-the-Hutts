@@ -83,7 +83,8 @@ todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
-
+html_logo = '.static/img/hutts-verification.png'
+html_favicon = '.static/img/hutts-verification-icon.png'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
@@ -153,6 +154,7 @@ latex_documents = [
      'Java the Hutts', 'manual'),
 ]
 
+latex_logo = '.static/img/hutts-verification.png'
 
 # -- Options for manual page output ---------------------------------------
 
