@@ -78,6 +78,6 @@ class Pipeline:
 
         """
         logger.info("Extracting face from image")
-        (extracted_face, _) = self.face_detector.extract_face(image)
+        extracted_face = self.face_detector.extract_face(image)
 
         return extracted_face

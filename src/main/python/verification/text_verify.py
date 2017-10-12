@@ -57,27 +57,27 @@ class TextVerify:
             TypeError: If min_matches is not an integer.
             TypeError: If verbose is not a boolean.
         """
-        if type(extracted) is not dict:
+        if not isinstance(extracted, dict):
             raise TypeError(
                 'Bad type for arg extracted - expected dict. Received type "%s"' %
                 type(extracted).__name__
             )
-        if type(verifier) is not dict:
+        if not isinstance(verifier, dict):
             raise TypeError(
                 'Bad type for arg verifier - expected dict. Received type "%s"' %
                 type(verifier).__name__
             )
-        if type(threshold) is not float:
+        if not isinstance(threshold, float):
             raise TypeError(
                 'Bad type for arg threshold - expected float. Received type "%s"' %
                 type(threshold).__name__
             )
-        if type(min_matches) is not int:
+        if not isinstance(min_matches, int):
             raise TypeError(
                 'Bad type for arg min_matches - expected int. Received type "%s"' %
                 type(min_matches).__name__
             )
-        if type(verbose) is not bool:
+        if not isinstance(verbose, bool):
             raise TypeError(
                 'Bad type for arg verbose - expected bool. Received type "%s"' %
                 type(verbose).__name__
@@ -168,12 +168,12 @@ class TextVerify:
             TypeError: If str_x is not a string.
             TypeError: If str_y is not a string.
         """
-        if type(str_x) is not str:
+        if not isinstance(str_x, str):
             raise TypeError(
                 'Bad type for arg str_x - expected string. Received type "%s"' %
                 type(str_x).__name__
             )
-        if type(str_y) is not str:
+        if not isinstance(str_y, str):
             raise TypeError(
                 'Bad type for arg str_y - expected string. Received type "%s"' %
                 type(str_y).__name__
@@ -252,12 +252,12 @@ class TextVerify:
             TypeError: If id_number is not a string containing only numeric characters.
             TypeError: If valid_length is not an integer.
         """
-        if (type(id_number) is not str) or (type(id_number) is str and not id_number.isnumeric()):
+        if (not isinstance(id_number, str)) or (isinstance(id_number, str) and not id_number.isnumeric()):
             raise TypeError(
                 'Bad type for arg id_number - expected string of ONLY numeric characters. Received type "%s"' %
                 type(id_number).__name__
             )
-        if type(valid_length) is not int:
+        if not isinstance(valid_length, int):
             raise TypeError(
                 'Bad type for arg valid_length - expected integer. Received type "%s"' %
                 type(valid_length).__name__

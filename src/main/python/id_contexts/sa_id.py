@@ -348,7 +348,7 @@ class SAID(IDContext):
         Raises:
             TypeError: If id_number is not a string containing only numeric characters.
         """
-        if (type(id_number) is not str) or (type(id_number) is str and not id_number.isnumeric()):
+        if (not isinstance(id_number, str)) or (isinstance(id_number, str) and not id_number.isnumeric()):
             raise TypeError(
                 'Bad type for arg id_number - expected string of ONLY numeric characters. Received type "%s"' %
                 type(id_number).__name__

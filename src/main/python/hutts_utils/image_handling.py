@@ -18,18 +18,21 @@ def grab_image(path=None, stream=None, url=None):
             ValueError: If no path stream or URL was found
     Returns:
         (:obj:'OpenCV image'): Image that is now compatible with OpenCV operations
-    TODO:
-        Return a Json error indicating file not found
     """
     # If the path is not None, then load the image from disk. Example: payload = {"image": open("id.jpg", "rb")}
     if path is not None:
         logger.debug("Grabbing from Disk")
         image = cv2.imread(path)
+
+        if image is None:
+            raise ValueError('Invalid Path. No image could be found.'
+                             ' Either path is incorrect or image does not exist')
     # otherwise, the image does not reside on disk
     else:
         # If the URL is not None, then download the image
         if url is not None:
             # Example: "http://www.pyimagesearch.com/wp-content/uploads/2015/05/obama.jpg"
+            # If URL is incorrect Urllib in imutils library will catch the error.
             logger.debug("Downloading image from URL")
             return url_to_image(url)
         # if the stream is not None, then the image has been uploaded
@@ -38,8 +41,11 @@ def grab_image(path=None, stream=None, url=None):
             data = stream.read()
             image = np.asarray(bytearray(data), dtype="uint8")
             image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+            if image is None:
+                raise ValueError('Invalid Path. No image could be found.'
+                                 ' Either path is incorrect or image does not exist')
         else:
             raise ValueError('No valid method was found to grab image.'
-                             ' Either path is incorrect or image does not exists')
+                             ' Either path is incorrect or image does not exist')
 
     return image

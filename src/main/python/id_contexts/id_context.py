@@ -81,27 +81,27 @@ class IDContext(ABC):
             TypeError: If barcode_data is not a dictionary.
         """
         # Check if arguments passed in are the correct type.
-        if type(id_string) is not str:
+        if not isinstance(id_string, str):
             raise TypeError(
                 'Bad type for arg id_string - expected string. Received type "%s".' %
                 type(id_string).__name__
             )
-        if barcode_data and type(barcode_data) is not dict:
+        if barcode_data and not isinstance(barcode_data, dict):
             raise TypeError(
                 'Bad type for arg barcode_data - expected dictionary. Received type "%s".' %
                 type(barcode_data).__name__
             )
-        if ignore_fields and (type(ignore_fields) is not list or type(ignore_fields[0]) is not str):
+        if ignore_fields and (not isinstance(ignore_fields, list) or not isinstance(ignore_fields[0], str)):
             raise TypeError(
                 'Bad type for arg ignore_fields - expected list of strings. Received type "%s".' %
                 type(ignore_fields).__name__
             )
-        if type(fuzzy_min_ratio) is not float:
+        if not isinstance(fuzzy_min_ratio, float):
             raise TypeError(
                 'Bad type for arg fuzzy_min_ratio - expected float. Received type "%s".' %
                 type(fuzzy_min_ratio).__name__
             )
-        if type(max_multi_line) is not int:
+        if not isinstance(max_multi_line, int):
             raise TypeError(
                 'Bad type for arg max_multi_line - expected int. Received type "%s".' %
                 type(max_multi_line).__name__

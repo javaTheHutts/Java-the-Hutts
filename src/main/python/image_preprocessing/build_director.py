@@ -5,10 +5,11 @@ from image_preprocessing.face_manager import FaceDetector
 from image_preprocessing.pipeline_builder import PipelineBuilder
 from image_preprocessing.thresholding_manager import ThresholdingManager
 from hutts_utils.hutts_logger import logger
+from hutts_utils.pypath import correct_path
 
 # Constants path to trained data for Shape Predictor.
-SHAPE_PREDICTOR_PATH = "{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
-    base_path=os.path.abspath(os.path.dirname(__file__)))
+SHAPE_PREDICTOR_PATH = correct_path("{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
+    base_path=os.path.abspath(os.path.dirname(__file__))))
 
 
 class BuildDirector:
@@ -25,7 +26,7 @@ class BuildDirector:
             Nicolai van Niekerk and Marno Hermann
         Args:
             preferences (dict): User-specified techniques to use in pipeline.
-            identification_type (string): Containts the type of identification, this is used
+            identification_type (string): Contains the type of identification, this is used
                                         to determine which techniques are used.
         Returns:
             :Pipeline (Constructed pipeline)

@@ -3,8 +3,11 @@ import os
 import imutils
 import numpy as np
 from imutils.perspective import four_point_transform
+from hutts_utils.hutts_logger import logger
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+# The minimum contour area must be to be transformed.
+CONTOUR_AREA_THRESHOLD = 150000
 
 
 class SimplificationManager:
@@ -29,11 +32,8 @@ class SimplificationManager:
                 is present and the identification document is now in a perspective view.
         Raises:
             TypeError: If a parameter is passed that is not of type Numpy array.
-        Todo:
-            Determine a better solution to this problem when detecting smaller edge.
-                at the moment this is hardcoded contour_area_threshold = 100000
         """
-        if type(image) is not np.ndarray:
+        if not isinstance(image, np.ndarray):
             raise TypeError(
                 'Bad type for arg image - expected image in numpy array. Received type "%s".' %
                 type(image).__name__
@@ -52,8 +52,8 @@ class SimplificationManager:
         contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
         warped = orig
         # Used to prevent false positive detection
-        contour_area_threshold = 100000
-        if cv2.contourArea(contours[0]) > contour_area_threshold:
+        logger.debug('Contour area Threshold: ' + str(cv2.contourArea(contours[0])))
+        if cv2.contourArea(contours[0]) > CONTOUR_AREA_THRESHOLD:
             for c in contours:
                 peri = cv2.arcLength(c, True)
                 approx = cv2.approxPolyDP(c, 0.02 * peri, True)
@@ -65,5 +65,6 @@ class SimplificationManager:
             cv2.drawContours(image, [screen_contours], -1, (0, 255, 0), 2)
             if use_io:
                 cv2.imwrite(DESKTOP + "/output/2.png", image)
+            logger.debug('Performing four point simplification')
             warped = four_point_transform(orig, screen_contours.reshape(4, 2) * ratio)
         return warped

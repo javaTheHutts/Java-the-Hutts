@@ -184,3 +184,39 @@ def test_color_manager_apply_extract_7():
     manager = ColorManager("extract", "red_purple")
     with pytest.raises(NameError):
         manager.apply(test_image_colour)
+
+
+def test_color_manager_apply_extract_8():
+    """
+    Test Extract Colour with incorrect value for Blackhat extraction (Invalid Type)
+    """
+    manager = ColorManager("blackHat", "blue", 'a')
+    with pytest.raises(TypeError):
+        manager.apply(test_image_colour)
+
+
+def test_color_manager_apply_extract_9():
+    """
+    Test Extract Colour with incorrect value for blackhat extraction.
+    """
+    manager = ColorManager("blackHat", "blue", (1, 3, 4, 5))
+    with pytest.raises(ValueError):
+        manager.apply(test_image_colour)
+
+
+def test_color_manager_apply_extract_10():
+    """
+    Test Extract Colour with incorrect value for topHat (Invalid Type)
+    """
+    manager = ColorManager("topHat", "blue", 'a')
+    with pytest.raises(TypeError):
+        manager.apply(test_image_colour)
+
+
+def test_color_manager_apply_extract_11():
+    """
+    Test Extract Colour with incorrect value for Tophat extraction
+    """
+    manager = ColorManager("topHat", "blue", (1, 3, 4, 5))
+    with pytest.raises(ValueError):
+        manager.apply(test_image_colour)

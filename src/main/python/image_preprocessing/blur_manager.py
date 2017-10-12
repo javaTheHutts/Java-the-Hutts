@@ -19,7 +19,7 @@ class BlurManager:
             None
 
         """
-        if type(blur_type) is not str:
+        if not isinstance(blur_type, str):
             raise TypeError(
                 'Bad type for arg blur_type - expected string. Received type "%s".' %
                 type(blur_type).__name__
@@ -57,13 +57,18 @@ class BlurManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which basic blurring should be applied to.
+            blur_kernel (Integer list): Represent the kernel dimension by which basic blurring should be applied to.
             Integer list: Represent the kernel dimension by which basic blurring should be applied to.
+        Raises:
+            ValueError: If a blur_kernel with an invalid length is provided.
+            TypeError: If  a blur_kernel is not of type list.
         Returns:
             obj:'OpenCV image': A modified copy of the image where basic blurring was applied to the image.
-        Todo:
-            Add additional checks for invalid kernel sizes.
-
         """
+        if not (isinstance(blur_kernel, list)):
+            raise TypeError('Invalid kernel type provided for normal blurring. Blur kernel supports list type')
+        if not len(blur_kernel[0]) == 2:
+            raise ValueError('Invalid kernel size - blur_kernel list can only contain 2 items.')
         for (kX, kY) in blur_kernel:
             blurred = cv2.blur(image, (kX, kY))
         return blurred
@@ -75,13 +80,18 @@ class BlurManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which Gaussian blurring should be applied to.
+            blur_kernel (Integer list): Represent the kernel dimension by which basic blurring should be applied to.
             Integer list: Represent the kernel dimension by which basic blurring should be applied to.
+        Raises:
+            ValueError: If a blur_kernel with an invalid length is provided.
+            TypeError: If  a blur_kernel is not of type list.
         Returns:
             obj:'OpenCV image': A modified copy of the image where Gaussian blurring was applied to the image.
-        Todo:
-            Add additional checks for invalid kernel sizes
-
         """
+        if not (isinstance(blur_kernel, list)):
+            raise TypeError('Invalid kernel type provided for gaussian blur. Blur kernel supports list type')
+        if not len(blur_kernel[0]) == 2:
+            raise ValueError('Invalid kernel size - blur_kernel list can only contain 2 items.')
         for (kX, kY) in blur_kernel:
             blurred = cv2.GaussianBlur(image, (kX, kY), 0)
         return blurred
@@ -93,13 +103,18 @@ class BlurManager:
             Stephan Nell
         Args:
             image (:obj:'OpenCV image'): Image to which Median blurring should be applied to.
+            blur_kernel (Integer array): Represent the kernel dimension by which median blurring should be applied to.
             Integer array: Represent the kernel dimension by which median blurring should be applied to.
+        Raises:
+            TypeError: If  a blur_kernel is not of type list.
+            ValueError: If a blur_kernel with an invalid length is provided.
         Returns:
             obj:'OpenCV image': A modified copy of the image where Median blurring was applied to the image.
-        Todo:
-            Add additional checks for invalid kernel sizes.
-
         """
+        if not (isinstance(blur_kernel[0], int)):
+            raise TypeError('Invalid kernel type provided for median blur. Blur kernel supports list type')
+        if not len(blur_kernel) == 1:
+            raise ValueError('Invalid kernel size only one integer value should be provided')
         for k in blur_kernel:
             blurred = cv2.medianBlur(image, k)
         return blurred
