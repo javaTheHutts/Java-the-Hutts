@@ -12,7 +12,7 @@
 \AddToShipoutPictureBG{%
     \AtPageLowerLeft{
         % \hspace{1cm}
-        \includegraphics[width=4.5cm]{img/Java-Hutts2.png}
+        \includegraphics[width=4.5cm]{img/java-the-hutts-footer.png}
     }
 }
 \title{Architectural Design Specification}
@@ -23,11 +23,13 @@
 \makeatletter
     \begin{titlepage}
         \begin{center}
-            \includegraphics[width=0.7\linewidth]{img/up.png}\\[4ex]
+            {\includegraphics[width=0.7\linewidth]{img/hutts-verification.png}}\\[2ex]
+            \vspace{3cm}
             {\huge \bfseries \@title }\\[2ex]
+            {\LARGE \textbf{Project:} Electronic ID Verification}\\[2ex]
             {\LARGE \textbf{Team:} Java the Hutts}\\[2ex]
             {\LARGE \@date}\\[2ex]
-            {\includegraphics[width=\linewidth]{img/team_photo.jpg}}\\[2ex]
+            \vspace{3cm}
             {\large  Nicolai van Niekerk\\ \texttt{nicvaniek@gmail.com}}\\[2ex]
             {\large  Marno Hermann\\ \texttt{marno@barnton-consulting.co.za}}\\[2ex]
             {\large  Stephan Nell\\ \texttt{nellstephanj@gmail.com}}\\[2ex]
@@ -56,8 +58,8 @@ The following modules' designs are included in this document:
 The document begins with an explanation on the chosen architectural pattern and how it will be used to modularize the API. It then outlines the architectural design of each module along with all relevant UML diagrams. Finally the chosen technologies are discussed as well as the deployment of the system. 
 
 \subsection{Architectural Pattern}
-The Hutts-Validation system will be designed as a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling. The API will consist of three independent services: Image Processing, Image Preprocessing and Verification. 
-The system also makes use of the famous GRASP Controller pattern to ensure loose coupling between the interface and services. The use of use case controllers allow the interface and services to change independently without affecting one another. It also allows the system to support multiple interfaces. A high-level sequence diagram depicting the use of the pattern will be evident in the descriptions of the individual services.
+The Hutts-Validation system is a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling. The API consists of three independent services: Image Processing, Image Preprocessing and Verification.
+The system also makes use of the famous GRASP Controller pattern to ensure loose coupling between the interface and services. The use of use case controllers allow the interface and services to change independently without affecting one another. It also allows the system to support multiple interfaces. A high-level sequence diagram depicting the use of the pattern is evident in the descriptions of the individual services.
 
 \section{Deployment Diagram}
 The following Deployment diagram depicts the architecture of the system as deployment of artifacts to deployment targets.. This can be seen as an overall view on the system in a deployment scenario.
@@ -81,7 +83,7 @@ The class diagram of the Image Preprocessing module makes use of a well-known de
 	\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/imageProcessingClassDiagram.png}
-	    \caption{Image Preprocessing Class Diagram}
+	    \caption{Class Diagram of Image Preprocessing service}
 	 \end{figure}
 	 \pagebreak
 \subsubsection{Activity Diagram}
