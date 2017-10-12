@@ -58,22 +58,22 @@ The following modules' designs are included in this document:
 The document begins with an explanation on the chosen architectural pattern and how it will be used to modularize the API. It then outlines the architectural design of each module along with all relevant UML diagrams. Finally the chosen technologies are discussed as well as the deployment of the system. 
 
 \subsection{Architectural Pattern}
-The Hutts-Validation system is a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling. The API consists of three independent services: Image Processing, Image Preprocessing and Verification.
-The system also makes use of the famous GRASP Controller pattern to ensure loose coupling between the interface and services. The use of use case controllers allow the interface and services to change independently without affecting one another. It also allows the system to support multiple interfaces. A high-level sequence diagram depicting the use of the pattern is evident in the descriptions of the individual services.
+The Hutts-Validation system is designed as a WebAPI using the Service-Oriented Architecture (SOA). In this pattern, the architecture is essentially a collection of independent services that communicate with each other. Each service is well-defined, self-contained and does not depend on the context or state of other services, ensuring loose coupling.
+\par \noindent The system also makes use of the famous GRASP \textbf{Controller pattern} to ensure loose coupling between the interface and services. The use of use case controllers allow the interface and services to change independently without affecting one another. It also allows the system to support multiple interfaces. A high-level sequence diagram depicting the use of the pattern will be evident in the descriptions of the individual services.
 
 \section{Deployment Diagram}
 The following Deployment diagram depicts the architecture of the system as deployment of artifacts to deployment targets.. This can be seen as an overall view on the system in a deployment scenario.
 \begin{figure}[h]
 	    	\centering
 	    	\includegraphics[scale=0.5]{img/Quant.png}
-	    	\caption{Deployment Diagram}
+	    	\caption{Deployment Diagram of Hutts Verification}
 	    \end{figure}
 	    \pagebreak
 	 
 \section{Services}
 This section outlines the design of each individual service and in terms of UML diagrams and how services are related to one another.
 
-\subsection{Image Preprocessing}
+\subsection{Image Preprocessing Service}
 The Image Preprocessing service is a crucial module of the system that requires a heavy emphasis. This service creates the image preprocessing pipeline for the application of all the necessary preprocessing techniques on incoming images to yield better results further down the system pipeline, specifically for further processing. This service is mostly used to prepare the image for OCR and facial recognition. 
 \subsubsection{Class Diagram}
 The class diagram of the Image Preprocessing module makes use of a well-known design pattern: 
@@ -83,27 +83,36 @@ The class diagram of the Image Preprocessing module makes use of a well-known de
 	\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/imageProcessingClassDiagram.png}
-	    \caption{Class Diagram of Image Preprocessing service}
+	    \caption{Image Preprocessing Service}
 	 \end{figure}
 	 \pagebreak
 \subsubsection{Activity Diagram}
+    \begin{itemize}
+        \item \textbf{Precondition:} A photo of an ID with a high DPI and reasonable, proportionate lighting should be
+provided.
+        \item \textbf{Postcondition:} The service returns a fully preprocessed image ready for extraction.
+    \end{itemize}
 	\begin{figure}[H]
 	    \centering
-	    \includegraphics[scale=0.5]{img/process_activity.png}
-	    \caption{Image Processing Activity Diagram}
+	    \includegraphics[scale=0.5]{img/activity_preprocessing.png}
+	    \caption{Image Preprocessing Activity Diagram}
 	 \end{figure}
 	 \pagebreak
 
-\subsection{Image Processing}
+\subsection{Image Processing Service}
 The Image Processing service is the core module of the system. This service creates the image processing pipeline by applying all the necessary computer vision and processing techniques. This service is mostly used to process the information contained within an incoming image into a workable format. 
 \subsubsection{Class Diagram}
 	\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/extractClassDiagram.png}
-	    \caption{Image Processing Class Diagram}
+	    \caption{Image Processing Service}
 	 \end{figure}
 	 \pagebreak
 \subsubsection{Activity Diagram}
+\begin{itemize}
+        \item \textbf{Precondition:} A fully preprocessed image must be provided.
+        \item \textbf{Postcondition:} The service returns the extracted text and face.
+    \end{itemize}
 	\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/process_activity.png}
@@ -118,16 +127,21 @@ The Image Processing service is the core module of the system. This service crea
 	 \end{figure}
 	 \pagebreak
 	 
-\subsection{Verification}
+\subsection{Verification Service}
 The Verification service is the part of the system that is responsible for all the logic related to verifying a form of ID against given information. It performs the required checks and calculations to determine a likeness percentage that forms the ultimate verifier.
 \subsubsection{Class Diagram}
 	\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/VerifyClass.png}
-	    \caption{Verification Class Diagram}
+	    \caption{Verification Service}
 	 \end{figure}
 	 \pagebreak
 \subsubsection{Activity Diagram}
+\begin{itemize}
+        \item \textbf{Precondition:} A photo of an ID with a high DPI and reasonable, proportionate lighting should be
+provided, as well as initial personal information and a photo of the individual's face.
+        \item \textbf{Postcondition:} The service returns an overall percentage match for the data, as well as individual matches for text verification and face verification.
+    \end{itemize}
 	\begin{figure}[H]
 	    \centering
 	    \includegraphics[scale=0.5]{img/verify_activity.png}
