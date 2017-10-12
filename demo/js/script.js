@@ -256,7 +256,7 @@ $(document).ready(function () {
 
 		// Toggle I/O
 		var io = $('#pipeline_switch').is(':checked');
-		formData.append('useIO', io);
+		//formData.append('useIO', io);
 
 		$.ajax({
 			type: "POST",

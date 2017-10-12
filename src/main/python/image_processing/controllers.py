@@ -65,6 +65,8 @@ def extract_text():
             preferences['id_type'] = request.form['id_type']
         if 'useIO' in request.form:
             preferences['useIO'] = request.form['useIO'] == 'true'
+        else:
+            preferences['useIO'] = False
 
         # Extract text from image
         extractor = TextExtractor(preferences)
@@ -159,6 +161,8 @@ def extract_all():
             preferences['id_type'] = request.form['id_type']
         if 'useIO' in request.form:
             preferences['useIO'] = request.form['useIO'] == 'true'
+        else:
+            preferences['useIO'] = False
 
         # Extract test from image
         extractor = TextExtractor(preferences)
