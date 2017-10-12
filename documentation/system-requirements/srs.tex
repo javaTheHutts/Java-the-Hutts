@@ -10,7 +10,7 @@
 \AddToShipoutPictureBG{%
     \AtPageLowerLeft{
         % \hspace{1cm}
-        \includegraphics[width=4.5cm]{img/Java-Hutts2.png}
+        \includegraphics[width=4.5cm]{img/java-the-hutts-footer.png}
     }
 }
 \title{System Requirements Specification}
@@ -21,18 +21,19 @@
 \makeatletter
     \begin{titlepage}
         \begin{center}
-            \includegraphics[width=0.7\linewidth]{img/up.png}\\[4ex]
+            {\includegraphics[width=0.7\linewidth]{img/hutts-verification.png}}\\[2ex]
+            \vspace{3cm}
             {\huge \bfseries \@title }\\[2ex]
+            {\LARGE \textbf{Project:} Electronic ID Verification}\\[2ex]
             {\LARGE \textbf{Team:} Java the Hutts}\\[2ex]
             {\LARGE \@date}\\[2ex]
-            {\includegraphics[width=\linewidth]{img/team_photo.jpg}}\\[2ex]
+            \vspace{3cm}
             {\large  Nicolai van Niekerk\\ \texttt{nicvaniek@gmail.com}}\\[2ex]
             {\large  Marno Hermann\\ \texttt{marno@barnton-consulting.co.za}}\\[2ex]
             {\large  Stephan Nell\\ \texttt{nellstephanj@gmail.com}}\\[2ex]
             {\large  Jan-Justin van Tonder\\ \texttt{J.vanTonder@tuks.co.za}}\\[2ex]
             {\large  Andreas Nel\\ \texttt{nel.andreas1@gmail.com}}\\[2ex]
         \end{center}
-        
     \end{titlepage}
 \makeatother
 
@@ -87,11 +88,24 @@
 		This chapter aims to give an overview of the entire \project system. The system will be contextualised in order to demonstrate the basic functionality of the system, as well as demonstrate how the system interacts with other systems. It will also describe the levels, or types, of users that will utilise the system and describe the functionality that is available to said user. At the end of this chapter, the constraints and assumptions for the system will be addressed.
 
 		\subsection{Product Perspective}\label{subsec:overall-product-perspective}
-		The system will be designed in the form of a Web API, which is to be hosted on an independent server.\\
+		The system is designed in the form of a Web API, which hosted on an independent server.\\
 		
-		 \noindent The application will focus on two main criteria. The first is that the application should be able to extract a name, surname, ID number and face, from a photo of either an ID book or ID card. The application should then take the information that was extracted and compare it to an existing profile and then a percentage match score for each corresponding value should be returned.\\
+		 \noindent The application focuses on two main criteria. First, the system is able to extract the following
+		 from the either an ID book or ID card:
+		 \begin{itemize}
+			\item Name
+			\item Surname
+			\item South African ID Number
+			\item Nationality
+			\item Country of Birth
+			\item Status
+			\item Gender
+			\item Date of Birth
+			\item Face
+		 \end{itemize}
+The application then takes the information that was extracted and compares it to an existing profile followed by percentage match scores for each corresponding value which is returned\\
 		 
-		  \noindent When comparing the face for a similarity percentage, the application will deal with problems like an old photo or changed facial features, such as a beard, by manipulating the photo with different methods to ensure that highest accuracy is ensured when a comparison is being performed.\\
+		  \noindent When comparing the face for a similarity percentage, the application deals with problems like an old photo or changed facial features, such as a beard, by applying facial landmarks to ensure that highest accuracy is ensured when a comparison is being performed.\\
 		  
 		  \noindent The second feature is responsible for extracting the information from a given ID photo and returns the collection of the information that the system managed to extract.
 
@@ -99,11 +113,11 @@
 		    The intent of the \project system is to function as a Web API, thus, the users will require some knowledge regarding restful programming. \project is platform independent, therefore, users require no platform specific knowledge.
 
 		\subsection{Constraints}\label{subsec:overall-constraints}
-			Only a valid South African ID book, South African ID card, South African Driver license or South African Passport can be used with the application.\\
+			Only a valid South African ID book or South African ID card can be used with the application.\\
 			
 			\noindent People's facial features could change or the photo provided could be very old, or the individual in the photo could be standing skew and not providing a full frontal, facial image.\\
 
-			\noindent Low DPI, lighting and resolution of images can drastically    affect performance.
+			\noindent Low DPI, lighting, noisy backgrounds and resolution of images can drastically affect performance.
 
 		\subsection{Assumptions and Dependencies}\label{subsec:overall-asusmptions-and-dependencies}
 		\begin{itemize}
@@ -120,7 +134,7 @@
 
 		\subsection{External Interface Requirements}\label{subsec:specific-external}
 		\subsubsection{User-interfaces}
-		The system will be implemented as a Web API that will be called over a network. As a result there are no (graphical) user-interface requirements.
+		The system is implemented as a Web API that is called over a network. As a result there are no (graphical) user-interface requirements.
 		\subsubsection{Hardware Interfaces}
 		No extra hardware interface is needed, since the application is designed as a Web API and is detached from any hardware requirements.
 		\subsubsection{Software Interfaces}
@@ -141,11 +155,10 @@
 		    \item \textbf{FR-06:} The system must be able to compare the extracted text with provided data.
 		    \item \textbf{FR-07:} The system must be able to compare two faces after image processing.
 		    \item \textbf{FR-08:} The system must be able to give a percentage match on the validated data.
-		    \item \textbf{FR-09:} The system must be able to visually show the differences in images.
-		    \item \textbf{FR-10:} The system must be able to perform extraction on a South African ID book.
-		    \item \textbf{FR-11:} The system must be able to perform extraction on a South African ID card.
-		    \item \textbf{FR-12:} The system must allow a user to specify a matching accuracy threshold.
-		    
+		    \item \textbf{FR-9:} The system must be able to perform extraction on a South African ID book.
+		    \item \textbf{FR-10:} The system must be able to perform extraction on a South African ID card.
+		    \item \textbf{FR-11:} The system must allow a user to specify a matching accuracy threshold.
+		    \item \textbf{FR-12:} The system must allow a user to specify preferences of extraction
 		\end{enumerate}
 		
 		\subsubsection{Use cases}
