@@ -272,18 +272,14 @@ $(document).ready(function () {
 
 				// Handle the case involving a UP card, if a UP card
 				// was used as an input image
-				if (data['up_card']) {
-					handleUPCard(data);
-				} else {
-					$("input[id$=extract]").each(function () {
-						var id = $(this).attr("id").replace("-extract", "");
-						if (id != "id-photo") {
-							$(this).focus();
-							$(this).val(data[id]);
-							$(this).blur();
-						}
-					});
-				}
+				$("input[id$=extract]").each(function () {
+					var id = $(this).attr("id").replace("-extract", "");
+					if (id != "id-photo") {
+						$(this).focus();
+						$(this).val(data[id]);
+						$(this).blur();
+					}
+				});
 
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
@@ -381,21 +377,15 @@ $(document).ready(function () {
 				
 				// Parse the response
 				var cardComponents = jQuery.parseJSON(data);
-				// Handle the case involving a UP card, if a UP card
-				// was used as an input image
-				if (cardComponents['text_extract_result']['up_card']) {
-					handleUPCard(cardComponents['text_extract_result'], cardComponents['extracted_face']);
-				} else {
-					// Populate text fields
-					$("input[id$=extract]").each(function () {
-						var id = $(this).attr("id").replace("-extract", "");
-						if (id != "id-photo") {
-							$(this).focus();
-							$(this).val(cardComponents.text_extract_result[id]);
-							$(this).blur();
-						}
-					});
-				}
+				// Populate text fields
+				$("input[id$=extract]").each(function () {
+					var id = $(this).attr("id").replace("-extract", "");
+					if (id != "id-photo") {
+						$(this).focus();
+						$(this).val(cardComponents.text_extract_result[id]);
+						$(this).blur();
+					}
+				});
 
 				// Show face
 				document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
@@ -561,39 +551,6 @@ function clearVerificationFields() {
 			$(this).blur();
 		}
 	});
-}
-
-// Handle the extracted information from a UP card
-function handleUPCard(extracted_text) {
-	// The regex used to find the student/staff number
-	// used mostly to sift through the garbage and find 
-	// what we actually want
-	var re = /[0-9]{6,10}/
-	// Split text_dump on newline
-	var textDump = extracted_text['text_dump'].split('\n');
-	// Sift through the noise
-	for (var i = 0; i < textDump.length; i++) {
-		if (re.test(textDump[i])) {
-			// Get student/staff number
-			var upNumber = extracted_text['barcode_dump']? extracted_text['barcode_dump']: textDump[i];
-			$('#identity_number-extract').focus();
-			$('#identity_number-extract').val(upNumber);
-			$('#identity_number-extract').blur();
-			// Get initials and surname if possible
-			if (i - 1 > 0) {
-				var nameLine = textDump[i - 1].split(' ');
-				nameLine.shift();
-				$('#names-extract').focus();
-				$('#names-extract').val(nameLine[0]);
-				$('#names-extract').blur();
-				nameLine.shift();
-				nameLine = nameLine.join(' ');
-				$('#surname-extract').focus();
-				$('#surname-extract').val(nameLine);
-				$('#surname-extract').blur();
-			}
-		}
-	}
 }
 
 function addPreferences(formData) {
