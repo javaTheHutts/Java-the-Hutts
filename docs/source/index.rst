@@ -10,11 +10,12 @@ Welcome to Hutts Verification's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   apidocs/hutts_utils
-   apidocs/id_contexts
-   apidocs/image_preprocessing
-   apidocs/image_processing
-   apidocs/verification
+   Introduction <introduction.rst>
+   Requirements and Installation Instructions <install.rst>
+   Using the Interface <interface.rst>
+   Using the Server <server.rst>
+   Using the API <api.rst>
+   FAQ <faq.rst>
 
 Indices and tables
 ==================
