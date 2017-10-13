@@ -7,7 +7,7 @@ Unit tests for the Verify Text module.
 """
 
 import pytest
-from verification.text_verify import TextVerify
+from hutts_verification.verification.text_verify import TextVerify
 
 
 def test_verify_blank():

@@ -8,9 +8,9 @@ Initialises logging and starts the server.
 
 import argparse
 from flask import Flask, request
-from hutts_utils import hutts_logger
-from verification.controllers import verify
-from image_processing.controllers import extract
+from hutts_verification.utils import hutts_logger
+from hutts_verification.verification.controllers import verify
+from hutts_verification.image_processing.controllers import extract
 
 # Initialise flask application.
 app = Flask(__name__)
