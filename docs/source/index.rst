@@ -6,11 +6,12 @@
 Welcome to Hutts Verification's documentation!
 ==============================================
 
+.. include:: introduction.rst
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   Introduction <introduction.rst>
    Requirements and Installation Instructions <install.rst>
    Using the Interface <interface.rst>
    Using the Server <server.rst>
