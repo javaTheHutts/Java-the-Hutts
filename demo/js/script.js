@@ -436,6 +436,14 @@ $(document).ready(function () {
 		$('select').material_select();
 	});
 
+	// Add a disclaimer cookie upon closing
+	$('#disclaimer-close').on('click', function() {
+		sessionStorage.setItem('disclaimer-seen', true);
+	});
+
+	// Show disclaimer if it has not been seen yet
+	if (!sessionStorage.getItem('disclaimer-seen')) $('#disclaimer').modal('open');
+
 });
 
 // Show ID Image preview
