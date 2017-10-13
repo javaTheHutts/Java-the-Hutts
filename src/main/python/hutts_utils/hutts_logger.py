@@ -1,16 +1,13 @@
 """
-----------------------------------------------------------------------
-Authors: Jan-Justin van Tonder
-----------------------------------------------------------------------
 Wraps the logic required to setup and use a custom logger while
 disabling the built-in flask logger.
-----------------------------------------------------------------------
-Example usage:
 
-    # First import the logger from the hutts_logger module...
-    from hutts_utils.hutts_logger import logger
-    # then start logging.
-    logger.info('logging an example')
+:Example:
+
+First import the logger from the hutts_logger module...
+from hutts_utils.hutts_logger import logger
+then start logging.
+logger.info('logging an example')
 
 There are 5 logging levels, as shown below with their corresponding
 function call (from lowest to highest level):
@@ -26,14 +23,14 @@ run in debug mode, in which case the logger level will be DEBUG.
 What this means is that messages lower than INFO, i.e. DEBUG, will
 not be shown, again this is unless the flask app is run in debug
 mode.
+!
 
-NOTE: A function (prettify_json_message) has been included to take
+.. note: A function (prettify_json_message) has been included to take
 a json obj/dict and return a prettified string of said json obj/dict
 in the event that someone wishes to display a message in the form of
 a json obj/dict.
-----------------------------------------------------------------------
-TODO: Look into handling the constants in a config file instead.
-----------------------------------------------------------------------
+
+.. todo: Look into handling the constants in a config file instead.
 """
 
 import colorlog
@@ -42,6 +39,13 @@ import json
 import logging
 import os
 from logging.handlers import RotatingFileHandler
+
+__author__ = "Jan-Justin van Tonder"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Jan-Justin van Tonder"
+__email__ = "J.vanTonder@tuks.co.za"
+__status__ = "Development"
 
 """Specifies the name of the custom logger."""
 LOGGING_LOGGER_NAME = 'hutts_logger'
@@ -102,9 +106,6 @@ logger = None
 def setup_logger():
     """
     This function is responsible for creating the custom logger and delegating the creation of its handlers.
-
-    Author:
-        Jan-Justin van Tonder
     """
     global logger
     logger = logging.getLogger(__name__)
@@ -122,9 +123,6 @@ def setup_logger():
 def disable_flask_logging(app_instance):
     """
     This function disables the flask logging, which interferes with the custom logger.
-
-    Author:
-        Jan-Justin van Tonder
 
     Args:
         app_instance (obj): A reference to the current flask server application.
@@ -187,7 +185,7 @@ def prettify_json_message(json_message):
         json_message (dict): A message that is to be prettified before being logged.
 
     Returns:
-        (str): A prettified json message string.
+        string: A prettified json message string.
     """
     return json.dumps(json_message, indent=2, sort_keys=True)
 
