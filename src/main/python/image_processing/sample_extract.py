@@ -1,3 +1,7 @@
+"""
+This class wraps all the functionality required to extract text from an image.
+"""
+
 import os
 import cv2
 import pytesseract
@@ -10,24 +14,30 @@ from image_preprocessing.template_matching import TemplateMatching
 from image_processing.context_manager import ContextManager
 from hutts_utils.hutts_logger import logger, prettify_json_message
 
+__author__ = "Nicolai van Niekerk"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Nicolai van Niekerk"
+__email__ = "nicvaniek@gmail.com"
+__status__ = "Development"
+
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
 class TextExtractor:
     """
-    The TextExtractor extracts text from the ID image
+    The TextExtractor extracts text from the ID image.
     """
 
     def __init__(self, preferences):
         """
         Initialise Text Extractor.
-        Authors(s):
-            Nicolai van Niekerk
+
         Args:
             preferences (dict): User-specified CV techniques.
+
         Returns:
             None
-
         """
         self.preferences = preferences
         self.remove_face = 'false'
@@ -37,12 +47,12 @@ class TextExtractor:
     def extract(self, img):
         """
         This function is a sample that demonstrates how text would be extracted
-        Author(s):
-            Nicolai van Niekerk
+
         Args:
             img: The image of the ID that contains the text to be extracted
+
         Returns:
-            id_details: JSON obj (The extracted information)
+            id_details (obj): The extracted information
         """
         if 'remove_face' in self.preferences:
             self.remove_face = self.preferences['remove_face'] == 'true'
@@ -124,11 +134,11 @@ class FaceExtractor:
     def extract(self, img, use_io):
         """
         This function is a sample that demonstrates how the face would be extracted.
-        Author(s):
-            Stephan Nell
+
         Args:
             img: The image of the ID that contains the face that must be extracted.
             use_io (boolean): Whether or not images should be written to disk
+
         Returns:
             image: The extracted and aligned facial image.
         """
