@@ -1,3 +1,7 @@
+"""
+This class is responsible for controlling the PipelineBuilder.
+"""
+
 import os
 from image_preprocessing.blur_manager import BlurManager
 from image_preprocessing.color_manager import ColorManager
@@ -6,6 +10,13 @@ from image_preprocessing.pipeline_builder import PipelineBuilder
 from image_preprocessing.thresholding_manager import ThresholdingManager
 from hutts_utils.hutts_logger import logger
 from hutts_utils.pypath import correct_path
+
+__authors__ = "Nicolai van Niekerk, Marno Hermann, Stephan Nell"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Nicolai van Niekerk"
+__email__ = "nicvaniek@gmail.com"
+__status__ = "Development"
 
 # Constants path to trained data for Shape Predictor.
 SHAPE_PREDICTOR_PATH = correct_path("{base_path}/trained_data/shape_predictor_face_landmarks.dat".format(
@@ -22,12 +33,12 @@ class BuildDirector:
         This function constructs the pipeline for text extraction.
         This includes building different managers with their specific parameters.
         These managers will be called within the pipeline when executed.
-        Author(s):
-            Nicolai van Niekerk and Marno Hermann
+
         Args:
             preferences (dict): User-specified techniques to use in pipeline.
             identification_type (string): Contains the type of identification, this is used
                                         to determine which techniques are used.
+
         Returns:
             :Pipeline (Constructed pipeline)
         """
@@ -109,8 +120,7 @@ class BuildDirector:
         This function constructs the pipeline for face extraction.
         This includes building different managers with their specific parameters.
         These managers will be called within the pipeline when executed.
-        Author(s):
-            Stephan Nell
+
         Returns:
             :Pipeline (Constructed pipeline)
         """

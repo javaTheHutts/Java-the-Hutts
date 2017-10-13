@@ -1,3 +1,8 @@
+"""
+Wraps the functionality required to dynamically deduce the type of identification
+documentation that has been provided in an image.
+"""
+
 import cv2
 import os
 import numpy as np
@@ -5,6 +10,13 @@ import imutils
 from pathlib import Path
 from hutts_utils.hutts_logger import logger
 from hutts_utils.pypath import correct_path
+
+__author__ = "Marno Hermann"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Marno Hermann"
+__email__ = "marno@barnton-consulting.co.za"
+__status__ = "Development"
 
 TEMPLATE_DIR = correct_path(Path(os.path.abspath(os.path.dirname(__file__)), 'templates'))
 
@@ -15,7 +27,6 @@ class TemplateMatching:
     that is used in the image.
     Thus you provide it with templates and it will identify whether you used an id card, id book etc.
     """
-
     def __init__(self):
         logger.debug("Looking for the templates in directory: " + str(TEMPLATE_DIR))
         self.template = [(1034, cv2.imread(TEMPLATE_DIR + "/temp_flag.jpg"), 0.75, "idcard"),
@@ -25,16 +36,16 @@ class TemplateMatching:
     def identify(self, source):
         """
         This function identifies the src image by searching for the templates provided.
-        Author(s):
-            Marno Hermann
+
         Args:
             source (Image) : The image that needs to be identified
 
         Returns:
             string : Returns a string if no type could be identified, None is returned
 
-        Example usage:
-        identify(args["image"]])
+        :Example:
+        identify(args["image"]]) !
+
         """
         if hasattr(source, 'shape') is False:
             raise TypeError("Must be an image")
