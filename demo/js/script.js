@@ -345,8 +345,8 @@ $(document).ready(function () {
 
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
-					populatePipeline(PipelineType.PROFILE, 6);
-					$('#profile-pipeline').show(600);
+					// populatePipeline(PipelineType.PROFILE, 6);
+					// $('#profile-pipeline').show(600);
 				}
 				$('#extract-loader').modal('close');
 			},
@@ -408,9 +408,9 @@ $(document).ready(function () {
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
 					populatePipeline(PipelineType.TEXT, 8);
-					populatePipeline(PipelineType.PROFILE, 6);
+					// populatePipeline(PipelineType.PROFILE, 6);
 					$('#text-pipeline').show(600);
-					$('#profile-pipeline').show(600);
+					// $('#profile-pipeline').show(600);
 				}
 				$('#extract-loader').modal('close');
 			},
