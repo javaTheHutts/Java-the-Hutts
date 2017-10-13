@@ -1,6 +1,17 @@
+"""
+A class that is used to extract and compare two images of faces and calculate the resulting match.
+"""
+
 import dlib
 from scipy.spatial import distance
 from hutts_utils.hutts_logger import logger
+
+__author__ = "Stephan Nell"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Stephan Nell"
+__email__ = "nellstephanj@gmail.com"
+__status__ = "Development"
 
 
 class FaceVerify:
@@ -12,7 +23,7 @@ class FaceVerify:
     """
     def __init__(self, shape_predictor_path, face_recognition_path):
         """
-        Initialise face verify manager
+        Initialise face verify manager.
         Args:
             shape_predictor_path (str): Describes the path the Shape Predictor
             trained data.
@@ -48,8 +59,7 @@ class FaceVerify:
 
         The Verify function makes use of the dlib library which guarantees 99.38%
         accuracy on the standard Labeled Faces in the Wild benchmark.
-        Author(s):
-            Stephan Nell
+
         Args:
             face1 (:obj:'OpenCV image'): The first image containing the face that should be compared.
             face2 (:obj:'OpenCV image'): The second image containing the face that should be compared
