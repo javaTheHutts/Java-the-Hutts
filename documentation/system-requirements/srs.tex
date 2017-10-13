@@ -267,9 +267,17 @@ The application then takes the information that was extracted and compares it to
 		arguments behind why we decided on these technologies.\\
 		It was important to us to try and utilise technologies that are,
 		free to use, efficient, relatively small in terms package size and
-		requires as few as possible dependencies. 
-		\subsection{
-		\href{http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_tutorials.html}			{OpenCV-Python Version \textit{3.2.0}}}
+		requires as few as possible dependencies.
+		
+
+		\begin{minipage}[b]{0.50\linewidth}
+		\subsection{ 	
+			\href{https://github.com/skvark/opencv-python}	{OpenCV-Python Version \textit{3.2.0}}}
+		\vspace{5mm}
+		\end{minipage}
+		\begin{minipage}[b]{0.50\linewidth}
+			\includegraphics[width=2.0cm]{img/opencv-logo.png}
+		\end{minipage}
 		OpenCV (Open Source Computer Vision Library) is free for commercial use.
 		OpenCV is a well-documented and supported Computer Vision library
 		since it has been available and been developed on for over 15 years at this point.
@@ -280,9 +288,15 @@ The application then takes the information that was extracted and compares it to
 
 		\noindent
 		OpenCV will be used for real-time processing of images throughout the system,
-		which will include image clean-up image extraction and image manipulation.
-
+		which will include image clean-up image extraction and image manipulation.\\
+		
+		\begin{minipage}[b]{0.25\linewidth}
 		\subsection{\href{http://dlib.net/}{Dlib \textit{19.6.0}}}
+		\vspace{5mm}
+		\end{minipage}
+		\begin{minipage}[b]{0.75\linewidth}
+			\includegraphics[width=2.0cm]{img/Dlib.png}
+		\end{minipage}
 		Dlib is an open source Machine learning toolkit and is also
 		the only open source machine learning library that supports facial landmark
 		optimisation and face likeness calculations out of the box.\\ 
@@ -297,13 +311,18 @@ The application then takes the information that was extracted and compares it to
 		in terms of the face likeness calculations. \\
 
 		\noindent
-		Dlib also allows for face detection, as well as facial landmark 
+		Dlib also allows for face detection, as well as facial landmark
 		detection, both of which is required to improve the
 		accuracy and reliability of the face likeness algorithm by supporting
-		the alignment and clean-up of detected faces.
+		the alignment and clean-up of detected faces.\\
 
-		\subsection{\href{https://pypi.python.org/pypi/pytesseract}
-		{Pytesseract \textit{0.1.7}}}
+		\begin{minipage}[b]{0.30\linewidth}
+		\subsection{\href{https://pypi.python.org/pypi/pytesseract}{Pytesseract \textit{0.1.7}}}
+		\vspace{5mm}
+		\end{minipage}
+		\begin{minipage}[b]{0.70\linewidth}
+			\includegraphics[width=3.0cm]{img/Tesseract.png}
+		\end{minipage}
 		Python-tesseract is an open source optical 
 		character recognition (OCR) tool for python. This allows 
 		for the reading and decoding of embedded text in images.\\
@@ -318,28 +337,44 @@ The application then takes the information that was extracted and compares it to
 		\end{enumerate}
 		If it is found later to be a necessity in future, Tesseract supports
 		additional training of fonts, which will allow for greater
-		reliability and accuracy when extracting text.
+		reliability and accuracy when extracting text.\\
 
-		\subsection{\href{https://travis-ci.org}
-		{Travis CI}}
+		\begin{minipage}[b]{0.20\linewidth}
+			\subsection{\href{https://travis-ci.org} {Travis CI}}
+		\vspace{2mm}
+		\end{minipage}
+		\begin{minipage}[b]{0.80\linewidth}
+			\includegraphics[width=1.0cm]{img/travis.jpg}
+		\end{minipage}
 		Travis CI, is a hosted continuous integration and delivery service for GitHub projects.\\	
 
 		\noindent
 		Travis CI allowed us to run each pull request in a clean VM build whilst running multiple Test in parallel.
-		This ensured our system was always in a stable state due to the automated testing and installing of the 					project.It also allowed us to streamline code review process.
+		This ensured our system was always in a stable state due to the automated testing and installing of the				        project.It also allowed us to streamline code review process.\\
 
-		\subsection{\href{https://www.codacy.com}
-		{Codacy}}
+		\begin{minipage}[b]{0.20\linewidth}
+			\subsection{\href{https://www.codacy.com}{Codacy}}
+		\vspace{2mm}
+		\end{minipage}
+		\begin{minipage}[b]{0.80\linewidth}
+			\includegraphics[width=1.0cm]{img/codacy.png}
+		\end{minipage}
 		Codacy is an automated code analysis/quality tool.\\
-
+		
 		\noindent
 		Codacy allowed us to continuously test and maintain our system, by checking for code complexity,
 		duplication, security and unit test coverage of changes in every commit and pull request.
 		Codacy allowed us to enforce our code quality standard as well practices
 		that are considered the norm in the industry.
-
-		\subsection{\href{https://snyk.io}
-		{Snyk}}
+		
+		\cleardoublepage
+		\begin{minipage}[b]{0.20\linewidth}
+			\subsection{\href{https://snyk.io}{Snyk}}
+			\vspace{5mm}
+		\end{minipage}
+		\begin{minipage}[b]{0.80\linewidth}
+			\includegraphics[width=1.0cm]{img/snyk.png}
+		\end{minipage}
 		Snyk supports testing and monitoring Python projects that have their dependencies
 		managed by pip by helping fix and monitor known vulnerabilities in the dependencies in projects.\\
 
