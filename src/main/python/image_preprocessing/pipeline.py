@@ -1,16 +1,41 @@
+"""
+This is an object that handles the entire process of extracting data from an image
+from a high-level perspective.
+"""
+
 import cv2
 import os
 from hutts_utils.hutts_logger import logger
+
+__authors__ = "Nicolai van Niekerk, Stephan Nell"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Nicolai van Niekerk"
+__email__ = "nicvaniek@gmail.com"
+__status__ = "Development"
+
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
 
 class Pipeline:
     """
     The Pipeline will perform all necessary processing on the image and is built by the PipelineBuilder.
+
+    Attributes:
+        blur_manager (:BlurManager): The BlurManager that is used in this pipeline.
+        color_manager (:ColorManager): The ColorManager that is used in this pipeline.
+        face_detector (:FaceDetector): The FaceDetector that is used in this pipeline.
+        threshold_manager (:ThresholdManager): The ThresholdManager that is used in this pipeline.
     """
     def __init__(self, blur_manager=None, color_manager=None, face_detector=None, threshold_manager=None):
         """
         Initialize Pipeline with parameters passed from t￼￼￼￼￼￼he Builder.
+
+        Args:
+            blur_manager (:BlurManager): The BlurManager.
+            color_manager (:ColorManager): The ColorManager.
+            face_detector (:FaceDetector): The FaceDetector.
+            threshold_manager (:ThresholdManager): The ThresholdManager.
         """
         self.blur_manager = blur_manager
         self.color_manager = color_manager
@@ -20,8 +45,7 @@ class Pipeline:
     def process_text_extraction(self, useIO, image, remove_face=False):
         """
         This function applies all the processing needed to extract text from a image.
-        Author(s):
-            Nicolai van Niekerk
+
         Args:
             useIO (boolean): Whether or not to write images to disk
             image (:obj:'OpenCV image'): Image to which processing should be applied to.
@@ -29,7 +53,6 @@ class Pipeline:
                 be activated during the pre-processing phase to remove the face from the image.
         Returns:
             image: The processed image.
-
         """
 
         # Remove face from image.
@@ -69,13 +92,12 @@ class Pipeline:
     def process_face_extraction(self, image):
         """
         This function applies all the processing needed to extract a face from a image.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image to which processing should be applied to.
-        Returns:
-            image: The processed image.
 
+        Returns:
+            image (:obj:'OpenCV image'): The processed image.
         """
         logger.info("Extracting face from image")
         extracted_face = self.face_detector.extract_face(image)

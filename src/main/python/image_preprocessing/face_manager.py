@@ -1,14 +1,24 @@
+"""
+Wraps all the functionality necessary for extracting a face from an image.
+"""
+
+import os
+from pathlib import Path
+import cv2
+import dlib
 from imutils.face_utils import FaceAligner
 from imutils.face_utils import rect_to_bb
 from hutts_utils.hutts_logger import logger
-from pathlib import Path
 from hutts_utils.pypath import correct_path
-import dlib
-import os
-import cv2
+
+__authors__ = "Stephan Nell, Nicolai van Niekerk"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Stephan Nell"
+__email__ = "nellstephanj@gmail.com"
+__status__ = "Development"
 
 TEMPLATE_DIR = correct_path(Path(os.path.abspath(os.path.dirname(__file__)), 'templates'))
-
 FACE_NOT_FOUND_PLACE_HOLDER = cv2.imread(TEMPLATE_DIR + "/profile.jpg")
 
 
@@ -22,14 +32,13 @@ class FaceDetector:
     def __init__(self, shape_predictor_path):
         """
         Initialise Face Detector Manager.
-        Authors(s):
-            Nicolai van Niekerk, Stephan Nell
+
         Args:
             shape_predictor_path (str): Describes the path the Shape Predictor
             trained data.
+
         Returns:
             None
-
         """
         self.shape_predictor_path = shape_predictor_path
         self.predictor = dlib.shape_predictor(self.shape_predictor_path)
@@ -47,14 +56,15 @@ class FaceDetector:
         If a face is not detected in the image the execution should log that the face was not found and continue
         with execution. This is due to the fact that face detection might not be critical to
         a function (like with text extraction) and rather be used to increase accuracy.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image containing the face we need to detect.
+
         Raises:
             ValueError: If no face can be detected.
+
         Returns:
-            Integer List: This list contains the box coordinates for the region in which the face resides.
+            list(integer): This list contains the box coordinates for the region in which the face resides.
         """
         rectangles = self.detector(image, 1)
         if len(rectangles) == 0:
@@ -65,12 +75,13 @@ class FaceDetector:
         """
         This function finds a face in the image passed and is optimised
         to align the face before being returned.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image containing the face we need to detect and extract.
+
         Raises:
             ValueError: If no face can be detected.
+
         Returns:
             obj:'OpenCV image': Any background and unnecessary components are removed and only
             the aligned face is returned.
@@ -88,18 +99,16 @@ class FaceDetector:
         After the region has been blurred, the blurred region is reapplied to the original image.
         Blurring the face is implemented as a method in the attempt to reduce noise when extracting
         text from the image later in the image pipeline.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image containing the face we need to detect and blur.
+
         Raises:
             ValueError: If no face can be detected.
+
         Returns:
             obj:'OpenCV image': A copy of the original image is returned but with the applied
             blurring to the face region.
-
-            Remove hard coded y and h adjustment values.
-
         """
         rectangle = self.detect(image)
         if rectangle is None:
