@@ -6,7 +6,7 @@ Unit tests for the SA ID book old module.
 ----------------------------------------------------------------------
 """
 
-from id_contexts.sa_id_book_old import SAIDBookOld
+from hutts_verification.id_contexts.sa_id_book_old import SAIDBookOld
 
 
 def test_get_id_info_empty_in_str():

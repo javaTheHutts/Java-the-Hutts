@@ -7,7 +7,7 @@ Unit tests for the Text Cleaner module.
 """
 
 import pytest
-from image_processing.text_cleaner import TextCleaner
+from hutts_verification.image_processing.text_cleaner import TextCleaner
 
 
 def test_clean_up_empty_in_str():
