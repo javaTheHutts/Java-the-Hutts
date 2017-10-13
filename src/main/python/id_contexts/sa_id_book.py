@@ -1,16 +1,19 @@
 """
-----------------------------------------------------------------------
-Authors: Jan-Justin van Tonder
-----------------------------------------------------------------------
 This file contains the logic for South African ID book (post 1994)
 context.
-----------------------------------------------------------------------
 """
 
 from id_contexts.id_context import FieldType, LineType
 from id_contexts.sa_id import SAID
 from hutts_utils.hutts_logger import logger
 from fuzzywuzzy import fuzz
+
+__author__ = "Jan-Justin van Tonder"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Jan-Justin van Tonder"
+__email__ = "J.vanTonder@tuks.co.za"
+__status__ = "Development"
 
 
 class SAIDBook(SAID):
@@ -84,9 +87,6 @@ class SAIDBook(SAID):
     def _get_idiosyncratic_match(self, match_context, id_string_list, current_index):
         """
         Identifies and returns matches that are specific to the current ID context.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             match_context (dict): A dictionary object that provides context for the information that is to be extracted.

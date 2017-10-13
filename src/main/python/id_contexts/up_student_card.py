@@ -1,15 +1,18 @@
 """
-----------------------------------------------------------------------
-Authors: Jan-Justin van Tonder
-----------------------------------------------------------------------
 This file contains the logic for University of Pretoria ID
 card context. It is mainly intended for demonstration purposes.
-----------------------------------------------------------------------
 """
 
 import re
 from id_contexts.id_context import IDContext, FieldType, LineType
 from hutts_utils.hutts_logger import logger
+
+__author__ = "Jan-Justin van Tonder"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Jan-Justin van Tonder"
+__email__ = "J.vanTonder@tuks.co.za"
+__status__ = "Development"
 
 
 class UPStudentCard(IDContext):
@@ -53,9 +56,6 @@ class UPStudentCard(IDContext):
         This function is responsible for generating a dictionary object containing the relevant ID information,
         such as names, surname, ID number, etc., from a given input string containing said relevant information.
         In this particular ID context, the information is sparse and is mainly intended for demonstration purposes.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             match_contexts (list): A list of dictionaries that contain the contextual information used in the process

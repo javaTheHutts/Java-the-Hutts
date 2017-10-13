@@ -1,17 +1,20 @@
 """
-----------------------------------------------------------------------
-Authors: Jan-Justin van Tonder
-----------------------------------------------------------------------
 This file contains the abstraction of all ID contexts, which contain
 the necessary information and settings specific to a particular ID
 document type.
-----------------------------------------------------------------------
 """
 
 import re
 from abc import ABC, abstractmethod
 from enum import Enum
 from hutts_utils.hutts_logger import logger
+
+__author__ = "Jan-Justin van Tonder"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Jan-Justin van Tonder"
+__email__ = "J.vanTonder@tuks.co.za"
+__status__ = "Development"
 
 
 class IDContext(ABC):
@@ -60,9 +63,6 @@ class IDContext(ABC):
         Responsible for filtering undesirable fields to be retrieved as well as delegating the responsibility
         of extracting ID information from an OCR string and housing said information in a convenient dictionary.
         Some type checking is done to reduce the likelihood of errors further down the call stack.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             id_string (str): A string containing some ID information.
@@ -119,9 +119,6 @@ class IDContext(ABC):
         """
         Filters out fields which are to be ignored from the match_contexts.
 
-        Authors:
-            Jan-Justin van Tonder
-
         Args:
             ignore_fields (list): A list containing fields which are to be ignored during extraction.
 
@@ -157,9 +154,6 @@ class IDContext(ABC):
     def _normalise_match(match_context, match):
         """
         Normalises a given match string according to the context it was matched.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             match_context (dict): A dictionary object that provides context for the information that is to be extracted.
