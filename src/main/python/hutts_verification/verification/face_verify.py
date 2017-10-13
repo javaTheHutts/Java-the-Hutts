@@ -24,14 +24,15 @@ class FaceVerify:
     def __init__(self, shape_predictor_path, face_recognition_path):
         """
         Initialise face verify manager.
+
         Args:
-            shape_predictor_path (str): Describes the path the Shape Predictor
-            trained data.
-            face_recognition_path (str): Describes the path the face recognition
-            trained data.
+            shape_predictor_path (str): Describes the path the Shape Predictor trained data.
+            face_recognition_path (str): Describes the path the face recognition trained data.
+
         Raises:
             TypeError: If a none string value is passed for shape_predictor_path
             TypeError: If a none string value is passed for face_recognition_path
+
         """
         logger.info("Initialise FaceVerify")
 
@@ -63,18 +64,15 @@ class FaceVerify:
         Args:
             face1 (:obj:'OpenCV image'): The first image containing the face that should be compared.
             face2 (:obj:'OpenCV image'): The second image containing the face that should be compared
-            threshold (float): The threshold value determines at what distance the two images are
-                considered the same person. If a verify score is below the threshold value the faces are
-                considered a match. The Labled Faces in the Wild benchmark recommend a default threshold
-                of 0.6 but a threshold of 0.55 was decided on since a threshold of 0.55 represents
-                the problem better.
+            threshold (float): The threshold value determines at what distance the two images are considered the same person.
+            If a verify score is below the threshold value the faces are considered a match.
+            The Labled Faces in the Wild benchmark recommend a default threshold
+            of 0.6 but a threshold of 0.55 was decided on since a threshold of 0.55 represents
+            the problem better.
 
         Returns:
-            bool: Represent if two face indeed match True if distance calculated is
-                    below threshold value. False if the distance calculated is
-                    above threshold value.
-            float: Return Euclidean distance between the vector representation
-            of the two faces
+            bool: Represent if two face indeed match. True if distance calculated is below threshold value, False otherwise.
+            float: Return Euclidean distance between the vector representation of the two faces.
 
         Raises:
             ValueError: If no face can be detected no faces can be matched and
