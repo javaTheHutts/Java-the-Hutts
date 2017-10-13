@@ -6,8 +6,8 @@ Unit tests for the context manager module.
 ----------------------------------------------------------------------
 """
 
-from image_processing.context_manager import ContextManager
-from id_contexts.id_context import IDContext
+from hutts_verification.image_processing.context_manager import ContextManager
+from hutts_verification.id_contexts.id_context import IDContext
 
 
 def test_get_id_context_known_1():
