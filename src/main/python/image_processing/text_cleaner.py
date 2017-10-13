@@ -1,14 +1,17 @@
 """
-----------------------------------------------------------------------
-Authors: Jan-Justin van Tonder
-----------------------------------------------------------------------
 This file contains the logic used to manage the removal of characters
 from an input string.
-----------------------------------------------------------------------
 """
 
 import re
 from hutts_utils.hutts_logger import logger
+
+__author__ = "Jan-Justin van Tonder"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Jan-Justin van Tonder"
+__email__ = "J.vanTonder@tuks.co.za"
+__status__ = "Development"
 
 
 class TextCleaner:
@@ -32,9 +35,6 @@ class TextCleaner:
         """
         This function serves to receive an input string, clean it up through removing undesirable characters and
         unnecessary whitespace, and to return the cleaned string.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             in_string (str): The input string that is to be cleaned.
@@ -76,9 +76,6 @@ class TextCleaner:
         """
         This function is responsible for compiling a regex pattern that is used to filter out the characters that
         were deemed undesirable from a string.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             deplorables (list): A list of characters that are to be filtered from the input string.

@@ -1,9 +1,20 @@
+"""
+Wraps functions that are used to simplify or ease the image processing process.
+"""
+
 import cv2
 import os
 import imutils
 import numpy as np
 from imutils.perspective import four_point_transform
 from hutts_utils.hutts_logger import logger
+
+__author__ = "Nicolai van Niekerk, Stephan Nell"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Nicolai van Niekerk"
+__email__ = "nicvaniek@gmail.com"
+__status__ = "Development"
 
 DESKTOP = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 # The minimum contour area must be to be transformed.
@@ -22,14 +33,15 @@ class SimplificationManager:
         a function to detect the contours of a identification document. If contours of an
         identification document is detected the image is converted from a non-perspective view
         to an perspective view.
-        Author(s):
-            Stephan Nell, Nicolai van Niekerk
+
         Args:
             image (:obj:'OpenCV image'): Image containing a identification document
             use_io (boolean): Whether or not to write images to disk
+
         Returns:
             obj:'OpenCV image': Returns as warped image where just the identification document
                 is present and the identification document is now in a perspective view.
+
         Raises:
             TypeError: If a parameter is passed that is not of type Numpy array.
         """
