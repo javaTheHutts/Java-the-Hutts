@@ -1,10 +1,6 @@
 """
-----------------------------------------------------------------------
-Authors: Stephan Nell, Marno Hermann, Jan-Justin van Tonder
-----------------------------------------------------------------------
 This file contains the abstraction and high-level logic of South
 African ID contexts.
-----------------------------------------------------------------------
 """
 
 import re
@@ -13,6 +9,13 @@ from fuzzywuzzy import fuzz
 from datetime import datetime
 from id_contexts.id_context import IDContext, LineType
 from hutts_utils.hutts_logger import logger
+
+__authors__ = "Jan-Justin van Tonder, Stephan Nell, Marno Hermann"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Jan-Justin van Tonder"
+__email__ = "J.vanTonder@tuks.co.za"
+__status__ = "Development"
 
 
 class SAID(IDContext):
@@ -49,9 +52,6 @@ class SAID(IDContext):
         """
         This function is responsible for generating a dictionary object containing the relevant ID information,
         such as names, surname, ID number, etc., from a given input string containing said relevant information.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             match_contexts (list): A list of dictionaries that contain the contextual information used in the process
@@ -92,9 +92,6 @@ class SAID(IDContext):
         This function is responsible for populating a dictionary object with information that it is able to find
         and extract from a given string containing ID information.
 
-        Authors:
-            Jan-Justin van Tonder
-
         Args:
             id_string (str): A string containing some ID information.
             id_info (dict): A dictionary object used to house extracted ID information.
@@ -125,9 +122,6 @@ class SAID(IDContext):
         relevant ID information based on some context for image_processing that is provided as input. Fuzzy string
         matching is performed on field names in order to extract field values. This process is assisted with a context
         that is is to be provided.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             id_string_list (list): An ID string that has been broken down into a list of individual lines.
@@ -241,11 +235,6 @@ class SAID(IDContext):
         This function is responsible for extracting information from a given ID number and populating a given
         dictionary object with the extracted information.
 
-        Authors:
-            Marno Hermann
-            Stephan Nell
-            Jan-Justin van Tonder
-
         Args:
             match_contexts (list): A list of dictionaries that contain the contextual information used in the process
                 of retrieving field values from the OCR output string.
@@ -280,9 +269,6 @@ class SAID(IDContext):
         All custom operations that are required after all the extraction has taken place, should be
         called from within this function.
 
-        Authors:
-            Jan-Justin van Tonder
-
         Args:
             id_info (dict): A dictionary object used to house extracted ID information.
 
@@ -307,9 +293,6 @@ class SAID(IDContext):
         Due to the preference of extracting the date of birth from the id number as opposed to
         the ocr output, there tends to be a discrepancy in the date format retrieved, therefore,
         standardise it for future use.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             date_of_birth (str): The date of birth to be standardised.
@@ -389,9 +372,6 @@ class SAID(IDContext):
     def _compute_checksum(id_number):
         """
         Compute the Luhn checksum for the given id number string for validation.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.
