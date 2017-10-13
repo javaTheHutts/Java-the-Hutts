@@ -108,7 +108,7 @@ class FaceVerify:
         if match_distance < threshold:
             match_distance = 1 - match_distance
             threshold = 1 - threshold + 0.05
-            percentage_match = ((match_distance-threshold)*15/((match_distance-threshold)*100))*100 + 85
+            percentage_match = ((match_distance-threshold)*15/((1-threshold)*100))*100 + 85
             logger.info('Matching percentage: ' + str(percentage_match) + "%")
             return True, percentage_match
         elif match_distance < threshold + 0.05:
