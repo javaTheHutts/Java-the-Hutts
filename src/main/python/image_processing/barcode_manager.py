@@ -1,6 +1,19 @@
+"""
+A class that is responsible for detecting a barcode and extracting information
+from said barcode.
+"""
+
 import numpy as np
 import cv2
 import zbar.misc
+
+__author__ = "Stephan Nell"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Stephan Nell"
+__email__ = "nellstephanj@gmail.com"
+__status__ = "Development"
+
 
 # The minimum area a rectangle must be to be considered a barcode.
 BOUNDING_RECTANGLE_THRESHOLD = 200
@@ -19,7 +32,7 @@ class BarCodeManager:
 
     def detect(self, image):
         """
-        This function detects a region containing a Barcode if a Barcode is present in the image passed
+        This function detects a region containing a barcode if a barcode is present in the image passed.
         Barcodes supported:
             EAN
             UPC
@@ -28,16 +41,16 @@ class BarCodeManager:
             Code 128
             ITF
         For more information on Barcode types: https://www.scandit.com/types-barcodes-choosing-right-barcode/
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image containing the potential barcode.
+
         Returns:
-            Boolean: A value of True is returned if a Barcode was detected
+            boolean: A value of True is returned if a barcode was detected.
                 If however a barcode was not detected a value of false is returned.
             obj:'OpenCV image': If a Barcode was successfully detected the detected barcode is returned.
                 If a barcode was not detected return the original image.
-            Integer List: This list contains the box coordinates for the region in which the barcode resides.
+            integer list: This list contains the box coordinates for the region in which the barcode resides.
         Raises:
             TypeError: If a none numpy array value has been passed
         Todo:
@@ -83,14 +96,14 @@ class BarCodeManager:
     def get_barcode_info(self, image):
         """
         This function returns scanned barcode information.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image containing a Barcode.
+
         Returns:
-            Boolean: A value of True if the function was able to extract information from the barcode.
+            boolean: A value of True if the function was able to extract information from the barcode.
                 If no information was extracted from the barcode a value of False is returned.
-            String: A UTF-8 String containing the information extracted from the Barcode.
+            string: A UTF-8 String containing the information extracted from the Barcode.
                 If no information was extracted from the barcode a empty string is returned.
             obj:'OpenCV image': A copy of the original image.
         Todo:
@@ -113,14 +126,14 @@ class BarCodeManager:
         This function applies blurring to a detected barcode region to reduce noise in the image.
         The barcode region is first extracted, then blurring is applied, after blurring is applied
         the blurred out barcode is reapplied to the original image.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image containing a Barcode.
             box: The box is an integer list containing the box region coordinates of the barcode location.
             dilation_intensity (int): Indicates the intensity by which the barcode should be dilated.
                 The greater the intensity the greater the extent of dilation. Greater intensity
                 leads to reduce of speed with every iterations.
+
         Returns:
              obj:'OpenCV image': The Original image with blurring applied to the barcode region in the image.
         """

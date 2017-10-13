@@ -1,9 +1,5 @@
 """
-----------------------------------------------------------------------
-Author(s): Nicolai van Niekerk, Stephan Nell
-----------------------------------------------------------------------
 Handles all requests relevant to the extraction service of the API.
-----------------------------------------------------------------------
 """
 import base64
 import cv2
@@ -13,6 +9,13 @@ from hutts_utils.image_handling import grab_image
 from image_processing.sample_extract import FaceExtractor
 from hutts_utils.hutts_logger import logger
 
+__authors__ = "Nicolai van Niekerk, Stephan Nell"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Nicolai van Niekerk"
+__email__ = "nicvaniek@gmail.com"
+__status__ = "Development"
+
 
 extract = Blueprint('extract', __name__)
 
@@ -20,13 +23,8 @@ extract = Blueprint('extract', __name__)
 @extract.route('/extractText', methods=['POST'])
 def extract_text():
     """
-    ----------------------------------------------------------------------
-    Author(s): Nicolai van Niekerk, Stephan Nell
-    ----------------------------------------------------------------------
     Sample function to extract text from image received.
-    ----------------------------------------------------------------------
     URL: http://localhost:5000/extractText
-    ----------------------------------------------------------------------
     """
     # Initialize the data dictionary to be returned by the request.
     data = {"success": False}
@@ -77,13 +75,8 @@ def extract_text():
 @extract.route('/extractFace', methods=['POST'])
 def extract_face():
     """
-    ----------------------------------------------------------------------
-    Author(s): Nicolai van Niekerk, Stephan Nell
-    ----------------------------------------------------------------------
     Sample function to extract face from image received
-    ----------------------------------------------------------------------
     URL: http://localhost:5000/extractFace
-    ----------------------------------------------------------------------
     """
     # initialize the data dictionary to be returned by the request
     data = {"success": False}
@@ -117,13 +110,8 @@ def extract_face():
 @extract.route('/extractAll', methods=['POST'])
 def extract_all():
     """
-    ----------------------------------------------------------------------
-    Author(s): Nicolai van Niekerk, Stephan Nell
-    ----------------------------------------------------------------------
     Sample function to extract face and text from image received
-    ----------------------------------------------------------------------
     URL: http://localhost:5000/extractAll
-    ----------------------------------------------------------------------
     """
     # initialize the data dictionary to be returned by the request
     data = {"success": False}
@@ -179,12 +167,12 @@ def face_extraction_response(use_io, image, text_extract_result=None):
     to a jpg image. Furthermore, the jpg image is converted to
     Base64 jpg type and returned. If text extraction results are provided
     the response will contain the data of text extraction result as well.
-    Author(s):
-        Stephan Nell
+
     Args:
         use_io (boolean): Whether or not images should be written to disk
         image: The cv2 (numpy) image that should be converted to jpg
         text_extract_result (dict) the extracted text results
+
     Returns:
         (:obj:'Response'): The response object that contains the information for HTTP transmission
     """
