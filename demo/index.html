@@ -85,6 +85,7 @@
 									<select id="id-type">
 										<option value="default" selected>auto-detect</option>
 										<option value="idbook">ID book</option>
+										<option value="idbookold">ID book (old)</option>
 										<option value="idcard">ID card</option>
 										<option value="studentcard">student card</option>
 									</select>
@@ -132,7 +133,7 @@
 					<li>
 						<div class="collapsible-header waves-effect waves-teal">
 							<i class="material-icons carets">expand_more</i>
-							Text Extraction
+							Extraction
 						</div>
 						<div class="collapsible-body">
 							<div class="row">
@@ -249,14 +250,6 @@
 							</div>
 						</div>
 					</li>
-					<li>
-						<div class="collapsible-header waves-effect waves-teal">
-							<i class="material-icons carets">expand_more</i>Profile Extraction
-						</div>
-						<div class="collapsible-body">
-
-						</div>
-					</li>
 				</ul>
 				<!-- End Settings 1 -->
 			</li>
@@ -330,9 +323,8 @@
 				</a>
 			</li>
 			<li>
-				<a class="waves-effect waves-teal slide-btn" href="#"
-				data-activates="info-slide">
-					<i class="material-icons">info_outline</i>Info
+				<a class="waves-effect waves-teal modal-trigger" href="#disclaimer">
+					<i class="material-icons fa fa-list-alt"></i>Disclaimer
 				</a>
 			</li>
 		</ul>
@@ -721,7 +713,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
+						<div id="text-verify-details-card" class="row">
 							<div class="col s12 card-wrapper">
 								<div class="card">
 									<div class="card-content">
@@ -730,8 +722,8 @@
 											<thead>
 												<tr>
 													<th>Field</th>
-													<th>Extracted field value</th>
-													<th>Verifier field value</th>
+													<th class="center-align">Verifier field value</th>
+													<th class="center-align">Extracted field value</th>
 													<th class="right-align">Match percentage</th>
 												</tr>
 											</thead>
@@ -820,35 +812,35 @@
 					<div class="modal-content">
 						<h4>Disclaimer</h4>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-							tempor incididunt ut labore et dolore magna aliqua. 
-							Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-							ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-							pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
-							in culpa qui officia deserunt mollit anim id est laborum
+							We being Java the Hutts, the party that "owns" this website and Hutts Verification,
+							wishes to advise and confirm that by accessing or using our website, or Hutts
+							Verification, you acknowledge that you have read all of the privacy terms and the
+							POPI disclaimer wherein you understand and agree that all information provided,
+							whether personal or otherwise, may be used and processed by the "owner" of this
+							website.
 						</p>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-							tempor incididunt ut labore et dolore magna aliqua. 
-							Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-							ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-							pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
-							in culpa qui officia deserunt mollit anim id est laborum
+							Further, by continuing to access this website you specifically agree that Java the Hutts
+							will use such information provided by you, irrespective of the nature of such information.
+							However, Java the Hutts will use its best endeavors and take all reasonable precautions to
+							ensure that any information provided, is only used for the purposes it has been provided.
 						</p>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-							tempor incididunt ut labore et dolore magna aliqua. 
-							Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-							ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-							reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-							pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
-							in culpa qui officia deserunt mollit anim id est laborum
+							Please note that by submitting information via this website, you consent to the collection,
+							collation, and processing of such information, as well as the use and disclosure of such
+							information, in accordance with this policy.
+						</p>
+						<p>
+							Whatsmore, in providing information to this website or Hutts Verification, the entrusted
+							party, Java the Hutts, will not store or re-distribute submitted information in any way.
+						</p>
+						<p>
+							If you do not agree to, or wish to be bound by these terms, please exit this page and
+							do not access or use the website.
 						</p>
 					</div>
 					<div class="modal-footer">
-						<a href="#!" class="modal-action modal-close waves-effect waves-teal btn-flat">
+						<a id="disclaimer-close" href="#!" class="modal-action modal-close waves-effect waves-teal btn-flat">
 							Got it
 						</a>
 					</div>

@@ -15,6 +15,11 @@ PipelineType = {
 
 $(document).ready(function () {
 
+	// Attempt to deal with sticky hover
+	if ($(window).width() < 994) {
+		disableHoverEffects();
+	}
+
 	// Hide some content
 	$('.initially-hidden').hide();
 
@@ -169,6 +174,9 @@ $(document).ready(function () {
 		// Hide previous detailed results
 		$('#detailed-results').hide();
 
+		// Hide previous verbose verify text results
+		$('#text-verify-details-card').hide();
+
 		// Ensure that the pre-loader spinner is visible
 		$('#verify-result .modal-content .spinner').show();
 		var ditto = ellipses('#verify-ditto');
@@ -190,20 +198,25 @@ $(document).ready(function () {
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
 					populatePipeline(PipelineType.TEXT, 8);
-					populatePipeline(PipelineType.PROFILE, 6);
+					// populatePipeline(PipelineType.PROFILE, 6);
 					$('#text-pipeline').show(600);
-					$('#profile-pipeline').show(600);
+					// $('#profile-pipeline').show(600);
 				}
+
+				// Show the view details button
+				$('.circle-results-wrapper, #verify-result.modal .modal-footer')
+				.show(500);
+				
+				// Populate the detailed results
+				populateDetailedResults(data);
+
+				// Unhide the detailed results section
+				$('#detailed-results').show(600);
 				
 				// Populate the detailed results section
 				if (typeof data.text_match === 'object') {
-					// Show the view details button
-					$('.circle-results-wrapper, #verify-result.modal .modal-footer')
-					.show(500);
-					// Populate the detailed results
-					populateDetailedResults(data);
-					// Unhide the detailed results section
-					$('#detailed-results').show(600);
+					// Show the verbose text verify results.
+					$('#text-verify-details-card').show(600);
 				}
 			},
 			error: function() {
@@ -229,7 +242,9 @@ $(document).ready(function () {
 
 	// Hover compare cards on compare button hover
 	$('#verify-btn, .extraction-options button').hover(function () {
-		$('.duo-card').addClass('duo-card-hover');
+		if ($(window).width() >= 994) {
+			$('.duo-card').addClass('duo-card-hover');
+		}
 	}, function () {
 		$('.duo-card').removeClass('duo-card-hover');
 	});
@@ -272,18 +287,14 @@ $(document).ready(function () {
 
 				// Handle the case involving a UP card, if a UP card
 				// was used as an input image
-				if (data['up_card']) {
-					handleUPCard(data);
-				} else {
-					$("input[id$=extract]").each(function () {
-						var id = $(this).attr("id").replace("-extract", "");
-						if (id != "id-photo") {
-							$(this).focus();
-							$(this).val(data[id]);
-							$(this).blur();
-						}
-					});
-				}
+				$("input[id$=extract]").each(function () {
+					var id = $(this).attr("id").replace("-extract", "");
+					if (id != "id-photo") {
+						$(this).focus();
+						$(this).val(data[id]);
+						$(this).blur();
+					}
+				});
 
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
@@ -334,8 +345,8 @@ $(document).ready(function () {
 
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
-					populatePipeline(PipelineType.PROFILE, 6);
-					$('#profile-pipeline').show(600);
+					// populatePipeline(PipelineType.PROFILE, 6);
+					// $('#profile-pipeline').show(600);
 				}
 				$('#extract-loader').modal('close');
 			},
@@ -381,21 +392,15 @@ $(document).ready(function () {
 				
 				// Parse the response
 				var cardComponents = jQuery.parseJSON(data);
-				// Handle the case involving a UP card, if a UP card
-				// was used as an input image
-				if (cardComponents['text_extract_result']['up_card']) {
-					handleUPCard(cardComponents['text_extract_result'], cardComponents['extracted_face']);
-				} else {
-					// Populate text fields
-					$("input[id$=extract]").each(function () {
-						var id = $(this).attr("id").replace("-extract", "");
-						if (id != "id-photo") {
-							$(this).focus();
-							$(this).val(cardComponents.text_extract_result[id]);
-							$(this).blur();
-						}
-					});
-				}
+				// Populate text fields
+				$("input[id$=extract]").each(function () {
+					var id = $(this).attr("id").replace("-extract", "");
+					if (id != "id-photo") {
+						$(this).focus();
+						$(this).val(cardComponents.text_extract_result[id]);
+						$(this).blur();
+					}
+				});
 
 				// Show face
 				document.getElementById("face-preview-extract").src = cardComponents.extracted_face;
@@ -403,9 +408,9 @@ $(document).ready(function () {
 				// Populate and unhide pipeline
 				if($('#pipeline_switch').is(':checked')){
 					populatePipeline(PipelineType.TEXT, 8);
-					populatePipeline(PipelineType.PROFILE, 6);
+					// populatePipeline(PipelineType.PROFILE, 6);
 					$('#text-pipeline').show(600);
-					$('#profile-pipeline').show(600);
+					// $('#profile-pipeline').show(600);
 				}
 				$('#extract-loader').modal('close');
 			},
@@ -437,6 +442,14 @@ $(document).ready(function () {
 			$('.text-extract-settings').prop('disabled', false);
 		$('select').material_select();
 	});
+
+	// Add a disclaimer cookie upon closing
+	$('#disclaimer-close').on('click', function() {
+		sessionStorage.setItem('disclaimer-seen', true);
+	});
+
+	// Show disclaimer if it has not been seen yet
+	if (!sessionStorage.getItem('disclaimer-seen')) $('#disclaimer').modal('open');
 
 });
 
@@ -563,39 +576,6 @@ function clearVerificationFields() {
 	});
 }
 
-// Handle the extracted information from a UP card
-function handleUPCard(extracted_text) {
-	// The regex used to find the student/staff number
-	// used mostly to sift through the garbage and find 
-	// what we actually want
-	var re = /[0-9]{6,10}/
-	// Split text_dump on newline
-	var textDump = extracted_text['text_dump'].split('\n');
-	// Sift through the noise
-	for (var i = 0; i < textDump.length; i++) {
-		if (re.test(textDump[i])) {
-			// Get student/staff number
-			var upNumber = extracted_text['barcode_dump']? extracted_text['barcode_dump']: textDump[i];
-			$('#identity_number-extract').focus();
-			$('#identity_number-extract').val(upNumber);
-			$('#identity_number-extract').blur();
-			// Get initials and surname if possible
-			if (i - 1 > 0) {
-				var nameLine = textDump[i - 1].split(' ');
-				nameLine.shift();
-				$('#names-extract').focus();
-				$('#names-extract').val(nameLine[0]);
-				$('#names-extract').blur();
-				nameLine.shift();
-				nameLine = nameLine.join(' ');
-				$('#surname-extract').focus();
-				$('#surname-extract').val(nameLine);
-				$('#surname-extract').blur();
-			}
-		}
-	}
-}
-
 function addPreferences(formData) {
 	var blurTechnique = $('#blur_technique').val();
 	var thresholdTechnique = $('#threshold_technique').val();
@@ -625,7 +605,7 @@ function addPreferences(formData) {
 			formData.append('color', "red");
 	}
 
-	// Verbose outpuut for verification
+	// Verbose output for verification
 	var verboseVerify = $('#verbose_switch').is(':checked');
 	formData.append('verbose_verify', verboseVerify);
 
@@ -639,23 +619,26 @@ function populateDetailedResults(data) {
 	$('#text-verify-details, #verify-details').html('');
 
 	// Populate the verify table
+	var percent = parseFloat(data.face_match).toFixed(2);
 	var row = $('<tr>');
 	row.append('<td>Profile</td>');
-	row.append('<td class="center-align">' + parseFloat(data.face_match).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">' + (!isNaN(percent) ? percent + '%' : '-')  + '</td>');
 	row.append('<td class="center-align">-</td>');
 	row.append('<td class="center-align">-</td>');
 	$('#verify-details').append(row);
+	percent = parseFloat(data.text_match.total).toFixed(2);
 	row = $('<tr>');
 	row.append('<td>Text</td>');
-	row.append('<td class="center-align">' + parseFloat(data.text_match.total).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">' + (!isNaN(percent) ? percent + '%' : '-') + '</td>');
 	row.append('<td class="center-align">-</td>');
 	row.append('<td class="center-align">-</td>');
 	$('#verify-details').append(row);
 	var threshold = parseFloat($('#verification-threshold').val()).toFixed(2);
-	var passResult = data['total'] >= threshold? 'pass': 'fail';
+	var passResult = data.total_match >= threshold ? 'Pass' : 'Fail';
+	percent = parseFloat(data.total_match).toFixed(2);
 	row = $('<tr>');
 	row.append('<td>Total</td>');
-	row.append('<td class="center-align">' + parseFloat(data.total_match).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">' + (!isNaN(percent) ? percent + '%' : '-') + '</td>');
 	row.append('<td class="center-align">' + threshold + '%</td>');
 	row.append('<td class="center-align">' + passResult + '</td>');
 	$('#verify-details').append(row);
@@ -664,15 +647,14 @@ function populateDetailedResults(data) {
 	var textMatch = data.text_match;
 	for (var field in textMatch) {
 		if (field !== 'total') {
+			var percent = parseFloat(textMatch[field].match_percentage).toFixed(2);
+			eFieldVal = textMatch[field].extracted_field_value;
+			vFieldVal = textMatch[field].verifier_field_value;
 			var row = $('<tr>');
 			row.append('<td>' + titleCase(field.replace(/_/g, ' ')) + '</td>');
-			row.append('<td>' + textMatch[field].extracted_field_value + '</td>');
-			row.append('<td>' + textMatch[field].verifier_field_value + '</td>');
-			row.append(
-				'<td class="right-align">' + 
-				parseFloat(textMatch[field].match_percentage).toFixed(2) + 
-				'%</td>'
-			);
+			row.append('<td class="center-align">' + (vFieldVal == '' || vFieldVal == null ? '-' : vFieldVal) + '</td>');
+			row.append('<td class="center-align">' + (eFieldVal == '' || eFieldVal == null ? '-' : eFieldVal) + '</td>');
+			row.append('<td class="right-align">' + (!isNaN(percent) ? percent + '%' : '-&nbsp;&nbsp;&nbsp;&nbsp;') + '</td>');
 			// Append the newly created row to the table
 			$('#text-verify-details').append(row);
 		}
@@ -683,7 +665,7 @@ function populateDetailedResults(data) {
 	row.append('<td></td>');
 	row.append('<td></td>');
 	row.append('<td></td>');
-	row.append('<td class="right-align">' + parseFloat(textMatch[field]).toFixed(2) + '%</td>');
+	row.append('<td class="right-align">' + parseFloat(textMatch.total).toFixed(2) + '%</td>');
 	$('#text-verify-details').append(row);
 }
 
@@ -895,4 +877,11 @@ function extractInputCheck() {
 		}
 	});
 	return $('#id-photo-extract').val() != '';
+}
+
+// Disable all the hover effects.
+function disableHoverEffects() {
+	$('.tooltipped').tooltip('remove');
+	$('.tooltipped').removeClass('tooltipped');
+	$('.hoverable').removeClass('hoverable');
 }

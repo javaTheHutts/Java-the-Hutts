@@ -105,6 +105,11 @@ class TextExtractor:
         # Get ID information from cleaned text.
         logger.info('Placing extracted text in a dictionary...')
         id_context = self._context_manager.get_id_context(identification_type)
+        # Check if context was found.
+        if id_context is None:
+            # Log the error and raise it for handling.
+            logger.error('Could not find ID context for ID type "%s"' % identification_type)
+            raise ValueError('Could not identify ID type')
         id_details = id_context.get_id_info(clean_text, barcode_data=data)
         # Log the retrieved ID information extracted text to terminal.
         # This is for demonstration purposes.

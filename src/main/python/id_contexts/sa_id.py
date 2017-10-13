@@ -26,6 +26,12 @@ class SAID(IDContext):
     # Define a class-level constant for a valid ID number length.
     VALID_ID_LENGTH = 13
 
+    # Define a class-level constant as a minimum age year delta for year threshold.
+    MIN_AGE_DELTA = 15
+
+    # Define a class-level constant as a year delta for year threshold.
+    YEAR_DELTA = 100
+
     def __init__(self, match_contexts):
         """
         Initialises the SAID object.
@@ -327,6 +333,12 @@ class SAID(IDContext):
             # format 'DD MMM YYYY'
             else:
                 standardised_date_of_birth = datetime.strptime(current_date_of_birth, '%d%b%Y')
+            # Check to see if the year is too far in the future.
+            threshold_year = datetime.now().year - SAID.MIN_AGE_DELTA
+            if standardised_date_of_birth.year >= threshold_year:
+                # Reduce the year by a defined year delta.
+                replacement_year = standardised_date_of_birth.year - SAID.YEAR_DELTA
+                standardised_date_of_birth = standardised_date_of_birth.replace(year=replacement_year)
             # Standardise the date by formatting it according to ISO date format standard,
             # which is 'YYYY-MM-DD'
             return datetime.strftime(standardised_date_of_birth, '%Y-%m-%d')

@@ -170,7 +170,7 @@ class IDContext(ABC):
         """
         # If the field value should only be text, strip everything that is numeric.
         if match_context['field_type'] == FieldType.TEXT_ONLY:
-            match = re.sub(r'[^\w\s-]', '', match)
+            match = re.sub(r'[\d]', '', match)
         # If the field value ought to be numeric only, strip everything that is not numeric.
         elif match_context['field_type'] == FieldType.NUMERIC_ONLY:
             match = re.sub(r'[^\d]', '', match)
