@@ -137,20 +137,23 @@ def receive_faces(match_face=True):
     """
     This function receives faces/ID from request flask handler.
     The function checks for multiple means of receiving the faces/ID. These include
-        Receiving image by file path
-        Receiving image by URL
-        Receiving image by file Stream
+
+        - Receiving image by file path
+        - Receiving image by URL
+        - Receiving image by file Stream
+
     It is expected that an image of a face and an image of an ID will be sent.
     However, if the order is not followed that system will still be able to return the best effort result without
     loss of accuracy.
 
     Args:
         match_face (bool): Indicates if additional profile of a face should be extracted.
-            If an additional face should not be extracted simply return the ID image.
+        If an additional face should not be extracted simply return the ID image.
 
     Returns:
        image_of_id (:obj:'OpenCV image'): An image of a ID.
        face (:obj:'OpenCV image'): An image of a face. If match_face is set to True
+
     """
     data = {"success": False}
     # Get id image as numpy array
