@@ -262,7 +262,7 @@ The application then takes the information that was extracted and compares it to
             \item Documentation should be of such a standard that anyone can easily implement the application when needed.
             \item The system should indicate that images match only if the images match with an accuracy of at least 75\%.
 		\end{itemize}
-		\section{Technology Choices}
+		\section{Technology Choices and Software Development tools}
 		This section describes the technologies in use, and the
 		arguments behind why we decided on these technologies.\\
 		It was important to us to try and utilise technologies that are,
@@ -277,16 +277,16 @@ The application then takes the information that was extracted and compares it to
 		including Python, which was one of the requirements specified by the client.
 		OpenCV now also supports multi-core hardware acceleration, which will
 		increase efficiency drastically. \\
-		
+
 		\noindent
 		OpenCV will be used for real-time processing of images throughout the system,
 		which will include image clean-up image extraction and image manipulation.
-	
-		\subsection{\href{http://dlib.net/}{Dlib \textit{19.4.0}}}
+
+		\subsection{\href{http://dlib.net/}{Dlib \textit{19.6.0}}}
 		Dlib is an open source Machine learning toolkit and is also
 		the only open source machine learning library that supports facial landmark
 		optimisation and face likeness calculations out of the box.\\ 
-		
+
 		\noindent
 		Dlib allows us to make use of a high quality, pre-trained classifiers
 		for facial likeness, which made use of over 3 million faces 
@@ -295,19 +295,19 @@ The application then takes the information that was extracted and compares it to
 		{\textit{Labeled Faces in the Wild}}
 		bench mark, thus allowing us to meet most of our performance requirements
 		in terms of the face likeness calculations. \\
-		
+
 		\noindent
 		Dlib also allows for face detection, as well as facial landmark 
 		detection, both of which is required to improve the
 		accuracy and reliability of the face likeness algorithm by supporting
 		the alignment and clean-up of detected faces.
-		
+
 		\subsection{\href{https://pypi.python.org/pypi/pytesseract}
 		{Pytesseract \textit{0.1.7}}}
 		Python-tesseract is an open source optical 
 		character recognition (OCR) tool for python. This allows 
 		for the reading and decoding of embedded text in images.\\
-		
+
 		\noindent
 		Tesseract allows for easy, automated scanning of cards. By making use
 		of Tesseract we no longer need to:
@@ -318,7 +318,38 @@ The application then takes the information that was extracted and compares it to
 		\end{enumerate}
 		If it is found later to be a necessity in future, Tesseract supports
 		additional training of fonts, which will allow for greater
-		reliability and accuracy when extracting text.  
+		reliability and accuracy when extracting text.
+
+		\subsection{\href{https://travis-ci.org}
+		{Travis CI}}
+		Travis CI, is a hosted continuous integration and delivery service for GitHub projects.\\	
+
+		\noindent
+		Travis CI allowed us to run each pull request in a clean VM build whilst running multiple Test in parallel.
+		This ensured our system was always in a stable state due to the automated testing and installing of the 					project.It also allowed us to streamline code review process.
+
+		\subsection{\href{https://www.codacy.com}
+		{Codacy}}
+		Codacy is an automated code analysis/quality tool.\\
+
+		\noindent
+		Codacy allowed us to continuously test and maintain our system, by checking for code complexity,
+		duplication, security and unit test coverage of changes in every commit and pull request.
+		Codacy allowed us to enforce our code quality standard as well practices
+		that are considered the norm in the industry.
+
+		\subsection{\href{https://snyk.io}
+		{Snyk}}
+		Snyk supports testing and monitoring Python projects that have their dependencies
+		managed by pip by helping fix and monitor known vulnerabilities in the dependencies in projects.\\
+
+		\noindent
+		Hutts verification used several helpful open-source dependencies. However, not all these
+		dependencies can ensure that they are up to date and secure.
+	    Snyk was used as a support tool to help prevent this problem by probing us the means
+	    to detect and fix any vulnerabilities that could affect the performance or security of our project.
+
+
 	
 	\cleardoublepage
 
