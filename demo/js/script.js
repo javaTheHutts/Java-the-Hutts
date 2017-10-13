@@ -15,6 +15,11 @@ PipelineType = {
 
 $(document).ready(function () {
 
+	// Attempt to deal with sticky hover
+	if ($(window).width() < 994) {
+		disableHoverEffects();
+	}
+
 	// Hide some content
 	$('.initially-hidden').hide();
 
@@ -237,7 +242,9 @@ $(document).ready(function () {
 
 	// Hover compare cards on compare button hover
 	$('#verify-btn, .extraction-options button').hover(function () {
-		$('.duo-card').addClass('duo-card-hover');
+		if ($(window).width() >= 994) {
+			$('.duo-card').addClass('duo-card-hover');
+		}
 	}, function () {
 		$('.duo-card').removeClass('duo-card-hover');
 	});
@@ -870,4 +877,11 @@ function extractInputCheck() {
 		}
 	});
 	return $('#id-photo-extract').val() != '';
+}
+
+// Disable all the hover effects.
+function disableHoverEffects() {
+	$('.tooltipped').tooltip('remove');
+	$('.tooltipped').removeClass('tooltipped');
+	$('.hoverable').removeClass('hoverable');
 }
