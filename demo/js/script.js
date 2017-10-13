@@ -612,23 +612,26 @@ function populateDetailedResults(data) {
 	$('#text-verify-details, #verify-details').html('');
 
 	// Populate the verify table
+	var percent = parseFloat(data.face_match).toFixed(2);
 	var row = $('<tr>');
 	row.append('<td>Profile</td>');
-	row.append('<td class="center-align">' + parseFloat(data.face_match).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">' + (!isNaN(percent) ? percent + '%' : '-')  + '</td>');
 	row.append('<td class="center-align">-</td>');
 	row.append('<td class="center-align">-</td>');
 	$('#verify-details').append(row);
+	percent = parseFloat(data.text_match.total).toFixed(2);
 	row = $('<tr>');
 	row.append('<td>Text</td>');
-	row.append('<td class="center-align">' + parseFloat(data.text_match.total).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">' + (!isNaN(percent) ? percent + '%' : '-') + '</td>');
 	row.append('<td class="center-align">-</td>');
 	row.append('<td class="center-align">-</td>');
 	$('#verify-details').append(row);
 	var threshold = parseFloat($('#verification-threshold').val()).toFixed(2);
-	var passResult = data['total'] >= threshold? 'pass': 'fail';
+	var passResult = data.total_match >= threshold ? 'Pass' : 'Fail';
+	percent = parseFloat(data.total_match).toFixed(2);
 	row = $('<tr>');
 	row.append('<td>Total</td>');
-	row.append('<td class="center-align">' + parseFloat(data.total_match).toFixed(2) + '%</td>');
+	row.append('<td class="center-align">' + (!isNaN(percent) ? percent + '%' : '-') + '</td>');
 	row.append('<td class="center-align">' + threshold + '%</td>');
 	row.append('<td class="center-align">' + passResult + '</td>');
 	$('#verify-details').append(row);
@@ -637,15 +640,14 @@ function populateDetailedResults(data) {
 	var textMatch = data.text_match;
 	for (var field in textMatch) {
 		if (field !== 'total') {
+			var percent = parseFloat(textMatch[field].match_percentage).toFixed(2);
+			eFieldVal = textMatch[field].extracted_field_value;
+			vFieldVal = textMatch[field].verifier_field_value;
 			var row = $('<tr>');
 			row.append('<td>' + titleCase(field.replace(/_/g, ' ')) + '</td>');
-			row.append('<td>' + textMatch[field].extracted_field_value + '</td>');
-			row.append('<td>' + textMatch[field].verifier_field_value + '</td>');
-			row.append(
-				'<td class="right-align">' + 
-				parseFloat(textMatch[field].match_percentage).toFixed(2) + 
-				'%</td>'
-			);
+			row.append('<td class="center-align">' + (vFieldVal == '' || vFieldVal == null ? '-' : vFieldVal) + '</td>');
+			row.append('<td class="center-align">' + (eFieldVal == '' || eFieldVal == null ? '-' : eFieldVal) + '</td>');
+			row.append('<td class="right-align">' + (!isNaN(percent) ? percent + '%' : '-&nbsp;&nbsp;&nbsp;&nbsp;') + '</td>');
 			// Append the newly created row to the table
 			$('#text-verify-details').append(row);
 		}
@@ -656,7 +658,7 @@ function populateDetailedResults(data) {
 	row.append('<td></td>');
 	row.append('<td></td>');
 	row.append('<td></td>');
-	row.append('<td class="right-align">' + parseFloat(textMatch[field]).toFixed(2) + '%</td>');
+	row.append('<td class="right-align">' + parseFloat(textMatch.total).toFixed(2) + '%</td>');
 	$('#text-verify-details').append(row);
 }
 
