@@ -1,5 +1,16 @@
+"""
+Wraps all the functions related to applying thresholding techniques to an image.
+"""
+
 import cv2
 import numpy as np
+
+__authors__ = "Stephan Nell, Nicolai van Niekerk"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Stephan Nell"
+__email__ = "nellstephanj@gmail.com"
+__status__ = "Development"
 
 
 class ThresholdingManager:
@@ -9,17 +20,17 @@ class ThresholdingManager:
     def __init__(self, thresholding_type):
         """
         Initialise Thresholding manager.
-        Authors(s):
-            Nicolai van Niekerk, Stephan Nell
+
         Args:
             thresholding_type (str): Indicates the type of thresholding that
                 should be applied.
+
         Raises:
             TypeError: If a parameter is passed that is not of type String.
             NameError: If the thresholding type is not Adaptive or Otsu.
+
         Returns:
             None
-
         """
         if not isinstance(thresholding_type, str):
             raise TypeError(
@@ -37,12 +48,13 @@ class ThresholdingManager:
     def apply(self, image):
         """
         This performs the thresholding based on the predefined technique.
-        Author(s):
-            Nicolai van Niekerk, Stephan Nell
+
         Args:
             image: The image to which the thresholding must be applied.
+
         Raises:
             NameError: If invalid thresholding type is provided. i.e. Adaptive or Otsu.
+
         Returns:
             obj:'OpenCV image': The threshold image.
         """
@@ -57,12 +69,13 @@ class ThresholdingManager:
     def adaptiveThresholding(image):
         """
         This function applies a simple adaptive thresholding to the image passed.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image to which thresholding should be applied.
+
         Raises:
             TypeError: If a parameter is passed that is not of type Numpy array.
+
         Returns:
             obj:'OpenCV image': The Threshold image.
         """
@@ -78,12 +91,13 @@ class ThresholdingManager:
     def otsuThresholding(image):
         """
         This function applies a simple Binary Inverse Otso thresholding to the image passed.
-        Author(s):
-            Stephan Nell
+
         Args:
             image (:obj:'OpenCV image'): Image to which thresholding should be applied.
+
         Raises:
             TypeError: If a parameter is passed that is not of type Numpy array.
+
         Returns:
             obj:'OpenCV image': The Threshold image.
         """
