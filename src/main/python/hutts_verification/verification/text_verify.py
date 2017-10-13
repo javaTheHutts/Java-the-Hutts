@@ -1,6 +1,5 @@
 """
-Contains the logic used to verify the extracted text from a form
-of ID.
+Contains the logic used to verify the extracted text from a form of ID.
 """
 
 import Levenshtein
@@ -33,16 +32,13 @@ class TextVerify:
 
         Args:
             extracted (dict): A dictionary containing the information that was extracted from an ID.
-            verifier (dict): A dictionary containing the information against which the extracted data is to be
-                verified.
-            threshold (float): A threshold percentage (out of 100) that is used to determine whether or not the
-                final match percentage is accepted as verified.
-            min_matches (int): The minimum number of matches that have to be calculated for the final result to be
-                considered as verified.
+            verifier (dict): A dictionary containing the information against which the extracted data is to be verified.
+            threshold (float): A threshold percentage (out of 100) that is used to determine whether or not the final match percentage is accepted as verified.
+            min_matches (int): The minimum number of matches that have to be calculated for the final result to be considered as verified.
             verbose (bool): Indicates whether or not to return all of the calculated match percentages.
 
         Returns:
-            (bool, float | dict): The first value returned is a bool that indicates whether or not the total
+            (bool | float | dict): The first value returned is a bool that indicates whether or not the total
                 percentage match is above the specified threshold value, while the second return value is the total
                 percentage match value if verbose is False, or returns a dict of all the determined percentage match
                 values if verbose is True.
@@ -53,6 +49,7 @@ class TextVerify:
             TypeError: If threshold is not a float.
             TypeError: If min_matches is not an integer.
             TypeError: If verbose is not a boolean.
+
         """
         if not isinstance(extracted, dict):
             raise TypeError(

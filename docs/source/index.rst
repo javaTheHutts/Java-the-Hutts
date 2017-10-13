@@ -14,7 +14,7 @@ Welcome to Hutts Verification's documentation!
    Requirements and Installation Instructions <install.rst>
    Using the Interface <interface.rst>
    Using the Server <server.rst>
-   Using the API <apidocs/hutts_verification.rst>
+   Using the API <apidocs/modules.rst>
    FAQ <faq.rst>
 
 Indices and tables
