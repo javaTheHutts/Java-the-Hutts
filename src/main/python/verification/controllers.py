@@ -1,10 +1,7 @@
 """
-----------------------------------------------------------------------
-Author: Nicolai van Niekerk
-----------------------------------------------------------------------
-Handles all requests relevant to the validation service of the API
-----------------------------------------------------------------------
+Handles all requests relevant to the verification service of the API.
 """
+
 from image_processing.sample_extract import TextExtractor
 from image_preprocessing.face_manager import FaceDetector
 from verification.text_verify import TextVerify
@@ -15,6 +12,13 @@ from hutts_utils.image_handling import grab_image
 from hutts_utils.pypath import correct_path
 from pathlib import Path
 import os
+
+__authors__ = "Nicolai van Niekerk, Stephan Nell, Marno Hermann"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Nicolai van Niekerk"
+__email__ = "nicvaniek@gmail.com"
+__status__ = "Development"
 
 
 verify = Blueprint('verify', __name__)
@@ -41,14 +45,9 @@ FACE_RECOGNITION_PATH = correct_path(Path(
 @verify.route('/verifyID', methods=['POST'])
 def verify_id():
     """
-    ----------------------------------------------------------------------
-    Authors: Nicolai van Niekerk, Stephan Nell, Marthinus Hermann
-    ----------------------------------------------------------------------
     Sample function to return a match percentage of an ID image and
-    provided personal information and picture of face
-    ----------------------------------------------------------------------
+    provided personal information and picture of face.
     URL: http://localhost:5000/verifyID
-    ----------------------------------------------------------------------
     """
     image_of_id, face = receive_faces(match_face=True)
     entered_details = receive_details()
@@ -72,15 +71,10 @@ def verify_id():
 @verify.route('/verifyFaces', methods=['POST'])
 def verify_faces():
     """
-        ----------------------------------------------------------------------
-        Author: Nicolai van Niekerk, Stephan Nell
-        ----------------------------------------------------------------------
-        Sample function to return a match percentage of an ID face image and
-        picture of face
-        ----------------------------------------------------------------------
-        URL: http://localhost:5000/verifyFaces
-        ----------------------------------------------------------------------
-        """
+    Sample function to return a match percentage of an ID face image and
+    picture of face
+    URL: http://localhost:5000/verifyFaces
+    """
     image_of_id, face = receive_faces(match_face=True)
     (is_match, distance) = match_faces(image_of_id, face)
 
@@ -95,15 +89,9 @@ def verify_faces():
 @verify.route('/verifyInfo', methods=['POST'])
 def verify_info():
     """
-        ----------------------------------------------------------------------
-        Author: Nicolai van Niekerk, Stephan Nell
-        ----------------------------------------------------------------------
-        Sample function to return a match percentage of an ID image and
-        provided personal information
-        ----------------------------------------------------------------------
-        URL: http://localhost:5000/verifyInfo
-        ----------------------------------------------------------------------
-        """
+    Sample function to return a match percentage of an ID image and
+    provided personal information
+    """
     image_of_id, _ = receive_faces(match_face=False)
     entered_details = receive_details()
 
@@ -124,16 +112,16 @@ def match_faces(image_of_id, face):
     This function receives two images that receive images of faces that need to be verified.
     It is expected that an image of an ID and an image of a Profile picture will be received.
     Even if the expected images are not received the function will still apply a best effort solution.
-    Author(s):
-        Stephan Nell
+
     Args:
        image_of_id (:obj:'OpenCV image'): An image of an ID that contains a face that needs to be verified
        face (:obj:'OpenCV image'): A image of a face that needs to be verified
+
     Returns:
         bool: Represent if two faces indeed match True if distance calculated is
               below a threshold value. False if the distance calculated is above threshold value.
         float: Return Euclidean distance between the vector representation
-               of the two faces
+               of the two faces.
     """
     # Extract face
     face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
@@ -155,11 +143,11 @@ def receive_faces(match_face=True):
     It is expected that an image of a face and an image of an ID will be sent.
     However, if the order is not followed that system will still be able to return the best effort result without
     loss of accuracy.
-    Author(s):
-        Stephan Nell
+
     Args:
         match_face (bool): Indicates if additional profile of a face should be extracted.
             If an additional face should not be extracted simply return the ID image.
+
     Returns:
        image_of_id (:obj:'OpenCV image'): An image of a ID.
        face (:obj:'OpenCV image'): An image of a face. If match_face is set to True
@@ -207,10 +195,10 @@ def manage_text_extractor(image_of_id):
     """
     This function manages the text extraction from an ID images.
     Management includes preparing text extraction preferences and receiving extracted text.
-    Author(s):
-        Stephan Nell
+
     Args:
        image_of_id (:obj:'OpenCV image'): An image of an ID that text must be extracted from.
+
     Returns:
        preferences (dict): Prepared list of preferences. May contained additional text extraction or logger preferences.
        extracted_text (json object): A collection of text extracted from the ID.
@@ -246,12 +234,12 @@ def manage_text_verification(preferences, extracted_text, entered_details):
     """
     The function manages the preparation before text verification and result of the text verification it self
     Management includes preparing logger functionality and controlling match percentages and messages.
-    Author(s):
-        Stephan Nell
+
     Args:
         preferences (list): A list of preferences. Containing details about logger functionality.
         extracted_text (JSON object): Contains text extracted from ID image.
         entered_details (dict): Dictionary containing information that needs to be verified
+
     Returns:
        text_match_percentage (float): Value representing the accuracy with which the entered details
             matches that of the extracted text.
@@ -273,8 +261,7 @@ def manage_text_verification(preferences, extracted_text, entered_details):
 def receive_details():
     """
     This function receives the details that need to be verified from the flask handler.
-    Author(s):
-        Stephan Nell
+
     Returns:
         entered_details (dict): Details that need to be verified with that extracted from image.
     """

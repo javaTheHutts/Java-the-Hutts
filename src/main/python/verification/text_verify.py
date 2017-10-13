@@ -1,30 +1,27 @@
 """
-----------------------------------------------------------------------
-Authors: Jan-Justin van Tonder
-----------------------------------------------------------------------
 Contains the logic used to verify the extracted text from a form
 of ID.
-----------------------------------------------------------------------
 """
 
 import Levenshtein
 from hutts_utils.hutts_logger import logger, prettify_json_message
 
+__author__ = "Jan-Justin van Tonder"
+__copyright__ = "Copyright 2017, Java the Hutts"
+__license__ = "BSD"
+__maintainer__ = "Jan-Justin van Tonder"
+__email__ = "J.vanTonder@tuks.co.za"
+__status__ = "Development"
+
 
 class TextVerify:
     """
     This class is responsible for the verification of text that is extracted from an ID.
-
-    Authors:
-        Jan-Justin van Tonder
     """
 
     def __init__(self):
         """
         Initialises the TextVerify object.
-
-        Authors:
-            Jan-Justin van Tonder
         """
         # Logging for debugging purposes.
         logger.debug('Initialising %s...' % type(self).__name__)
@@ -154,9 +151,6 @@ class TextVerify:
         This function is responsible for determining the percentage match for two strings and returning
         said percentage.
 
-        Authors:
-            Jan-Justin van Tonder
-
         Args:
             str_x (str): The first string that is used to perform matching.
             str_y (str): The second string that is used to perform matching.
@@ -185,9 +179,6 @@ class TextVerify:
         """
         This function is responsible for calculating a single, total percentage match value for a dict of match
         values that have been calculated.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             matches (dict): A dictionary of pre-calculated, match percentages.
@@ -286,9 +277,6 @@ class TextVerify:
     def _compute_checksum(id_number):
         """
         Compute the Luhn checksum for the given id number string for validation.
-
-        Authors:
-            Jan-Justin van Tonder
 
         Args:
             id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.
