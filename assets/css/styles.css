@@ -869,6 +869,33 @@ a.btn-cta {
     transform: translate(-2px, 60px);
   }
 }
+@media (max-width: 768px) and (max-height: 540px) {
+  .hero-section .figure-holder-wrapper {
+    top: -20px;
+  }
+  #hutts {
+    margin-top: 75px;
+  }
+  .figure-holder-wrapper h3,
+  .figure-holder-wrapper .btn {
+    margin-top: 20px;
+  }
+  .figure-holder-wrapper h3 {
+    font-size: 18px;
+  }
+  .figure-holder-wrapper p {
+    font-size: 14px;
+  }
+}
+@media (max-width: 768px) and (max-height: 450px) {
+  .hero-section .figure-holder-wrapper {
+    bottom: 0;
+    top: 0;
+  }
+  #hutts {
+    margin-top: 20px;
+  }
+}
 @media (min-width: 768px) and (max-width: 992px) {
   .hero-section .figure-holder-wrapper {
     bottom: 80px;
