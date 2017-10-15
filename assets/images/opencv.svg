@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   viewBox="0 0 235 235"
+   height="235pt"
+   width="235pt"
+   id="svg15"
+   sodipodi:docname="opencv.svg"
+   inkscape:version="0.92.2 (unknown)">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="710"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="0.95805142"
+     inkscape:cx="-42.271444"
+     inkscape:cy="178.27584"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg15"
+     fit-margin-top="5"
+     fit-margin-left="5"
+     fit-margin-bottom="5"
+     fit-margin-right="5" />
+  <defs
+     id="defs3">
+    <!-- <font-face font-family="Eurostile Bold">
+			<font-face-src>
+				<font-face-name name="Eurostile Bold"/>
+				<font-face-uri xlink:href="http://xfont.ru/fonts/3/5/1/3517.ttf">
+					<font-face-format string="truetype"/>
+				</font-face-uri>
+			</font-face-src>
+		</font-face>
+		<style type="text/css">
+			<![CDATA[
+				@font-face {
+					font-family: 'Eurostile Bold',
+					src: src: local('Eurostile Bold'),
+					url('http://xfont.ru/fonts/3/5/1/3517.ttf');
+				}
+			]]>
+		</style> -->
+    <path
+       d="m -69.65039,120.63802 a 139.30078,139.30078 120 1 1 139.30078,0 L 27.708984,47.993369 a 55.417969,55.417969 120 1 0 -55.417968,0 z"
+       id="cv_element"
+       inkscape:connector-curvature="0" />
+  </defs>
+  <!-- paths -->
+  <!--- text -->
+  <!-- <text style="font-family: 'Eurostile Bold';" font-family="Eurostile Bold" font-size="170" y="95%" x="0">OpenCV</text> -->
+  <circle
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.29288256;stroke-opacity:1"
+     id="path826"
+     cx="117.5"
+     cy="117.5"
+     r="112.5" />
+  <g
+     id="g831"
+     transform="matrix(0.22249095,0,0,0.21452742,50.86396,53.271607)"
+     style="fill:#333333;fill-opacity:1">
+    <use
+       id="red"
+       y="140"
+       x="298"
+       xlink:href="#cv_element"
+       style="fill:#333333;fill-opacity:1"
+       width="100%"
+       height="100%" />
+    <use
+       transform="rotate(180,457,415)"
+       id="blue"
+       y="415"
+       x="457"
+       xlink:href="#cv_element"
+       style="fill:#333333;fill-opacity:1"
+       width="100%"
+       height="100%" />
+    <use
+       transform="rotate(-120,142,415)"
+       id="green"
+       y="415"
+       x="142"
+       xlink:href="#cv_element"
+       style="fill:#333333;fill-opacity:1"
+       width="100%"
+       height="100%" />
+  </g>
+</svg>

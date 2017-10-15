@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   data-name="Layer 1"
+   viewBox="0 0 211.19405 85"
+   x="0px"
+   y="0px"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="hutts-verification.svg"
+   inkscape:version="0.92.2 (unknown)"
+   width="211.19405"
+   height="85"
+   inkscape:export-filename="/home/justin/Documents/University/3rd Year/COS 301/Capstone/Java-the-Hutts/demo/img/hutts-verification.png"
+   inkscape:export-xdpi="119.28783"
+   inkscape:export-ydpi="119.28783">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Artboard 6</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="710"
+     id="namedview8"
+     showgrid="false"
+     inkscape:measure-start="0,0"
+     inkscape:measure-end="0,0"
+     inkscape:zoom="2.36"
+     inkscape:cx="9.4711734"
+     inkscape:cy="24.915255"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6"
+     fit-margin-left="5"
+     fit-margin-top="5"
+     fit-margin-bottom="5"
+     fit-margin-right="5" />
+  <title
+     id="title2">Artboard 6</title>
+  <path
+     d="M 31.67,19.95 H 22.73 V 13.31 A 8.32,8.32 0 0 1 31.04,5 h 64 a 8.32,8.32 0 0 1 8.31,8.31 v 40.08 a 8.32,8.32 0 0 1 -8.31,8.31 h -6.11 v -8.93 h 5.45 V 13.93 H 31.67 Z M 5,73.06 V 32.98 a 6.94,6.94 0 0 1 6.94,-6.94 h 64 a 6.94,6.94 0 0 1 6.94,6.94 V 73.06 A 6.94,6.94 0 0 1 75.94,80 h -64 A 6.94,6.94 0 0 1 5,73.06 Z M 74.68,65.21 A 0.94,0.94 0 0 0 73.74,64.27 H 62.09 a 0.94,0.94 0 0 0 -0.94,0.94 v 1.8 a 0.94,0.94 0 0 0 0.94,0.94 h 11.65 a 0.94,0.94 0 0 0 0.94,-0.94 z M 49.5,40.83 a 0.94,0.94 0 0 0 0.94,0.94 h 23.3 a 0.94,0.94 0 0 0 0.94,-0.94 v -1.8 a 0.94,0.94 0 0 0 -0.94,-0.94 h -23.3 a 0.94,0.94 0 0 0 -0.94,0.94 z m 0,8.73 a 0.94,0.94 0 0 0 0.94,0.94 h 23.3 a 0.94,0.94 0 0 0 0.94,-0.94 v -1.8 a 0.94,0.94 0 0 0 -0.94,-0.94 h -23.3 a 0.94,0.94 0 0 0 -0.94,0.94 z m 0,8.73 a 0.94,0.94 0 0 0 0.94,0.94 h 23.3 a 0.94,0.94 0 0 0 0.94,-0.94 V 56.5 A 0.94,0.94 0 0 0 73.74,55.56 H 50.44 A 0.94,0.94 0 0 0 49.5,56.5 Z M 13.38,69.01 a 1.34,1.34 0 0 0 1.34,1.34 h 30.26 a 1.34,1.34 0 0 0 1.34,-1.34 v -3.3 A 3.31,3.31 0 0 0 45.1,63.15 53.41,53.41 0 0 0 35.48,56.98 0.3,0.3 0 0 1 35.31,56.71 V 53.5 a 7.37,7.37 0 0 0 0.94,-2.53 c 0.36,0 0.83,-0.53 1.34,-2.33 0.7,-2.46 0,-2.82 -0.67,-2.76 a 6.46,6.46 0 0 0 0.27,-1 c 1.06,-6.38 -2.03,-6.6 -2.03,-6.6 a 4.81,4.81 0 0 0 -1.92,-1.78 6.36,6.36 0 0 0 -3.87,-0.82 5.63,5.63 0 0 0 -1.54,0.29 v 0 a 6.81,6.81 0 0 0 -1.7,0.87 9.13,9.13 0 0 0 -1.75,1.44 7,7 0 0 0 -1.89,3.31 7.19,7.19 0 0 0 0,3.23 v 0 a 6.45,6.45 0 0 0 0.27,1 c -0.62,-0.06 -1.36,0.3 -0.67,2.76 0.51,1.79 1,2.3 1.34,2.33 a 7.51,7.51 0 0 0 0.95,2.59 v 3.2 a 0.3,0.3 0 0 1 -0.17,0.27 53.41,53.41 0 0 0 -9.62,6.17 3.31,3.31 0 0 0 -1.22,2.56 z"
+     id="path4"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:1"
+     inkscape:export-filename="/home/justin/Documents/University/3rd Year/COS 301/Capstone/Java-the-Hutts/demo/img/hutts-verification-icon.png"
+     inkscape:export-xdpi="131.77426"
+     inkscape:export-ydpi="131.77426" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40.38022232px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.00950563px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     x="113.66213"
+     y="55.736694"
+     id="text4518"
+     transform="scale(1.0095056,0.9905839)"><tspan
+       sodipodi:role="line"
+       id="tspan4516"
+       x="113.66213"
+       y="55.736694"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.49809837px;font-family:'Maven Pro';-inkscape-font-specification:'Maven Pro Bold';fill:#ffffff;fill-opacity:1;stroke-width:1.00950563px;">verification</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#40babd;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     x="112.03389"
+     y="38.220337"
+     id="text824"><tspan
+       sodipodi:role="line"
+       id="tspan822"
+       x="112.03389"
+       y="38.220337"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Maven Pro';-inkscape-font-specification:'Maven Pro';fill:#40babd;fill-opacity:1;">Hutts</tspan></text>
+</svg>

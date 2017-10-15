@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   viewBox="0 0 235 235"
+   height="235pt"
+   width="235pt"
+   id="svg15"
+   sodipodi:docname="scipy.svg"
+   inkscape:version="0.92.2 (unknown)">
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="710"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="2.3424793"
+     inkscape:cx="98.025408"
+     inkscape:cy="133.548"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg15"
+     fit-margin-top="5"
+     fit-margin-left="5"
+     fit-margin-bottom="5"
+     fit-margin-right="5" />
+  <defs
+     id="defs3">
+    <!-- <font-face font-family="Eurostile Bold">
+			<font-face-src>
+				<font-face-name name="Eurostile Bold"/>
+				<font-face-uri xlink:href="http://xfont.ru/fonts/3/5/1/3517.ttf">
+					<font-face-format string="truetype"/>
+				</font-face-uri>
+			</font-face-src>
+		</font-face>
+		<style type="text/css">
+			<![CDATA[
+				@font-face {
+					font-family: 'Eurostile Bold',
+					src: src: local('Eurostile Bold'),
+					url('http://xfont.ru/fonts/3/5/1/3517.ttf');
+				}
+			]]>
+		</style> -->
+    <path
+       d="m -69.65039,120.63802 a 139.30078,139.30078 120 1 1 139.30078,0 L 27.708984,47.993369 a 55.417969,55.417969 120 1 0 -55.417968,0 z"
+       id="cv_element"
+       inkscape:connector-curvature="0" />
+  </defs>
+  <!-- paths -->
+  <!--- text -->
+  <!-- <text style="font-family: 'Eurostile Bold';" font-family="Eurostile Bold" font-size="170" y="95%" x="0">OpenCV</text> -->
+  <circle
+     style="opacity:1;fill:#ffffed;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.29288256;stroke-opacity:1"
+     id="path826"
+     cx="117.5"
+     cy="117.5"
+     r="112.5" />
+  <path
+     style="fill:#333333;fill-opacity:1;stroke-width:0.98102349"
+     d="m 101.15615,171.79809 c -3.85597,-1.07807 -9.757177,-3.59974 -13.113791,-5.60372 -6.003392,-3.58415 -16.817302,-13.98217 -16.246735,-15.62191 0.160359,-0.46082 4.452973,-4.10616 9.539166,-8.10072 6.167625,-4.84394 9.804231,-7.07236 10.9189,-6.6909 0.9192,0.31459 4.02121,3.95113 6.893357,8.08121 2.872143,4.13007 6.589713,8.50968 8.261263,9.73245 16.20454,11.85399 36.99557,-6.93218 28.64968,-25.88699 -2.64655,-6.01077 -7.39753,-8.93384 -20.44364,-12.57808 -8.39309,-2.34449 -10.66025,-3.40057 -12.80724,-5.96583 -5.59183,-6.68125 -4.13291,-16.672713 3.17297,-21.730021 8.11508,-5.617481 14.09264,-3.349714 22.89623,8.686401 3.48633,4.76644 7.4672,9.61385 8.8464,10.77203 2.83617,2.38168 8.36046,2.78551 12.24662,0.89522 1.96164,-0.95419 2.90422,-0.93351 4.45075,0.0976 1.76838,1.179 2.37623,0.86597 6.15762,-3.17091 3.98001,-4.24895 4.13352,-4.62434 2.98847,-7.307289 -1.16285,-2.724614 -1.39571,-2.804556 -6.35648,-2.182121 -6.12193,0.768099 -6.7913,1.129612 -6.7913,3.667828 0,2.102412 -4.77495,4.051982 -7.87003,3.213252 -0.93416,-0.25314 -4.45688,-4.393587 -7.82827,-9.200974 -6.77084,-9.654817 -10.65318,-13.005167 -16.77442,-14.47589 -10.65876,-2.56093 -21.94477,5.027424 -24.51971,16.486276 -1.2089,5.379788 -0.64462,9.648948 2.01759,15.264438 2.53113,5.33899 6.26446,7.72276 16.38908,10.46464 12.24027,3.3148 15.44239,4.91263 17.6731,8.81863 4.79991,8.40476 -0.22903,19.10004 -9.75702,20.75069 -4.85049,0.84031 -10.02252,-2.66724 -15.34587,-10.40716 -5.59103,-8.12912 -8.45839,-10.53594 -12.552008,-10.53594 -4.084401,0 -6.517676,1.37726 -15.965781,9.03686 -4.177664,3.38685 -7.86658,6.16006 -8.197577,6.16271 -0.844775,0.007 -4.384029,-9.73419 -5.522569,-15.19957 -1.232323,-5.91557 -1.217042,-18.52334 0.0295,-24.32704 1.902913,-8.85983 7.344321,-19.082747 14.00381,-26.309337 12.916161,-14.016059 32.266035,-20.194092 50.674095,-16.179241 13.23241,2.886028 28.36695,14.513061 34.99888,26.887712 3.06081,5.711232 5.16192,6.320651 6.22353,1.805093 0.31321,-1.332243 1.17219,-2.422256 1.90882,-2.422256 0.94241,0 1.16861,0.726351 0.7632,2.450773 -0.43335,1.843246 -0.0781,2.735319 1.43271,3.598564 2.73732,1.563958 1.58575,3.258349 -1.39282,2.049377 -1.94473,-0.789345 -5.19671,-0.477635 -5.19671,0.498123 0,0.149003 0.7019,2.266829 1.55976,4.706282 1.09444,3.11208 1.67869,7.98827 2.14492,15.58524 -0.323,9.70425 -0.76521,11.84345 -3.10408,18.24528 -10.32681,28.266 -37.80322,43.55826 -65.05434,35.9392 z"
+     id="path930"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="ccccccscscssscscccscssscccsssscscsssssccssccscc" />
+</svg>

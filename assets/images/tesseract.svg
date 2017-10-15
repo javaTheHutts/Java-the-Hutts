@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   _ngcontent-c3=""
+   id="T"
+   viewBox="0 0 310 310"
+   version="1.1"
+   sodipodi:docname="tesseract.svg"
+   width="310"
+   height="310"
+   inkscape:version="0.92.2 (unknown)">
+  <metadata
+     id="metadata31">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs29" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="710"
+     id="namedview27"
+     showgrid="false"
+     fit-margin-top="5"
+     fit-margin-left="5"
+     fit-margin-bottom="5"
+     fit-margin-right="5"
+     inkscape:zoom="1.1136932"
+     inkscape:cx="-107.7751"
+     inkscape:cy="125.98495"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="T" />
+  <style
+     _ngcontent-c3=""
+     id="style2">.st0{opacity:0.5;}</style>
+  <circle
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:8.87323952;stroke-opacity:1"
+     id="path838"
+     cx="155"
+     cy="155"
+     r="150" />
+  <g
+     id="g851"
+     style="fill:#333333;fill-opacity:1"
+     transform="matrix(5.512126,0,0,4.7286753,44.75748,76.169234)">
+    <g
+       id="g14"
+       class="st0"
+       _ngcontent-c3=""
+       style="opacity:0.5;fill:#333333;fill-opacity:1">
+      <circle
+         id="circle4"
+         r="2.2"
+         cy="3.8"
+         cx="28.200001"
+         class="st1"
+         _ngcontent-c3=""
+         style="fill:#333333;fill-opacity:1" />
+      <path
+         id="path6"
+         d="M 28.2,6.5 C 26.7,6.5 25.4,5.3 25.4,3.7 25.4,2.1 26.7,1 28.2,1 29.7,1 31,2.2 31,3.8 31,5.4 29.7,6.5 28.2,6.5 Z m 0,-4.4 c -0.9,0 -1.7,0.8 -1.7,1.7 0,0.9 0.8,1.7 1.7,1.7 0.9,0 1.7,-0.8 1.7,-1.7 0,-0.9 -0.7,-1.7 -1.7,-1.7 z"
+         class="st1"
+         _ngcontent-c3=""
+         style="fill:#333333;fill-opacity:1"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path8"
+         d="M 11.8,2.7 H 28.2 V 4.8 H 11.8 Z"
+         class="st1"
+         _ngcontent-c3=""
+         style="fill:#333333;fill-opacity:1"
+         inkscape:connector-curvature="0" />
+      <g
+         id="g12"
+         _ngcontent-c3=""
+         style="fill:#333333;fill-opacity:1">
+        <path
+           id="path10"
+           d="M 18.9,3.8 H 21 v 28.5 h -2.1 z"
+           class="st1"
+           _ngcontent-c3=""
+           style="fill:#333333;fill-opacity:1"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <circle
+       id="circle16"
+       r="2.2"
+       cy="32.200001"
+       cx="20"
+       class="st1"
+       _ngcontent-c3=""
+       style="fill:#333333;fill-opacity:1" />
+    <path
+       id="path18"
+       d="m 20,35 c -1.5,0 -2.8,-1.2 -2.8,-2.8 0,-1.5 1.2,-2.8 2.8,-2.8 1.6,0 2.8,1.2 2.8,2.8 0,1.6 -1.3,2.8 -2.8,2.8 z m 0,-4.5 c -0.9,0 -1.7,0.8 -1.7,1.7 0,0.9 0.8,1.7 1.7,1.7 0.9,0 1.7,-0.8 1.7,-1.7 0,-0.9 -0.8,-1.7 -1.7,-1.7 z"
+       class="st1"
+       _ngcontent-c3=""
+       style="fill:#333333;fill-opacity:1"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g24"
+       _ngcontent-c3=""
+       style="fill:#333333;fill-opacity:1">
+      <circle
+         id="circle20"
+         r="2.2"
+         cy="3.8"
+         cx="11.8"
+         class="st1"
+         _ngcontent-c3=""
+         style="fill:#333333;fill-opacity:1" />
+      <path
+         id="path22"
+         d="M 11.8,6.5 C 10.3,6.5 9,5.3 9,3.8 9,2.3 10.3,1 11.8,1 c 1.5,0 2.8,1.2 2.8,2.8 0,1.6 -1.3,2.7 -2.8,2.7 z m 0,-4.4 c -0.9,0 -1.7,0.8 -1.7,1.7 0,0.9 0.8,1.7 1.7,1.7 0.9,0 1.7,-0.8 1.7,-1.7 0,-0.9 -0.8,-1.7 -1.7,-1.7 z"
+         class="st1"
+         _ngcontent-c3=""
+         style="fill:#333333;fill-opacity:1"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

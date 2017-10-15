@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->  
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->  
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->  
+<head>
+  <title>Hutts Verification</title>
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Java the Hutts">    
+  <link rel="shortcut icon" href="favicon.ico">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+  <!-- Plugins CSS -->
+  <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+  <!-- Theme CSS -->  
+  <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head> 
+  
+  <body>
+    <!-- ******HEADER****** --> 
+    <header id="header" class="header">  
+      <div class="container">       
+        <h1 class="logo">
+          <a class="scrollto" href="#hero">
+            <span class="logo-icon-wrapper"><img class="logo-icon" src="assets/images/logo-icon.svg" alt="icon"></span>
+            <span class="text"><span class="highlight">Hutts</span>Verification</span>
+          </a>
+          </h1><!--//logo-->
+          <nav class="main-nav navbar-right" role="navigation">
+            <div class="navbar-header">
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button><!--//nav-toggle-->
+            </div><!--//navbar-header-->
+            <div id="navbar-collapse" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="nav-item"><a class="scrollto" href="#features">Services</a></li> 
+                <li class="nav-item"><a class="scrollto" href="#tech">Technologies</a></li>
+                <li class="nav-item"><a class="scrollto" href="#documentation">Documentation</a></li>                      
+                <li class="nav-item"><a class="scrollto" href="#team">The Team</a></li>
+              </ul><!--//nav-->
+            </div><!--//navabr-collapse-->
+          </nav><!--//main-nav-->                     
+        </div><!--//container-->
+      </header><!--//header-->
+      
+      <div id="hero" class="hero-section">
+        <div class="figure-holder-wrapper">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-5 col-sm-12">
+                <img id="hutts" src="assets/images/hutts-verification.svg" alt="Hutts Verification" />
+                <h3>Electronic ID verification and extraction.</h3>
+                <p>
+                  Hutts Verification is an open sourcer, Python-based Web API for electronically
+                  verifiying and extracting information from images of South African IDs.
+                </p>
+                <a href="https://javathehutts.000webhostapp.com" target="_blank" class="btn btn-default">
+                  Live Demo
+                </a>
+              </div>
+              <div class="col-md-7 col-sm-5 hidden-xs hidden-sm">
+                <img id="web-api" src="assets/images/web-api.png" alt="Hutts Verification" />
+              </div>
+            </div><!--//row-->
+          </div><!--//container-->
+        </div><!--//figure-holder-wrapper-->
+      </div><!--//hero-->
+
+      <div id="features" class="features-section">
+        <div class="container text-center">
+          <h2 class="section-title">Services</h2>
+          <p class="intro">Hutts Verification provides two main services, namely 
+            <span class="font-weight-bold">extraction</span> and
+            <span class="font-weight-bold">verification</span> of South African ID information.
+            <br>
+            A request for said services, and their responses, are in JSON.
+          </p>
+          <div class="row">
+            <div class="col-md-5 col-lg-6">
+              <div class="service-wrapper">
+                <h3 class="service service-selected" data-target="#service-carousel" data-slide-to="0">
+                  Extraction
+                </h3>
+                <h3 class="service" data-target="#service-carousel" data-slide-to="1">
+                  Verification
+                </h3>
+              </div>
+              <div id="service-carousel" class="carousel slide"
+              data-ride="carousel" data-wrap="false" data-interval="false">
+                <div class="carousel-inner" role="listbox">
+                  <div class="item active">
+                    <p>
+                      Extraction is a serivice provided for extracting information from 
+                      an individual's ID and can be used for purposes such as 
+                      electronically completing forms.
+                    </p>
+                    <p>
+                      Three types of extraction requests can be performed:
+                      <ul>
+                        <li>Extraction of an individual's personal details only</li>
+                        <li>Extraction of an individual's photo only</li>
+                        <li>Extraction of an individual's personal and photo</li>
+                      </ul>
+                    </p>
+                  </div>
+                  <div class="item">
+                    <p>
+                      Verification is a serivice provided for electronically verifying 
+                      information from an individual's ID against existing information,
+                      so as to aid in the confirmation of an individual's identity.
+                    </p>
+                    <p>
+                      Three types of verification requests can be performed:
+                      <ul>
+                        <li>Verification of an individual's personal details only</li>
+                        <li>Verification of an individual's photo only</li>
+                        <li>Verification of an individual's personal and photo</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-md-offset-1 col-lg-6 demo-vid-wrapper">
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/J25F4_aIX0I?controls=1" frame-border="0" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div><!--//container-->
+      </div><!--//features-->
+      
+      <div id="tech" class="tech-section">
+        <div class="container text-center">
+          <h2 class="section-title">Under the Hood</h2>
+          <p class="intro">
+            Hutts Verification utilises Python and Flask as its base,
+            and further uses several computer vision techniques and technologies
+            in order to render its services
+          </p>
+          <div class="row tech-row">
+            <div class="col-sm-4 text-center">
+              <img class="tech-logo" src="assets/images/python.svg" alt="Python">
+              <h2>Python</h2>
+              <p>
+                High-level programming language for general-purpose programming.
+              </p>
+            </div>
+            <div class="col-sm-4 text-center">
+              <img class="tech-logo" src="assets/images/flask.svg" alt="Flask">
+              <h2>Flask</h2>
+              <p>
+                A popular and extensible micro web framework for building web applications with Python.
+              </p>
+            </div>
+            <div class="col-sm-4 text-center">
+              <img class="tech-logo" src="assets/images/opencv.svg" alt="Open-CV">
+              <h2>Open-CV</h2>
+              <p>
+                An open source library for computer vision, image processing and machine learning.
+              </p>
+            </div>
+            <div class="col-sm-4 text-center">
+              <img class="tech-logo" src="assets/images/tesseract.svg" alt="Tesseract-OCR">
+              <h2>Tesseract-OCR</h2>
+              <p>
+                An OCR engine with support for unicode and the ability to recognize more than 
+                100 languages out of the box.
+              </p>
+            </div>
+            <div class="col-sm-4 text-center">
+              <img class="tech-logo" src="assets/images/dlib.svg" alt="DLib">
+              <h2>DLib</h2>
+              <p>
+                A C++ toolkit containing machine learning algorithms and tools for creating
+                complex software to solve real world problems.
+              </p>
+            </div>
+            <div class="col-sm-4 text-center">
+              <img class="tech-logo" src="assets/images/scipy.svg" alt="SciPy">
+              <h2>SciPy</h2>
+              <p>
+                An open source Python library used for scientific computing and technical computing.
+              </p>
+            </div>
+          </div>
+        </div><!--//container-->
+      </div><!--//about-section-->
+
+      <div id="tech-devops" class="tech-section">
+          <div class="container text-center">
+            <h2 class="section-title">DevOps</h2>
+            <p class="intro">
+              Hutts Verification employs the support of several DevOps tools to automate
+              and monitor building, integration, testing, and releasing to deployment.
+            </p>
+            <div class="row tech-row">
+              <div class="col-sm-4 text-center">
+                <img class="tech-logo" src="assets/images/github.svg" alt="GitHub">
+                <h2>GitHub</h2>
+                <p>
+                  A web-based Git or version control repository and Internet hosting service.
+                </p>
+              </div>
+              <div class="col-sm-4 text-center">
+                <img class="tech-logo" src="assets/images/codacy.svg" alt="Codacy">
+                <h2>Codacy</h2>
+                <p>
+                  An automated code review application that includes static analysis functionality.
+                </p>
+              </div>
+              <div class="col-sm-4 text-center">
+                <img class="tech-logo" src="assets/images/snyk.svg" alt="Snyk">
+                <h2>Snyk</h2>
+                <p>
+                  An application for continuously finding and fixing vulnerabilities in
+                  application dependencies.
+                </p>
+              </div>
+              <div class="col-sm-4 text-center">
+                <img class="tech-logo" src="assets/images/travis.svg" alt="Travis-CI">
+                <h2>Travis-CI</h2>
+                <p>
+                  A hosted, distributed continuous integration service used to build and test software
+                  projects hosted at GitHub.
+                </p>
+              </div>
+              <div class="col-sm-4 text-center">
+                <img class="tech-logo" src="assets/images/pybuilder.svg" alt="PyBuilder">
+                <h2>PyBuilder</h2>
+                <p>
+                  An extensible, easy to use continuous build tool for Python.
+                </p>
+              </div>
+              <div class="col-sm-4 text-center">
+                <img class="tech-logo" src="assets/images/docker.svg" alt="Docker">
+                <h2>Docker</h2>
+                <p>
+                  A tool that can package an application and its dependencies in a 
+                  virtual container to run any Linux server. 
+                </p>
+              </div>
+            </div>
+          </div><!--//container-->
+        </div><!--//about-section-->
+          
+      <div id="documentation" class="documentation-section">
+        <div class="container">
+          <h2 class="section-title text-center">Documentation</h2>
+          <p class="intro">
+            Here is where we provide you with the all-important documentation
+            that you need in order to understand and use our API.
+          </p>
+          <div class="docs-btn-wrapper">
+            <a href="#" class="btn btn-docs">To the Docs!</a>
+          </div>
+        </div><!--//container-->
+      </div><!--//documentation-->
+          
+      <div class="team-section" id="team">
+        <div class="container text-center">
+          <h2 class="section-title">Our Team</h2>
+          <p class="intro">Meet the team behind Hutts Verification</p>
+          <div class="story">
+            <p>
+              Hutts Verification is created by Java the Hutts, a team of IT students from the University of Pretoria.
+              We are a team that strives to work hard and deliver quality, robust software. Each of our members have
+              been exposed to the world of sofware development and bring a substantial amount of experience.
+              We are not afraid to learn and would love to work on a project that challenges us, and that can be put
+              straight into production.
+            </p>
+          </div>
+          <div class="members-wrapper row">
+            <div class="item col-sm-6 col-sm-offset-3 col-xs-12">
+              <div id="nicolai" class="item-inner">
+                <div class="profile">
+                  <img class="profile-image" src="https://avatars2.githubusercontent.com/u/14542853?v=3&s=200" alt="Nicolai van Niekerk" />
+                </div>
+                <div class="member-content">
+                  <h3 class="member-name">Nicolai van Niekerk</h3>
+                  <div class="member-title">Team Leader</div>
+                  <ul class="social list-inline">
+                    <li><a class="github" href="https://github.com/Nicvaniek" target="_blank"><i class="fa fa-github"></i></a></li>
+                    <li><a class="linkedin" href="https://www.linkedin.com/in/nicolai-van-niekerk-70970b109/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="mail" href="mailto:nicvaniek@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                  </ul>
+                  <div class="member-desc">
+                    <p>
+                      I have been exposed to the Systems Development Life Cycle since my first year at university.
+                      I am a quick learner and I'm passionate about developing robust, user-friendly software.
+                    </p>
+                  </div><!--//member-desc-->
+                </div><!--//member-content-->
+              </div><!--//item-inner-->
+            </div>
+            <div class="item col-sm-6 col-xs-12">
+              <div id="andreas" class="item-inner">
+                <div class="profile">
+                  <img class="profile-image" src="https://avatars1.githubusercontent.com/u/17763359?v=3&s=150" alt="Andreas Nel" />
+                </div>
+                <div class="member-content">
+                  <h3 class="member-name">Andreas Nel</h3>
+                  <div class="member-title">Developer</div>
+                  <ul class="social list-inline">
+                    <li><a class="github" href="https://github.com/AndreasNel" target="_blank"><i class="fa fa-github"></i></a></li>
+                    <li><a class="linkedin" href="https://www.linkedin.com/in/andreas-nel-340805130/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="mail" href="mailto:nel.andreas1@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                  </ul>
+                  <div class="member-desc">
+                    <p>
+                      Ambitious, calculating, focused (with a tinge of dry humour). I spend a large amount of my time
+                      trying to improve my skill set and myself as a person, leading to me having held various positions
+                      in the past such as a sales person, waiter, research assistant and intern. I am extremely
+                      curious about the fields of Artificial Intelligence and Computer Security, and have quite recently
+                      also enjoyed working with computer networking.
+                    </p>
+                  </div><!--//member-desc-->
+                </div><!--//member-content-->
+              </div><!--//item-inner-->
+            </div>
+            <div class="item col-sm-6 col-xs-12">
+              <div id="stephan" class="item-inner">
+                <div class="profile">
+                  <img class="profile-image" src="https://media.licdn.com/mpr/mpr/shrinknp_150_150/AAEAAQAAAAAAAANkAAAAJGFlYTM1OTY2LWEzNjktNDEzYy1iOWE4LTk3NjY4ZmNmOTljYQ.jpg" alt="Stephan Nell" />
+                </div>
+                <div class="member-content">
+                  <h3 class="member-name">Stephan Nell</h3>
+                  <div class="member-title">Developer</div>
+                  <ul class="social list-inline">
+                    <li><a class="github" href="https://github.com/nellstephanj" target="_blank"><i class="fa fa-github"></i></a></li>
+                    <li><a class="linkedin" href="https://www.linkedin.com/in/stephan-nell-201710b8/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="mail" href="mailto:nellstephanj@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                  </ul>
+                  <div class="member-desc">
+                    <p>
+                      Calm and patient problem solver, who enjoys a good challenge. Always responsive to guidance and advice and
+                      seeking to make the most of my ability. I enjoy experimenting with new technologies and various networking
+                      problems. I am someone who collaborates well with others in a team and is always willing to go the extra
+                      mile to solve a problem and improve on current solutions. Currently, I enjoy my Networking and Artificial
+                      Intelligence courses, and I am determined to further my studies in Artificial Intelligence and Computer Security.
+                    </p>
+                  </div><!--//member-desc-->
+                </div><!--//member-content-->
+              </div><!--//item-inner-->
+            </div>
+            <div class="item col-sm-6 col-xs-12">
+              <div id="marno" class="item-inner">
+                <div class="profile">
+                  <img class="profile-image" src="https://avatars2.githubusercontent.com/u/25800894?v=3&s=150" alt="Marno Hermann" />
+                </div>
+                <div class="member-content">
+                  <h3 class="member-name">Marno Hermann</h3>
+                  <div class="member-title">Developer</div>
+                  <ul class="social list-inline">
+                    <li><a class="github" href="https://github.com/MarnoH" target="_blank"><i class="fa fa-github"></i></a></li>
+                    <li><a class="mail" href="mailto:marno@barnton-consulting.co.za" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                  </ul>
+                  <div class="member-desc">
+                    <p>
+                      I am a goal driven individual always trying to better myself and the people around me.
+                      Well balanced person that enjoys his morning runs. I am a Microsoft Certified Technology
+                      Specialist (MCTS) completed 70-516 exam. Through Barnton Consulting developed programs for
+                      SAB Miller, Premier Foods, Dartcom and RCL Foods. Most importantly I love what I do.
+                    </p>
+                  </div><!--//member-desc-->
+                </div><!--//member-content-->
+              </div><!--//item-inner-->
+            </div>
+            <div class="item col-sm-6 col-xs-12">
+              <div id="justin" class="item-inner">
+                <div class="profile">
+                  <img class="profile-image" src="https://avatars0.githubusercontent.com/u/22789485?v=3&s=150" alt="Jan-Justin van Tonder" />
+                </div>
+                <div class="member-content">
+                  <h3 class="member-name">Jan-Justin van Tonder</h3>
+                  <div class="member-title">Developer</div>
+                  <ul class="social list-inline">
+                    <li><a class="github" href="https://github.com/jan-justin" target="_blank"><i class="fa fa-github"></i></a></li>
+                    <li><a class="linkedin" href="https://www.linkedin.com/in/jan-justin-van-tonder-358bab142/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="mail" href="mailto:Jan.Justin.vTonder@gmail.com" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                  </ul>
+                  <div class="member-desc">
+                    <p>
+                      Cool, calm, constant tinkerer and copious coffee drinker. I am constantly on the lookout for new
+                      challenges with a willingness to learn novel, strange and wonderful things. I have a passion for
+                      computers and, in particular, Computer Networks as well as Artificial Intelligence. Being a BIT student,
+                      I have been exposed to the full spectrum of Information Technology, ranging from information science to
+                      computer science.
+                    </p>
+                  </div><!--//member-desc-->
+                </div><!--//member-content-->
+              </div><!--//item-inner-->
+            </div>
+          </div><!--//members-wrapper-->
+        </div>
+      </div><!--//team-section-->
+      
+      <div class="footer-logo-wrapper text-center">
+        <img id="footer-logo" src="assets/images/footer.png" />
+      </div>
+        
+      <div id="contact" class="contact-section">
+        <a href="https://github.com/javaTheHutts" target="_blank" class="footer-btn">
+          <i class="fa fa-github"></i></a>
+        </a>
+      </div><!--//contact-section-->
+      
+      <footer class="footer text-center">
+        <div class="container">
+          <small class="copyright pull-left">©2017 Java the Hutts</small>
+          <small class="copyright pull-right">BSD License</small>
+        </div><!--//container-->
+      </footer>
+      
+    <!-- Javascript -->          
+    <script type="text/javascript" src="assets/plugins/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>     
+    <script type="text/javascript" src="assets/js/main.js"></script> 
+          
+  </body>
+</html>
+        
