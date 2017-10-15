@@ -376,7 +376,7 @@ a.btn-cta {
 }
 .documentation-section .intro {
   text-align: center;
-  color: #eee;
+  color: #fff;
   font-size: 16px;
   max-width: 760px;
   margin: 0 auto;
@@ -428,7 +428,7 @@ a.btn-cta {
 /* ======= Team Section ======= */
 .team-section {
   padding-top: 90px;
-  padding-bottom: 90px;
+  padding-bottom: 0;
   background: #fff;
 }
 .team-section .section-title {
@@ -841,7 +841,7 @@ a.btn-cta {
 }
 .footer-logo-wrapper {
   background-color: #fff;
-  margin-top: -125px;
+  margin-top: 0;
 }
 #footer-logo {
   width: 350px;
@@ -888,12 +888,17 @@ a.btn-cta {
     min-height: 600px;
   }
 }
+@media (min-width: 1024px) and (max-width: 1200px) {
+  #web-api {
+    margin-top:80px;
+  }
+}
 @media (min-width: 1200px) {
   .hero-section .figure-holder-wrapper {
-    bottom: 10px;
+    bottom: 60px;
   }
   #hutts {
-    margin-top: 120px;
+    margin-top: 10px;
   }
   .tech-row div p {
     padding: 0;
@@ -902,8 +907,11 @@ a.btn-cta {
   }
 }
 @media (min-width: 1900px) {
+  .hero-section .figure-holder-wrapper {
+    bottom: 250px;
+  }
   #hutts {
-    margin-top: 250px;
+    margin-top: 150px;
   }
   .container {
     width: 80%;
@@ -911,6 +919,6 @@ a.btn-cta {
 }
 @media (min-width: 2500px) {
   #hutts {
-    margin-top: 350px;
+    margin-top: 200px;
   }
 }
