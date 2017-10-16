@@ -15,6 +15,13 @@ PipelineType = {
 
 $(document).ready(function () {
 
+	// Remove webhost ad div
+	$('a').each(function() {
+		if ($(this).attr('title') == 'Hosted on free web hosting 000webhost.com. Host your own website for FREE.') {
+			$(this).parent().remove();
+		}
+	});
+
 	// Attempt to deal with sticky hover
 	if ($(window).width() < 994) {
 		disableHoverEffects();
