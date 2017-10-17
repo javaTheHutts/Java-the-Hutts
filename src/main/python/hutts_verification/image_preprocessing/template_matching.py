@@ -25,7 +25,7 @@ class TemplateMatching:
     """
     The TemplateMatching class receives template images to identify the type of identification
     that is used in the image.
-    Thus you provide it with templates and it will identify whether you used an id card, id book etc.
+    Thus you provide it with templates and it will identify whether you used an ID card, ID book etc.
     """
     def __init__(self):
         logger.debug("Looking for the templates in directory: " + str(TEMPLATE_DIR))
@@ -37,14 +37,10 @@ class TemplateMatching:
         """
         This function identifies the src image by searching for the templates provided.
 
-        Args:
-            source (Image) : The image that needs to be identified
+        :param source (obj) : The image that needs to be identified.
 
         Returns:
-            string : Returns a string if no type could be identified, None is returned
-
-        :Example:
-        identify(args["image"]]) !
+            - (str) : Either type of the image or None if the type could not be identified.
 
         """
         if hasattr(source, 'shape') is False:

@@ -22,15 +22,13 @@ class ColorManager:
         """
         Initialise Color Manager.
 
-        Args:
-            color_extraction_type (str): Indicates the type of color extraction that
+        :param color_extraction_type (str): Indicates the type of color extraction that
                 should be applied.
-            channel (str): Indicates the color channel that should be extracted.
-                Only red, green and blue (RGB) are considered valid colors to extracts.
-            kernel_size (integer tuple): Indicates the kernel size for operation that
+        :param channel (str): Indicates the color channel that should be extracted.
+                Only red, green and blue (RGB) are considered valid colors to extract.
+        :param kernel_size (int tuple): Indicates the kernel size for operation that
                 require modification of the kernel size, like black and white-hat modifications.
-        Returns:
-            None
+
         """
         self.color_extraction_type = color_extraction_type
         self.channel = channel
@@ -40,15 +38,15 @@ class ColorManager:
         """
         This performs the specified processing technique.
 
-        Args:
-            image: The image to which the technique must be applied.
+        :param image: The image to which the technique must be applied.
 
         Raises:
-            NameError: If invalid color extraction type is provided i.e.
-                histogram, extract, black hat or top hat (white hat).
+            - NameError: If an invalid color extraction type is provided (other than
+                histogram, extract, black hat or top hat (white hat)).
 
         Returns:
-            obj:'OpenCV image': The modified image
+            - (obj): The modified OpenCV image.
+
         """
         if self.color_extraction_type == "extract":
             return self.extractChannel(image, self.channel)
@@ -69,11 +67,11 @@ class ColorManager:
         """
         This function applies histogram equalisation to the image passed.
 
-        Args:
-            image (:obj:'OpenCV image'): Image to which histogram equalisation should be applied to.
+        :param image (obj): OpenCV image to which histogram equalisation should be applied to.
 
         Returns:
-            obj:'OpenCV image': The Histogram equalised image.
+            - (obj): The Histogram equalised image.
+
         """
         image_grey = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         return cv2.equalizeHist(image_grey)
@@ -82,15 +80,15 @@ class ColorManager:
         """
         This function extracts a selected color channel from an image.
 
-        Args:
-            image (:obj:'OpenCV image'): Image to which image channel should be removed.
-            str: Color that should be removed valid color red, green, blue.
+        :param image (obj): OpenCV image for which the image channel should be removed.
+        :param image_channel (str): Color that should be removed (valid colors: 'red', 'green', 'blue').
 
         Raises:
-            NameError: If invalid colour is selected i.e. not red, green, blue
+            - NameError: If invalid colour is selected (not red, green, blue).
 
         Returns:
-            obj:'OpenCV image': A copy of the image passed but with a color channel removed.
+            - (obj): A copy of the image passed but with a color channel removed.
+
         """
         (B, G, R) = cv2.split(image)
         zeros = np.zeros(image.shape[:2], dtype="uint8")
@@ -114,19 +112,18 @@ class ColorManager:
         """
         This function applies blackhat color changes to the image passed.
 
-        Args:
-            image (:obj:'OpenCV image'): Image to which black hat color changes should be
-                applied to
-            rect_kernel_size (list): Represent the kernel dimension by which blackHat morphology
+        :param image (obj): OpenCV image to which black hat color changes should be
+                applied to.
+        :param rect_kernel_size (list): Represents the kernel dimensions by which blackHat morphology
                 changes should be applied to.
 
         Raises:
-            TypeError: If the kernel size type is not a tuple.
-            ValueError: If the kernel size tuple contains more than 2 items.
+            - TypeError: If the kernel size type is not a tuple.
+            - ValueError: If the kernel size tuple contains more than 2 items.
 
         Returns:
-            obj:'OpenCV image': A modified copy of the image where blackHat morphology was
-                applied to an image.
+            - (obj): A modified copy of the image blackHat morphology applied to an image.
+
         """
         if not (isinstance(rect_kernel_size, tuple)):
             raise TypeError('Invalid kernel type provided. Black hat kernel Supports tuple type')
@@ -139,19 +136,17 @@ class ColorManager:
         """
         This function applies tophat color changes to the image passed.
 
-        Args:
-            image (:obj:'OpenCV image'): Image to which top hat color changes should be
-                applied to.
-            rect_kernel_size (list): Represents the kernel dimension by which topHat  morphology
+        :param image (obj): Image to which top hat color changes should be applied to.
+        :param rect_kernel_size (list): Represents the kernel dimension by which topHat morphology
                 changes should be applied to.
 
         Raises:
-            TypeError: If the kernel size type is not a tuple.
-            ValueError: If the kernel size tuple contains more than 2 items.
+            - TypeError: If the kernel size type is not a tuple.
+            - ValueError: If the kernel size tuple contains more than 2 items.
 
         Returns:
-            obj:'OpenCV image': A modified copy of the image where topHat morphology was
-                applied to an image.
+            - (obj): A modified copy of the image with topHat morphology applied to it.
+
         """
         if not (isinstance(rect_kernel_size, tuple)):
             raise TypeError('Invalid kernel type provided. Top hat Kernel supports tuple type')
