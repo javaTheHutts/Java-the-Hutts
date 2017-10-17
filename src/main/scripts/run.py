@@ -12,6 +12,7 @@ from flask import Flask, request
 from hutts_utils import hutts_logger
 from verification.controllers import verify
 from image_processing.controllers import extract
+from hutts_utils.hutts_logger import logger
 from flask_cors import CORS
 
 # Initialise flask application.
@@ -57,6 +58,7 @@ def error_handler(error):
     """
     A very general exception handler for unhandled exceptions.
     """
+    logger.error(error)
     return str(error), 500
 
 
