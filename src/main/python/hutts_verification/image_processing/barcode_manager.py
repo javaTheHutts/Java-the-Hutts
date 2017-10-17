@@ -22,9 +22,11 @@ BOUNDING_RECTANGLE_THRESHOLD = 200
 class BarCodeManager:
     """
     The BarCode Manager is responsible for:
+
     1. Detecting the barcode.
     2. Extracting any information on the detected barcode.
     3. Applying blurring to the detected barcode to reduce noise.
+
     """
 
     def __init__(self):
@@ -34,27 +36,26 @@ class BarCodeManager:
         """
         This function detects a region containing a barcode if a barcode is present in the image passed.
         Barcodes supported:
-            EAN
-            UPC
-            Code 39
-            Code 93
-            Code 128
-            ITF
-        For more information on Barcode types: https://www.scandit.com/types-barcodes-choosing-right-barcode/
 
-        Args:
-            image (:obj:'OpenCV image'): Image containing the potential barcode.
+            - EAN
+            - UPC
+            - Code 39
+            - Code 93
+            - Code 128
+            - ITF
+
+        For more information on Barcode types: https://www.scandit.com/types-barcodes-choosing-right-barcode/.
+
+        :param image (obj): Image containing the potential barcode.
 
         Returns:
-            boolean: A value of True is returned if a barcode was detected.
-                If however a barcode was not detected a value of false is returned.
-            obj:'OpenCV image': If a Barcode was successfully detected the detected barcode is returned.
-                If a barcode was not detected return the original image.
-            integer list: This list contains the box coordinates for the region in which the barcode resides.
+            - (boolean): Indicates whether a barcode was detected or not.
+            - (obj): Return the detected barcode or the original image, based on whether the barcode was found.
+            - (int list): This list contains the box coordinates for the region in which the barcode resides.
+
         Raises:
-            TypeError: If a none numpy array value has been passed
-        Todo:
-            Find a way to support PDF417 format.
+            - TypeError: If a none numpy array value has been passed.
+
         """
         if type(image) is not np.ndarray:
             raise TypeError(
@@ -97,17 +98,13 @@ class BarCodeManager:
         """
         This function returns scanned barcode information.
 
-        Args:
-            image (:obj:'OpenCV image'): Image containing a Barcode.
+        :param image (obj): Image containing a Barcode.
 
         Returns:
-            boolean: A value of True if the function was able to extract information from the barcode.
-                If no information was extracted from the barcode a value of False is returned.
-            string: A UTF-8 String containing the information extracted from the Barcode.
-                If no information was extracted from the barcode a empty string is returned.
-            obj:'OpenCV image': A copy of the original image.
-        Todo:
-            Find a way to support PDF417 format.
+            - (boolean): Whether the function was able to extract information from the barcode.
+            - (str): A UTF-8 String of the data extracted from the barcode (empty if nothing was extracted).
+            - (obj): A copy of the original image.
+
         """
         (detection, detected_image, box) = self.detect(image.copy())
         if detection:
@@ -127,15 +124,15 @@ class BarCodeManager:
         The barcode region is first extracted, then blurring is applied, after blurring is applied
         the blurred out barcode is reapplied to the original image.
 
-        Args:
-            image (:obj:'OpenCV image'): Image containing a Barcode.
-            box: The box is an integer list containing the box region coordinates of the barcode location.
-            dilation_intensity (int): Indicates the intensity by which the barcode should be dilated.
-                The greater the intensity the greater the extent of dilation. Greater intensity
-                leads to reduce of speed with every iterations.
+        :param image (obj): Image containing a Barcode.
+        :param box (int list): The box is an integer list containing the box region coordinates of the
+                barcode location.
+        :param dilation_intensity (int): Indicates the intensity by which the barcode should be dilated.
+                The greater the intensity the greater the extent of dilation.
 
         Returns:
-             obj:'OpenCV image': The Original image with blurring applied to the barcode region in the image.
+             (obj): The original image with blurring applied to the barcode region in the image.
+
         """
         (x, y, w, h) = cv2.boundingRect(box)
         sub_bar_code = image[y:y + h, x:x + w]
