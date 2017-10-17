@@ -19,11 +19,11 @@ def correct_path(path):
     This function checks if the given path exists in most known
     Python package installation directories and returns the corresponding path.
 
-    Args:
-        path (string || Path): The path that has to be checked.
+    - path (str || Path): The path that has to be checked.
 
     Returns:
-        string : The correct path if it exists, else None.
+        (str): The correct path if it exists, else None.
+
     """
     search_path = Path(path)
     logger.debug("Looking for " + str(search_path))
@@ -46,13 +46,13 @@ def _transform_path(path, search_str, replace_str):
     """
     This function replaces a single directory in the given path by the given string and returns the new path.
 
-    Args:
-        path (string || Path): The path that has to be transformed.
-        search_str (string): The directory that has to be changed.
-        replace_str (string): The directory that the subdirectory has to be changed to.
+    :param path (str || Path): The path that has to be transformed.
+    :param search_str (str): The directory that has to be changed.
+    :param replace_str (str): The directory that the subdirectory has to be changed to.
 
     Returns:
-        Path : The new path if the replacement was successful, else the original path.
+        (Path): The new path if the replacement was successful, else the original path.
+
     """
     result = Path(path)
     subdirectories = list(path.parts)

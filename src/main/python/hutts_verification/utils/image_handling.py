@@ -21,17 +21,17 @@ def grab_image(path=None, stream=None, url=None, string=None):
     This function grabs the image from URL, or image path and applies necessary changes to the grabbed
     images so that the image is compatible with OpenCV operation.
 
-    Args:
-        path (str): The path to the image if it reside on disk.
-        stream (str): A stream of text representing where on the internet the image resides.
-        url(str): Url representing a path to where an image should be fetched.
-        string(str): A base64 encoded string of the image.
+    :param str (path): The path to the image if it resides on disk.
+    :param str (stream): A stream of text representing an image upload.
+    :param str (url): URL representing a path to where an image should be fetched.
+    :param str (string): A base64 encoded string of the image.
 
     Raises:
-            ValueError: If no path stream or URL was found.
+        - ValueError: If no path, stream, URL or Base64 string was found.
 
     Returns:
-        (:obj:'OpenCV image'): Image that is now compatible with OpenCV operations.
+        - (obj): Image that is now compatible with OpenCV operations.
+
     """
     # If the path is not None, then load the image from disk. Example: payload = {"image": open("id.jpg", "rb")}
     if path is not None:
@@ -67,5 +67,4 @@ def grab_image(path=None, stream=None, url=None, string=None):
         else:
             raise ValueError('No valid method was found to grab image.'
                              ' Either path is incorrect or image does not exist')
-
     return image
