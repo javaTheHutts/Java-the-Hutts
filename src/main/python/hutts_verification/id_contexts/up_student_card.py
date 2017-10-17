@@ -57,18 +57,18 @@ class UPStudentCard(IDContext):
         such as names, surname, ID number, etc., from a given input string containing said relevant information.
         In this particular ID context, the information is sparse and is mainly intended for demonstration purposes.
 
-        Args:
-            match_contexts (list): A list of dictionaries that contain the contextual information used in the process
-                of retrieving field values from the OCR output string - not particularly useful for this ID context.
-            id_string (str): A string containing some ID information.
-            barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
-            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
-                two strings.
-            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
-                noted as running onto multiple lines.
+        :param match_contexts (list): A list of dictionaries that contain the contextual information used in the
+                process of retrieving field values from the OCR output string.
+        :param id_string (str): A string containing some ID information.
+        :param barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
+        :param fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when
+                comparing two strings.
+        :param max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields
+                that are noted as running onto multiple lines.
 
         Returns:
-            (dict): A dictionary object containing the relevant, extracted ID information.
+            - (dict): A dictionary object containing the relevant, extracted ID information.
+
         """
         id_info = {}
         regexp = re.compile(r'[0-9]{6,10}')
