@@ -17,21 +17,21 @@ __status__ = "Development"
 class FaceVerify:
     """
     The FaceVerify class is responsible for
+
     1. Detecting the face.
-    2. Generating a threshold value that determines the likeness
-    of two individuals in an image
+    2. Generating a threshold value that determines the likeness of two individuals in an image.
+
     """
     def __init__(self, shape_predictor_path, face_recognition_path):
         """
         Initialise face verify manager.
 
-        Args:
-            shape_predictor_path (str): Describes the path the Shape Predictor trained data.
-            face_recognition_path (str): Describes the path the face recognition trained data.
+        :param shape_predictor_path (str): The path to the shape predictor trained data.
+        :param face_recognition_path (str): The path to the face recognition trained data.
 
         Raises:
-            TypeError: If a none string value is passed for shape_predictor_path
-            TypeError: If a none string value is passed for face_recognition_path
+            - TypeError: If a string value is not passed for shape_predictor_path.
+            - TypeError: If a string value is not passed for face_recognition_path.
 
         """
         logger.info("Initialise FaceVerify")
@@ -58,25 +58,23 @@ class FaceVerify:
         the threshold value passed by the user a boolean value of True is returned
         indicating that the faces in the images passed indeed match.
 
-        The Verify function makes use of the dlib library which guarantees 99.38%
+        The verify function makes use of the dlib library which guarantees 99.38%
         accuracy on the standard Labeled Faces in the Wild benchmark.
 
-        Args:
-            face1 (:obj:'OpenCV image'): The first image containing the face that should be compared.
-            face2 (:obj:'OpenCV image'): The second image containing the face that should be compared
-            threshold (float): The threshold value determines at what distance the two images are considered the same.
-            If a verify score is below the threshold value the faces are considered a match.
-            The Labled Faces in the Wild benchmark recommend a default threshold
-            of 0.6 but a threshold of 0.55 was decided on since a threshold of 0.55 represents
-            the problem better.
+        :param face1 (obj): The first image containing the face that should be compared.
+        :param face2 (obj): The second image containing the face that should be compared.
+        :param threshold (float): The threshold value determines at what distance the two images
+                are considered the same. If a verify score is below the threshold value the faces are
+                considered a match. The Labled Faces in the Wild benchmark recommend a default threshold
+                of 0.6 but a threshold of 0.55 was decided on to ensure higher confidence in results.
 
         Returns:
-            bool: Represent if two face indeed match. True if distance calculated is below threshold value.
-            float: Return Euclidean distance between the vector representation of the two faces.
+            - (boolean): Represents if two face indeed match.
+            - (float): The Euclidean distance between the vector representations of the two faces.
 
         Raises:
-            ValueError: If no face can be detected no faces can be matched and
-            operation should be aborted.
+            - ValueError: If no face can be detected then no faces can be matched and the operation should be aborted.
+
         """
 
         logger.debug('Getting frontal face detector')

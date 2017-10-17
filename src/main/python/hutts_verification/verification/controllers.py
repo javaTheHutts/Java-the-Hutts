@@ -50,7 +50,9 @@ def verify_id():
     """
     Sample function to return a match percentage of an ID image and
     provided personal information and picture of face.
-    URL: http://localhost:5000/verifyID
+
+    URL: http://localhost:5000/verifyID.
+
     """
     image_of_id, face = receive_faces(match_face=True)
     entered_details = receive_details()
@@ -80,8 +82,10 @@ def verify_id():
 def verify_faces():
     """
     Sample function to return a match percentage of an ID face image and
-    picture of face
-    URL: http://localhost:5000/verifyFaces
+    picture of face.
+
+    URL: http://localhost:5000/verifyFaces.
+
     """
     image_of_id, face = receive_faces(match_face=True)
     (is_match, distance) = match_faces(image_of_id, face)
@@ -98,7 +102,7 @@ def verify_faces():
 def verify_info():
     """
     Sample function to return a match percentage of an ID image and
-    provided personal information
+    provided personal information.
     """
     image_of_id, _ = receive_faces(match_face=False)
     entered_details = receive_details()
@@ -121,15 +125,13 @@ def match_faces(image_of_id, face):
     It is expected that an image of an ID and an image of a Profile picture will be received.
     Even if the expected images are not received the function will still apply a best effort solution.
 
-    Args:
-       image_of_id (:obj:'OpenCV image'): An image of an ID that contains a face that needs to be verified
-       face (:obj:'OpenCV image'): A image of a face that needs to be verified
+    :param image_of_id (obj): An image of an ID that contains a face that needs to be verified.
+    :param face (obj): A image of a face that needs to be verified.
 
     Returns:
-        bool: Represent if two faces indeed match True if distance calculated is
-              below a threshold value. False if the distance calculated is above threshold value.
-        float: Return Euclidean distance between the vector representation
-               of the two faces.
+        - boolean: Whether the two faces match (the distance between them is above the threshold value).
+        - float: Return Euclidean distance between the vector representations of the two faces.
+
     """
     # Extract face
     face_detector = FaceDetector(SHAPE_PREDICTOR_PATH)
@@ -154,13 +156,12 @@ def receive_faces(match_face=True):
     However, if the order is not followed that system will still be able to return the best effort result without
     loss of accuracy.
 
-    Args:
-        match_face (bool): Indicates if additional profile of a face should be extracted.
-        If an additional face should not be extracted simply return the ID image.
+    :param match_face (boolean): Indicates if an additional profile of a face should be extracted.
+            If an additional face should not be extracted simply return the ID image.
 
     Returns:
-       image_of_id (:obj:'OpenCV image'): An image of a ID.
-       face (:obj:'OpenCV image'): An image of a face. If match_face is set to True
+       - (obj): An image of a ID.
+       - (obj): An image of a face if match_face is set to True.
 
     """
     data = {"success": False}
@@ -207,12 +208,12 @@ def manage_text_extractor(image_of_id):
     This function manages the text extraction from an ID images.
     Management includes preparing text extraction preferences and receiving extracted text.
 
-    Args:
-       image_of_id (:obj:'OpenCV image'): An image of an ID that text must be extracted from.
+    :param image_of_id (obj): An image of an ID that text must be extracted from.
 
     Returns:
-       preferences (dict): Prepared list of preferences. May contained additional text extraction or logger preferences.
-       extracted_text (json object): A collection of text extracted from the ID.
+       - preferences (dict): Prepared list of preferences. May contain additional text extraction or logger preferences.
+       - extracted_text (json object): A collection of text extracted from the ID.
+
     """
     preferences = {}
     # Grab additional parameters specifying techniques. Extract text
@@ -246,19 +247,15 @@ def manage_text_verification(preferences, extracted_text, entered_details):
     The function manages the preparation before text verification and result of the text verification it self
     Management includes preparing logger functionality and controlling match percentages and messages.
 
-    Args:
-        preferences (list): A list of preferences. Containing details about logger functionality.
-        extracted_text (JSON object): Contains text extracted from ID image.
-        entered_details (dict): Dictionary containing information that needs to be verified
+    :param preferences (list): A list of preferences containing details about logger functionality.
+    :param extracted_text (JSON object): Contains text extracted from ID image.
+    :param entered_details (dict): Dictionary containing information that needs to be verified.
 
     Returns:
-       text_match_percentage (float): Value representing the accuracy with which the entered details
-            matches that of the extracted text.
-       text_match (dict): Contains intermediate match percentages for different details.
-            For Example the match percentage between just the date_of_birth fields
-       is_pass (bool): Indicates if text_verification passes.
-            If match percentage is above threshold provided in preferences then verification passes.
-            If match percentage is below threshold value provided in preferences then verification fails.
+       - (float): Value representing the accuracy with which the entered details matches that of the extracted text.
+       - (dict): Contains individual match percentages for different fields.
+       - (boolean): Indicates if text_verification passes based on the threshold value.
+
     """
     text_verifier = TextVerify()
     verbose_verify = preferences['verbose_verify']
@@ -274,7 +271,8 @@ def receive_details():
     This function receives the details that need to be verified from the flask handler.
 
     Returns:
-        entered_details (dict): Details that need to be verified with that extracted from image.
+        - (dict): Details that need to be verified with that extracted from image.
+
     """
     entered_details = {
         "names": request.get_json()['names'],

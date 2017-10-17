@@ -30,25 +30,20 @@ class TextVerify:
         This function is responsible for the verification of text that is extracted from an ID and is passed in,
         along with information that is to be used to verify the extracted text.
 
-        Args:
-            extracted (dict): A dictionary containing the information that was extracted from an ID.
-            verifier (dict): A dictionary containing the information against which the extracted data is to be verified.
-            threshold (float): A threshold percentage used to determine if the match percentage is accepted as verified.
-            min_matches (int): The minimum number of matches to calculatd for the result to be considered as verified.
-            verbose (bool): Indicates whether or not to return all of the calculated match percentages.
+        :param extracted (dict): The information that was extracted from an ID.
+        :param verifier (dict): The information against which the extracted data is to be verified.
+        :param threshold (float): A percentage used to determine if the match percentage is accepted as verified.
+        :param min_matches (int): The minimum number of matches needed to allow a positive match.
+        :param verbose (boolean): Indicates whether or not to return all of the calculated match percentages.
 
         Returns:
-            (bool | float | dict): The first value returned is a bool that indicates whether or not the total
+            - ((bool, float) | dict): The first value returned is a bool that indicates whether or not the total
                 percentage match is above the specified threshold value, while the second return value is the total
                 percentage match value if verbose is False, or returns a dict of all the determined percentage match
                 values if verbose is True.
 
         Raises:
-            TypeError: If extracted is not a dictionary.
-            TypeError: If verifier is not a dictionary.
-            TypeError: If threshold is not a float.
-            TypeError: If min_matches is not an integer.
-            TypeError: If verbose is not a boolean.
+            TypeError: If any parameter is not of the correct type.
 
         """
         if not isinstance(extracted, dict):
@@ -148,16 +143,14 @@ class TextVerify:
         This function is responsible for determining the percentage match for two strings and returning
         said percentage.
 
-        Args:
-            str_x (str): The first string that is used to perform matching.
-            str_y (str): The second string that is used to perform matching.
+        :param str_x (str): The first string that is used to perform matching.
+        :param str_y (str): The second string that is used to perform matching.
 
         Returns:
-            (float): Match percentage of the two given strings.
+            - (float): Match percentage of the two given strings.
 
         Raises:
-            TypeError: If str_x is not a string.
-            TypeError: If str_y is not a string.
+            TypeError: If either parameter is not a string.
         """
         if not isinstance(str_x, str):
             raise TypeError(
@@ -177,14 +170,11 @@ class TextVerify:
         This function is responsible for calculating a single, total percentage match value for a dict of match
         values that have been calculated.
 
-        Args:
-            matches (dict): A dictionary of pre-calculated, match percentages.
+        :param matches (dict): A dictionary of pre-calculated, match percentages.
 
         Returns:
-            (float): A total match percentage (out of 100) for a given set of match percentages.
+            - (float): A total match percentage for a given set of match percentages.
 
-        Todo:
-            Investigate the proposal of calculating a weighted total.
         """
         return round(sum(value['match_percentage'] for value in matches.values()) / len(matches), 2)
 
@@ -194,16 +184,13 @@ class TextVerify:
         Creates a dictionary containing fields for which matches could not be computed, due to non-existence
         of fields or field values.
 
-        Author:
-            Jan-Justin van Tonder
-
-        Args:
-            extracted (dict): A dictionary containing the information that was extracted from an ID.
-            verifier (dict): A dictionary containing the information against which the extracted data is to be
+        :param extracted (dict): A dictionary containing the information that was extracted from an ID.
+        :param verifier (dict): A dictionary containing the information against which the extracted data is to be
                 verified.
 
         Returns:
-            (dict): A dictionary containing fields for which no matches can be found.
+            - (dict): A dictionary containing fields for which no matches can be found.
+
         """
         non_matches = {}
         # Iterate over the extracted and verifier dictionaries to determine the field values for which match
@@ -229,16 +216,16 @@ class TextVerify:
         """
         Determines whether a given id number is valid or not.
 
-        Args:
-            id_number (str):
-            valid_length (int): Specifies the length of a given id number to be considered as valid.
+        :param id_number (str): The ID number that has to be validated.
+        :param valid_length (int): Specifies the length of a given id number to be considered as valid.
 
         Returns:
-            (bool): True if the id number is valid, False otherwise.
+            - (boolean): True if the id number is valid, False otherwise.
 
         Raises:
             TypeError: If id_number is not a string containing only numeric characters.
             TypeError: If valid_length is not an integer.
+
         """
         if (not isinstance(id_number, str)) or (isinstance(id_number, str) and not id_number.isnumeric()):
             raise TypeError(
@@ -275,11 +262,11 @@ class TextVerify:
         """
         Compute the Luhn checksum for the given id number string for validation.
 
-        Args:
-            id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.
+        :param id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.
 
         Returns:
-            (int): Luhn checksum value for validation.
+            - (int): Luhn checksum value for validation.
+
         """
         # Map the digits of the given id number to new integers and create a list from said mapping.
         digits = list(map(int, id_number))
