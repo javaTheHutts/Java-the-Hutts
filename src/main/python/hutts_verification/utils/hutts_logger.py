@@ -2,35 +2,34 @@
 Wraps the logic required to setup and use a custom logger while
 disabling the built-in flask logger.
 
-:Example:
+Example usage:
 
 First import the logger from the hutts_logger module...
 from hutts_verification.utils.hutts_logger import logger
 then start logging.
-logger.info('logging an example')
+
+``logger.info('logging an example')``
 
 There are 5 logging levels, as shown below with their corresponding
 function call (from lowest to highest level):
 
-    DEBUG       -   logger.debug(message)
-    INFO        -   logger.info(message)
-    WARNING     -   logger.warning(message)
-    ERROR       -   logger.error(message)
-    CRITICAL    -   logger.critical(message)
+    - DEBUG       -   ``logger.debug(message)``
+    - INFO        -   ``logger.info(message)``
+    - WARNING     -   ``logger.warning(message)``
+    - ERROR       -   ``logger.error(message)``
+    - CRITICAL    -   ``logger.critical(message)``
 
 The default level of the logger will be INFO, unless the flask app is
 run in debug mode, in which case the logger level will be DEBUG.
 What this means is that messages lower than INFO, i.e. DEBUG, will
 not be shown, again this is unless the flask app is run in debug
 mode.
-!
 
-.. note: A function (prettify_json_message) has been included to take
-a json obj/dict and return a prettified string of said json obj/dict
-in the event that someone wishes to display a message in the form of
-a json obj/dict.
+.. note:    A function (prettify_json_message) has been included to take
+            a json obj/dict and return a prettified string of said json obj/dict
+            in the event that someone wishes to display a message in the form of
+            a json obj/dict.
 
-.. todo: Look into handling the constants in a config file instead.
 """
 
 import colorlog
@@ -61,7 +60,7 @@ LOGGING_LOG_TO_CONSOLE_FMT = '[%(asctime)s.%(msecs)03d]%(log_color)s[%(levelname
                              '-- (%(filename)s:%(lineno)d) -- %(message)s'
 """
 Specifies the colours to be used to indicate the different levels when logging to console.
-For a more detailed description see the colorlog documentation: https://github.com/borntyping/python-colorlog
+For a more detailed description see the colorlog documentation: https://github.com/borntyping/python-colorlog.
 """
 LOGGING_LOG_TO_CONSOLE_COLOURS = {
     'DEBUG':    'bold_cyan',
@@ -72,7 +71,7 @@ LOGGING_LOG_TO_CONSOLE_COLOURS = {
 }
 """
 Specifies the secondary colours to be used to indicate the different levels when logging to console.
-For a more detailed description see the colorlog documentation: https://github.com/borntyping/python-colorlog
+For a more detailed description see the colorlog documentation: https://github.com/borntyping/python-colorlog.
 """
 LOGGING_LOG_TO_CONSOLE_SEC_COLOURS = {
     'message': {
@@ -124,8 +123,8 @@ def disable_flask_logging(app_instance):
     """
     This function disables the flask logging, which interferes with the custom logger.
 
-    Args:
-        app_instance (obj): A reference to the current flask server application.
+    :param app_instance (obj): A reference to the current flask server application.
+
     """
     app_instance.handlers = []
     app_instance.logger.propagate = False
@@ -137,7 +136,8 @@ def get_console_handler():
     This function is responsible for creating a console log handler with a global format and returning it.
 
     Returns:
-        handler (obj): A log handler that is responsible for logging to the console.
+        - (obj): A log handler that is responsible for logging to the console.
+
     """
     formatter = colorlog.ColoredFormatter(
         fmt=LOGGING_LOG_TO_CONSOLE_FMT,
@@ -155,7 +155,8 @@ def get_file_handler(log_dir=None):
     This function is responsible for creating a file log handler with a global format and returning it.
 
     Returns:
-        handler (obj): A log handler that is responsible for logging to a file.
+        - (obj): A log handler that is responsible for logging to a file.
+
     """
     log_file_dir = log_dir if log_dir else LOGGING_LOG_TO_FILE_DEFAULT_DIR
     try:
@@ -181,11 +182,11 @@ def prettify_json_message(json_message):
     This function is a helper function that is used to prettify a json/dict message obj so that is more readable
     for humans when it is logged.
 
-    Args:
-        json_message (dict): A message that is to be prettified before being logged.
+    :param json_message (dict): A message that is to be prettified before being logged.
 
     Returns:
-        string: A prettified json message string.
+        - (str): A prettified json message string.
+
     """
     return json.dumps(json_message, indent=2, sort_keys=True)
 
