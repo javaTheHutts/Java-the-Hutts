@@ -23,4 +23,4 @@ Hutts Verification can also be installed completely from the source code availab
     cd target/dist/Java-the-Hutts-1.0.dev0/
     python3 setup.py install
 
-6. In order to test whether the installation was successful, the user should be able to execute the ``import hutts_verification`` in any python shell without error.
+6. In order to test whether the installation was successful, the user should be able to execute the ``import hutts_verification`` statement in any Python 3 shell without error.

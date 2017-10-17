@@ -13,6 +13,7 @@ Welcome to Hutts Verification's documentation!
    :caption: Contents:
 
    Requirements and Installation Instructions <install.rst>
+   Using the Server <server.rst>
    Using the API <apidocs/modules.rst>
    FAQ <faq.rst>
 
