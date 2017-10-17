@@ -88,14 +88,15 @@ class SAIDBook(SAID):
         """
         Identifies and returns matches that are specific to the current ID context.
 
-        Args:
-            match_context (dict): A dictionary object that provides context for the information that is to be extracted.
-            id_string_list (list): An ID string that has been broken down into a list of individual lines.
-            current_index (int): The current index within the ID string list.
+        :param match_context (dict): A dictionary object that provides context for
+                the information that is to be extracted.
+        :param id_string_list (list): An ID string that has been broken down into
+                a list of individual lines.
+        :param current_index (int): The current index within the ID string list.
 
         Returns:
-            (str): A string containing the match value of a context-specific case.
-            (None): Used to indicate that no special case was identified.
+            - (str): A string containing the match value of a context-specific case.
+            - (None): Used to indicate that no special case was identified.
         """
         # Check for the status special case.
         if match_context['field'] == 'status':

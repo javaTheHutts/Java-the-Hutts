@@ -39,9 +39,9 @@ class SAID(IDContext):
         """
         Initialises the SAID object.
 
-        Args:
-            match_contexts (list): A list of dictionaries that contain the contextual information used in the process
-                of retrieving field values from the OCR output string.
+        :param match_contexts (list): A list of dictionaries that contain the contextual
+                information used in the process of retrieving field values from the OCR output string.
+
         """
         # Logging for debugging purposes.
         logger.debug('Initialising %s...' % type(self).__name__)
@@ -53,18 +53,17 @@ class SAID(IDContext):
         This function is responsible for generating a dictionary object containing the relevant ID information,
         such as names, surname, ID number, etc., from a given input string containing said relevant information.
 
-        Args:
-            match_contexts (list): A list of dictionaries that contain the contextual information used in the process
-                of retrieving field values from the OCR output string.
-            id_string (str): A string containing some ID information.
-            barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
-            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
-                two strings.
-            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
-                noted as running onto multiple lines.
+        :param match_contexts (list): A list of dictionaries that contain the contextual information used
+                in the process of retrieving field values from the OCR output string.
+        :param id_string (str): A string containing some ID information.
+        :param barcode_data (dict): A dictionary object containing information extracted from a barcode.
+        :param fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness
+                when comparing two strings.
+        :param max_multi_line (int): Specifies the maximum number of lines that is to be extracted from
+                fields that are noted as running onto multiple lines.
 
         Returns:
-            (dict): A dictionary object containing the relevant, extracted ID information.
+            - (dict): A dictionary object containing the relevant, extracted ID information.
         """
         # Given a string containing extracted ID text,
         # create a dictionary object and populate it with
@@ -92,13 +91,13 @@ class SAID(IDContext):
         This function is responsible for populating a dictionary object with information that it is able to find
         and extract from a given string containing ID information.
 
-        Args:
-            id_string (str): A string containing some ID information.
-            id_info (dict): A dictionary object used to house extracted ID information.
-            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
-                two strings.
-            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
-                noted as running onto multiple lines.
+        :param id_string (str): A string containing some ID information.
+        :param id_info (dict): A dictionary object used to house extracted ID information.
+        :param fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when
+                comparing two strings.
+        :param max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields
+                that are noted as running onto multiple lines.
+
         """
         # Split the id_string on the newline character to generate a list.
         id_string_list = id_string.split('\n')
@@ -123,27 +122,17 @@ class SAID(IDContext):
         matching is performed on field names in order to extract field values. This process is assisted with a context
         that is is to be provided.
 
-        Args:
-            id_string_list (list): An ID string that has been broken down into a list of individual lines.
-            match_context (dict): A dictionary object that provides context for the information that is to be extracted.
-            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing
-                two strings.
-            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are
-                noted as running onto multiple lines.
-            e.g. Given OCR output such as :
-                ...
-                Names\n
-                This is a long\n
-                long list of names\n
-                that spans multiple\n
-                lines\n
-                ...
-                max_multi_line = 2, means that only the string:
-                "This is a long list of names" is retrieved.
+        :param id_string_list (list): An ID string that has been broken down into a list of individual lines.
+        :param match_context (dict): A dictionary object that provides context for the information that is to be
+                extracted.
+        :param fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when
+                comparing two strings.
+        :param max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields
+                that are noted as running onto multiple lines.
 
         Returns:
-            (str): A string containing the extracted information, if a match was found.
-            (None): If nothing was matched or an extracted value is an empty string.
+            - (str): A string containing the extracted information, if a match was found.
+            - (None): If nothing was matched or an extracted value is an empty string.
         """
         best_match_ratio = fuzzy_min_ratio
         match = None
@@ -222,10 +211,11 @@ class SAID(IDContext):
         Abstract method to be implemented by subclasses.
         Meant to retrieve matches that are particular to a context of a subclass.
 
-        Args:
-            match_context (dict): A dictionary object that provides context for the information that is to be extracted.
-            id_string_list (list): An ID string that has been broken down into a list of individual lines.
-            current_index (int): The current index within the ID string list.
+        :param match_context (dict): A dictionary object that provides context for the information that
+                is to be extracted.
+        :param id_string_list (list): An ID string that has been broken down into a list of individual lines.
+        :param current_index (int): The current index within the ID string list.
+
         """
         pass
 
@@ -235,11 +225,11 @@ class SAID(IDContext):
         This function is responsible for extracting information from a given ID number and populating a given
         dictionary object with the extracted information.
 
-        Args:
-            match_contexts (list): A list of dictionaries that contain the contextual information used in the process
-                of retrieving field values from the OCR output string.
-            id_info (dict): A dictionary object containing extracted ID information.
-            id_number (str): An ID number.
+        :param match_contexts (list): A list of dictionaries that contain the contextual information used in
+                the process of retrieving field values from the OCR output string.
+        :param id_info (dict): A dictionary object containing extracted ID information.
+        :param id_number (str): An ID number.
+
         """
         for match_context in match_contexts:
             if match_context['field'] == 'date_of_birth':
@@ -269,11 +259,11 @@ class SAID(IDContext):
         All custom operations that are required after all the extraction has taken place, should be
         called from within this function.
 
-        Args:
-            id_info (dict): A dictionary object used to house extracted ID information.
+        :param id_info (dict): A dictionary object used to house extracted ID information.
 
         Returns:
-            (dict): The original id_info, with some post-processed field values.
+            - (dict): The original id_info, with some post-processed field values.
+
         """
         # Check if date of birth field exists for post-processing.
         if 'date_of_birth' in id_info and id_info['date_of_birth']:
@@ -291,15 +281,15 @@ class SAID(IDContext):
         """
         Standardises the date of birth field value due to a mixture of formats that can be extracted.
         Due to the preference of extracting the date of birth from the id number as opposed to
-        the ocr output, there tends to be a discrepancy in the date format retrieved, therefore,
+        the OCR output, there tends to be a discrepancy in the date format retrieved, therefore,
         standardise it for future use.
 
-        Args:
-            date_of_birth (str): The date of birth to be standardised.
+        :param date_of_birth (str): The date of birth to be standardised.
 
         Returns:
-            (str): A standardised date of birth field value if the extracted format could be parsed, else the
+            - (str): A standardised date of birth field value if the extracted format could be parsed, else the
                 extracted format is kept.
+
         """
         try:
             # Attempt to parse the different dates that could appear for formatting.
@@ -334,14 +324,14 @@ class SAID(IDContext):
         """
         Determines whether a given id number is valid or not.
 
-        Args:
-            id_number (str): An ID number that is to be validated.
+        :param id_number (str): An ID number that is to be validated.
 
         Returns:
-            (bool): True if the id number is valid, False otherwise.
+            - (bool): True if the id number is valid, False otherwise.
 
         Raises:
-            TypeError: If id_number is not a string containing only numeric characters.
+            - TypeError: If id_number is not a string containing only numeric characters.
+
         """
         if (not isinstance(id_number, str)) or (isinstance(id_number, str) and not id_number.isnumeric()):
             raise TypeError(
@@ -373,11 +363,11 @@ class SAID(IDContext):
         """
         Compute the Luhn checksum for the given id number string for validation.
 
-        Args:
-            id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.
+        :param id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.
 
         Returns:
-            (int): Luhn checksum value for validation.
+            - (int): Luhn checksum value for validation.
+
         """
         # Create a list of ID number digits parsed as integers.
         digits = [int(digit) for digit in id_number]
