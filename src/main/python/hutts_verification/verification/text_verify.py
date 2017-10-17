@@ -33,8 +33,8 @@ class TextVerify:
         Args:
             extracted (dict): A dictionary containing the information that was extracted from an ID.
             verifier (dict): A dictionary containing the information against which the extracted data is to be verified.
-            threshold (float): A threshold percentage (out of 100) that is used to determine whether or not the final match percentage is accepted as verified.
-            min_matches (int): The minimum number of matches that have to be calculated for the final result to be considered as verified.
+            threshold (float): A threshold percentage used to determine if the match percentage is accepted as verified.
+            min_matches (int): The minimum number of matches to calculatd for the result to be considered as verified.
             verbose (bool): Indicates whether or not to return all of the calculated match percentages.
 
         Returns:

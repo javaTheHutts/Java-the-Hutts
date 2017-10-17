@@ -32,13 +32,13 @@ def extract_text():
     # Check to see if this is a post request.
     if request.method == "POST":
         # Check to see if an image was uploaded.
-        if request.files.get("idPhoto", None) is not None:
+        if request.get_json().get("idPhoto", None) is not None:
             # Grab the uploaded image.
-            image = grab_image(stream=request.files["idPhoto"])
+            image = grab_image(string=request.get_json()["idPhoto"])
         # Otherwise, assume that a URL was passed in.
         else:
             # Grab the URL from the request.
-            url = request.args.get("url", None)
+            url = request.get_json().get("url", None)
             # If the URL is None, then return an error.
             if url is None:
                 data["error"] = "No URL provided."
@@ -49,20 +49,20 @@ def extract_text():
         # Grab additional parameters specifying techniques
         preferences = {}
 
-        if 'blur_technique' in request.form:
-            preferences['blur_method'] = request.form['blur_technique']
-        if 'threshold_technique' in request.form:
-            preferences['threshold_method'] = request.form['threshold_technique']
-        if 'remove_face' in request.form:
-            preferences['remove_face'] = request.form['remove_face']
-        if 'remove_barcode' in request.form:
-            preferences['remove_barcode'] = request.form['remove_barcode']
-        if 'color' in request.form:
-            preferences['color'] = request.form['color']
-        if 'id_type' in request.form:
-            preferences['id_type'] = request.form['id_type']
-        if 'useIO' in request.form:
-            preferences['useIO'] = request.form['useIO'] == 'true'
+        if 'blur_technique' in request.get_json():
+            preferences['blur_method'] = request.get_json()['blur_technique']
+        if 'threshold_technique' in request.get_json():
+            preferences['threshold_method'] = request.get_json()['threshold_technique']
+        if 'remove_face' in request.get_json():
+            preferences['remove_face'] = request.get_json()['remove_face']
+        if 'remove_barcode' in request.get_json():
+            preferences['remove_barcode'] = request.get_json()['remove_barcode']
+        if 'color' in request.get_json():
+            preferences['color'] = request.get_json()['color']
+        if 'id_type' in request.get_json():
+            preferences['id_type'] = request.get_json()['id_type']
+        if 'useIO' in request.get_json():
+            preferences['useIO'] = request.get_json()['useIO'] == 'true'
         else:
             preferences['useIO'] = False
 
@@ -84,13 +84,13 @@ def extract_face():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("idPhoto", None) is not None:
+        if request.get_json().get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = grab_image(stream=request.files["idPhoto"])
+            image = grab_image(string=request.get_json()["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.args.get("url", None)
+            url = request.get_json().get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
@@ -100,8 +100,8 @@ def extract_face():
 
     # Add preferences
     preferences = {}
-    if 'useIO' in request.form:
-        preferences['useIO'] = request.form['useIO'] == 'true'
+    if 'useIO' in request.get_json():
+        preferences['useIO'] = request.get_json()['useIO'] == 'true'
     # Call open CV commands here with the extracted image
     response = face_extraction_response(preferences['useIO'], image)
     return response
@@ -118,13 +118,13 @@ def extract_all():
     # check to see if this is a post request
     if request.method == "POST":
         # check to see if an image was uploaded
-        if request.files.get("idPhoto", None) is not None:
+        if request.get_json().get("idPhoto", None) is not None:
             # grab the uploaded image
-            image = grab_image(stream=request.files["idPhoto"])
+            image = grab_image(string=request.get_json()["idPhoto"])
         # otherwise, assume that a URL was passed in
         else:
             # grab the URL from the request
-            url = request.args.get("url", None)
+            url = request.get_json().get("url", None)
             # if the URL is None, then return an error
             if url is None:
                 data["error"] = "No URL provided."
@@ -135,20 +135,20 @@ def extract_all():
         # Grab additional parameters specifying techniques
         preferences = {}
 
-        if 'blur_technique' in request.form:
-            preferences['blur_method'] = request.form['blur_technique']
-        if 'threshold_technique' in request.form:
-            preferences['threshold_method'] = request.form['threshold_technique']
-        if 'remove_face' in request.form:
-            preferences['remove_face'] = request.form['remove_face']
-        if 'remove_barcode' in request.form:
-            preferences['remove_barcode'] = request.form['remove_barcode']
-        if 'color' in request.form:
-            preferences['color'] = request.form['color']
-        if 'id_type' in request.form:
-            preferences['id_type'] = request.form['id_type']
-        if 'useIO' in request.form:
-            preferences['useIO'] = request.form['useIO'] == 'true'
+        if 'blur_technique' in request.get_json():
+            preferences['blur_method'] = request.get_json()['blur_technique']
+        if 'threshold_technique' in request.get_json():
+            preferences['threshold_method'] = request.get_json()['threshold_technique']
+        if 'remove_face' in request.get_json():
+            preferences['remove_face'] = request.get_json()['remove_face']
+        if 'remove_barcode' in request.get_json():
+            preferences['remove_barcode'] = request.get_json()['remove_barcode']
+        if 'color' in request.get_json():
+            preferences['color'] = request.get_json()['color']
+        if 'id_type' in request.get_json():
+            preferences['id_type'] = request.get_json()['id_type']
+        if 'useIO' in request.get_json():
+            preferences['useIO'] = request.get_json()['useIO'] == 'true'
         else:
             preferences['useIO'] = False
 

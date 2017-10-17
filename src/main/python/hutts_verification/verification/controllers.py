@@ -14,7 +14,7 @@ from pathlib import Path
 from multiprocessing.pool import ThreadPool
 import os
 
-__authors__ = "Nicolai van Niekerk, Stephan Nell, Marno Hermann"
+__authors__ = "Nicolai van Niekerk, Stephan Nell, Marno Hermann, Andreas Nel"
 __copyright__ = "Copyright 2017, Java the Hutts"
 __license__ = "BSD"
 __maintainer__ = "Nicolai van Niekerk"
@@ -166,13 +166,13 @@ def receive_faces(match_face=True):
     data = {"success": False}
     # Get id image as numpy array
     # Check to see if an image was uploaded.
-    if request.files.get("id_img", None) is not None:
+    if request.get_json().get("id_img", None) is not None:
         # Grab the uploaded image.
-        image_of_id = grab_image(stream=request.files["id_img"])
+        image_of_id = grab_image(string=request.get_json()["id_img"])
     # Otherwise, assume that a URL was passed in.
     else:
         # Grab the URL from the request.
-        url = request.args.get("url", None)
+        url = request.get_json().get("url", None)
         # If the URL is None, then return an error.
         if url is None:
             data["error"] = "No URL provided."
@@ -185,13 +185,13 @@ def receive_faces(match_face=True):
 
     # Get face image as numpy array
     # Check to see if an image was uploaded.
-    if request.files.get("face_img", None) is not None:
+    if request.get_json().get("face_img", None) is not None:
         # Grab the uploaded image.
-        face = grab_image(stream=request.files["face_img"])
+        face = grab_image(string=request.get_json()["face_img"])
     # Otherwise, assume that a URL was passed in.
     else:
         # Grab the URL from the request.
-        url = request.args.get("url", None)
+        url = request.get_json().get("url", None)
         # If the URL is None, then return an error.
         if url is None:
             data["error"] = "No URL provided."
@@ -217,24 +217,24 @@ def manage_text_extractor(image_of_id):
     preferences = {}
     # Grab additional parameters specifying techniques. Extract text
     logger.info("Setting Preferences")
-    if 'blur_technique' in request.form:
-        preferences['blur_method'] = request.form['blur_technique']
-    if 'threshold_technique' in request.form:
-        preferences['threshold_method'] = request.form['threshold_technique']
-    if 'remove_face' in request.form:
-        preferences['remove_face'] = request.form['remove_face']
-    if 'remove_barcode' in request.form:
-        preferences['remove_barcode'] = request.form['remove_barcode']
-    if 'color' in request.form:
-        preferences['color'] = request.form['color']
-    if 'id_type' in request.form:
-        preferences['id_type'] = request.form['id_type']
-    if 'verbose_verify' in request.form:
-        preferences['verbose_verify'] = True if request.form['verbose_verify'] == 'true' else False
+    if 'blur_technique' in request.get_json():
+        preferences['blur_method'] = request.get_json()['blur_technique']
+    if 'threshold_technique' in request.get_json():
+        preferences['threshold_method'] = request.get_json()['threshold_technique']
+    if 'remove_face' in request.get_json():
+        preferences['remove_face'] = request.get_json()['remove_face']
+    if 'remove_barcode' in request.get_json():
+        preferences['remove_barcode'] = request.get_json()['remove_barcode']
+    if 'color' in request.get_json():
+        preferences['color'] = request.get_json()['color']
+    if 'id_type' in request.get_json():
+        preferences['id_type'] = request.get_json()['id_type']
+    if 'verbose_verify' in request.get_json():
+        preferences['verbose_verify'] = True if request.get_json()['verbose_verify'] == 'true' else False
     else:
         preferences['verbose_verify'] = False
-    if 'useIO' in request.form:
-        preferences['useIO'] = request.form['useIO'] == 'true'
+    if 'useIO' in request.get_json():
+        preferences['useIO'] = request.get_json()['useIO'] == 'true'
 
     extractor = TextExtractor(preferences)
     extracted_text = extractor.extract(image_of_id)
@@ -277,13 +277,13 @@ def receive_details():
         entered_details (dict): Details that need to be verified with that extracted from image.
     """
     entered_details = {
-        "names": request.form['names'],
-        "surname": request.form['surname'],
-        "identity_number": request.form['idNumber'],
-        "nationality": request.form['nationality'],
-        "country_of_birth": request.form['cob'],
-        "status": request.form['status'],
-        "sex": request.form['gender'],
-        "date_of_birth": request.form['dob']
+        "names": request.get_json()['names'],
+        "surname": request.get_json()['surname'],
+        "identity_number": request.get_json()['idNumber'],
+        "nationality": request.get_json()['nationality'],
+        "country_of_birth": request.get_json()['cob'],
+        "status": request.get_json()['status'],
+        "sex": request.get_json()['gender'],
+        "date_of_birth": request.get_json()['dob']
     }
     return entered_details

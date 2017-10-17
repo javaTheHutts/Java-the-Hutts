@@ -64,14 +64,14 @@ class FaceVerify:
         Args:
             face1 (:obj:'OpenCV image'): The first image containing the face that should be compared.
             face2 (:obj:'OpenCV image'): The second image containing the face that should be compared
-            threshold (float): The threshold value determines at what distance the two images are considered the same person.
+            threshold (float): The threshold value determines at what distance the two images are considered the same.
             If a verify score is below the threshold value the faces are considered a match.
             The Labled Faces in the Wild benchmark recommend a default threshold
             of 0.6 but a threshold of 0.55 was decided on since a threshold of 0.55 represents
             the problem better.
 
         Returns:
-            bool: Represent if two face indeed match. True if distance calculated is below threshold value, False otherwise.
+            bool: Represent if two face indeed match. True if distance calculated is below threshold value.
             float: Return Euclidean distance between the vector representation of the two faces.
 
         Raises:
