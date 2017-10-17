@@ -81,6 +81,9 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+# Don't show the full path to objects
+add_module_names = False
+
 
 # -- Options for HTML output ----------------------------------------------
 html_logo = '.static/img/hutts-verification.png'
