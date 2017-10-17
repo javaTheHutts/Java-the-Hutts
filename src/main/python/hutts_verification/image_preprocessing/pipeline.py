@@ -21,21 +21,21 @@ class Pipeline:
     """
     The Pipeline will perform all necessary processing on the image and is built by the PipelineBuilder.
 
-    Attributes:
-        blur_manager (:BlurManager): The BlurManager that is used in this pipeline.
-        color_manager (:ColorManager): The ColorManager that is used in this pipeline.
-        face_detector (:FaceDetector): The FaceDetector that is used in this pipeline.
-        threshold_manager (:ThresholdManager): The ThresholdManager that is used in this pipeline.
+    :param blur_manager (BlurManager): The BlurManager that is used in this pipeline.
+    :param color_manager (ColorManager): The ColorManager that is used in this pipeline.
+    :param face_detector (FaceDetector): The FaceDetector that is used in this pipeline.
+    :param threshold_manager (ThresholdManager): The ThresholdManager that is used in this pipeline.
+
     """
     def __init__(self, blur_manager=None, color_manager=None, face_detector=None, threshold_manager=None):
         """
         Initialize Pipeline with parameters passed from t￼￼￼￼￼￼he Builder.
 
-        Args:
-            blur_manager (:BlurManager): The BlurManager.
-            color_manager (:ColorManager): The ColorManager.
-            face_detector (:FaceDetector): The FaceDetector.
-            threshold_manager (:ThresholdManager): The ThresholdManager.
+        :param blur_manager (BlurManager): The BlurManager.
+        :param color_manager (ColorManager): The ColorManager.
+        :param face_detector (FaceDetector): The FaceDetector.
+        :param threshold_manager (ThresholdManager): The ThresholdManager.
+
         """
         self.blur_manager = blur_manager
         self.color_manager = color_manager
@@ -46,19 +46,19 @@ class Pipeline:
         """
         This function applies all the processing needed to extract text from a image.
 
-        Args:
-            useIO (boolean): Whether or not to write images to disk
-            image (:obj:'OpenCV image'): Image to which processing should be applied to.
-            remove_face :boolean: If the remove face flag is set to true extra processes will
+        :param useIO (boolean): Whether or not to write images to disk.
+        :param image (obj): Image that should be processed.
+        :param remove_face (boolean): If the remove face flag is set to true, extra processes will
                 be activated during the pre-processing phase to remove the face from the image.
+
         Returns:
-            image: The processed image.
+            - (obj): The processed image.
+
         """
 
         # Remove face from image.
-        logger.info("Removing face: " + str(remove_face))
         if remove_face:
-            logger.info("REMOVING FACE...")
+            logger.info("Removing face: " + str(remove_face))
             image = self.face_detector.blur_face(image)
             if useIO:
                 cv2.imwrite(DESKTOP + "/output/4.png", image)
@@ -93,11 +93,11 @@ class Pipeline:
         """
         This function applies all the processing needed to extract a face from a image.
 
-        Args:
-            image (:obj:'OpenCV image'): Image to which processing should be applied to.
+        :param image (obj): Image to which processing should be applied to.
 
         Returns:
-            image (:obj:'OpenCV image'): The processed image.
+            - (obj): The processed image.
+
         """
         logger.info("Extracting face from image")
         extracted_face = self.face_detector.extract_face(image)

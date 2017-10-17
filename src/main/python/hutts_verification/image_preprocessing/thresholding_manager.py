@@ -21,16 +21,12 @@ class ThresholdingManager:
         """
         Initialise Thresholding manager.
 
-        Args:
-            thresholding_type (str): Indicates the type of thresholding that
-                should be applied.
+        :param thresholding_type (str): Indicates the type of thresholding that should be applied.
 
         Raises:
-            TypeError: If a parameter is passed that is not of type String.
-            NameError: If the thresholding type is not Adaptive or Otsu.
+            - TypeError: If a parameter is passed that is not of type String.
+            - NameError: If the thresholding type is not Adaptive or Otsu.
 
-        Returns:
-            None
         """
         if not isinstance(thresholding_type, str):
             raise TypeError(
@@ -49,14 +45,14 @@ class ThresholdingManager:
         """
         This performs the thresholding based on the predefined technique.
 
-        Args:
-            image: The image to which the thresholding must be applied.
+        :param image: The image to which the thresholding must be applied.
 
         Raises:
-            NameError: If invalid thresholding type is provided. i.e. Adaptive or Otsu.
+            - NameError: If a thresholding type other than 'adaptive' or 'otsu' is provided.
 
         Returns:
-            obj:'OpenCV image': The threshold image.
+            - (obj): The image, with the appropriate thresholding applied to it.
+
         """
         if self.thresholding_type == "adaptive":
             return self.adaptiveThresholding(image)
@@ -70,14 +66,14 @@ class ThresholdingManager:
         """
         This function applies a simple adaptive thresholding to the image passed.
 
-        Args:
-            image (:obj:'OpenCV image'): Image to which thresholding should be applied.
+        :param image (obj): Image to which thresholding should be applied.
 
         Raises:
-            TypeError: If a parameter is passed that is not of type Numpy array.
+            - TypeError: If a parameter is passed that is not of type Numpy array.
 
         Returns:
-            obj:'OpenCV image': The Threshold image.
+            - (obj): The image, with adaptive thresholding applied to it.
+
         """
         if not isinstance(image, np.ndarray):
             raise TypeError(
@@ -90,16 +86,16 @@ class ThresholdingManager:
     @staticmethod
     def otsuThresholding(image):
         """
-        This function applies a simple Binary Inverse Otso thresholding to the image passed.
+        This function applies a simple Binary Inverse Otsu thresholding to the image passed.
 
-        Args:
-            image (:obj:'OpenCV image'): Image to which thresholding should be applied.
+        :param image (obj): Image to which thresholding should be applied.
 
         Raises:
-            TypeError: If a parameter is passed that is not of type Numpy array.
+            - TypeError: If a parameter is passed that is not of type Numpy array.
 
         Returns:
-            obj:'OpenCV image': The Threshold image.
+            - (obj): The image, with otsu thresholding applied to it.
+
         """
         if not isinstance(image, np.ndarray):
             raise TypeError(

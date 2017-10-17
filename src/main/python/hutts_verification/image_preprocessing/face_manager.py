@@ -24,21 +24,19 @@ FACE_NOT_FOUND_PLACE_HOLDER = cv2.imread(TEMPLATE_DIR + "/profile.jpg")
 
 class FaceDetector:
     """
-    The FaceDetector class is responsible for
+    The FaceDetector class is responsible for:
+
     1. Detecting the face.
     2. Extracting a face from an image.
     3. Applying blurring on a detected face in an image.
+
     """
     def __init__(self, shape_predictor_path):
         """
         Initialise Face Detector Manager.
 
-        Args:
-            shape_predictor_path (str): Describes the path the Shape Predictor
-            trained data.
+        :param shape_predictor_path (str): Describes the path to the Shape Predictor trained data.
 
-        Returns:
-            None
         """
         self.shape_predictor_path = shape_predictor_path
         self.predictor = dlib.shape_predictor(self.shape_predictor_path)
@@ -57,14 +55,14 @@ class FaceDetector:
         with execution. This is due to the fact that face detection might not be critical to
         a function (like with text extraction) and rather be used to increase accuracy.
 
-        Args:
-            image (:obj:'OpenCV image'): Image containing the face we need to detect.
+        :param image (obj): OpenCV image containing the face we need to detect.
 
         Raises:
-            ValueError: If no face can be detected.
+            - ValueError: If no face can be detected.
 
         Returns:
-            list(integer): This list contains the box coordinates for the region in which the face resides.
+            - list(int): This list contains the box coordinates for the region in which the face resides.
+
         """
         rectangles = self.detector(image, 1)
         if len(rectangles) == 0:
@@ -76,16 +74,14 @@ class FaceDetector:
         This function finds a face in the image passed and is optimised
         to align the face before being returned.
 
-        Args:
-            image (:obj:'OpenCV image'): Image containing the face we need to detect and extract.
+        :param image (obj): Image containing the face we need to detect and extract.
 
         Raises:
-            ValueError: If no face can be detected.
+            - ValueError: If no face can be detected.
 
         Returns:
-            obj:'OpenCV image': Any background and unnecessary components are removed and only
-            the aligned face is returned.
-            obj:'OpenCV image': A copy of the original image is returned.
+            - (obj): An image of the aligned face.
+
         """
         rectangle = self.detect(image)
         if rectangle is None:
@@ -100,15 +96,14 @@ class FaceDetector:
         Blurring the face is implemented as a method in the attempt to reduce noise when extracting
         text from the image later in the image pipeline.
 
-        Args:
-            image (:obj:'OpenCV image'): Image containing the face we need to detect and blur.
+        :param image (obj): OpenCV image containing the face we need to detect and blur.
 
         Raises:
-            ValueError: If no face can be detected.
+            - ValueError: If no face can be detected.
 
         Returns:
-            obj:'OpenCV image': A copy of the original image is returned but with the applied
-            blurring to the face region.
+            - (obj): A copy of the image with blurring applied to the face in the image.
+
         """
         rectangle = self.detect(image)
         if rectangle is None:

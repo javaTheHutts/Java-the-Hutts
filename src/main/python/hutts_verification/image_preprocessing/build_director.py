@@ -25,7 +25,7 @@ SHAPE_PREDICTOR_PATH = correct_path("{base_path}/trained_data/shape_predictor_fa
 
 class BuildDirector:
     """
-    The BuildDirector constructs the Pipeline using the PipelineBuilder
+    The BuildDirector constructs the Pipeline using the PipelineBuilder.
     """
     @staticmethod
     def construct_text_extract_pipeline(preferences, identification_type):
@@ -34,13 +34,13 @@ class BuildDirector:
         This includes building different managers with their specific parameters.
         These managers will be called within the pipeline when executed.
 
-        Args:
-            preferences (dict): User-specified techniques to use in pipeline.
-            identification_type (string): Contains the type of identification, this is used
-                                        to determine which techniques are used.
+        :param preferences (dict): User-specified techniques to use in pipeline.
+        :param identification_type (str): Contains the type of identification, this is used
+                to determine which techniques are used.
 
         Returns:
-            :Pipeline (Constructed pipeline)
+            - (obj): Pipeline used for text extraction.
+
         """
         builder = PipelineBuilder()
         # Use template matching to identify type here
@@ -122,7 +122,8 @@ class BuildDirector:
         These managers will be called within the pipeline when executed.
 
         Returns:
-            :Pipeline (Constructed pipeline)
+            - (obj): Pipeline for facial extraction.
+
         """
         logger.debug("Shape Predictor path: " + SHAPE_PREDICTOR_PATH)
         builder = PipelineBuilder()
