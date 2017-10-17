@@ -20,11 +20,11 @@ class ContextManager:
     """
     A class responsible for managing and maintaining the various ID contexts.
 
-    Attributes:
-        _sa_id_card (IDContext): A South African ID card context.
-        _sa_id_book (IDContext): A South African ID book context.
-        _sa_id_book_old (IDContext): An old South African ID book context.
-        _up_card (IDContext): A University of Pretoria staff/student card context.
+    :_sa_id_card (SAIDCard): A South African ID card context.
+    :_sa_id_book (SAIDBook): A South African ID book context.
+    :_sa_id_book_old (SAIDBookOld): An old South African ID book context.
+    :_up_card (UPStudentCard): A University of Pretoria staff/student card context.
+
     """
     def __init__(self):
         """
@@ -40,12 +40,12 @@ class ContextManager:
         """
         Returns an ID context based on the ID type that is passed in as an arg.
 
-        Args:
-            id_type (str): A string indicating a type of ID.
+        :param id_type (str): A string indicating a type of ID.
 
         Returns:
-            (IDContext): An IDContext object determined by the ID type passed in as an arg.
-            (None): In the event that the ID type is unrecognisable.
+            - (IDContext): An IDContext object determined by the ID type passed in as an arg.
+            - (None): In the event that the ID type is unrecognisable.
+
         """
         # Determine which ID context to return, otherwise return None.
         if id_type == 'idcard':

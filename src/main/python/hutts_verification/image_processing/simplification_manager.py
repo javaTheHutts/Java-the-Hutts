@@ -32,18 +32,17 @@ class SimplificationManager:
         The perspective transformation takes the image passed and applies edge detection and
         a function to detect the contours of a identification document. If contours of an
         identification document is detected the image is converted from a non-perspective view
-        to an perspective view.
+        to a perspective view.
 
-        Args:
-            image (:obj:'OpenCV image'): Image containing a identification document
-            use_io (boolean): Whether or not to write images to disk
+        :param image (obj): Image containing a identification document.
+        :param use_io (boolean): Whether or not to write images to disk.
 
         Returns:
-            obj:'OpenCV image': Returns as warped image where just the identification document
-                is present and the identification document is now in a perspective view.
+            - (obj): The transformed image.
 
         Raises:
-            TypeError: If a parameter is passed that is not of type Numpy array.
+            - TypeError: If a parameter is passed that is not of type Numpy array.
+
         """
         if not isinstance(image, np.ndarray):
             raise TypeError(

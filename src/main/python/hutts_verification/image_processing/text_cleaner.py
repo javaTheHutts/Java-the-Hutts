@@ -18,9 +18,9 @@ class TextCleaner:
     """
     This class is encapsulates the logic required to clean the OCR output string produced from an image of an ID.
 
-    Attributes:
-        _deplorables (list): A list of strings that contain characters that is to be filtered out from the OCR output
-            string during string cleaning.
+    :_deplorables (list): A list of strings that contain characters that is to be filtered out from the OCR output
+        string during string cleaning.
+
     """
     def __init__(self):
         """
@@ -36,16 +36,16 @@ class TextCleaner:
         This function serves to receive an input string, clean it up through removing undesirable characters and
         unnecessary whitespace, and to return the cleaned string.
 
-        Args:
-            in_string (str): The input string that is to be cleaned.
-            deplorables (list, Optional): A list of characters that are to be filtered from the input string.
+        :param in_string (str): The input string that is to be cleaned.
+        :param deplorables (list): A list of characters that are to be filtered from the input string.
 
         Returns:
-            str: A string that has been stripped of undesirable characters and unnecessary whitespace.
+            - (str): A string that has been stripped of undesirable characters and unnecessary whitespace.
 
         Raises:
-            TypeError: If in_string is not a string.
-            TypeError: If deplorables is not a list of strings.
+            - TypeError: If in_string is not a string.
+            - TypeError: If deplorables is not a list of strings.
+
         """
         # Check if the correct argument types have been passed in.
         if not isinstance(in_string, str):
@@ -77,11 +77,11 @@ class TextCleaner:
         This function is responsible for compiling a regex pattern that is used to filter out the characters that
         were deemed undesirable from a string.
 
-        Args:
-            deplorables (list): A list of characters that are to be filtered from the input string.
+        :param deplorables (list): A list of characters that are to be filtered from the input string.
 
         Returns:
-            A compiled regex pattern used to match undesirable characters in a string.
+            - (obj): A compiled regex pattern used to match undesirable characters in a string.
+
         """
         # Append to existing list of undesirable characters if there is a given list of
         # undesirable characters

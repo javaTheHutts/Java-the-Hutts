@@ -33,11 +33,8 @@ class TextExtractor:
         """
         Initialise Text Extractor.
 
-        Args:
-            preferences (dict): User-specified CV techniques.
+        :param preferences (dict): User-specified CV techniques.
 
-        Returns:
-            None
         """
         self.preferences = preferences
         self.remove_face = 'false'
@@ -46,13 +43,13 @@ class TextExtractor:
 
     def extract(self, img):
         """
-        This function is a sample that demonstrates how text would be extracted
+        This function is a sample that demonstrates how text would be extracted.
 
-        Args:
-            img: The image of the ID that contains the text to be extracted
+        :param img (obj): The image of the ID that contains the text to be extracted.
 
         Returns:
-            id_details (obj): The extracted information
+            - id_details (obj): The extracted information.
+
         """
         if 'remove_face' in self.preferences:
             self.remove_face = self.preferences['remove_face'] == 'true'
@@ -140,12 +137,12 @@ class FaceExtractor:
         """
         This function is a sample that demonstrates how the face would be extracted.
 
-        Args:
-            img: The image of the ID that contains the face that must be extracted.
-            use_io (boolean): Whether or not images should be written to disk
+        :param img (obj): The image of the ID that contains the face that must be extracted.
+        :param use_io (boolean): Whether or not images should be written to disk.
 
         Returns:
-            image: The extracted and aligned facial image.
+            - (obj): The extracted and aligned facial image.
+
         """
         simplification_manager = SimplificationManager()
 
