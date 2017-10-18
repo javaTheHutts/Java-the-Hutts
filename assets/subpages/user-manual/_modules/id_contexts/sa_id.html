@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>id_contexts.sa_id &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>id_contexts.sa_id</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for id_contexts.sa_id</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains the abstraction and high-level logic of South</span>
+<span class="sd">African ID contexts.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">fuzz</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">id_contexts.id_context</span> <span class="k">import</span> <span class="n">IDContext</span><span class="p">,</span> <span class="n">LineType</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span>
+
+<span class="n">__authors__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder, Stephan Nell, Marno Hermann&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;J.vanTonder@tuks.co.za&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<div class="viewcode-block" id="SAID"><a class="viewcode-back" href="../../apidocs/id_contexts.html#id_contexts.sa_id.SAID">[docs]</a><span class="k">class</span> <span class="nc">SAID</span><span class="p">(</span><span class="n">IDContext</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An abstract class for South African IDs.</span>
+<span class="sd">    Contains the high-level logic that is relevant to all South African IDs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define a class-level constant for a minimum fuzzy ratio during post-processing.</span>
+    <span class="n">POST_PROCESS_MIN_FUZZY_RATIO</span> <span class="o">=</span> <span class="mf">70.0</span>
+
+    <span class="c1"># Define a class-level constant for a valid ID number length.</span>
+    <span class="n">VALID_ID_LENGTH</span> <span class="o">=</span> <span class="mi">13</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_contexts</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialises the SAID object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            match_contexts (list): A list of dictionaries that contain the contextual information used in the process</span>
+<span class="sd">                of retrieving field values from the OCR output string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initialising </span><span class="si">%s</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="c1"># Initialise parent.</span>
+        <span class="n">IDContext</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_contexts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_dictify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_contexts</span><span class="p">,</span> <span class="n">id_string</span><span class="p">,</span> <span class="n">barcode_data</span><span class="p">,</span> <span class="n">fuzzy_min_ratio</span><span class="p">,</span> <span class="n">max_multi_line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for generating a dictionary object containing the relevant ID information,</span>
+<span class="sd">        such as names, surname, ID number, etc., from a given input string containing said relevant information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            match_contexts (list): A list of dictionaries that contain the contextual information used in the process</span>
+<span class="sd">                of retrieving field values from the OCR output string.</span>
+<span class="sd">            id_string (str): A string containing some ID information.</span>
+<span class="sd">            barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.</span>
+<span class="sd">            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing</span>
+<span class="sd">                two strings.</span>
+<span class="sd">            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are</span>
+<span class="sd">                noted as running onto multiple lines.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (dict): A dictionary object containing the relevant, extracted ID information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Given a string containing extracted ID text,</span>
+        <span class="c1"># create a dictionary object and populate it with</span>
+        <span class="c1"># relevant information from said text.</span>
+        <span class="n">id_info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Check if barcode data, containing the id number, exists and</span>
+        <span class="c1"># if so, save it and extract some relevant information from it.</span>
+        <span class="c1"># It should overwrite any existing fields that can be extracted from the id number, since</span>
+        <span class="c1"># the information embedded within the id number is more reliable, at least theoretically.</span>
+        <span class="k">if</span> <span class="n">barcode_data</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracting details from barcode data...&#39;</span><span class="p">)</span>
+            <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;identity_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">barcode_data</span><span class="p">[</span><span class="s1">&#39;identity_number&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_id_number_information_extraction</span><span class="p">(</span><span class="n">match_contexts</span><span class="p">,</span> <span class="n">id_info</span><span class="p">,</span> <span class="n">barcode_data</span><span class="p">[</span><span class="s1">&#39;identity_number&#39;</span><span class="p">])</span>
+        <span class="c1"># Attempt to populate id_info with information from the given ID string.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracting details from the given text string...&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_populate_id_information</span><span class="p">(</span><span class="n">match_contexts</span><span class="p">,</span> <span class="n">id_string</span><span class="p">,</span> <span class="n">id_info</span><span class="p">,</span> <span class="n">fuzzy_min_ratio</span><span class="p">,</span> <span class="n">max_multi_line</span><span class="p">)</span>
+        <span class="c1"># Perform some custom post-processing on the information that was extracted.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Post-processing some field values...&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_post_process</span><span class="p">(</span><span class="n">id_info</span><span class="p">)</span>
+        <span class="c1"># Return the info that was found.</span>
+        <span class="k">return</span> <span class="n">id_info</span>
+
+    <span class="k">def</span> <span class="nf">_populate_id_information</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_contexts</span><span class="p">,</span> <span class="n">id_string</span><span class="p">,</span> <span class="n">id_info</span><span class="p">,</span> <span class="n">fuzzy_min_ratio</span><span class="p">,</span> <span class="n">max_multi_line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for populating a dictionary object with information that it is able to find</span>
+<span class="sd">        and extract from a given string containing ID information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_string (str): A string containing some ID information.</span>
+<span class="sd">            id_info (dict): A dictionary object used to house extracted ID information.</span>
+<span class="sd">            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing</span>
+<span class="sd">                two strings.</span>
+<span class="sd">            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are</span>
+<span class="sd">                noted as running onto multiple lines.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Split the id_string on the newline character to generate a list.</span>
+        <span class="n">id_string_list</span> <span class="o">=</span> <span class="n">id_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="c1"># Attempt to retrieve matches.</span>
+        <span class="k">for</span> <span class="n">match_context</span> <span class="ow">in</span> <span class="n">match_contexts</span><span class="p">:</span>
+            <span class="c1"># Extract desired field name from context as key.</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span>
+            <span class="c1"># Only retrieve information if it does not exist or it could not previously</span>
+            <span class="c1"># be determined.</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">id_info</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">id_info</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                <span class="n">id_info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_match</span><span class="p">(</span><span class="n">id_string_list</span><span class="p">,</span> <span class="n">match_context</span><span class="p">,</span> <span class="n">fuzzy_min_ratio</span><span class="p">,</span> <span class="n">max_multi_line</span><span class="p">)</span>
+                <span class="c1"># If the ID number has been retrieved, use it to extract other useful information.</span>
+                <span class="c1"># It should overwrite any existing fields that can be extracted from the id number, since</span>
+                <span class="c1"># the information embedded within the id number is more reliable, at least theoretically.</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;identity_number&#39;</span> <span class="ow">and</span> <span class="n">id_info</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_id_number_information_extraction</span><span class="p">(</span><span class="n">match_contexts</span><span class="p">,</span> <span class="n">id_info</span><span class="p">,</span> <span class="n">id_info</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_get_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_string_list</span><span class="p">,</span> <span class="n">match_context</span><span class="p">,</span> <span class="n">fuzzy_min_ratio</span><span class="p">,</span> <span class="n">max_multi_line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for searching through a list of lines from an ID string and extracting the</span>
+<span class="sd">        relevant ID information based on some context for image_processing that is provided as input. Fuzzy string</span>
+<span class="sd">        matching is performed on field names in order to extract field values. This process is assisted with a context</span>
+<span class="sd">        that is is to be provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_string_list (list): An ID string that has been broken down into a list of individual lines.</span>
+<span class="sd">            match_context (dict): A dictionary object that provides context for the information that is to be extracted.</span>
+<span class="sd">            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing</span>
+<span class="sd">                two strings.</span>
+<span class="sd">            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are</span>
+<span class="sd">                noted as running onto multiple lines.</span>
+<span class="sd">            e.g. Given OCR output such as :</span>
+<span class="sd">                ...</span>
+<span class="sd">                Names\n</span>
+<span class="sd">                This is a long\n</span>
+<span class="sd">                long list of names\n</span>
+<span class="sd">                that spans multiple\n</span>
+<span class="sd">                lines\n</span>
+<span class="sd">                ...</span>
+<span class="sd">                max_multi_line = 2, means that only the string:</span>
+<span class="sd">                &quot;This is a long list of names&quot; is retrieved.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (str): A string containing the extracted information, if a match was found.</span>
+<span class="sd">            (None): If nothing was matched or an extracted value is an empty string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">best_match_ratio</span> <span class="o">=</span> <span class="n">fuzzy_min_ratio</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">skip_to_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">id_num_lines</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">id_string_list</span><span class="p">)</span>
+        <span class="c1"># Set the most suitable fuzzy matching function based on line type.</span>
+        <span class="n">get_match_ratio</span> <span class="o">=</span> <span class="n">fuzz</span><span class="o">.</span><span class="n">token_set_ratio</span>
+        <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;line_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_ADJACENT</span><span class="p">:</span>
+            <span class="n">get_match_ratio</span> <span class="o">=</span> <span class="n">fuzz</span><span class="o">.</span><span class="n">partial_token_set_ratio</span>
+        <span class="c1"># Iterate over the id_string list to find fuzzy matches.</span>
+        <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="n">current_line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">id_string_list</span><span class="p">):</span>
+            <span class="c1"># Check to see if we can jump ahead and ignore the current index.</span>
+            <span class="k">if</span> <span class="n">skip_to_index</span> <span class="o">&gt;</span> <span class="n">current_index</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># Is there a match?</span>
+            <span class="n">match_ratio</span> <span class="o">=</span> <span class="n">get_match_ratio</span><span class="p">(</span><span class="n">current_line</span><span class="p">,</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;find&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">match_ratio</span> <span class="o">&gt;=</span> <span class="n">best_match_ratio</span><span class="p">:</span>
+                <span class="c1"># Set new best match ratio and retrieve the info if possible</span>
+                <span class="n">best_match_ratio</span> <span class="o">=</span> <span class="n">match_ratio</span>
+                <span class="c1"># Check for special cases of extraction.</span>
+                <span class="n">idiosyncratic_match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_idiosyncratic_match</span><span class="p">(</span><span class="n">match_context</span><span class="p">,</span> <span class="n">id_string_list</span><span class="p">,</span> <span class="n">current_index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">idiosyncratic_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">idiosyncratic_match</span>
+                <span class="c1"># Check to see if we are dealing with a field value on single line adjacent to the field name.</span>
+                <span class="k">elif</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;line_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_ADJACENT</span><span class="p">:</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;find&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">current_line</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="c1"># Check to see if we are going out of bounds of the string before proceeding.</span>
+                <span class="k">elif</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;line_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_NEWLINE</span> <span class="ow">and</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">id_num_lines</span><span class="p">:</span>
+                    <span class="c1"># We are only interested in field value, not field name.</span>
+                    <span class="c1"># e.g: Surname\n</span>
+                    <span class="c1">#      Smith\n</span>
+                    <span class="c1">#      ...</span>
+                    <span class="c1"># ignore &#39;Surname&#39; so as to be able to manually specify field name</span>
+                    <span class="c1"># in the context settings.</span>
+                    <span class="c1"># Retrieve the field value on the very next line.</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">id_string_list</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="c1"># If the field value exists over multiple lines.</span>
+                    <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;multi_line&#39;</span><span class="p">]:</span>
+                        <span class="c1"># Determine the lower bound index for field values that span multiple lines.</span>
+                        <span class="n">lower_index</span> <span class="o">=</span> <span class="n">current_index</span> <span class="o">+</span> <span class="mi">2</span>
+                        <span class="k">if</span> <span class="n">lower_index</span> <span class="o">&gt;=</span> <span class="n">id_num_lines</span><span class="p">:</span>
+                            <span class="c1"># There is nothing to find in this case.</span>
+                            <span class="k">continue</span>
+                        <span class="c1"># Determine the upper bound index for field values that span multiple lines.</span>
+                        <span class="n">upper_index</span> <span class="o">=</span> <span class="n">current_index</span> <span class="o">+</span> <span class="n">max_multi_line</span> <span class="o">+</span> <span class="mi">1</span>
+                        <span class="k">if</span> <span class="n">upper_index</span> <span class="o">&gt;</span> <span class="n">id_num_lines</span><span class="p">:</span>
+                            <span class="c1"># Don&#39;t go out of bounds.</span>
+                            <span class="n">upper_index</span> <span class="o">=</span> <span class="n">id_num_lines</span>
+                        <span class="c1"># Iterate ahead to retrieve the field value that spans over multiple lines.</span>
+                        <span class="k">for</span> <span class="n">forward_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lower_index</span><span class="p">,</span> <span class="n">upper_index</span><span class="p">):</span>
+                            <span class="c1"># For ech of the specified endpoints, check if the end of the field value has</span>
+                            <span class="c1"># been reached.</span>
+                            <span class="n">end_point_ratio</span> <span class="o">=</span> <span class="n">fuzz</span><span class="o">.</span><span class="n">token_set_ratio</span><span class="p">(</span>
+                                <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;multi_line_end&#39;</span><span class="p">],</span>
+                                <span class="n">id_string_list</span><span class="p">[</span><span class="n">forward_index</span><span class="p">]</span>
+                            <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">end_point_ratio</span> <span class="o">&gt;=</span> <span class="n">fuzzy_min_ratio</span><span class="p">:</span>
+                                <span class="n">skip_to_index</span> <span class="o">=</span> <span class="n">forward_index</span>
+                                <span class="k">break</span>
+                            <span class="c1"># Otherwise, add the line to the field value.</span>
+                            <span class="n">match</span> <span class="o">+=</span> <span class="s1">&#39; </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">id_string_list</span><span class="p">[</span><span class="n">forward_index</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="c1"># Check if a legitimate match was found before proceeding.</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="c1"># Normalise the match found.</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalise_match</span><span class="p">(</span><span class="n">match_context</span><span class="p">,</span> <span class="n">match</span><span class="p">)</span>
+        <span class="c1"># Final check to see if an empty string (&#39;&#39;, not None) is the match found, return None if this is the case.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="c1"># Otherwise return what we have found.</span>
+        <span class="k">return</span> <span class="n">match</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_idiosyncratic_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_context</span><span class="p">,</span> <span class="n">id_string_list</span><span class="p">,</span> <span class="n">current_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Abstract method to be implemented by subclasses.</span>
+<span class="sd">        Meant to retrieve matches that are particular to a context of a subclass.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            match_context (dict): A dictionary object that provides context for the information that is to be extracted.</span>
+<span class="sd">            id_string_list (list): An ID string that has been broken down into a list of individual lines.</span>
+<span class="sd">            current_index (int): The current index within the ID string list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_id_number_information_extraction</span><span class="p">(</span><span class="n">match_contexts</span><span class="p">,</span> <span class="n">id_info</span><span class="p">,</span> <span class="n">id_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for extracting information from a given ID number and populating a given</span>
+<span class="sd">        dictionary object with the extracted information.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            match_contexts (list): A list of dictionaries that contain the contextual information used in the process</span>
+<span class="sd">                of retrieving field values from the OCR output string.</span>
+<span class="sd">            id_info (dict): A dictionary object containing extracted ID information.</span>
+<span class="sd">            id_number (str): An ID number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">match_context</span> <span class="ow">in</span> <span class="n">match_contexts</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;date_of_birth&#39;</span><span class="p">:</span>
+                <span class="c1"># Extract date of birth digits from ID number.</span>
+                <span class="n">yy</span> <span class="o">=</span> <span class="n">id_number</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">mm</span> <span class="o">=</span> <span class="n">id_number</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+                <span class="n">dd</span> <span class="o">=</span> <span class="n">id_number</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+                <span class="c1"># Populate id_info with date of birth.</span>
+                <span class="n">date_of_birth</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">mm</span><span class="p">,</span> <span class="n">dd</span><span class="p">)</span>
+                <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;date_of_birth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">date_of_birth</span>
+            <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;sex&#39;</span><span class="p">:</span>
+                <span class="c1"># Extract gender digit from ID Number.</span>
+                <span class="n">gender_digit</span> <span class="o">=</span> <span class="n">id_number</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+                <span class="c1"># Populate id_info with gender info.</span>
+                <span class="c1"># Currently, the genders on South African IDs are binary, meaning an individual is</span>
+                <span class="c1"># either male or female.</span>
+                <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;F&#39;</span> <span class="k">if</span> <span class="n">gender_digit</span> <span class="o">&lt;</span> <span class="s1">&#39;5&#39;</span> <span class="k">else</span> <span class="s1">&#39;M&#39;</span>
+            <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span>
+                <span class="c1"># Extract status digit from ID Number.</span>
+                <span class="n">status_digit</span> <span class="o">=</span> <span class="n">id_number</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span>
+                <span class="c1"># Populate id_info with status info.</span>
+                <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Citizen&#39;</span> <span class="k">if</span> <span class="n">status_digit</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span> <span class="k">else</span> <span class="s1">&#39;Non Citizen&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used to perform custom processing after extraction has taken place.</span>
+<span class="sd">        All custom operations that are required after all the extraction has taken place, should be</span>
+<span class="sd">        called from within this function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_info (dict): A dictionary object used to house extracted ID information.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (dict): The original id_info, with some post-processed field values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if date of birth field exists for post-processing.</span>
+        <span class="k">if</span> <span class="s1">&#39;date_of_birth&#39;</span> <span class="ow">in</span> <span class="n">id_info</span> <span class="ow">and</span> <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;date_of_birth&#39;</span><span class="p">]:</span>
+            <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;date_of_birth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_standardise_date_of_birth</span><span class="p">(</span><span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;date_of_birth&#39;</span><span class="p">])</span>
+        <span class="c1"># Check if country of birth field exists for post-processing.</span>
+        <span class="k">if</span> <span class="s1">&#39;country_of_birth&#39;</span> <span class="ow">in</span> <span class="n">id_info</span> <span class="ow">and</span> <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;country_of_birth&#39;</span><span class="p">]:</span>
+            <span class="n">fuzz_ratio</span> <span class="o">=</span> <span class="n">fuzz</span><span class="o">.</span><span class="n">token_set_ratio</span><span class="p">(</span><span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;country_of_birth&#39;</span><span class="p">],</span> <span class="s1">&#39;SUID-AFRIKA&#39;</span><span class="p">)</span>
+            <span class="c1"># We should be fairly certain, with a margin for error, that we have a match.</span>
+            <span class="k">if</span> <span class="n">fuzz_ratio</span> <span class="o">&gt;=</span> <span class="n">SAID</span><span class="o">.</span><span class="n">POST_PROCESS_MIN_FUZZY_RATIO</span><span class="p">:</span>
+                <span class="c1"># Translate from Afrikaans to English</span>
+                <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;country_of_birth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;South Africa&#39;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_standardise_date_of_birth</span><span class="p">(</span><span class="n">date_of_birth</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Standardises the date of birth field value due to a mixture of formats that can be extracted.</span>
+<span class="sd">        Due to the preference of extracting the date of birth from the id number as opposed to</span>
+<span class="sd">        the ocr output, there tends to be a discrepancy in the date format retrieved, therefore,</span>
+<span class="sd">        standardise it for future use.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            date_of_birth (str): The date of birth to be standardised.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (str): A standardised date of birth field value if the extracted format could be parsed, else the</span>
+<span class="sd">                extracted format is kept.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Attempt to parse the different dates that could appear for formatting.</span>
+            <span class="n">current_date_of_birth</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">date_of_birth</span><span class="p">)</span>
+            <span class="c1"># If the current date contains a &#39;-&#39;, then it was extracted from the id number and &#39;-&#39; is the</span>
+            <span class="c1"># third character in, parse it in the format &#39;YY-MM-DD&#39;</span>
+            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">current_date_of_birth</span> <span class="ow">and</span> <span class="n">current_date_of_birth</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">standardised_date_of_birth</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">current_date_of_birth</span><span class="p">,</span> <span class="s1">&#39;%y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="c1"># If the current date contains a &#39;-&#39;, then it was extracted from the id number, parse it in the</span>
+            <span class="c1"># format &#39;YYYY-MM-DD&#39; based on elimination of possibilities for this specific ID context.</span>
+            <span class="k">elif</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">current_date_of_birth</span><span class="p">:</span>
+                <span class="n">standardised_date_of_birth</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">current_date_of_birth</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="c1"># Otherwise it was extracted from the OCR output, therefore, parse it in the</span>
+            <span class="c1"># format &#39;DD MMM YYYY&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">standardised_date_of_birth</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">current_date_of_birth</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">%b%Y&#39;</span><span class="p">)</span>
+            <span class="c1"># Standardise the date by formatting it according to ISO date format standard,</span>
+            <span class="c1"># which is &#39;YYYY-MM-DD&#39;</span>
+            <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">standardised_date_of_birth</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c1"># Could not parse the date so log and keep it as is.</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not parse date &quot;</span><span class="si">%s</span><span class="s1">&quot; for formatting. Keeping date as is.&#39;</span> <span class="o">%</span> <span class="n">date_of_birth</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">date_of_birth</span>
+
+<div class="viewcode-block" id="SAID.validate_id_number"><a class="viewcode-back" href="../../apidocs/id_contexts.html#id_contexts.sa_id.SAID.validate_id_number">[docs]</a>    <span class="k">def</span> <span class="nf">validate_id_number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines whether a given id number is valid or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_number (str): An ID number that is to be validated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (bool): True if the id number is valid, False otherwise.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If id_number is not a string containing only numeric characters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">id_number</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">id_number</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">id_number</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg id_number - expected string of ONLY numeric characters. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">id_number</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Checking if ID number is valid...&#39;</span><span class="p">)</span>
+        <span class="c1"># Determine if the id number is of a valid length.</span>
+        <span class="n">is_valid_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">id_number</span><span class="p">)</span> <span class="o">==</span> <span class="n">SAID</span><span class="o">.</span><span class="n">VALID_ID_LENGTH</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;ID number length appears </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;valid&#39;</span> <span class="k">if</span> <span class="n">is_valid_length</span> <span class="k">else</span> <span class="s1">&#39;invalid&#39;</span><span class="p">))</span>
+        <span class="c1"># Return early since the result will be false anyways.</span>
+        <span class="c1"># Do not calculate the checksum if it is not required.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid_length</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;ID number appears invalid&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Determine if the id number checksum is valid.</span>
+        <span class="n">is_valid_id_checksum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_checksum</span><span class="p">(</span><span class="n">id_number</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="c1"># Both the length and the checksum must be valid for the entire id number to be valid.</span>
+        <span class="n">is_valid_id_number</span> <span class="o">=</span> <span class="n">is_valid_length</span> <span class="ow">and</span> <span class="n">is_valid_id_checksum</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;ID number checksum appears </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;valid&#39;</span> <span class="k">if</span> <span class="n">is_valid_id_checksum</span> <span class="k">else</span> <span class="s1">&#39;invalid&#39;</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;ID number appears </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;valid&#39;</span> <span class="k">if</span> <span class="n">is_valid_id_number</span> <span class="k">else</span> <span class="s1">&#39;invalid&#39;</span><span class="p">))</span>
+        <span class="c1"># Return final result of validation.</span>
+        <span class="k">return</span> <span class="n">is_valid_id_number</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_compute_checksum</span><span class="p">(</span><span class="n">id_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the Luhn checksum for the given id number string for validation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (int): Luhn checksum value for validation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create a list of ID number digits parsed as integers.</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">digit</span><span class="p">)</span> <span class="k">for</span> <span class="n">digit</span> <span class="ow">in</span> <span class="n">id_number</span><span class="p">]</span>
+        <span class="c1"># Create a sum of the even digits by multiplying each digit by 2, performing mod 10 division and summing</span>
+        <span class="c1"># the resultant digits.</span>
+        <span class="n">even_partial_sum</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="nb">divmod</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">digit</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="k">for</span> <span class="n">digit</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">::</span><span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="n">even_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">even_partial_sum</span><span class="p">)</span>
+        <span class="c1"># Sum all the odd positioned digits.</span>
+        <span class="n">odd_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">digits</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="c1"># Return the Luhn checksum value for validation.</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">even_sum</span> <span class="o">+</span> <span class="n">odd_sum</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

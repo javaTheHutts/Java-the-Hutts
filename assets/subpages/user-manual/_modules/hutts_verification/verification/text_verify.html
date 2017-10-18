@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hutts_verification.verification.text_verify &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hutts_verification.verification.text_verify</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hutts_verification.verification.text_verify</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Contains the logic used to verify the extracted text from a form of ID.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">Levenshtein</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span><span class="p">,</span> <span class="n">prettify_json_message</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;J.vanTonder@tuks.co.za&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<div class="viewcode-block" id="TextVerify"><a class="viewcode-back" href="../../../apidocs/hutts_verification.verification.html#hutts_verification.verification.text_verify.TextVerify">[docs]</a><span class="k">class</span> <span class="nc">TextVerify</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is responsible for the verification of text that is extracted from an ID.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialises the TextVerify object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initialising </span><span class="si">%s</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TextVerify.verify"><a class="viewcode-back" href="../../../apidocs/hutts_verification.verification.html#hutts_verification.verification.text_verify.TextVerify.verify">[docs]</a>    <span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extracted</span><span class="p">,</span> <span class="n">verifier</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">75.00</span><span class="p">,</span> <span class="n">min_matches</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for the verification of text that is extracted from an ID and is passed in,</span>
+<span class="sd">        along with information that is to be used to verify the extracted text.</span>
+
+<span class="sd">        :param extracted (dict): The information that was extracted from an ID.</span>
+<span class="sd">        :param verifier (dict): The information against which the extracted data is to be verified.</span>
+<span class="sd">        :param threshold (float): A percentage used to determine if the match percentage is accepted as verified.</span>
+<span class="sd">        :param min_matches (int): The minimum number of matches needed to allow a positive match.</span>
+<span class="sd">        :param verbose (boolean): Indicates whether or not to return all of the calculated match percentages.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - ((bool, float) | dict): The first value returned is a bool that indicates whether or not the total</span>
+<span class="sd">                percentage match is above the specified threshold value, while the second return value is the total</span>
+<span class="sd">                percentage match value if verbose is False, or returns a dict of all the determined percentage match</span>
+<span class="sd">                values if verbose is True.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If any parameter is not of the correct type.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">extracted</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg extracted - expected dict. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">extracted</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verifier</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg verifier - expected dict. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">verifier</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg threshold - expected float. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">min_matches</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg min_matches - expected int. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">min_matches</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg verbose - expected bool. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="c1"># Set minimum number of matches, if zero or less set to one.</span>
+        <span class="n">min_matches</span> <span class="o">=</span> <span class="n">min_matches</span> <span class="k">if</span> <span class="n">min_matches</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="c1"># Logging for debugging and verbose purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Threshold for verification set as: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">threshold</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Minimum number of matches for verification set as: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">min_matches</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Simplified percentages to be returned&#39;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">verbose</span> <span class="k">else</span> <span class="s1">&#39;Verbose percentages to be returned&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Verifying:&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="c1"># Prettify and log the extracted information.</span>
+        <span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">log_line</span><span class="p">)</span> <span class="k">for</span> <span class="n">log_line</span> <span class="ow">in</span> <span class="n">prettify_json_message</span><span class="p">(</span><span class="n">extracted</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Against:&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="c1"># Prettify and log the verifier information.</span>
+        <span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">log_line</span><span class="p">)</span> <span class="k">for</span> <span class="n">log_line</span> <span class="ow">in</span> <span class="n">prettify_json_message</span><span class="p">(</span><span class="n">verifier</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="c1"># Initialise a dictionary to house the final matching percentages.</span>
+        <span class="n">match_percentages</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Iterate over the verifier and calculate a percentage match for the values,</span>
+        <span class="c1"># if the keys match and the corresponding values exist.</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">verifier</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">extracted</span> <span class="ow">and</span> <span class="n">extracted</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Compute the match percentage.</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Computing match &quot;</span><span class="si">%s</span><span class="s1">&quot; and &quot;</span><span class="si">%s</span><span class="s1">&quot;...&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">extracted</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+                <span class="n">match_percentages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;match_percentage&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_match_percentage</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">extracted</span><span class="p">[</span><span class="n">key</span><span class="p">]),</span>
+                    <span class="s1">&#39;verifier_field_value&#39;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span>
+                    <span class="s1">&#39;extracted_field_value&#39;</span><span class="p">:</span> <span class="n">extracted</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="p">}</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; and &quot;</span><span class="si">%s</span><span class="s1">&quot; match percentage: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span>
+                    <span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">extracted</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">match_percentages</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;match_percentage&#39;</span><span class="p">])</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not find corresponding field &quot;</span><span class="si">%s</span><span class="s1">&quot; in extracted information to verify&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
+        <span class="c1"># Determine the number of percentages calculated and initialise a default value for the total match score.</span>
+        <span class="n">num_scores</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">match_percentages</span><span class="p">)</span>
+        <span class="n">total_match_percentage</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="c1"># Check if enough matches were found.</span>
+        <span class="k">if</span> <span class="n">num_scores</span> <span class="o">&gt;=</span> <span class="n">min_matches</span><span class="p">:</span>
+            <span class="c1"># Calculate the total match score.</span>
+            <span class="n">total_match_percentage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_percentage_match</span><span class="p">(</span><span class="n">match_percentages</span><span class="p">)</span>
+        <span class="c1"># Either the minimum number of percentages criteria was not met.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;A total of </span><span class="si">%d</span><span class="s1"> matches were found, which is less than the minimum&#39;</span> <span class="o">%</span> <span class="n">num_scores</span><span class="p">)</span>
+        <span class="c1"># Determine whether or not the text is verified.</span>
+        <span class="n">is_verified</span> <span class="o">=</span> <span class="n">total_match_percentage</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Intermediate match percentages:&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">log_line</span><span class="p">)</span> <span class="k">for</span> <span class="n">log_line</span> <span class="ow">in</span> <span class="n">prettify_json_message</span><span class="p">(</span><span class="n">match_percentages</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Final match percentage: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">total_match_percentage</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Threshold to pass: </span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">threshold</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Result: &#39;</span> <span class="o">+</span> <span class="s1">&#39;Passed&#39;</span> <span class="k">if</span> <span class="n">is_verified</span> <span class="k">else</span> <span class="s1">&#39;Failed&#39;</span><span class="p">)</span>
+        <span class="c1"># Return the final result.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">is_verified</span><span class="p">,</span> <span class="n">total_match_percentage</span>
+        <span class="c1"># Append the total and non-matches to the existing percentages for verbose purposes,</span>
+        <span class="c1"># and return all percentage values.</span>
+        <span class="n">match_percentages</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_non_matches</span><span class="p">(</span><span class="n">extracted</span><span class="p">,</span> <span class="n">verifier</span><span class="p">))</span>
+        <span class="n">match_percentages</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_match_percentage</span>
+        <span class="k">return</span> <span class="n">is_verified</span><span class="p">,</span> <span class="n">match_percentages</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_match_percentage</span><span class="p">(</span><span class="n">str_x</span><span class="p">,</span> <span class="n">str_y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for determining the percentage match for two strings and returning</span>
+<span class="sd">        said percentage.</span>
+
+<span class="sd">        :param str_x (str): The first string that is used to perform matching.</span>
+<span class="sd">        :param str_y (str): The second string that is used to perform matching.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (float): Match percentage of the two given strings.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If either parameter is not a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">str_x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg str_x - expected string. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">str_x</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">str_y</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg str_y - expected string. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">str_y</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">Levenshtein</span><span class="o">.</span><span class="n">ratio</span><span class="p">(</span><span class="n">str_x</span><span class="p">,</span> <span class="n">str_y</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_total_percentage_match</span><span class="p">(</span><span class="n">matches</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for calculating a single, total percentage match value for a dict of match</span>
+<span class="sd">        values that have been calculated.</span>
+
+<span class="sd">        :param matches (dict): A dictionary of pre-calculated, match percentages.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (float): A total match percentage for a given set of match percentages.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;match_percentage&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">matches</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_non_matches</span><span class="p">(</span><span class="n">extracted</span><span class="p">,</span> <span class="n">verifier</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a dictionary containing fields for which matches could not be computed, due to non-existence</span>
+<span class="sd">        of fields or field values.</span>
+
+<span class="sd">        :param extracted (dict): A dictionary containing the information that was extracted from an ID.</span>
+<span class="sd">        :param verifier (dict): A dictionary containing the information against which the extracted data is to be</span>
+<span class="sd">                verified.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (dict): A dictionary containing fields for which no matches can be found.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">non_matches</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Iterate over the extracted and verifier dictionaries to determine the field values for which match</span>
+        <span class="c1"># percentages cannot be computed due to non-existence of values.</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">verify_key</span><span class="p">,</span> <span class="n">verify_value</span><span class="p">),</span> <span class="p">(</span><span class="n">extract_key</span><span class="p">,</span> <span class="n">extract_value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">verifier</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">extracted</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="c1"># There exists no corresponding field or field value for the verifier in the extracted ID info.</span>
+            <span class="k">if</span> <span class="n">verify_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">extracted</span> <span class="ow">or</span> <span class="n">extracted</span><span class="p">[</span><span class="n">verify_key</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">non_matches</span><span class="p">[</span><span class="n">verify_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;match_percentage&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s1">&#39;verifier_field_value&#39;</span><span class="p">:</span> <span class="n">verify_value</span><span class="p">,</span>
+                    <span class="s1">&#39;extracted_field_value&#39;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">}</span>
+            <span class="c1"># There exists no corresponding field or field value for the extracted ID info in the verifier.</span>
+            <span class="k">if</span> <span class="n">extract_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">verifier</span> <span class="ow">or</span> <span class="n">verifier</span><span class="p">[</span><span class="n">extract_key</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">non_matches</span><span class="p">[</span><span class="n">extract_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;match_percentage&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s1">&#39;verifier_field_value&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s1">&#39;extracted_field_value&#39;</span><span class="p">:</span> <span class="n">extract_value</span>
+                <span class="p">}</span>
+        <span class="k">return</span> <span class="n">non_matches</span>
+
+<div class="viewcode-block" id="TextVerify.validate_id_number"><a class="viewcode-back" href="../../../apidocs/hutts_verification.verification.html#hutts_verification.verification.text_verify.TextVerify.validate_id_number">[docs]</a>    <span class="k">def</span> <span class="nf">validate_id_number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_number</span><span class="p">,</span> <span class="n">valid_length</span><span class="o">=</span><span class="mi">13</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines whether a given id number is valid or not.</span>
+
+<span class="sd">        :param id_number (str): The ID number that has to be validated.</span>
+<span class="sd">        :param valid_length (int): Specifies the length of a given id number to be considered as valid.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (boolean): True if the id number is valid, False otherwise.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If id_number is not a string containing only numeric characters.</span>
+<span class="sd">            TypeError: If valid_length is not an integer.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">id_number</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">id_number</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">id_number</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg id_number - expected string of ONLY numeric characters. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">id_number</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">valid_length</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg valid_length - expected integer. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">valid_length</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Checking if extracted id number is valid...&#39;</span><span class="p">)</span>
+        <span class="c1"># Determine if the id number is of a valid length.</span>
+        <span class="n">is_valid_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">id_number</span><span class="p">)</span> <span class="o">==</span> <span class="n">valid_length</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted id number length appears </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;valid&#39;</span> <span class="k">if</span> <span class="n">is_valid_length</span> <span class="k">else</span> <span class="s1">&#39;invalid&#39;</span><span class="p">))</span>
+        <span class="c1"># Return early since the result will be false anyways.</span>
+        <span class="c1"># Do not calculate the checksum if it is not required.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid_length</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted id number appears invalid&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Determine if the id number checksum is valid.</span>
+        <span class="n">is_valid_id_checksum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_checksum</span><span class="p">(</span><span class="n">id_number</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="c1"># Both the length and the checksum must be valid for the entire id number to be valid.</span>
+        <span class="n">is_valid_id_number</span> <span class="o">=</span> <span class="n">is_valid_length</span> <span class="ow">and</span> <span class="n">is_valid_id_checksum</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted id number checksum appears </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;valid&#39;</span> <span class="k">if</span> <span class="n">is_valid_id_checksum</span> <span class="k">else</span> <span class="s1">&#39;invalid&#39;</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted id number appears </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;valid&#39;</span> <span class="k">if</span> <span class="n">is_valid_id_number</span> <span class="k">else</span> <span class="s1">&#39;invalid&#39;</span><span class="p">))</span>
+        <span class="c1"># Return final result of validation.</span>
+        <span class="k">return</span> <span class="n">is_valid_id_number</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_compute_checksum</span><span class="p">(</span><span class="n">id_number</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the Luhn checksum for the given id number string for validation.</span>
+
+<span class="sd">        :param id_number (str): A string containing an id number for which the Luhn checksum is to be calculated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (int): Luhn checksum value for validation.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Map the digits of the given id number to new integers and create a list from said mapping.</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">id_number</span><span class="p">))</span>
+        <span class="c1"># Create a sum of the even digits by multiplying each digit by 2, performing mod 10 division and summing</span>
+        <span class="c1"># the resultant digits.</span>
+        <span class="n">even_partial_sum</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="nb">divmod</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">digit</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span> <span class="k">for</span> <span class="n">digit</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">::</span><span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="n">even_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">even_partial_sum</span><span class="p">)</span>
+        <span class="c1"># Sum all the odd positioned digits.</span>
+        <span class="n">odd_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">digits</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="c1"># Return the Luhn checksum value for validation.</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">even_sum</span> <span class="o">+</span> <span class="n">odd_sum</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

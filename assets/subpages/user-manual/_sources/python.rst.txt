@@ -1,0 +1,21 @@
+python package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    python.hutts_utils
+    python.id_contexts
+    python.image_preprocessing
+    python.image_processing
+    python.verification
+
+Module contents
+---------------
+
+.. automodule:: python
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>image_preprocessing.color_manager &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>image_preprocessing.color_manager</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for image_preprocessing.color_manager</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Wraps all the functionality required to manipulate the color channels in an image.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__authors__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell, Nicolai van Niekerk&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;nellstephanj@gmail.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<div class="viewcode-block" id="ColorManager"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.color_manager.ColorManager">[docs]</a><span class="k">class</span> <span class="nc">ColorManager</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Color manager is responsible for applying several color management techniques</span>
+<span class="sd">    to the image passed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color_extraction_type</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise Color Manager.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            color_extraction_type (str): Indicates the type of color extraction that</span>
+<span class="sd">                should be applied.</span>
+<span class="sd">            channel (str): Indicates the color channel that should be extracted.</span>
+<span class="sd">                Only red, green and blue (RGB) are considered valid colors to extracts.</span>
+<span class="sd">            kernel_size (integer tuple): Indicates the kernel size for operation that</span>
+<span class="sd">                require modification of the kernel size, like black and white-hat modifications.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_extraction_type</span> <span class="o">=</span> <span class="n">color_extraction_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channel</span> <span class="o">=</span> <span class="n">channel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="n">kernel_size</span>
+
+<div class="viewcode-block" id="ColorManager.apply"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.color_manager.ColorManager.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This performs the specified processing technique.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image: The image to which the technique must be applied.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: If invalid color extraction type is provided i.e.</span>
+<span class="sd">                histogram, extract, black hat or top hat (white hat).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: The modified image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_extraction_type</span> <span class="o">==</span> <span class="s2">&quot;extract&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">extractChannel</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_extraction_type</span> <span class="o">==</span> <span class="s2">&quot;histogram&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">histEqualisation</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_extraction_type</span> <span class="o">==</span> <span class="s2">&quot;blackHat&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blackHat</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_extraction_type</span> <span class="o">==</span> <span class="s2">&quot;topHat&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">topHat</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_extraction_type</span> <span class="o">==</span> <span class="s2">&quot;whiteHat&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">topHat</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;Invalid Color extraction type! </span><span class="se">\n</span><span class="s1">&#39;</span>
+                            <span class="s1">&#39;Try: &quot;histrogram&quot;, &quot;extract&quot;, &quot;blackhat&quot;, &quot;topHat&quot; or &quot;whiteHat&quot;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColorManager.histEqualisation"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.color_manager.ColorManager.histEqualisation">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">histEqualisation</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function applies histogram equalisation to the image passed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (:obj:&#39;OpenCV image&#39;): Image to which histogram equalisation should be applied to.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: The Histogram equalised image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_grey</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">equalizeHist</span><span class="p">(</span><span class="n">image_grey</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColorManager.extractChannel"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.color_manager.ColorManager.extractChannel">[docs]</a>    <span class="k">def</span> <span class="nf">extractChannel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">image_channel</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function extracts a selected color channel from an image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (:obj:&#39;OpenCV image&#39;): Image to which image channel should be removed.</span>
+<span class="sd">            str: Color that should be removed valid color red, green, blue.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            NameError: If invalid colour is selected i.e. not red, green, blue</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: A copy of the image passed but with a color channel removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;uint8&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">image_channel</span> <span class="o">==</span> <span class="s2">&quot;green&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">R</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">image_channel</span> <span class="o">==</span> <span class="s2">&quot;blue&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">zeros</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">R</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">image_channel</span> <span class="o">==</span> <span class="s2">&quot;red&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">zeros</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">image_channel</span> <span class="o">==</span> <span class="s2">&quot;red_blue&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">zeros</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">zeros</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">image_channel</span> <span class="o">==</span> <span class="s2">&quot;green_blue&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">zeros</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">R</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">image_channel</span> <span class="o">==</span> <span class="s2">&quot;green_red&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">B</span><span class="p">,</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">zeros</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;Invalid Colour Selection! Only red, green, blue are valid colour selections&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColorManager.blackHat"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.color_manager.ColorManager.blackHat">[docs]</a>    <span class="k">def</span> <span class="nf">blackHat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">rect_kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function applies blackhat color changes to the image passed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (:obj:&#39;OpenCV image&#39;): Image to which black hat color changes should be</span>
+<span class="sd">                applied to</span>
+<span class="sd">            rect_kernel_size (list): Represent the kernel dimension by which blackHat morphology</span>
+<span class="sd">                changes should be applied to.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If the kernel size type is not a tuple.</span>
+<span class="sd">            ValueError: If the kernel size tuple contains more than 2 items.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: A modified copy of the image where blackHat morphology was</span>
+<span class="sd">                applied to an image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">rect_kernel_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel type provided. Black hat kernel Supports tuple type&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">rect_kernel_size</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel size - rect_kernel_size list can only contain 2 items.&#39;</span><span class="p">)</span>
+        <span class="n">rectangle_kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="n">rect_kernel_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">morphologyEx</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_BLACKHAT</span><span class="p">,</span> <span class="n">rectangle_kernel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColorManager.topHat"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.color_manager.ColorManager.topHat">[docs]</a>    <span class="k">def</span> <span class="nf">topHat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">rect_kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function applies tophat color changes to the image passed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (:obj:&#39;OpenCV image&#39;): Image to which top hat color changes should be</span>
+<span class="sd">                applied to.</span>
+<span class="sd">            rect_kernel_size (list): Represents the kernel dimension by which topHat  morphology</span>
+<span class="sd">                changes should be applied to.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If the kernel size type is not a tuple.</span>
+<span class="sd">            ValueError: If the kernel size tuple contains more than 2 items.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: A modified copy of the image where topHat morphology was</span>
+<span class="sd">                applied to an image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">rect_kernel_size</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel type provided. Top hat Kernel supports tuple type&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">rect_kernel_size</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel Size - rect_kernel_size list can only contain 2 items.&#39;</span><span class="p">)</span>
+        <span class="n">rectangle_kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="n">rect_kernel_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">morphologyEx</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_TOPHAT</span><span class="p">,</span> <span class="n">rectangle_kernel</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

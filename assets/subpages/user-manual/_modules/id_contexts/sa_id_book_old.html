@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>id_contexts.sa_id_book_old &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>id_contexts.sa_id_book_old</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for id_contexts.sa_id_book_old</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains the logic for South African ID book (pre 1994)</span>
+<span class="sd">context.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">id_contexts.id_context</span> <span class="k">import</span> <span class="n">FieldType</span><span class="p">,</span> <span class="n">LineType</span>
+<span class="kn">from</span> <span class="nn">id_contexts.sa_id</span> <span class="k">import</span> <span class="n">SAID</span>
+<span class="kn">from</span> <span class="nn">fuzzywuzzy</span> <span class="k">import</span> <span class="n">fuzz</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;J.vanTonder@tuks.co.za&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<div class="viewcode-block" id="SAIDBookOld"><a class="viewcode-back" href="../../apidocs/id_contexts.html#id_contexts.sa_id_book_old.SAIDBookOld">[docs]</a><span class="k">class</span> <span class="nc">SAIDBookOld</span><span class="p">(</span><span class="n">SAID</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class that represents an ID context for a South African ID book (pre 1994).</span>
+<span class="sd">    It supplies some of the concrete information, such as the match contexts, to the classes higher up in inheritance</span>
+<span class="sd">    hierarchy and implements abstract methods defined by its parent.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialises the SAIDBookOld object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Specify initial list of contexts for string image_processing when populating</span>
+        <span class="c1"># the ID information dictionary to send as output.</span>
+        <span class="n">match_contexts</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;identity_number&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="s1">&#39;id no&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">NUMERIC_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_ADJACENT</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="s1">&#39;vansurname&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">TEXT_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_NEWLINE</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line_end&#39;</span><span class="p">:</span> <span class="s1">&#39;voornameforenames&#39;</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;names&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="s1">&#39;voornameforenames&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">TEXT_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_NEWLINE</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line_end&#39;</span><span class="p">:</span> <span class="s1">&#39;geboortedistrik of-land&#39;</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">TEXT_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_NEWLINE</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;date_of_birth&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="s1">&#39;geboortedatum&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">DATE_HYPHENATED</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_ADJACENT</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;country_of_birth&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="s1">&#39;district or country of birth&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">TEXT_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_NEWLINE</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="s1">&#39;saburgersacitizen&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">TEXT_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">UNTITLED_ADJACENT</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">}]</span>
+        <span class="c1"># Initialise parent</span>
+        <span class="n">SAID</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_contexts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_idiosyncratic_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_context</span><span class="p">,</span> <span class="n">id_string_list</span><span class="p">,</span> <span class="n">current_index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Identifies and returns matches that are specific to the current ID context.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            match_context (dict): A dictionary object that provides context for the information that is to be extracted.</span>
+<span class="sd">            id_string_list (list): An ID string that has been broken down into a list of individual lines.</span>
+<span class="sd">            current_index (int): The current index within the ID string list.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (str): A string containing the match value of a context-specific case.</span>
+<span class="sd">            (None): Used to indicate that no special case was identified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If we are looking for the ID number and the last few characters of the line</span>
+        <span class="c1"># are numeric, then the ID number is on the same line instead of a new line.</span>
+        <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;identity_number&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">id_string_list</span><span class="p">[</span><span class="n">current_index</span><span class="p">]</span>
+        <span class="c1"># Check for the status special case.</span>
+        <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span>
+            <span class="n">citizen_match_ratio</span> <span class="o">=</span> <span class="n">fuzz</span><span class="o">.</span><span class="n">token_set_ratio</span><span class="p">(</span><span class="n">id_string_list</span><span class="p">[</span><span class="n">current_index</span><span class="p">],</span> <span class="s1">&#39;saburgersacitizen&#39;</span><span class="p">)</span>
+            <span class="n">non_citizen_match_ratio</span> <span class="o">=</span> <span class="n">fuzz</span><span class="o">.</span><span class="n">token_set_ratio</span><span class="p">(</span><span class="n">id_string_list</span><span class="p">[</span><span class="n">current_index</span><span class="p">],</span> <span class="s1">&#39;niesaburgernonsacitizen&#39;</span><span class="p">)</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="s1">&#39;citizen&#39;</span> <span class="k">if</span> <span class="n">citizen_match_ratio</span> <span class="o">&gt;</span> <span class="n">non_citizen_match_ratio</span> <span class="k">else</span> <span class="s1">&#39;non citizen&#39;</span>
+            <span class="k">return</span> <span class="n">match</span>
+        <span class="c1"># Check for date of birth special case.</span>
+        <span class="k">if</span> <span class="n">match_context</span><span class="p">[</span><span class="s1">&#39;field&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;date_of_birth&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">id_string_list</span><span class="p">[</span><span class="n">current_index</span><span class="p">]</span>
+        <span class="c1"># Otherwise return an empty string to indicate that a special case was not identified.</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

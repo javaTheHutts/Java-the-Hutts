@@ -1,0 +1,21 @@
+lib package
+===========
+
+Subpackages
+-----------
+
+.. toctree::
+
+    lib.hutts_utils
+    lib.id_contexts
+    lib.image_preprocessing
+    lib.image_processing
+    lib.verification
+
+Module contents
+---------------
+
+.. automodule:: lib
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>verification.controllers &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>verification.controllers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for verification.controllers</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Handles all requests relevant to the verification service of the API.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">image_processing.sample_extract</span> <span class="k">import</span> <span class="n">TextExtractor</span>
+<span class="kn">from</span> <span class="nn">image_preprocessing.face_manager</span> <span class="k">import</span> <span class="n">FaceDetector</span>
+<span class="kn">from</span> <span class="nn">verification.text_verify</span> <span class="k">import</span> <span class="n">TextVerify</span>
+<span class="kn">from</span> <span class="nn">verification.face_verify</span> <span class="k">import</span> <span class="n">FaceVerify</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">Blueprint</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.image_handling</span> <span class="k">import</span> <span class="n">grab_image</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.pypath</span> <span class="k">import</span> <span class="n">correct_path</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">__authors__</span> <span class="o">=</span> <span class="s2">&quot;Nicolai van Niekerk, Stephan Nell, Marno Hermann&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Nicolai van Niekerk&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;nicvaniek@gmail.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<span class="n">verify</span> <span class="o">=</span> <span class="n">Blueprint</span><span class="p">(</span><span class="s1">&#39;verify&#39;</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Constants path to trained data for Shape Predictor.</span>
+<span class="n">CURRENT_LOCATION</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">SHAPE_PREDICTOR_PATH</span> <span class="o">=</span> <span class="n">correct_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span>
+                                            <span class="n">Path</span><span class="p">(</span><span class="n">CURRENT_LOCATION</span><span class="p">),</span>
+                                            <span class="n">Path</span><span class="p">(</span><span class="n">CURRENT_LOCATION</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+                                            <span class="s1">&#39;image_preprocessing&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;trained_data&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;shape_predictor_face_landmarks.dat&#39;</span>
+                                        <span class="p">)</span>
+                                    <span class="p">)</span>
+<span class="n">FACE_RECOGNITION_PATH</span> <span class="o">=</span> <span class="n">correct_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span>
+                                            <span class="n">Path</span><span class="p">(</span><span class="n">CURRENT_LOCATION</span><span class="p">),</span>
+                                            <span class="n">Path</span><span class="p">(</span><span class="n">CURRENT_LOCATION</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span>
+                                            <span class="s1">&#39;image_preprocessing&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;trained_data&#39;</span><span class="p">,</span>
+                                            <span class="s1">&#39;dlib_face_recognition_resnet_model_v1.dat&#39;</span>
+                                         <span class="p">))</span>
+
+
+<div class="viewcode-block" id="verify_id"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.verify_id">[docs]</a><span class="nd">@verify</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/verifyID&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">verify_id</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample function to return a match percentage of an ID image and</span>
+<span class="sd">    provided personal information and picture of face.</span>
+<span class="sd">    URL: http://localhost:5000/verifyID</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_of_id</span><span class="p">,</span> <span class="n">face</span> <span class="o">=</span> <span class="n">receive_faces</span><span class="p">(</span><span class="n">match_face</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">entered_details</span> <span class="o">=</span> <span class="n">receive_details</span><span class="p">()</span>
+
+    <span class="n">is_match</span><span class="p">,</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">match_faces</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">,</span> <span class="n">face</span><span class="p">)</span>
+    <span class="n">extracted_text</span><span class="p">,</span> <span class="n">preferences</span> <span class="o">=</span> <span class="n">manage_text_extractor</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">)</span>
+    <span class="n">text_match_percentage</span><span class="p">,</span> <span class="n">text_match</span><span class="p">,</span> <span class="n">is_pass</span> <span class="o">=</span> <span class="n">manage_text_verification</span><span class="p">(</span><span class="n">preferences</span><span class="p">,</span> <span class="n">extracted_text</span><span class="p">,</span> <span class="n">entered_details</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Preparing Results...&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># text verification contributes to 40% of the total and face likeness for 60%</span>
+        <span class="s2">&quot;total_match&quot;</span><span class="p">:</span> <span class="n">text_match_percentage</span><span class="o">*</span><span class="mf">0.4</span> <span class="o">+</span> <span class="n">distance</span><span class="o">*</span><span class="mf">0.6</span><span class="p">,</span>
+        <span class="s2">&quot;text_match&quot;</span><span class="p">:</span> <span class="n">text_match</span><span class="p">,</span>
+        <span class="s2">&quot;face_match&quot;</span><span class="p">:</span> <span class="n">distance</span><span class="p">,</span>
+        <span class="s2">&quot;is_match&quot;</span><span class="p">:</span> <span class="n">is_match</span><span class="p">,</span>
+        <span class="s2">&quot;is_pass&quot;</span><span class="p">:</span> <span class="n">is_pass</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="verify_faces"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.verify_faces">[docs]</a><span class="nd">@verify</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/verifyFaces&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">verify_faces</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample function to return a match percentage of an ID face image and</span>
+<span class="sd">    picture of face</span>
+<span class="sd">    URL: http://localhost:5000/verifyFaces</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_of_id</span><span class="p">,</span> <span class="n">face</span> <span class="o">=</span> <span class="n">receive_faces</span><span class="p">(</span><span class="n">match_face</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">is_match</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span> <span class="o">=</span> <span class="n">match_faces</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">,</span> <span class="n">face</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Preparing Results...&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;face_match&quot;</span><span class="p">:</span> <span class="n">distance</span><span class="p">,</span>
+        <span class="s2">&quot;is_match&quot;</span><span class="p">:</span> <span class="n">is_match</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="verify_info"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.verify_info">[docs]</a><span class="nd">@verify</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/verifyInfo&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">verify_info</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample function to return a match percentage of an ID image and</span>
+<span class="sd">    provided personal information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_of_id</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">receive_faces</span><span class="p">(</span><span class="n">match_face</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">entered_details</span> <span class="o">=</span> <span class="n">receive_details</span><span class="p">()</span>
+
+    <span class="n">extracted_text</span><span class="p">,</span> <span class="n">preferences</span> <span class="o">=</span> <span class="n">manage_text_extractor</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">)</span>
+    <span class="n">text_match_percentage</span><span class="p">,</span> <span class="n">text_match</span><span class="p">,</span> <span class="n">is_pass</span> <span class="o">=</span> <span class="n">manage_text_verification</span><span class="p">(</span><span class="n">preferences</span><span class="p">,</span> <span class="n">extracted_text</span><span class="p">,</span> <span class="n">entered_details</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Preparing Results...&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;text_match&quot;</span><span class="p">:</span> <span class="n">text_match</span><span class="p">,</span>
+        <span class="s2">&quot;is_pass&quot;</span><span class="p">:</span> <span class="n">is_pass</span><span class="p">,</span>
+        <span class="s2">&quot;text_match_percentage&quot;</span><span class="p">:</span> <span class="n">text_match_percentage</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="match_faces"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.match_faces">[docs]</a><span class="k">def</span> <span class="nf">match_faces</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">,</span> <span class="n">face</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function receives two images that receive images of faces that need to be verified.</span>
+<span class="sd">    It is expected that an image of an ID and an image of a Profile picture will be received.</span>
+<span class="sd">    Even if the expected images are not received the function will still apply a best effort solution.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">       image_of_id (:obj:&#39;OpenCV image&#39;): An image of an ID that contains a face that needs to be verified</span>
+<span class="sd">       face (:obj:&#39;OpenCV image&#39;): A image of a face that needs to be verified</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Represent if two faces indeed match True if distance calculated is</span>
+<span class="sd">              below a threshold value. False if the distance calculated is above threshold value.</span>
+<span class="sd">        float: Return Euclidean distance between the vector representation</span>
+<span class="sd">               of the two faces.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extract face</span>
+    <span class="n">face_detector</span> <span class="o">=</span> <span class="n">FaceDetector</span><span class="p">(</span><span class="n">SHAPE_PREDICTOR_PATH</span><span class="p">)</span>
+    <span class="n">extracted_face1</span> <span class="o">=</span> <span class="n">face_detector</span><span class="o">.</span><span class="n">extract_face</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">)</span>
+    <span class="n">extracted_face2</span> <span class="o">=</span> <span class="n">face_detector</span><span class="o">.</span><span class="n">extract_face</span><span class="p">(</span><span class="n">face</span><span class="p">)</span>
+
+    <span class="c1"># Verify faces</span>
+    <span class="n">face_verifier</span> <span class="o">=</span> <span class="n">FaceVerify</span><span class="p">(</span><span class="n">SHAPE_PREDICTOR_PATH</span><span class="p">,</span> <span class="n">FACE_RECOGNITION_PATH</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">face_verifier</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">extracted_face1</span><span class="p">,</span> <span class="n">extracted_face2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="receive_faces"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.receive_faces">[docs]</a><span class="k">def</span> <span class="nf">receive_faces</span><span class="p">(</span><span class="n">match_face</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function receives faces/ID from request flask handler.</span>
+<span class="sd">    The function checks for multiple means of receiving the faces/ID. These include</span>
+<span class="sd">        Receiving image by file path</span>
+<span class="sd">        Receiving image by URL</span>
+<span class="sd">        Receiving image by file Stream</span>
+<span class="sd">    It is expected that an image of a face and an image of an ID will be sent.</span>
+<span class="sd">    However, if the order is not followed that system will still be able to return the best effort result without</span>
+<span class="sd">    loss of accuracy.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        match_face (bool): Indicates if additional profile of a face should be extracted.</span>
+<span class="sd">            If an additional face should not be extracted simply return the ID image.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">       image_of_id (:obj:&#39;OpenCV image&#39;): An image of a ID.</span>
+<span class="sd">       face (:obj:&#39;OpenCV image&#39;): An image of a face. If match_face is set to True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="c1"># Get id image as numpy array</span>
+    <span class="c1"># Check to see if an image was uploaded.</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id_img&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Grab the uploaded image.</span>
+        <span class="n">image_of_id</span> <span class="o">=</span> <span class="n">grab_image</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s2">&quot;id_img&quot;</span><span class="p">])</span>
+    <span class="c1"># Otherwise, assume that a URL was passed in.</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Grab the URL from the request.</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># If the URL is None, then return an error.</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;No URL provided.&quot;</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># Load the image and convert.</span>
+        <span class="n">image_of_id</span> <span class="o">=</span> <span class="n">grab_image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match_face</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">image_of_id</span>
+
+    <span class="c1"># Get face image as numpy array</span>
+    <span class="c1"># Check to see if an image was uploaded.</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;face_img&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Grab the uploaded image.</span>
+        <span class="n">face</span> <span class="o">=</span> <span class="n">grab_image</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="p">[</span><span class="s2">&quot;face_img&quot;</span><span class="p">])</span>
+    <span class="c1"># Otherwise, assume that a URL was passed in.</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Grab the URL from the request.</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># If the URL is None, then return an error.</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;No URL provided.&quot;</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># Load the image and convert.</span>
+        <span class="n">face</span> <span class="o">=</span> <span class="n">grab_image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">image_of_id</span><span class="p">,</span> <span class="n">face</span></div>
+
+
+<div class="viewcode-block" id="manage_text_extractor"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.manage_text_extractor">[docs]</a><span class="k">def</span> <span class="nf">manage_text_extractor</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function manages the text extraction from an ID images.</span>
+<span class="sd">    Management includes preparing text extraction preferences and receiving extracted text.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">       image_of_id (:obj:&#39;OpenCV image&#39;): An image of an ID that text must be extracted from.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">       preferences (dict): Prepared list of preferences. May contained additional text extraction or logger preferences.</span>
+<span class="sd">       extracted_text (json object): A collection of text extracted from the ID.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">preferences</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Grab additional parameters specifying techniques. Extract text</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting Preferences&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;blur_technique&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;blur_method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;blur_technique&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;threshold_technique&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;threshold_method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;threshold_technique&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;remove_face&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;remove_face&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;remove_face&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;remove_barcode&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;remove_barcode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;remove_barcode&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;color&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;id_type&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;id_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;id_type&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;verbose_verify&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;verbose_verify&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;verbose_verify&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span> <span class="k">else</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;verbose_verify&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="s1">&#39;useIO&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">:</span>
+        <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;useIO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;useIO&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+
+    <span class="n">extractor</span> <span class="o">=</span> <span class="n">TextExtractor</span><span class="p">(</span><span class="n">preferences</span><span class="p">)</span>
+    <span class="n">extracted_text</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">image_of_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">extracted_text</span><span class="p">,</span> <span class="n">preferences</span></div>
+
+
+<div class="viewcode-block" id="manage_text_verification"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.manage_text_verification">[docs]</a><span class="k">def</span> <span class="nf">manage_text_verification</span><span class="p">(</span><span class="n">preferences</span><span class="p">,</span> <span class="n">extracted_text</span><span class="p">,</span> <span class="n">entered_details</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The function manages the preparation before text verification and result of the text verification it self</span>
+<span class="sd">    Management includes preparing logger functionality and controlling match percentages and messages.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        preferences (list): A list of preferences. Containing details about logger functionality.</span>
+<span class="sd">        extracted_text (JSON object): Contains text extracted from ID image.</span>
+<span class="sd">        entered_details (dict): Dictionary containing information that needs to be verified</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">       text_match_percentage (float): Value representing the accuracy with which the entered details</span>
+<span class="sd">            matches that of the extracted text.</span>
+<span class="sd">       text_match (dict): Contains intermediate match percentages for different details.</span>
+<span class="sd">            For Example the match percentage between just the date_of_birth fields</span>
+<span class="sd">       is_pass (bool): Indicates if text_verification passes.</span>
+<span class="sd">            If match percentage is above threshold provided in preferences then verification passes.</span>
+<span class="sd">            If match percentage is below threshold value provided in preferences then verification fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">text_verifier</span> <span class="o">=</span> <span class="n">TextVerify</span><span class="p">()</span>
+    <span class="n">verbose_verify</span> <span class="o">=</span> <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;verbose_verify&#39;</span><span class="p">]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> text verifiction requested&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Verbose&#39;</span> <span class="k">if</span> <span class="n">verbose_verify</span> <span class="k">else</span> <span class="s1">&#39;Non-verbose&#39;</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">is_pass</span><span class="p">,</span> <span class="n">text_match</span><span class="p">)</span> <span class="o">=</span> <span class="n">text_verifier</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">extracted_text</span><span class="p">,</span> <span class="n">entered_details</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose_verify</span><span class="p">)</span>
+    <span class="c1"># Check if we are working with verbose output for text verification</span>
+    <span class="n">text_match_percentage</span> <span class="o">=</span> <span class="n">text_match</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">verbose_verify</span> <span class="k">else</span> <span class="n">text_match</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">text_match_percentage</span><span class="p">,</span> <span class="n">text_match</span><span class="p">,</span> <span class="n">is_pass</span></div>
+
+
+<div class="viewcode-block" id="receive_details"><a class="viewcode-back" href="../../apidocs/verification.html#verification.controllers.receive_details">[docs]</a><span class="k">def</span> <span class="nf">receive_details</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function receives the details that need to be verified from the flask handler.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        entered_details (dict): Details that need to be verified with that extracted from image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">entered_details</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;names&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;surname&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;surname&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;identity_number&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;idNumber&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;nationality&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;nationality&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;country_of_birth&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;cob&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;gender&#39;</span><span class="p">],</span>
+        <span class="s2">&quot;date_of_birth&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s1">&#39;dob&#39;</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">entered_details</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

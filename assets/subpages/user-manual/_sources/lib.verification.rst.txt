@@ -1,0 +1,38 @@
+lib\.verification package
+=========================
+
+Submodules
+----------
+
+lib\.verification\.controllers module
+-------------------------------------
+
+.. automodule:: lib.verification.controllers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.verification\.face\_verify module
+--------------------------------------
+
+.. automodule:: lib.verification.face_verify
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.verification\.text\_verify module
+--------------------------------------
+
+.. automodule:: lib.verification.text_verify
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lib.verification
+    :members:
+    :undoc-members:
+    :show-inheritance:

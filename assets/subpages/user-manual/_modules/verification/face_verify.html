@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>verification.face_verify &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>verification.face_verify</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for verification.face_verify</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A class that is used to extract and compare two images of faces and calculate the resulting match.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">dlib</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="k">import</span> <span class="n">distance</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;nellstephanj@gmail.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<div class="viewcode-block" id="FaceVerify"><a class="viewcode-back" href="../../apidocs/verification.html#verification.face_verify.FaceVerify">[docs]</a><span class="k">class</span> <span class="nc">FaceVerify</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The FaceVerify class is responsible for</span>
+<span class="sd">    1. Detecting the face.</span>
+<span class="sd">    2. Generating a threshold value that determines the likeness</span>
+<span class="sd">    of two individuals in an image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_predictor_path</span><span class="p">,</span> <span class="n">face_recognition_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise face verify manager.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            shape_predictor_path (str): Describes the path the Shape Predictor</span>
+<span class="sd">            trained data.</span>
+<span class="sd">            face_recognition_path (str): Describes the path the face recognition</span>
+<span class="sd">            trained data.</span>
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If a none string value is passed for shape_predictor_path</span>
+<span class="sd">            TypeError: If a none string value is passed for face_recognition_path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initialise FaceVerify&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape_predictor_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg shape_predictor_path - expected string. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;.&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">shape_predictor_path</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face_recognition_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg face_recognition_path - expected string. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;.&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">face_recognition_path</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape_predictor_path</span> <span class="o">=</span> <span class="n">shape_predictor_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">face_recognition_path</span> <span class="o">=</span> <span class="n">face_recognition_path</span>
+
+<div class="viewcode-block" id="FaceVerify.verify"><a class="viewcode-back" href="../../apidocs/verification.html#verification.face_verify.FaceVerify.verify">[docs]</a>    <span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">face1</span><span class="p">,</span> <span class="n">face2</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.55</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function determines a percentage value of how close the faces</span>
+<span class="sd">        in the images passed are to each other if the determined value if below</span>
+<span class="sd">        the threshold value passed by the user a boolean value of True is returned</span>
+<span class="sd">        indicating that the faces in the images passed indeed match.</span>
+
+<span class="sd">        The Verify function makes use of the dlib library which guarantees 99.38%</span>
+<span class="sd">        accuracy on the standard Labeled Faces in the Wild benchmark.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            face1 (:obj:&#39;OpenCV image&#39;): The first image containing the face that should be compared.</span>
+<span class="sd">            face2 (:obj:&#39;OpenCV image&#39;): The second image containing the face that should be compared</span>
+<span class="sd">            threshold (float): The threshold value determines at what distance the two images are</span>
+<span class="sd">                considered the same person. If a verify score is below the threshold value the faces are</span>
+<span class="sd">                considered a match. The Labled Faces in the Wild benchmark recommend a default threshold</span>
+<span class="sd">                of 0.6 but a threshold of 0.55 was decided on since a threshold of 0.55 represents</span>
+<span class="sd">                the problem better.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Represent if two face indeed match True if distance calculated is</span>
+<span class="sd">                    below threshold value. False if the distance calculated is</span>
+<span class="sd">                    above threshold value.</span>
+<span class="sd">            float: Return Euclidean distance between the vector representation</span>
+<span class="sd">            of the two faces</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no face can be detected no faces can be matched and</span>
+<span class="sd">            operation should be aborted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting frontal face detector&#39;</span><span class="p">)</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">dlib</span><span class="o">.</span><span class="n">get_frontal_face_detector</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting shape predictor&#39;</span><span class="p">)</span>
+        <span class="n">shape_predictor</span> <span class="o">=</span> <span class="n">dlib</span><span class="o">.</span><span class="n">shape_predictor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape_predictor_path</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting facial recogniser&#39;</span><span class="p">)</span>
+        <span class="n">facial_recogniser</span> <span class="o">=</span> <span class="n">dlib</span><span class="o">.</span><span class="n">face_recognition_model_v1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">face_recognition_path</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Getting face in first image&#39;</span><span class="p">)</span>
+        <span class="n">face_detections</span> <span class="o">=</span> <span class="n">detector</span><span class="p">(</span><span class="n">face1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">face_detections</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Could not find a face in the first image&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Face could not be detected&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting the shape&#39;</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">shape_predictor</span><span class="p">(</span><span class="n">face1</span><span class="p">,</span> <span class="n">face_detections</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting the first face descriptor&#39;</span><span class="p">)</span>
+        <span class="n">face_descriptor1</span> <span class="o">=</span> <span class="n">facial_recogniser</span><span class="o">.</span><span class="n">compute_face_descriptor</span><span class="p">(</span><span class="n">face1</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Getting face in second image&#39;</span><span class="p">)</span>
+        <span class="n">face_detections</span> <span class="o">=</span> <span class="n">detector</span><span class="p">(</span><span class="n">face2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">face_detections</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Could not find a face in the first image&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Face could not be detected&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting the shape&#39;</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">shape_predictor</span><span class="p">(</span><span class="n">face2</span><span class="p">,</span> <span class="n">face_detections</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting the second face descriptor&#39;</span><span class="p">)</span>
+        <span class="n">face_descriptor2</span> <span class="o">=</span> <span class="n">facial_recogniser</span><span class="o">.</span><span class="n">compute_face_descriptor</span><span class="p">(</span><span class="n">face2</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Calculating the euclidean distance between the two faces&#39;</span><span class="p">)</span>
+        <span class="n">match_distance</span> <span class="o">=</span> <span class="n">distance</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">face_descriptor1</span><span class="p">,</span> <span class="n">face_descriptor2</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Matching distance: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">match_distance</span><span class="p">))</span>
+
+        <span class="c1"># Any distance below our threshold of 0.55 is a very good match.</span>
+        <span class="c1"># We map 0.55 to 85% and 0 to 100%.</span>
+        <span class="k">if</span> <span class="n">match_distance</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
+            <span class="n">match_distance</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">match_distance</span>
+            <span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">threshold</span> <span class="o">+</span> <span class="mf">0.05</span>
+            <span class="n">percentage_match</span> <span class="o">=</span> <span class="p">((</span><span class="n">match_distance</span><span class="o">-</span><span class="n">threshold</span><span class="p">)</span><span class="o">*</span><span class="mi">15</span><span class="o">/</span><span class="mi">50</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span> <span class="o">+</span> <span class="mi">85</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Matching percentage: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">percentage_match</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">percentage_match</span>
+        <span class="k">elif</span> <span class="n">match_distance</span> <span class="o">&lt;</span> <span class="n">threshold</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">:</span>
+            <span class="c1"># In this if we map (0.55-0.60] we map 0.549 to 70% match</span>
+            <span class="n">match_distance</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">match_distance</span>
+            <span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">threshold</span> <span class="o">+</span> <span class="mf">0.05</span>
+            <span class="n">percentage_match</span> <span class="o">=</span> <span class="p">((</span><span class="n">match_distance</span><span class="o">-</span><span class="n">threshold</span><span class="p">)</span><span class="o">*</span><span class="mi">30</span><span class="o">/</span><span class="mi">55</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span> <span class="o">+</span> <span class="mi">70</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Matching percentage: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">percentage_match</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">percentage_match</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If the distance is higher than 0.65 we map it to 60% and below</span>
+            <span class="n">percentage_match</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">-</span> <span class="p">((</span><span class="n">match_distance</span><span class="o">-</span><span class="n">threshold</span><span class="p">)</span><span class="o">*</span><span class="mi">60</span><span class="o">/</span><span class="mi">40</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Matching percentage: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">percentage_match</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">percentage_match</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

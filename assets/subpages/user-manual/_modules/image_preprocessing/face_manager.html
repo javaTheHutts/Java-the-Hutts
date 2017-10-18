@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>image_preprocessing.face_manager &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>image_preprocessing.face_manager</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for image_preprocessing.face_manager</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Wraps all the functionality necessary for extracting a face from an image.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">dlib</span>
+<span class="kn">from</span> <span class="nn">imutils.face_utils</span> <span class="k">import</span> <span class="n">FaceAligner</span>
+<span class="kn">from</span> <span class="nn">imutils.face_utils</span> <span class="k">import</span> <span class="n">rect_to_bb</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.pypath</span> <span class="k">import</span> <span class="n">correct_path</span>
+
+<span class="n">__authors__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell, Nicolai van Niekerk&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;nellstephanj@gmail.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+<span class="n">TEMPLATE_DIR</span> <span class="o">=</span> <span class="n">correct_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)),</span> <span class="s1">&#39;templates&#39;</span><span class="p">))</span>
+<span class="n">FACE_NOT_FOUND_PLACE_HOLDER</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">TEMPLATE_DIR</span> <span class="o">+</span> <span class="s2">&quot;/profile.jpg&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="FaceDetector"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.face_manager.FaceDetector">[docs]</a><span class="k">class</span> <span class="nc">FaceDetector</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The FaceDetector class is responsible for</span>
+<span class="sd">    1. Detecting the face.</span>
+<span class="sd">    2. Extracting a face from an image.</span>
+<span class="sd">    3. Applying blurring on a detected face in an image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape_predictor_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise Face Detector Manager.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape_predictor_path (str): Describes the path the Shape Predictor</span>
+<span class="sd">            trained data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape_predictor_path</span> <span class="o">=</span> <span class="n">shape_predictor_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predictor</span> <span class="o">=</span> <span class="n">dlib</span><span class="o">.</span><span class="n">shape_predictor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape_predictor_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detector</span> <span class="o">=</span> <span class="n">dlib</span><span class="o">.</span><span class="n">get_frontal_face_detector</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">face_aligner</span> <span class="o">=</span> <span class="n">FaceAligner</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor</span><span class="p">,</span> <span class="n">desiredFaceWidth</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FaceDetector.detect"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.face_manager.FaceDetector.detect">[docs]</a>    <span class="k">def</span> <span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function detects the face in the image passed.</span>
+<span class="sd">        By making use of the dlib HOG feature image_preprocessing and linear classifier for frontal face detection</span>
+<span class="sd">        we are able to detect the face with less false-positive results and without a major time penalty.</span>
+<span class="sd">        More Information dlib frontal_face detection: http://dlib.net/imaging.html#get_frontal_face_detector</span>
+
+<span class="sd">        A check will be done to see if a face is present in the image.</span>
+<span class="sd">        If a face is not detected in the image the execution should log that the face was not found and continue</span>
+<span class="sd">        with execution. This is due to the fact that face detection might not be critical to</span>
+<span class="sd">        a function (like with text extraction) and rather be used to increase accuracy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (:obj:&#39;OpenCV image&#39;): Image containing the face we need to detect.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no face can be detected.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list(integer): This list contains the box coordinates for the region in which the face resides.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rectangles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detector</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rectangles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;No valid face found. Returning None&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rectangles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">rectangles</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="FaceDetector.extract_face"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.face_manager.FaceDetector.extract_face">[docs]</a>    <span class="k">def</span> <span class="nf">extract_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function finds a face in the image passed and is optimised</span>
+<span class="sd">        to align the face before being returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (:obj:&#39;OpenCV image&#39;): Image containing the face we need to detect and extract.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no face can be detected.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: Any background and unnecessary components are removed and only</span>
+<span class="sd">            the aligned face is returned.</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: A copy of the original image is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rectangle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rectangle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">FACE_NOT_FOUND_PLACE_HOLDER</span>
+        <span class="n">face_aligned</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">face_aligner</span><span class="o">.</span><span class="n">align</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">rectangle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">face_aligned</span></div>
+
+<div class="viewcode-block" id="FaceDetector.blur_face"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.face_manager.FaceDetector.blur_face">[docs]</a>    <span class="k">def</span> <span class="nf">blur_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function find the faces and apply a blurring effect on the detected region.</span>
+<span class="sd">        After the region has been blurred, the blurred region is reapplied to the original image.</span>
+<span class="sd">        Blurring the face is implemented as a method in the attempt to reduce noise when extracting</span>
+<span class="sd">        text from the image later in the image pipeline.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image (:obj:&#39;OpenCV image&#39;): Image containing the face we need to detect and blur.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If no face can be detected.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            obj:&#39;OpenCV image&#39;: A copy of the original image is returned but with the applied</span>
+<span class="sd">            blurring to the face region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rectangle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rectangle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;No face found. Facial Blur ignored.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">image</span>
+        <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">=</span> <span class="n">rect_to_bb</span><span class="p">(</span><span class="n">rectangle</span><span class="p">)</span>
+        <span class="c1"># To Extend the entire region of face since face detector does not include upper head.</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">-</span><span class="mi">75</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">h</span><span class="o">+</span><span class="mi">75</span>
+        <span class="n">sub_face</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">]</span>
+        <span class="n">sub_face</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">sub_face</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">sub_face</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">sub_face</span><span class="p">,</span> <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">sub_face</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">sub_face</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sub_face</span>
+        <span class="k">return</span> <span class="n">image</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

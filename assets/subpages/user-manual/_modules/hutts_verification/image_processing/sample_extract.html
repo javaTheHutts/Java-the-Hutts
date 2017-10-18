@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hutts_verification.image_processing.sample_extract &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hutts_verification.image_processing.sample_extract</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hutts_verification.image_processing.sample_extract</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This class wraps all the functionality required to extract text from an image.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">pytesseract</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.image_preprocessing.build_director</span> <span class="k">import</span> <span class="n">BuildDirector</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.image_processing.text_cleaner</span> <span class="k">import</span> <span class="n">TextCleaner</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.image_processing.simplification_manager</span> <span class="k">import</span> <span class="n">SimplificationManager</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.image_processing.barcode_manager</span> <span class="k">import</span> <span class="n">BarCodeManager</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.image_preprocessing.template_matching</span> <span class="k">import</span> <span class="n">TemplateMatching</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.image_processing.context_manager</span> <span class="k">import</span> <span class="n">ContextManager</span>
+<span class="kn">from</span> <span class="nn">hutts_verification.utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span><span class="p">,</span> <span class="n">prettify_json_message</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Nicolai van Niekerk&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Nicolai van Niekerk&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;nicvaniek@gmail.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+<span class="n">DESKTOP</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)),</span> <span class="s1">&#39;Desktop&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TextExtractor"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_processing.html#hutts_verification.image_processing.sample_extract.TextExtractor">[docs]</a><span class="k">class</span> <span class="nc">TextExtractor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The TextExtractor extracts text from the ID image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preferences</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise Text Extractor.</span>
+
+<span class="sd">        :param preferences (dict): User-specified CV techniques.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preferences</span> <span class="o">=</span> <span class="n">preferences</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_face</span> <span class="o">=</span> <span class="s1">&#39;false&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context_manager</span> <span class="o">=</span> <span class="n">ContextManager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_text_cleaner</span> <span class="o">=</span> <span class="n">TextCleaner</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TextExtractor.extract"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_processing.html#hutts_verification.image_processing.sample_extract.TextExtractor.extract">[docs]</a>    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is a sample that demonstrates how text would be extracted.</span>
+
+<span class="sd">        :param img (obj): The image of the ID that contains the text to be extracted.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - id_details (obj): The extracted information.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s1">&#39;remove_face&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_face</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;remove_face&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;self.remove_face: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remove_face</span><span class="p">))</span>
+
+        <span class="n">simplification_manager</span> <span class="o">=</span> <span class="n">SimplificationManager</span><span class="p">()</span>
+        <span class="n">barcode_manager</span> <span class="o">=</span> <span class="n">BarCodeManager</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Perform perspective transformation and read from barcode.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Performing perspective transformation...&#39;</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">simplification_manager</span><span class="o">.</span><span class="n">perspectiveTransformation</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;useIO&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;useIO&#39;</span><span class="p">]:</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">DESKTOP</span> <span class="o">+</span> <span class="s2">&quot;/output/3.png&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+        <span class="n">barcode_data_found</span><span class="p">,</span> <span class="n">barcode_scan_data</span><span class="p">,</span> <span class="n">barcoded_image</span> <span class="o">=</span> <span class="n">barcode_manager</span><span class="o">.</span><span class="n">get_barcode_info</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">barcode_data_found</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Barcode successfully scanned&#39;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;identity_number&#39;</span><span class="p">:</span> <span class="n">barcode_scan_data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span>
+            <span class="p">}</span>
+
+        <span class="c1"># Process image</span>
+        <span class="k">if</span> <span class="s1">&#39;id_type&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">:</span>
+            <span class="n">identification_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;id_type&#39;</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No template matching required&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Identification type: &quot;</span> <span class="o">+</span> <span class="n">identification_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">template_match</span> <span class="o">=</span> <span class="n">TemplateMatching</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Performing template matching...&#39;</span><span class="p">)</span>
+            <span class="n">identification_type</span> <span class="o">=</span> <span class="n">template_match</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">barcoded_image</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Constructing text extraction pipeline&#39;</span><span class="p">)</span>
+        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">BuildDirector</span><span class="o">.</span><span class="n">construct_text_extract_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">,</span> <span class="n">identification_type</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">process_text_extraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;useIO&#39;</span><span class="p">],</span> <span class="n">barcoded_image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_face</span><span class="p">)</span>
+
+        <span class="c1"># Extract and return text</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.png&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="c1"># Log the uncleaned string to terminal.</span>
+        <span class="c1"># This is for demonstration purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;String to clean:&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">log_line</span><span class="p">)</span> <span class="k">for</span> <span class="n">log_line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Cleaning up text...&#39;</span><span class="p">)</span>
+        <span class="c1"># Clean the OCR output text.</span>
+        <span class="n">clean_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_cleaner</span><span class="o">.</span><span class="n">clean_up</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="c1"># Log the cleaned string to terminal.</span>
+        <span class="c1"># This is for demonstration purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Cleaned text:&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">log_line</span><span class="p">)</span> <span class="k">for</span> <span class="n">log_line</span> <span class="ow">in</span> <span class="n">clean_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="c1"># Get ID information from cleaned text.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Placing extracted text in a dictionary...&#39;</span><span class="p">)</span>
+        <span class="n">id_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context_manager</span><span class="o">.</span><span class="n">get_id_context</span><span class="p">(</span><span class="n">identification_type</span><span class="p">)</span>
+        <span class="c1"># Check if context was found.</span>
+        <span class="k">if</span> <span class="n">id_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Log the error and raise it for handling.</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Could not find ID context for ID type &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">identification_type</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Could not identify ID type&#39;</span><span class="p">)</span>
+        <span class="n">id_details</span> <span class="o">=</span> <span class="n">id_context</span><span class="o">.</span><span class="n">get_id_info</span><span class="p">(</span><span class="n">clean_text</span><span class="p">,</span> <span class="n">barcode_data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># Log the retrieved ID information extracted text to terminal.</span>
+        <span class="c1"># This is for demonstration purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted ID details:&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">id_details_line</span><span class="p">)</span> <span class="k">for</span> <span class="n">id_details_line</span> <span class="ow">in</span> <span class="n">prettify_json_message</span><span class="p">(</span><span class="n">id_details</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="c1"># Return the extracted ID information.</span>
+        <span class="k">return</span> <span class="n">id_details</span></div></div>
+
+
+<div class="viewcode-block" id="FaceExtractor"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_processing.html#hutts_verification.image_processing.sample_extract.FaceExtractor">[docs]</a><span class="k">class</span> <span class="nc">FaceExtractor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The FaceExtractor extracts the face region for the image passed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FaceExtractor.extract"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_processing.html#hutts_verification.image_processing.sample_extract.FaceExtractor.extract">[docs]</a>    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">use_io</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is a sample that demonstrates how the face would be extracted.</span>
+
+<span class="sd">        :param img (obj): The image of the ID that contains the face that must be extracted.</span>
+<span class="sd">        :param use_io (boolean): Whether or not images should be written to disk.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (obj): The extracted and aligned facial image.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">simplification_manager</span> <span class="o">=</span> <span class="n">SimplificationManager</span><span class="p">()</span>
+
+        <span class="c1"># Perform perspective transformation</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Performing perspective transformation...&#39;</span><span class="p">)</span>
+        <span class="n">perspective_image</span> <span class="o">=</span> <span class="n">simplification_manager</span><span class="o">.</span><span class="n">perspectiveTransformation</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">use_io</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">use_io</span><span class="p">:</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">DESKTOP</span> <span class="o">+</span> <span class="s2">&quot;/output/10.png&quot;</span><span class="p">,</span> <span class="n">perspective_image</span><span class="p">)</span>
+
+        <span class="c1"># Process image</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Constructing facial extraction pipeline...&#39;</span><span class="p">)</span>
+        <span class="n">pipeline</span> <span class="o">=</span> <span class="n">BuildDirector</span><span class="o">.</span><span class="n">construct_face_extract_pipeline</span><span class="p">()</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">process_face_extraction</span><span class="p">(</span><span class="n">perspective_image</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">image</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

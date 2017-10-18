@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>image_preprocessing.build_director &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>image_preprocessing.build_director</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for image_preprocessing.build_director</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This class is responsible for controlling the PipelineBuilder.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">image_preprocessing.blur_manager</span> <span class="k">import</span> <span class="n">BlurManager</span>
+<span class="kn">from</span> <span class="nn">image_preprocessing.color_manager</span> <span class="k">import</span> <span class="n">ColorManager</span>
+<span class="kn">from</span> <span class="nn">image_preprocessing.face_manager</span> <span class="k">import</span> <span class="n">FaceDetector</span>
+<span class="kn">from</span> <span class="nn">image_preprocessing.pipeline_builder</span> <span class="k">import</span> <span class="n">PipelineBuilder</span>
+<span class="kn">from</span> <span class="nn">image_preprocessing.thresholding_manager</span> <span class="k">import</span> <span class="n">ThresholdingManager</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.pypath</span> <span class="k">import</span> <span class="n">correct_path</span>
+
+<span class="n">__authors__</span> <span class="o">=</span> <span class="s2">&quot;Nicolai van Niekerk, Marno Hermann, Stephan Nell&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Nicolai van Niekerk&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;nicvaniek@gmail.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+<span class="c1"># Constants path to trained data for Shape Predictor.</span>
+<span class="n">SHAPE_PREDICTOR_PATH</span> <span class="o">=</span> <span class="n">correct_path</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{base_path}</span><span class="s2">/trained_data/shape_predictor_face_landmarks.dat&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">base_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))))</span>
+
+
+<div class="viewcode-block" id="BuildDirector"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.build_director.BuildDirector">[docs]</a><span class="k">class</span> <span class="nc">BuildDirector</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The BuildDirector constructs the Pipeline using the PipelineBuilder</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BuildDirector.construct_text_extract_pipeline"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.build_director.BuildDirector.construct_text_extract_pipeline">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">construct_text_extract_pipeline</span><span class="p">(</span><span class="n">preferences</span><span class="p">,</span> <span class="n">identification_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function constructs the pipeline for text extraction.</span>
+<span class="sd">        This includes building different managers with their specific parameters.</span>
+<span class="sd">        These managers will be called within the pipeline when executed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            preferences (dict): User-specified techniques to use in pipeline.</span>
+<span class="sd">            identification_type (string): Contains the type of identification, this is used</span>
+<span class="sd">                                        to determine which techniques are used.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :Pipeline (Constructed pipeline)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">PipelineBuilder</span><span class="p">()</span>
+        <span class="c1"># Use template matching to identify type here</span>
+
+        <span class="k">if</span> <span class="s1">&#39;blur_method&#39;</span> <span class="ow">in</span> <span class="n">preferences</span><span class="p">:</span>
+            <span class="n">blur_method</span> <span class="o">=</span> <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;blur_method&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idcard&#39;</span><span class="p">:</span>
+            <span class="n">blur_method</span> <span class="o">=</span> <span class="s1">&#39;gaussian&#39;</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idbook&#39;</span><span class="p">:</span>
+            <span class="n">blur_method</span> <span class="o">=</span> <span class="s1">&#39;gaussian&#39;</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;studentcard&#39;</span><span class="p">:</span>
+            <span class="n">blur_method</span> <span class="o">=</span> <span class="s1">&#39;median&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Default</span>
+            <span class="n">blur_method</span> <span class="o">=</span> <span class="s1">&#39;median&#39;</span>
+
+        <span class="k">if</span> <span class="n">blur_method</span> <span class="o">==</span> <span class="s1">&#39;median&#39;</span><span class="p">:</span>
+            <span class="n">blur_kernel_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idbook&#39;</span><span class="p">:</span>
+                <span class="n">blur_kernel_size</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+            <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idcard&#39;</span><span class="p">:</span>
+                <span class="n">blur_kernel_size</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">blur_kernel_size</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="s1">&#39;threshold_method&#39;</span> <span class="ow">in</span> <span class="n">preferences</span><span class="p">:</span>
+            <span class="n">threshold_method</span> <span class="o">=</span> <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;threshold_method&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idcard&#39;</span><span class="p">:</span>
+            <span class="n">threshold_method</span> <span class="o">=</span> <span class="s1">&#39;adaptive&#39;</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idbook&#39;</span><span class="p">:</span>
+            <span class="n">threshold_method</span> <span class="o">=</span> <span class="s1">&#39;adaptive&#39;</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;studentcard&#39;</span><span class="p">:</span>
+            <span class="n">threshold_method</span> <span class="o">=</span> <span class="s1">&#39;adaptive&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Default</span>
+            <span class="n">threshold_method</span> <span class="o">=</span> <span class="s1">&#39;adaptive&#39;</span>
+
+        <span class="k">if</span> <span class="s1">&#39;color&#39;</span> <span class="ow">in</span> <span class="n">preferences</span><span class="p">:</span>
+            <span class="n">color_extraction_type</span> <span class="o">=</span> <span class="s1">&#39;extract&#39;</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">preferences</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idcard&#39;</span><span class="p">:</span>
+            <span class="n">color_extraction_type</span> <span class="o">=</span> <span class="s1">&#39;extract&#39;</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red_blue&#39;</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;idbook&#39;</span><span class="p">:</span>
+            <span class="n">color_extraction_type</span> <span class="o">=</span> <span class="s1">&#39;extract&#39;</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red_blue&#39;</span>
+        <span class="k">elif</span> <span class="n">identification_type</span> <span class="o">==</span> <span class="s1">&#39;studentcard&#39;</span><span class="p">:</span>
+            <span class="n">color_extraction_type</span> <span class="o">=</span> <span class="s1">&#39;extract&#39;</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Default</span>
+            <span class="n">color_extraction_type</span> <span class="o">=</span> <span class="s1">&#39;extract&#39;</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Blur Method: &quot;</span> <span class="o">+</span> <span class="n">blur_method</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Kernel Size: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">blur_kernel_size</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;ColorXType: &quot;</span> <span class="o">+</span> <span class="n">color_extraction_type</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Color: &quot;</span> <span class="o">+</span> <span class="n">color</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Threshold Method: &quot;</span> <span class="o">+</span> <span class="n">threshold_method</span><span class="p">)</span>
+
+        <span class="n">blur_manager</span> <span class="o">=</span> <span class="n">BlurManager</span><span class="p">(</span><span class="n">blur_method</span><span class="p">,</span> <span class="n">blur_kernel_size</span><span class="p">)</span>
+        <span class="n">color_manager</span> <span class="o">=</span> <span class="n">ColorManager</span><span class="p">(</span><span class="n">color_extraction_type</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+        <span class="n">threshold_manager</span> <span class="o">=</span> <span class="n">ThresholdingManager</span><span class="p">(</span><span class="n">threshold_method</span><span class="p">)</span>
+        <span class="n">face_detector</span> <span class="o">=</span> <span class="n">FaceDetector</span><span class="p">(</span><span class="n">SHAPE_PREDICTOR_PATH</span><span class="p">)</span>
+
+        <span class="n">builder</span><span class="o">.</span><span class="n">set_blur_manager</span><span class="p">(</span><span class="n">blur_manager</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">set_color_manager</span><span class="p">(</span><span class="n">color_manager</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">set_face_detector</span><span class="p">(</span><span class="n">face_detector</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">set_threshold_manager</span><span class="p">(</span><span class="n">threshold_manager</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BuildDirector.construct_face_extract_pipeline"><a class="viewcode-back" href="../../apidocs/image_preprocessing.html#image_preprocessing.build_director.BuildDirector.construct_face_extract_pipeline">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">construct_face_extract_pipeline</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function constructs the pipeline for face extraction.</span>
+<span class="sd">        This includes building different managers with their specific parameters.</span>
+<span class="sd">        These managers will be called within the pipeline when executed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :Pipeline (Constructed pipeline)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Shape Predictor path: &quot;</span> <span class="o">+</span> <span class="n">SHAPE_PREDICTOR_PATH</span><span class="p">)</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">PipelineBuilder</span><span class="p">()</span>
+
+        <span class="n">face_detector</span> <span class="o">=</span> <span class="n">FaceDetector</span><span class="p">(</span><span class="n">SHAPE_PREDICTOR_PATH</span><span class="p">)</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">set_face_detector</span><span class="p">(</span><span class="n">face_detector</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

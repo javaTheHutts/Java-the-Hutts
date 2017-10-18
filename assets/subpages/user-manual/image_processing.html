@@ -1,0 +1,561 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>image_processing package &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">image_processing package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-image_processing.barcode_manager">image_processing.barcode_manager module</a></li>
+<li><a class="reference internal" href="#module-image_processing.context_manager">image_processing.context_manager module</a><ul>
+<li><a class="reference internal" href="#authors-jan-justin-van-tonder">Authors: Jan-Justin van Tonder</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-image_processing.controllers">image_processing.controllers module</a><ul>
+<li><a class="reference internal" href="#author-s-nicolai-van-niekerk-stephan-nell">Author(s): Nicolai van Niekerk, Stephan Nell</a><ul>
+<li><a class="reference internal" href="#handles-all-requests-relevant-to-the-extraction-service-of-the-api">Handles all requests relevant to the extraction service of the API.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-image_processing.sample_extract">image_processing.sample_extract module</a></li>
+<li><a class="reference internal" href="#module-image_processing.simplification_manager">image_processing.simplification_manager module</a></li>
+<li><a class="reference internal" href="#module-image_processing.text_cleaner">image_processing.text_cleaner module</a><ul>
+<li><a class="reference internal" href="#id1">Authors: Jan-Justin van Tonder</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-image_processing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>image_processing package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/image_processing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="image-processing-package">
+<h1>image_processing package<a class="headerlink" href="#image-processing-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-image_processing.barcode_manager">
+<span id="image-processing-barcode-manager-module"></span><h2>image_processing.barcode_manager module<a class="headerlink" href="#module-image_processing.barcode_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="image_processing.barcode_manager.BarCodeManager">
+<em class="property">class </em><code class="descclassname">image_processing.barcode_manager.</code><code class="descname">BarCodeManager</code><a class="reference internal" href="_modules/image_processing/barcode_manager.html#BarCodeManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.barcode_manager.BarCodeManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The BarCode Manager is responsible for:
+1. Detecting the barcode.
+2. Extracting any information on the detected barcode.
+3. Applying blurring to the detected barcode to reduce noise.</p>
+<dl class="method">
+<dt id="image_processing.barcode_manager.BarCodeManager.apply_barcode_blur">
+<code class="descname">apply_barcode_blur</code><span class="sig-paren">(</span><em>image</em>, <em>box</em>, <em>dilation_intensity=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/barcode_manager.html#BarCodeManager.apply_barcode_blur"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.barcode_manager.BarCodeManager.apply_barcode_blur" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies blurring to a detected barcode region to reduce noise in the image.
+The barcode region is first extracted, then blurring is applied, after blurring is applied
+the blurred out barcode is reapplied to the original image.
+Author(s):</p>
+<blockquote>
+<div>Stephan Nell</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">image (:obj:’OpenCV image’): Image containing a Barcode.
+box: The box is an integer list containing the box region coordinates of the barcode location.
+dilation_intensity (int): Indicates the intensity by which the barcode should be dilated.</p>
+<blockquote class="last">
+<div>The greater the intensity the greater the extent of dilation. Greater intensity
+leads to reduce of speed with every iterations.</div></blockquote>
+</dd>
+<dt>Returns:</dt>
+<dd>obj:’OpenCV image’: The Original image with blurring applied to the barcode region in the image.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="image_processing.barcode_manager.BarCodeManager.detect">
+<code class="descname">detect</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/barcode_manager.html#BarCodeManager.detect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.barcode_manager.BarCodeManager.detect" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function detects a region containing a Barcode if a Barcode is present in the image passed
+Barcodes supported:</p>
+<blockquote>
+<div>EAN
+UPC
+Code 39
+Code 93
+Code 128
+ITF</div></blockquote>
+<p>For more information on Barcode types: <a class="reference external" href="https://www.scandit.com/types-barcodes-choosing-right-barcode/">https://www.scandit.com/types-barcodes-choosing-right-barcode/</a>
+Author(s):</p>
+<blockquote>
+<div>Stephan Nell</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>image (:obj:’OpenCV image’): Image containing the potential barcode.</dd>
+<dt>Returns:</dt>
+<dd><dl class="first docutils">
+<dt>Boolean: A value of True is returned if a Barcode was detected</dt>
+<dd>If however a barcode was not detected a value of false is returned.</dd>
+<dt>obj:’OpenCV image’: If a Barcode was successfully detected the detected barcode is returned.</dt>
+<dd>If a barcode was not detected return the original image.</dd>
+</dl>
+<p class="last">Integer List: This list contains the box coordinates for the region in which the barcode resides.</p>
+</dd>
+<dt>Raises:</dt>
+<dd>TypeError: If a none numpy array value has been passed</dd>
+<dt>Todo:</dt>
+<dd>Find a way to support PDF417 format.
+Find a way to remove the hardcoded 200 value.
+Add additional checks for invalid Barcodes.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="image_processing.barcode_manager.BarCodeManager.get_barcode_info">
+<code class="descname">get_barcode_info</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/barcode_manager.html#BarCodeManager.get_barcode_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.barcode_manager.BarCodeManager.get_barcode_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns scanned barcode information.
+Author(s):</p>
+<blockquote>
+<div>Stephan Nell</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>image (:obj:’OpenCV image’): Image containing a Barcode.</dd>
+<dt>Returns:</dt>
+<dd><dl class="first docutils">
+<dt>Boolean: A value of True if the function was able to extract information from the barcode.</dt>
+<dd>If no information was extracted from the barcode a value of False is returned.</dd>
+<dt>String: A UTF-8 String containing the information extracted from the Barcode.</dt>
+<dd>If no information was extracted from the barcode a empty string is returned.</dd>
+</dl>
+<p class="last">obj:’OpenCV image’: A copy of the original image.</p>
+</dd>
+<dt>Todo:</dt>
+<dd>Find a way to support PDF417 format.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-image_processing.context_manager">
+<span id="image-processing-context-manager-module"></span><h2>image_processing.context_manager module<a class="headerlink" href="#module-image_processing.context_manager" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="authors-jan-justin-van-tonder">
+<h3>Authors: Jan-Justin van Tonder<a class="headerlink" href="#authors-jan-justin-van-tonder" title="Permalink to this headline">¶</a></h3>
+<p>This file contains the logic used to manage the various ID contexts.
+Should ideally be extended to do more than it currently does.
+———————————————————————-</p>
+<dl class="class">
+<dt id="image_processing.context_manager.ContextManager">
+<em class="property">class </em><code class="descclassname">image_processing.context_manager.</code><code class="descname">ContextManager</code><a class="reference internal" href="_modules/image_processing/context_manager.html#ContextManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.context_manager.ContextManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A class responsible for managing and maintaining the various ID contexts.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd>_sa_id_card (IDContext): A South African ID card context.
+_sa_id_book (IDContext): A South African ID book context.
+_sa_id_book_old (IDContext): An old South African ID book context.
+_up_card (IDContext): A University of Pretoria staff/student card context.</dd>
+</dl>
+<dl class="method">
+<dt id="image_processing.context_manager.ContextManager.get_id_context">
+<code class="descname">get_id_context</code><span class="sig-paren">(</span><em>id_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/context_manager.html#ContextManager.get_id_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.context_manager.ContextManager.get_id_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an ID context based on the ID type that is passed in as an arg.</p>
+<dl class="docutils">
+<dt>Authors:</dt>
+<dd>Jan-Justin van Tonder</dd>
+<dt>Args:</dt>
+<dd>id_type (str): A string indicating a type of ID.</dd>
+<dt>Returns:</dt>
+<dd>(IDContext): An IDContext object determined by the ID type passed in as an arg.
+(None): In the event that the ID type is unrecognisable.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-image_processing.controllers">
+<span id="image-processing-controllers-module"></span><h2>image_processing.controllers module<a class="headerlink" href="#module-image_processing.controllers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="author-s-nicolai-van-niekerk-stephan-nell">
+<h3>Author(s): Nicolai van Niekerk, Stephan Nell<a class="headerlink" href="#author-s-nicolai-van-niekerk-stephan-nell" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="handles-all-requests-relevant-to-the-extraction-service-of-the-api">
+<h4>Handles all requests relevant to the extraction service of the API.<a class="headerlink" href="#handles-all-requests-relevant-to-the-extraction-service-of-the-api" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="image_processing.controllers.extract_all">
+<code class="descclassname">image_processing.controllers.</code><code class="descname">extract_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/controllers.html#extract_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.controllers.extract_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="image_processing.controllers.extract_face">
+<code class="descclassname">image_processing.controllers.</code><code class="descname">extract_face</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/controllers.html#extract_face"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.controllers.extract_face" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="image_processing.controllers.extract_text">
+<code class="descclassname">image_processing.controllers.</code><code class="descname">extract_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/controllers.html#extract_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.controllers.extract_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="image_processing.controllers.face_extraction_response">
+<code class="descclassname">image_processing.controllers.</code><code class="descname">face_extraction_response</code><span class="sig-paren">(</span><em>image</em>, <em>text_extract_result=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/controllers.html#face_extraction_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.controllers.face_extraction_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function converts the extracted cv2 image and converts it
+to a jpg image. Furthermore, the jpg image is converted to
+Base64 jpg type and returned. If text extraction results are provided
+the response will contain the data of text extraction result as well.
+Author(s):</p>
+<blockquote>
+<div>Stephan Nell</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>image: The cv2 (numpy) image that should be converted to jpg
+text_extract_result (dict) the extracted text results</dd>
+<dt>Returns:</dt>
+<dd>(:obj:’Response’): The response object that contains the information for HTTP transmission</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="module-image_processing.sample_extract">
+<span id="image-processing-sample-extract-module"></span><h2>image_processing.sample_extract module<a class="headerlink" href="#module-image_processing.sample_extract" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="image_processing.sample_extract.FaceExtractor">
+<em class="property">class </em><code class="descclassname">image_processing.sample_extract.</code><code class="descname">FaceExtractor</code><a class="reference internal" href="_modules/image_processing/sample_extract.html#FaceExtractor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.sample_extract.FaceExtractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The FaceExtractor extracts the face region for the image passed.</p>
+<dl class="method">
+<dt id="image_processing.sample_extract.FaceExtractor.extract">
+<code class="descname">extract</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/sample_extract.html#FaceExtractor.extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.sample_extract.FaceExtractor.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is a sample that demonstrates how the face would be extracted.
+Author(s):</p>
+<blockquote>
+<div>Stephan Nell</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>img: The image of the ID that contains the face that must be extracted.</dd>
+<dt>Returns:</dt>
+<dd>image: The extracted and aligned facial image.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="image_processing.sample_extract.TextExtractor">
+<em class="property">class </em><code class="descclassname">image_processing.sample_extract.</code><code class="descname">TextExtractor</code><span class="sig-paren">(</span><em>preferences</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/sample_extract.html#TextExtractor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.sample_extract.TextExtractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The TextExtractor extracts text from the ID image</p>
+<dl class="method">
+<dt id="image_processing.sample_extract.TextExtractor.extract">
+<code class="descname">extract</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/sample_extract.html#TextExtractor.extract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.sample_extract.TextExtractor.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is a sample that demonstrates how text would be extracted
+Author(s):</p>
+<blockquote>
+<div>Nicolai van Niekerk</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>img: The image of the ID that contains the text to be extracted</dd>
+<dt>Returns:</dt>
+<dd>id_details: JSON obj (The extracted information)</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-image_processing.simplification_manager">
+<span id="image-processing-simplification-manager-module"></span><h2>image_processing.simplification_manager module<a class="headerlink" href="#module-image_processing.simplification_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="image_processing.simplification_manager.SimplificationManager">
+<em class="property">class </em><code class="descclassname">image_processing.simplification_manager.</code><code class="descname">SimplificationManager</code><a class="reference internal" href="_modules/image_processing/simplification_manager.html#SimplificationManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.simplification_manager.SimplificationManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The Simplification manger is used to remove unwanted content in an image thus
+simplifying process like OCR and facial comparisons.</p>
+<dl class="method">
+<dt id="image_processing.simplification_manager.SimplificationManager.perspectiveTransformation">
+<code class="descname">perspectiveTransformation</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/simplification_manager.html#SimplificationManager.perspectiveTransformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.simplification_manager.SimplificationManager.perspectiveTransformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The perspective transformation takes the image passed and applies edge detection and
+a function to detect the contours of a identification document. If contours of an
+identification document is detected the image is converted from a non-perspective view
+to an perspective view.
+Author(s):</p>
+<blockquote>
+<div>Stephan Nell</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>image (:obj:’OpenCV image’): Image containing a identification document</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>obj:’OpenCV image’: Returns as warped image where just the identification document</dt>
+<dd>is present and the identification document is now in a perspective view.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>TypeError: If a parameter is passed that is not of type Numpy array.</dd>
+<dt>Todo:</dt>
+<dd><dl class="first last docutils">
+<dt>Determine a better solution to this problem when detecting smaller edge.</dt>
+<dd>at the moment this is hardcoded contour_area_threshold = 100000</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-image_processing.text_cleaner">
+<span id="image-processing-text-cleaner-module"></span><h2>image_processing.text_cleaner module<a class="headerlink" href="#module-image_processing.text_cleaner" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Authors: Jan-Justin van Tonder<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This file contains the logic used to manage the removal of characters
+from an input string.
+———————————————————————-</p>
+<dl class="class">
+<dt id="image_processing.text_cleaner.TextCleaner">
+<em class="property">class </em><code class="descclassname">image_processing.text_cleaner.</code><code class="descname">TextCleaner</code><a class="reference internal" href="_modules/image_processing/text_cleaner.html#TextCleaner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.text_cleaner.TextCleaner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>This class is encapsulates the logic required to clean the OCR output string produced from an image of an ID.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>_deplorables (list): A list of strings that contain characters that is to be filtered out from the OCR output</dt>
+<dd>string during string cleaning.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="image_processing.text_cleaner.TextCleaner.clean_up">
+<code class="descname">clean_up</code><span class="sig-paren">(</span><em>in_string</em>, <em>deplorables=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/image_processing/text_cleaner.html#TextCleaner.clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#image_processing.text_cleaner.TextCleaner.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function serves to receive an input string, clean it up through removing undesirable characters and
+unnecessary whitespace, and to return the cleaned string.</p>
+<dl class="docutils">
+<dt>Authors:</dt>
+<dd>Jan-Justin van Tonder</dd>
+<dt>Args:</dt>
+<dd>in_string (str): The input string that is to be cleaned.
+deplorables (list, Optional): A list of characters that are to be filtered from the input string.</dd>
+<dt>Returns:</dt>
+<dd>str: A string that has been stripped of undesirable characters and unnecessary whitespace.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: If in_string is not a string.
+TypeError: If deplorables is not a list of strings.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-image_processing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-image_processing" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

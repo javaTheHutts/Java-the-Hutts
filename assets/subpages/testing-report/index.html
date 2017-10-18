@@ -1,0 +1,464 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>coverage</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.ba-throttle-debounce.min.js"></script>
+    <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="coverage_html.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(coverage.index_ready);
+    </script>
+</head>
+<body class="indexfile">
+
+<div id="header">
+    <div class="content">
+        <h1>coverage:
+            <span class="pc_cov">53%</span>
+        </h1>
+
+        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+
+        <form id="filter_container">
+            <input id="filter" type="text" value="" placeholder="filter..." />
+        </form>
+    </div>
+</div>
+
+<div class="help_panel">
+    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
+    <p class="legend">Hot-keys on this page</p>
+    <div>
+    <p class="keyhelp">
+        <span class="key">n</span>
+        <span class="key">s</span>
+        <span class="key">m</span>
+        <span class="key">x</span>
+        
+        <span class="key">b</span>
+        <span class="key">p</span>
+        
+        <span class="key">c</span> &nbsp; change column sorting
+    </p>
+    </div>
+</div>
+
+<div id="index">
+    <table class="index">
+        <thead>
+            
+            <tr class="tablehead" title="Click to sort">
+                <th class="name left headerSortDown shortkey_n">Module</th>
+                <th class="shortkey_s">statements</th>
+                <th class="shortkey_m">missing</th>
+                <th class="shortkey_x">excluded</th>
+                
+                <th class="shortkey_b">branches</th>
+                <th class="shortkey_p">partial</th>
+                
+                <th class="right shortkey_c">coverage</th>
+            </tr>
+        </thead>
+        
+        <tfoot>
+            <tr class="total">
+                <td class="name left">Total</td>
+                <td>1046</td>
+                <td>557</td>
+                <td>0</td>
+                
+                <td>378</td>
+                <td>8</td>
+                
+                <td class="right" data-ratio="749 1424">53%</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            
+            <tr class="file">
+                <td class="name left"><a href="__init_____init___py.html">__init__/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="hutts_utils___init___py.html">hutts_utils/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="hutts_utils_hutts_logger_py.html">hutts_utils/hutts_logger.py</a></td>
+                <td>57</td>
+                <td>56</td>
+                <td>0</td>
+                
+                <td>8</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="1 65">2%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="hutts_utils_image_handling_py.html">hutts_utils/image_handling.py</a></td>
+                <td>22</td>
+                <td>11</td>
+                <td>0</td>
+                
+                <td>10</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="18 32">56%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="hutts_utils_pypath_py.html">hutts_utils/pypath.py</a></td>
+                <td>25</td>
+                <td>25</td>
+                <td>0</td>
+                
+                <td>8</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 33">0%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="id_contexts___init___py.html">id_contexts/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="id_contexts_id_context_py.html">id_contexts/id_context.py</a></td>
+                <td>53</td>
+                <td>21</td>
+                <td>0</td>
+                
+                <td>26</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="58 79">73%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="id_contexts_sa_id_py.html">id_contexts/sa_id.py</a></td>
+                <td>132</td>
+                <td>24</td>
+                <td>0</td>
+                
+                <td>64</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="171 196">87%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="id_contexts_sa_id_book_py.html">id_contexts/sa_id_book.py</a></td>
+                <td>16</td>
+                <td>7</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="11 18">61%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="id_contexts_sa_id_book_old_py.html">id_contexts/sa_id_book_old.py</a></td>
+                <td>18</td>
+                <td>6</td>
+                <td>0</td>
+                
+                <td>6</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="18 24">75%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="id_contexts_sa_id_card_py.html">id_contexts/sa_id_card.py</a></td>
+                <td>10</td>
+                <td>6</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="4 10">40%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="id_contexts_up_student_card_py.html">id_contexts/up_student_card.py</a></td>
+                <td>36</td>
+                <td>33</td>
+                <td>0</td>
+                
+                <td>12</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="3 48">6%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing___init___py.html">image_preprocessing/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_blur_manager_py.html">image_preprocessing/blur_manager.py</a></td>
+                <td>39</td>
+                <td>7</td>
+                <td>0</td>
+                
+                <td>26</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="58 65">89%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_build_director_py.html">image_preprocessing/build_director.py</a></td>
+                <td>71</td>
+                <td>71</td>
+                <td>0</td>
+                
+                <td>30</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 101">0%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_color_manager_py.html">image_preprocessing/color_manager.py</a></td>
+                <td>52</td>
+                <td>9</td>
+                <td>0</td>
+                
+                <td>30</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="73 82">89%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_face_manager_py.html">image_preprocessing/face_manager.py</a></td>
+                <td>40</td>
+                <td>40</td>
+                <td>0</td>
+                
+                <td>6</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 46">0%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_pipeline_py.html">image_preprocessing/pipeline.py</a></td>
+                <td>38</td>
+                <td>38</td>
+                <td>0</td>
+                
+                <td>12</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 50">0%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_pipeline_builder_py.html">image_preprocessing/pipeline_builder.py</a></td>
+                <td>14</td>
+                <td>14</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 14">0%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_template_matching_py.html">image_preprocessing/template_matching.py</a></td>
+                <td>38</td>
+                <td>11</td>
+                <td>0</td>
+                
+                <td>16</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="43 54">80%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_preprocessing_thresholding_manager_py.html">image_preprocessing/thresholding_manager.py</a></td>
+                <td>26</td>
+                <td>7</td>
+                <td>0</td>
+                
+                <td>14</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="33 40">82%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_processing___init___py.html">image_processing/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_processing_barcode_manager_py.html">image_processing/barcode_manager.py</a></td>
+                <td>48</td>
+                <td>13</td>
+                <td>0</td>
+                
+                <td>8</td>
+                <td>3</td>
+                
+                <td class="right" data-ratio="40 56">71%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_processing_context_manager_py.html">image_processing/context_manager.py</a></td>
+                <td>20</td>
+                <td>7</td>
+                <td>0</td>
+                
+                <td>8</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="21 28">75%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_processing_sample_extract_py.html">image_processing/sample_extract.py</a></td>
+                <td>82</td>
+                <td>82</td>
+                <td>0</td>
+                
+                <td>18</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 100">0%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_processing_simplification_manager_py.html">image_processing/simplification_manager.py</a></td>
+                <td>37</td>
+                <td>22</td>
+                <td>0</td>
+                
+                <td>12</td>
+                <td>2</td>
+                
+                <td class="right" data-ratio="19 49">39%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="image_processing_text_cleaner_py.html">image_processing/text_cleaner.py</a></td>
+                <td>24</td>
+                <td>6</td>
+                <td>0</td>
+                
+                <td>6</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="24 30">80%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="verification___init___py.html">verification/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="verification_face_verify_py.html">verification/face_verify.py</a></td>
+                <td>55</td>
+                <td>11</td>
+                <td>0</td>
+                
+                <td>12</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="55 67">82%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="verification_text_verify_py.html">verification/text_verify.py</a></td>
+                <td>93</td>
+                <td>30</td>
+                <td>0</td>
+                
+                <td>44</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="99 137">72%</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <p id="no_rows">
+        No items found using the specified filter.
+    </p>
+</div>
+
+<div id="footer">
+    <div class="content">
+        <p>
+            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.4.1</a>,
+            created at 2017-10-18 17:34
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

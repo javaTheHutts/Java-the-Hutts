@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>id_contexts package &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Using the API" href="../api.html"/>
+        <link rel="next" title="image_preprocessing package" href="image_preprocessing.html"/>
+        <link rel="prev" title="hutts_utils package" href="hutts_utils.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../interface.html">Using the Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../server.html">Using the Server</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Using the API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hutts_utils.html"> Utility Functions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">   Different Types of Identification Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-id_contexts.id_context">id_contexts.id_context module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-id_contexts.sa_id">id_contexts.sa_id module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-id_contexts.sa_id_book">id_contexts.sa_id_book module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-id_contexts.sa_id_book_old">id_contexts.sa_id_book_old module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-id_contexts.sa_id_card">id_contexts.sa_id_card module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-id_contexts.up_student_card">id_contexts.up_student_card module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-id_contexts">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="image_preprocessing.html">   Preparing Images for Extraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_processing.html">   Extracting Data from Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification.html">   Verifying Data from Images</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">Using the API</a> &raquo;</li>
+        
+      <li>id_contexts package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidocs/id_contexts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id-contexts-package">
+<h1>id_contexts package<a class="headerlink" href="#id-contexts-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-id_contexts.id_context">
+<span id="id-contexts-id-context-module"></span><h2>id_contexts.id_context module<a class="headerlink" href="#module-id_contexts.id_context" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the abstraction of all ID contexts, which contain
+the necessary information and settings specific to a particular ID
+document type.</p>
+<dl class="class">
+<dt id="id_contexts.id_context.FieldType">
+<em class="property">class </em><code class="descclassname">id_contexts.id_context.</code><code class="descname">FieldType</code><a class="reference internal" href="../_modules/id_contexts/id_context.html#FieldType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.id_context.FieldType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>An enumerator used to specify the field type for extracted ID information.</p>
+<dl class="attribute">
+<dt id="id_contexts.id_context.FieldType.DATE_HYPHENATED">
+<code class="descname">DATE_HYPHENATED</code><em class="property"> = 3</em><a class="headerlink" href="#id_contexts.id_context.FieldType.DATE_HYPHENATED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="id_contexts.id_context.FieldType.MIXED">
+<code class="descname">MIXED</code><em class="property"> = 2</em><a class="headerlink" href="#id_contexts.id_context.FieldType.MIXED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="id_contexts.id_context.FieldType.NUMERIC_ONLY">
+<code class="descname">NUMERIC_ONLY</code><em class="property"> = 1</em><a class="headerlink" href="#id_contexts.id_context.FieldType.NUMERIC_ONLY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="id_contexts.id_context.FieldType.TEXT_ONLY">
+<code class="descname">TEXT_ONLY</code><em class="property"> = 0</em><a class="headerlink" href="#id_contexts.id_context.FieldType.TEXT_ONLY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="id_contexts.id_context.IDContext">
+<em class="property">class </em><code class="descclassname">id_contexts.id_context.</code><code class="descname">IDContext</code><span class="sig-paren">(</span><em>match_contexts</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/id_contexts/id_context.html#IDContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.id_context.IDContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">abc.ABC</span></code></p>
+<p>This class is an abstraction of all ID contexts.
+The ID contexts serve to contain the necessary information and settings specific to a particular ID
+document type for operations such as extracting information from an ID OCR string.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><dl class="first last docutils">
+<dt>match_contexts (list): A list of dictionaries that contain the contextual information used in the process of</dt>
+<dd><p class="first">retrieving field values from the OCR output string.
+e.g. {</p>
+<blockquote class="last">
+<div><blockquote>
+<div><p>‘field’: ‘surname’,          // The field name - can be set to any string one desires.
+‘find’: ‘surname’,           // A string to be used for matching field names.</p>
+<blockquote>
+<div>// in the OCR output string (used to know what to look for).</div></blockquote>
+<dl class="docutils">
+<dt>‘field_type’:                // Indicates if the field value is to be treated as alphanumeric or</dt>
+<dd><dl class="first last docutils">
+<dt>FieldType.TEXT_ONLY       // just numeric or just alphabetical characters.</dt>
+<dd>// (e.g. indicates that all numbers from field value should be removed
+// if the field type is TEXT_ONLY).</dd>
+</dl>
+</dd>
+<dt>‘line_type’: TITLED_NEWLINE  // Indicates the type of line to be considered when looking for the</dt>
+<dd>// field value relative to the ‘find’ value.
+// (e.g. TITLED_NEWLINE indicates that the field value is preceded
+// by a field name/title and a newline).</dd>
+</dl>
+<p>‘multi_line’: True,          // Indicates that the field value spans multiple lines.
+‘multi_line_end’: ‘names’    // (Optional, unless multi_line is true) A string identifying the next</p>
+<blockquote>
+<div>// field name that indicates the end of the multi-line field value.</div></blockquote>
+<dl class="docutils">
+<dt>‘to_uppercase’: False,       // (Optional) Indicates that the retrieved field value must be</dt>
+<dd>// converted to uppercase.</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="id_contexts.id_context.IDContext.get_id_info">
+<code class="descname">get_id_info</code><span class="sig-paren">(</span><em>id_string</em>, <em>barcode_data=None</em>, <em>ignore_fields=None</em>, <em>fuzzy_min_ratio=60.0</em>, <em>max_multi_line=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/id_contexts/id_context.html#IDContext.get_id_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.id_context.IDContext.get_id_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Responsible for filtering undesirable fields to be retrieved as well as delegating the responsibility
+of extracting ID information from an OCR string and housing said information in a convenient dictionary.
+Some type checking is done to reduce the likelihood of errors further down the call stack.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">id_string (str): A string containing some ID information.
+barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.
+ignore_fields (list, Optional): A list containing fields which are to be ignored during extraction.
+fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing</p>
+<blockquote>
+<div>two strings.</div></blockquote>
+<dl class="last docutils">
+<dt>max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are</dt>
+<dd>noted as running onto multiple lines.</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>(dict): A dictionary object containing the relevant, extracted ID information.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: If id_string is not a string.
+TypeError: If barcode_data is not a dictionary.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="id_contexts.id_context.LineType">
+<em class="property">class </em><code class="descclassname">id_contexts.id_context.</code><code class="descname">LineType</code><a class="reference internal" href="../_modules/id_contexts/id_context.html#LineType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.id_context.LineType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.Enum</span></code></p>
+<p>An enumerator used to specify the line type for extracted ID information.</p>
+<dl class="attribute">
+<dt id="id_contexts.id_context.LineType.TITLED_ADJACENT">
+<code class="descname">TITLED_ADJACENT</code><em class="property"> = 1</em><a class="headerlink" href="#id_contexts.id_context.LineType.TITLED_ADJACENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="id_contexts.id_context.LineType.TITLED_NEWLINE">
+<code class="descname">TITLED_NEWLINE</code><em class="property"> = 0</em><a class="headerlink" href="#id_contexts.id_context.LineType.TITLED_NEWLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="id_contexts.id_context.LineType.UNTITLED_ADJACENT">
+<code class="descname">UNTITLED_ADJACENT</code><em class="property"> = 3</em><a class="headerlink" href="#id_contexts.id_context.LineType.UNTITLED_ADJACENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="id_contexts.id_context.LineType.UNTITLED_NEWLINE">
+<code class="descname">UNTITLED_NEWLINE</code><em class="property"> = 2</em><a class="headerlink" href="#id_contexts.id_context.LineType.UNTITLED_NEWLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-id_contexts.sa_id">
+<span id="id-contexts-sa-id-module"></span><h2>id_contexts.sa_id module<a class="headerlink" href="#module-id_contexts.sa_id" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the abstraction and high-level logic of South
+African ID contexts.</p>
+<dl class="class">
+<dt id="id_contexts.sa_id.SAID">
+<em class="property">class </em><code class="descclassname">id_contexts.sa_id.</code><code class="descname">SAID</code><span class="sig-paren">(</span><em>match_contexts</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/id_contexts/sa_id.html#SAID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.sa_id.SAID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#id_contexts.id_context.IDContext" title="id_contexts.id_context.IDContext"><code class="xref py py-class docutils literal"><span class="pre">id_contexts.id_context.IDContext</span></code></a></p>
+<p>An abstract class for South African IDs.
+Contains the high-level logic that is relevant to all South African IDs.</p>
+<dl class="attribute">
+<dt id="id_contexts.sa_id.SAID.POST_PROCESS_MIN_FUZZY_RATIO">
+<code class="descname">POST_PROCESS_MIN_FUZZY_RATIO</code><em class="property"> = 70.0</em><a class="headerlink" href="#id_contexts.sa_id.SAID.POST_PROCESS_MIN_FUZZY_RATIO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="id_contexts.sa_id.SAID.VALID_ID_LENGTH">
+<code class="descname">VALID_ID_LENGTH</code><em class="property"> = 13</em><a class="headerlink" href="#id_contexts.sa_id.SAID.VALID_ID_LENGTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="id_contexts.sa_id.SAID.validate_id_number">
+<code class="descname">validate_id_number</code><span class="sig-paren">(</span><em>id_number</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/id_contexts/sa_id.html#SAID.validate_id_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.sa_id.SAID.validate_id_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines whether a given id number is valid or not.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>id_number (str): An ID number that is to be validated.</dd>
+<dt>Returns:</dt>
+<dd>(bool): True if the id number is valid, False otherwise.</dd>
+<dt>Raises:</dt>
+<dd>TypeError: If id_number is not a string containing only numeric characters.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-id_contexts.sa_id_book">
+<span id="id-contexts-sa-id-book-module"></span><h2>id_contexts.sa_id_book module<a class="headerlink" href="#module-id_contexts.sa_id_book" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the logic for South African ID book (post 1994)
+context.</p>
+<dl class="class">
+<dt id="id_contexts.sa_id_book.SAIDBook">
+<em class="property">class </em><code class="descclassname">id_contexts.sa_id_book.</code><code class="descname">SAIDBook</code><a class="reference internal" href="../_modules/id_contexts/sa_id_book.html#SAIDBook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.sa_id_book.SAIDBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#id_contexts.sa_id.SAID" title="id_contexts.sa_id.SAID"><code class="xref py py-class docutils literal"><span class="pre">id_contexts.sa_id.SAID</span></code></a></p>
+<p>A class that represents an ID context for a South African ID book (post 1994).
+It supplies some of the concrete information, such as the match contexts, to the classes higher up in inheritance
+hierarchy and implements abstract methods defined by its parent.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-id_contexts.sa_id_book_old">
+<span id="id-contexts-sa-id-book-old-module"></span><h2>id_contexts.sa_id_book_old module<a class="headerlink" href="#module-id_contexts.sa_id_book_old" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the logic for South African ID book (pre 1994)
+context.</p>
+<dl class="class">
+<dt id="id_contexts.sa_id_book_old.SAIDBookOld">
+<em class="property">class </em><code class="descclassname">id_contexts.sa_id_book_old.</code><code class="descname">SAIDBookOld</code><a class="reference internal" href="../_modules/id_contexts/sa_id_book_old.html#SAIDBookOld"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.sa_id_book_old.SAIDBookOld" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#id_contexts.sa_id.SAID" title="id_contexts.sa_id.SAID"><code class="xref py py-class docutils literal"><span class="pre">id_contexts.sa_id.SAID</span></code></a></p>
+<p>A class that represents an ID context for a South African ID book (pre 1994).
+It supplies some of the concrete information, such as the match contexts, to the classes higher up in inheritance
+hierarchy and implements abstract methods defined by its parent.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-id_contexts.sa_id_card">
+<span id="id-contexts-sa-id-card-module"></span><h2>id_contexts.sa_id_card module<a class="headerlink" href="#module-id_contexts.sa_id_card" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the logic for South African ID card context.</p>
+<dl class="class">
+<dt id="id_contexts.sa_id_card.SAIDCard">
+<em class="property">class </em><code class="descclassname">id_contexts.sa_id_card.</code><code class="descname">SAIDCard</code><a class="reference internal" href="../_modules/id_contexts/sa_id_card.html#SAIDCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.sa_id_card.SAIDCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#id_contexts.sa_id.SAID" title="id_contexts.sa_id.SAID"><code class="xref py py-class docutils literal"><span class="pre">id_contexts.sa_id.SAID</span></code></a></p>
+<p>A class that represents an ID context for a South African ID card.
+It supplies some of the concrete information, such as the match contexts, to the classes higher up in inheritance
+hierarchy and implements abstract methods defined by its parent.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-id_contexts.up_student_card">
+<span id="id-contexts-up-student-card-module"></span><h2>id_contexts.up_student_card module<a class="headerlink" href="#module-id_contexts.up_student_card" title="Permalink to this headline">¶</a></h2>
+<p>This file contains the logic for University of Pretoria ID
+card context. It is mainly intended for demonstration purposes.</p>
+<dl class="class">
+<dt id="id_contexts.up_student_card.UPStudentCard">
+<em class="property">class </em><code class="descclassname">id_contexts.up_student_card.</code><code class="descname">UPStudentCard</code><a class="reference internal" href="../_modules/id_contexts/up_student_card.html#UPStudentCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id_contexts.up_student_card.UPStudentCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#id_contexts.id_context.IDContext" title="id_contexts.id_context.IDContext"><code class="xref py py-class docutils literal"><span class="pre">id_contexts.id_context.IDContext</span></code></a></p>
+<p>A class that represents an ID context for a University of Pretoria ID card.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-id_contexts">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-id_contexts" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="image_preprocessing.html" class="btn btn-neutral float-right" title="image_preprocessing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hutts_utils.html" class="btn btn-neutral" title="hutts_utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

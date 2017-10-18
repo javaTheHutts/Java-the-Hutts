@@ -815,6 +815,7 @@ a.btn-cta {
   text-align: center;
 }
 .docs-btn-wrapper .btn-docs {
+  margin: 5px;
   border: 2px solid #fff;
   color: #fff;
   font-size: 20px;

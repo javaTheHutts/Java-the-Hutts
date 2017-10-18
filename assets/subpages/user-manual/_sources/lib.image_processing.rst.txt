@@ -1,0 +1,62 @@
+lib\.image\_processing package
+==============================
+
+Submodules
+----------
+
+lib\.image\_processing\.barcode\_manager module
+-----------------------------------------------
+
+.. automodule:: lib.image_processing.barcode_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.image\_processing\.context\_manager module
+-----------------------------------------------
+
+.. automodule:: lib.image_processing.context_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.image\_processing\.controllers module
+------------------------------------------
+
+.. automodule:: lib.image_processing.controllers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.image\_processing\.sample\_extract module
+----------------------------------------------
+
+.. automodule:: lib.image_processing.sample_extract
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.image\_processing\.simplification\_manager module
+------------------------------------------------------
+
+.. automodule:: lib.image_processing.simplification_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.image\_processing\.text\_cleaner module
+--------------------------------------------
+
+.. automodule:: lib.image_processing.text_cleaner
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lib.image_processing
+    :members:
+    :undoc-members:
+    :show-inheritance:

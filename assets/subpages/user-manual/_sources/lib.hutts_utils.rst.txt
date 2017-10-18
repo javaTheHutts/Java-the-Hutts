@@ -1,0 +1,38 @@
+lib\.hutts\_utils package
+=========================
+
+Submodules
+----------
+
+lib\.hutts\_utils\.hutts\_logger module
+---------------------------------------
+
+.. automodule:: lib.hutts_utils.hutts_logger
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.hutts\_utils\.image\_handling module
+-----------------------------------------
+
+.. automodule:: lib.hutts_utils.image_handling
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+lib\.hutts\_utils\.pypath module
+--------------------------------
+
+.. automodule:: lib.hutts_utils.pypath
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: lib.hutts_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:

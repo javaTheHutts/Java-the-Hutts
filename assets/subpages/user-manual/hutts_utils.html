@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hutts_utils package &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">hutts_utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hutts_utils.hutts_logger">hutts_utils.hutts_logger module</a><ul>
+<li><a class="reference internal" href="#authors-jan-justin-van-tonder">Authors: Jan-Justin van Tonder</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hutts_utils.image_handling">hutts_utils.image_handling module</a></li>
+<li><a class="reference internal" href="#module-hutts_utils.pypath">hutts_utils.pypath module</a><ul>
+<li><a class="reference internal" href="#authors-andreas-nel">Authors: Andreas Nel</a><ul>
+<li><a class="reference internal" href="#utilities-to-help-solve-python-path-directory-file-issues">Utilities to help solve Python path/directory/file issues.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hutts_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>hutts_utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/hutts_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hutts-utils-package">
+<h1>hutts_utils package<a class="headerlink" href="#hutts-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hutts_utils.hutts_logger">
+<span id="hutts-utils-hutts-logger-module"></span><h2>hutts_utils.hutts_logger module<a class="headerlink" href="#module-hutts_utils.hutts_logger" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="authors-jan-justin-van-tonder">
+<h3>Authors: Jan-Justin van Tonder<a class="headerlink" href="#authors-jan-justin-van-tonder" title="Permalink to this headline">¶</a></h3>
+<p>Wraps the logic required to setup and use a custom logger while
+disabling the built-in flask logger.
+———————————————————————-
+Example usage:</p>
+<blockquote>
+<div># First import the logger from the hutts_logger module…
+from hutts_utils.hutts_logger import logger
+# then start logging.
+logger.info(‘logging an example’)</div></blockquote>
+<p>There are 5 logging levels, as shown below with their corresponding
+function call (from lowest to highest level):</p>
+<blockquote>
+<div>DEBUG       -   logger.debug(message)
+INFO        -   logger.info(message)
+WARNING     -   logger.warning(message)
+ERROR       -   logger.error(message)
+CRITICAL    -   logger.critical(message)</div></blockquote>
+<p>The default level of the logger will be INFO, unless the flask app is
+run in debug mode, in which case the logger level will be DEBUG.
+What this means is that messages lower than INFO, i.e. DEBUG, will
+not be shown, again this is unless the flask app is run in debug
+mode.</p>
+<p>NOTE: A function (prettify_json_message) has been included to take
+a json obj/dict and return a prettified string of said json obj/dict
+in the event that someone wishes to display a message in the form of
+a json obj/dict.
+———————————————————————-
+TODO: Look into handling the constants in a config file instead.
+———————————————————————-</p>
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_DEFAULT_LEVEL">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_DEFAULT_LEVEL</code><em class="property"> = 10</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_DEFAULT_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the date format to be used by the various logging formatters.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOGGER_NAME">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOGGER_NAME</code><em class="property"> = 'hutts_logger'</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOGGER_NAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the default level for logging.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_DATE_FMT">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_DATE_FMT</code><em class="property"> = '%Y-%m-%d %H:%M:%S'</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_DATE_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether or not to log to console.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_CONSOLE</code><em class="property"> = True</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the log format to be used when logging to the console.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE_COLOURS">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_CONSOLE_COLOURS</code><em class="property"> = {'ERROR': 'bold_red', 'WARNING': 'bold_yellow', 'DEBUG': 'bold_cyan', 'INFO': 'bold_white', 'CRITICAL': 'bold_red,bg_white'}</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE_COLOURS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the secondary colours to be used to indicate the different levels when logging to console.
+For a more detailed description see the colorlog documentation: <a class="reference external" href="https://github.com/borntyping/python-colorlog">https://github.com/borntyping/python-colorlog</a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE_FMT">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_CONSOLE_FMT</code><em class="property"> = '[%(asctime)s.%(msecs)03d]%(log_color)s[%(levelname)8s]%(reset)s%(message_log_color)s -- (%(filename)s:%(lineno)d) -- %(message)s'</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the colours to be used to indicate the different levels when logging to console.
+For a more detailed description see the colorlog documentation: <a class="reference external" href="https://github.com/borntyping/python-colorlog">https://github.com/borntyping/python-colorlog</a></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE_SEC_COLOURS">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_CONSOLE_SEC_COLOURS</code><em class="property"> = {'message': {'CRITICAL': 'bold_red,bg_white', 'ERROR': 'red'}}</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_CONSOLE_SEC_COLOURS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether or not to log to a file.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_FILE</code><em class="property"> = True</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the name of the log file.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_BACKUP_COUNT">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_FILE_BACKUP_COUNT</code><em class="property"> = 1</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_BACKUP_COUNT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the encoding for the log file.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_DEFAULT_DIR">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_FILE_DEFAULT_DIR</code><em class="property"> = 'log/'</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_DEFAULT_DIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the log format to be used when logging to a file.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_ENCODING">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_FILE_ENCODING</code><em class="property"> = 'utf8'</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_ENCODING" title="Permalink to this definition">¶</a></dt>
+<dd><p>A global reference to the custom logger to be used.
+It is initialised to the default python logger to avoid errors during installation of packages.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_FILENAME">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_FILE_FILENAME</code><em class="property"> = 'hutts_verification.log'</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_FILENAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the default directory for the log file in the event that one is not specified during setup.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_FMT">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_FILE_FMT</code><em class="property"> = '[%(asctime)s.%(msecs)03d][%(levelname)8s] -- (%(filename)s:%(lineno)d) -- %(message)s'</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the maximum number of bytes for the log file before a rotate (assuming a rotating file is used).</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_MAX_BYTES">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">LOGGING_LOG_TO_FILE_MAX_BYTES</code><em class="property"> = 100000</em><a class="headerlink" href="#hutts_utils.hutts_logger.LOGGING_LOG_TO_FILE_MAX_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the number of backups for the log file (assuming a rotating file is used).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_utils.hutts_logger.disable_flask_logging">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">disable_flask_logging</code><span class="sig-paren">(</span><em>app_instance</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hutts_utils/hutts_logger.html#disable_flask_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_utils.hutts_logger.disable_flask_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function disables the flask logging, which interferes with the custom logger.</p>
+<dl class="docutils">
+<dt>Author:</dt>
+<dd>Jan-Justin van Tonder</dd>
+<dt>Args:</dt>
+<dd>app_instance (obj): A reference to the current flask server application.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_utils.hutts_logger.get_console_handler">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">get_console_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hutts_utils/hutts_logger.html#get_console_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_utils.hutts_logger.get_console_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is responsible for creating a console log handler with a global format and returning it.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>handler (obj): A log handler that is responsible for logging to the console.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_utils.hutts_logger.get_file_handler">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">get_file_handler</code><span class="sig-paren">(</span><em>log_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hutts_utils/hutts_logger.html#get_file_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_utils.hutts_logger.get_file_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is responsible for creating a file log handler with a global format and returning it.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>handler (obj): A log handler that is responsible for logging to a file.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_utils.hutts_logger.prettify_json_message">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">prettify_json_message</code><span class="sig-paren">(</span><em>json_message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hutts_utils/hutts_logger.html#prettify_json_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_utils.hutts_logger.prettify_json_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is a helper function that is used to prettify a json/dict message obj so that is more readable
+for humans when it is logged.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>json_message (dict): A message that is to be prettified before being logged.</dd>
+<dt>Returns:</dt>
+<dd>(str): A prettified json message string.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_utils.hutts_logger.setup_logger">
+<code class="descclassname">hutts_utils.hutts_logger.</code><code class="descname">setup_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hutts_utils/hutts_logger.html#setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_utils.hutts_logger.setup_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is responsible for creating the custom logger and delegating the creation of its handlers.</p>
+<dl class="docutils">
+<dt>Author:</dt>
+<dd>Jan-Justin van Tonder</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-hutts_utils.image_handling">
+<span id="hutts-utils-image-handling-module"></span><h2>hutts_utils.image_handling module<a class="headerlink" href="#module-hutts_utils.image_handling" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="hutts_utils.image_handling.grab_image">
+<code class="descclassname">hutts_utils.image_handling.</code><code class="descname">grab_image</code><span class="sig-paren">(</span><em>path=None</em>, <em>stream=None</em>, <em>url=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hutts_utils/image_handling.html#grab_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_utils.image_handling.grab_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function grabs the image from URL, or image path and applies necessary changes to the grabbed
+images so that the image is compatible with OpenCV operation.
+Author(s):</p>
+<blockquote>
+<div>Stephan Nell</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>path (str): The path to the image if it reside on disk
+stream (str): A stream of text representing where on the internet the image resides
+url(str): Url representing a path to where an image should be fetched.</dd>
+<dt>Raises:</dt>
+<dd>ValueError: If no path stream or URL was found</dd>
+<dt>Returns:</dt>
+<dd>(:obj:’OpenCV image’): Image that is now compatible with OpenCV operations</dd>
+<dt>TODO:</dt>
+<dd>Return a Json error indicating file not found</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_utils.pypath">
+<span id="hutts-utils-pypath-module"></span><h2>hutts_utils.pypath module<a class="headerlink" href="#module-hutts_utils.pypath" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="authors-andreas-nel">
+<h3>Authors: Andreas Nel<a class="headerlink" href="#authors-andreas-nel" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="utilities-to-help-solve-python-path-directory-file-issues">
+<h4>Utilities to help solve Python path/directory/file issues.<a class="headerlink" href="#utilities-to-help-solve-python-path-directory-file-issues" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="hutts_utils.pypath.correct_path">
+<code class="descclassname">hutts_utils.pypath.</code><code class="descname">correct_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hutts_utils/pypath.html#correct_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_utils.pypath.correct_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function checks if the given path exists in most known
+Python package installation directories and returns the corresponding path.
+Author(s):</p>
+<blockquote>
+<div>Andreas Nel</div></blockquote>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>path (string || Path): The path that has to be checked.</dd>
+<dt>Returns:</dt>
+<dd>string : The correct path if it exists, else None.</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="module-hutts_utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hutts_utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

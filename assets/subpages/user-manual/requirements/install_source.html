@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing from Source Code &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="Requirements and Installation Instructions" href="../install.html"/>
+        <link rel="next" title="hutts_verification" href="../apidocs/modules.html"/>
+        <link rel="prev" title="Installing via Docker" href="install_docker.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../install.html">Requirements and Installation Instructions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="install_docker.html">Installation via Docker</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation from Source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../install.html">Requirements and Installation Instructions</a> &raquo;</li>
+        
+      <li>Installing from Source Code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/requirements/install_source.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-from-source-code">
+<h1>Installing from Source Code<a class="headerlink" href="#installing-from-source-code" title="Permalink to this headline">¶</a></h1>
+<p>Hutts Verification can also be installed completely from the source code available at <a class="reference external" href="https://github.com/javaTheHutts/Java-the-Hutts">https://github.com/javaTheHutts/Java-the-Hutts</a></p>
+<p><strong>NOTE:</strong> This installation may take anything from 30 minutes to 3 hours, depending on which requirements have already been installed on the user’s computer.</p>
+<ol class="arabic">
+<li><p class="first">Install OpenCV 3.2.0, Python3 and all virtual environments as explained <a class="reference external" href="https://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/">here</a>. Please note that the version in the tutorial is different from the required version (3.2.0).</p>
+</li>
+<li><p class="first">Clone the repository for the source code with <code class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/javaTheHutts/Java-the-Hutts.git</span></code></p>
+</li>
+<li><p class="first">Run the following commands after the successful installation and linking of OpenCV to your virtual environment:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">libzbar0</span> <span class="n">libzbar</span><span class="o">-</span><span class="n">dev</span> <span class="n">libboost</span><span class="o">-</span><span class="nb">all</span><span class="o">-</span><span class="n">dev</span> <span class="n">tesseract</span><span class="o">-</span><span class="n">ocr</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the following commands while your OpenCV virtual environment is activated (this installs all the dependencies of the project):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip3</span> <span class="n">install</span> <span class="n">pybuilder</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="n">pyzbar</span><span class="o">==</span><span class="mf">0.1</span><span class="o">.</span><span class="mi">4</span> <span class="n">pyzbar</span><span class="p">[</span><span class="n">scripts</span><span class="p">]</span> <span class="n">zbar</span><span class="o">-</span><span class="n">py</span><span class="o">==</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">4</span>
+<span class="n">pip3</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">pyb</span> <span class="n">install_dependencies</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Install the project with the following commands:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pyb</span> <span class="n">analyze</span> <span class="n">full</span> <span class="n">publish</span>
+<span class="n">cd</span> <span class="n">target</span><span class="o">/</span><span class="n">dist</span><span class="o">/</span><span class="n">Java</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">Hutts</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="n">dev0</span><span class="o">/</span>
+<span class="n">python3</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In order to test whether the installation was successful, the user should be able to execute the <code class="docutils literal"><span class="pre">import</span> <span class="pre">hutts_verification</span></code> statement in any Python 3 shell without error.</p>
+</li>
+</ol>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../apidocs/modules.html" class="btn btn-neutral float-right" title="hutts_verification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install_docker.html" class="btn btn-neutral" title="Installing via Docker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,981 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hutts_verification.image_preprocessing package &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="hutts_verification package" href="hutts_verification.html"/>
+        <link rel="next" title="hutts_verification.image_processing package" href="hutts_verification.image_processing.html"/>
+        <link rel="prev" title="hutts_verification.id_contexts package" href="hutts_verification.id_contexts.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Using the API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hutts_verification.html">hutts_verification package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hutts_verification.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.id_contexts.html">hutts_verification.id_contexts package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hutts_verification.image_preprocessing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.image_processing.html">hutts_verification.image_processing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.utils.html">hutts_verification.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.verification.html">hutts_verification.verification package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hutts_verification.html#module-hutts_verification">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">hutts_verification</a> &raquo;</li>
+        
+          <li><a href="hutts_verification.html">hutts_verification package</a> &raquo;</li>
+        
+      <li>hutts_verification.image_preprocessing package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidocs/hutts_verification.image_preprocessing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hutts-verification-image-preprocessing-package">
+<h1>hutts_verification.image_preprocessing package<a class="headerlink" href="#hutts-verification-image-preprocessing-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.blur_manager">
+<span id="hutts-verification-image-preprocessing-blur-manager-module"></span><h2>hutts_verification.image_preprocessing.blur_manager module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.blur_manager" title="Permalink to this headline">¶</a></h2>
+<p>Wraps all the functionality required for applying blurring techniques to an image.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.blur_manager.BlurManager">
+<em class="property">class </em><code class="descname">BlurManager</code><span class="sig-paren">(</span><em>blur_type</em>, <em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/blur_manager.html#BlurManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.blur_manager.BlurManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The blur is responsible for applying different blur techniques to the images passed.</p>
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.blur_manager.BlurManager.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/blur_manager.html#BlurManager.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.blur_manager.BlurManager.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This performs the blurring.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> – The image to be blurred.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>NameError: If invalid blur type is provided i.e. Normal, Gaussian or Median.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The blurred OpenCV image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.blur_manager.BlurManager.blur">
+<code class="descname">blur</code><span class="sig-paren">(</span><em>image, blur_kernel=[(3, 3)]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/blur_manager.html#BlurManager.blur"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.blur_manager.BlurManager.blur" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies basic blurring to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image to which basic blurring should be applied to.</li>
+<li><strong>(</strong><strong>int list</strong><strong>)</strong> (<em>blur_kernel</em>) – Represent the kernel dimension by which basic blurring should be applied to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>ValueError: If a blur_kernel with an invalid length is provided.</li>
+<li>TypeError: If a blur_kernel is not of type list.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): A modified copy of the OpenCV image where basic blurring was applied to the image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.blur_manager.BlurManager.gaussianBlur">
+<code class="descname">gaussianBlur</code><span class="sig-paren">(</span><em>image, blur_kernel=[(7, 7)]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/blur_manager.html#BlurManager.gaussianBlur"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.blur_manager.BlurManager.gaussianBlur" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies Gaussian blurring to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image to which Gaussian blurring should be applied to.</li>
+<li><strong>(</strong><strong>Integer list</strong><strong>)</strong> (<em>blur_kernel</em>) – Represent the kernel dimension by which basic blurring
+should be applied to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>ValueError: If a blur_kernel with an invalid length is provided.</li>
+<li>TypeError: If a blur_kernel is not of type list.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): A modified copy of the OpenCV image where Gaussian blurring was applied to the image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.blur_manager.BlurManager.medianBlur">
+<code class="descname">medianBlur</code><span class="sig-paren">(</span><em>image, blur_kernel=[3]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/blur_manager.html#BlurManager.medianBlur"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.blur_manager.BlurManager.medianBlur" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies Median blurring to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image to which Median blurring should be applied to.</li>
+<li><strong>(</strong><strong>int list</strong><strong>)</strong> (<em>blur_kernel</em>) – Represent the kernel dimension by which median blurring should be applied to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>TypeError: If  a blur_kernel is not of type list.</li>
+<li>ValueError: If a blur_kernel with an invalid length is provided.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd>(obj): A modified copy of the image where Median blurring was applied to the image.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.build_director">
+<span id="hutts-verification-image-preprocessing-build-director-module"></span><h2>hutts_verification.image_preprocessing.build_director module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.build_director" title="Permalink to this headline">¶</a></h2>
+<p>This class is responsible for controlling the PipelineBuilder.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.build_director.BuildDirector">
+<em class="property">class </em><code class="descname">BuildDirector</code><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/build_director.html#BuildDirector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.build_director.BuildDirector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The BuildDirector constructs the Pipeline using the PipelineBuilder.</p>
+<dl class="staticmethod">
+<dt id="hutts_verification.image_preprocessing.build_director.BuildDirector.construct_face_extract_pipeline">
+<em class="property">static </em><code class="descname">construct_face_extract_pipeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/build_director.html#BuildDirector.construct_face_extract_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.build_director.BuildDirector.construct_face_extract_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function constructs the pipeline for face extraction.
+This includes building different managers with their specific parameters.
+These managers will be called within the pipeline when executed.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): Pipeline for facial extraction.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="hutts_verification.image_preprocessing.build_director.BuildDirector.construct_text_extract_pipeline">
+<em class="property">static </em><code class="descname">construct_text_extract_pipeline</code><span class="sig-paren">(</span><em>preferences</em>, <em>identification_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/build_director.html#BuildDirector.construct_text_extract_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.build_director.BuildDirector.construct_text_extract_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function constructs the pipeline for text extraction.
+This includes building different managers with their specific parameters.
+These managers will be called within the pipeline when executed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>dict</strong><strong>)</strong> (<em>preferences</em>) – User-specified techniques to use in pipeline.</li>
+<li><strong>(</strong><strong>str</strong><strong>)</strong> (<em>identification_type</em>) – Contains the type of identification, this is used
+to determine which techniques are used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): Pipeline used for text extraction.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.color_manager">
+<span id="hutts-verification-image-preprocessing-color-manager-module"></span><h2>hutts_verification.image_preprocessing.color_manager module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.color_manager" title="Permalink to this headline">¶</a></h2>
+<p>Wraps all the functionality required to manipulate the color channels in an image.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.color_manager.ColorManager">
+<em class="property">class </em><code class="descname">ColorManager</code><span class="sig-paren">(</span><em>color_extraction_type</em>, <em>channel='green'</em>, <em>kernel_size=(13</em>, <em>7)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/color_manager.html#ColorManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.color_manager.ColorManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The Color manager is responsible for applying several color management techniques
+to the image passed.</p>
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.color_manager.ColorManager.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/color_manager.html#ColorManager.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.color_manager.ColorManager.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This performs the specified processing technique.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> – The image to which the technique must be applied.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>NameError: If an invalid color extraction type is provided (other than</dt>
+<dd>histogram, extract, black hat or top hat (white hat)).</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The modified OpenCV image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.color_manager.ColorManager.blackHat">
+<code class="descname">blackHat</code><span class="sig-paren">(</span><em>image</em>, <em>rect_kernel_size=(13</em>, <em>7)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/color_manager.html#ColorManager.blackHat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.color_manager.ColorManager.blackHat" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies blackhat color changes to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image to which black hat color changes should be
+applied to.</li>
+<li><strong>(</strong><strong>list</strong><strong>)</strong> (<em>rect_kernel_size</em>) – Represents the kernel dimensions by which blackHat morphology
+changes should be applied to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>TypeError: If the kernel size type is not a tuple.</li>
+<li>ValueError: If the kernel size tuple contains more than 2 items.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): A modified copy of the image blackHat morphology applied to an image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.color_manager.ColorManager.extractChannel">
+<code class="descname">extractChannel</code><span class="sig-paren">(</span><em>image</em>, <em>image_channel='green'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/color_manager.html#ColorManager.extractChannel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.color_manager.ColorManager.extractChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function extracts a selected color channel from an image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image for which the image channel should be removed.</li>
+<li><strong>(</strong><strong>str</strong><strong>)</strong> (<em>image_channel</em>) – Color that should be removed (valid colors: ‘red’, ‘green’, ‘blue’).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>NameError: If invalid colour is selected (not red, green, blue).</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): A copy of the image passed but with a color channel removed.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="hutts_verification.image_preprocessing.color_manager.ColorManager.histEqualisation">
+<em class="property">static </em><code class="descname">histEqualisation</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/color_manager.html#ColorManager.histEqualisation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.color_manager.ColorManager.histEqualisation" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies histogram equalisation to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image to which histogram equalisation should be applied to.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The Histogram equalised image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.color_manager.ColorManager.topHat">
+<code class="descname">topHat</code><span class="sig-paren">(</span><em>image</em>, <em>rect_kernel_size=(13</em>, <em>7)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/color_manager.html#ColorManager.topHat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.color_manager.ColorManager.topHat" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies tophat color changes to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – Image to which top hat color changes should be applied to.</li>
+<li><strong>(</strong><strong>list</strong><strong>)</strong> (<em>rect_kernel_size</em>) – Represents the kernel dimension by which topHat morphology
+changes should be applied to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>TypeError: If the kernel size type is not a tuple.</li>
+<li>ValueError: If the kernel size tuple contains more than 2 items.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): A modified copy of the image with topHat morphology applied to it.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.face_manager">
+<span id="hutts-verification-image-preprocessing-face-manager-module"></span><h2>hutts_verification.image_preprocessing.face_manager module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.face_manager" title="Permalink to this headline">¶</a></h2>
+<p>Wraps all the functionality necessary for extracting a face from an image.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.face_manager.FaceDetector">
+<em class="property">class </em><code class="descname">FaceDetector</code><span class="sig-paren">(</span><em>shape_predictor_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/face_manager.html#FaceDetector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.face_manager.FaceDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The FaceDetector class is responsible for:</p>
+<ol class="arabic simple">
+<li>Detecting the face.</li>
+<li>Extracting a face from an image.</li>
+<li>Applying blurring on a detected face in an image.</li>
+</ol>
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.face_manager.FaceDetector.blur_face">
+<code class="descname">blur_face</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/face_manager.html#FaceDetector.blur_face"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.face_manager.FaceDetector.blur_face" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function find the faces and apply a blurring effect on the detected region.
+After the region has been blurred, the blurred region is reapplied to the original image.
+Blurring the face is implemented as a method in the attempt to reduce noise when extracting
+text from the image later in the image pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image containing the face we need to detect and blur.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>ValueError: If no face can be detected.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): A copy of the image with blurring applied to the face in the image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.face_manager.FaceDetector.detect">
+<code class="descname">detect</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/face_manager.html#FaceDetector.detect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.face_manager.FaceDetector.detect" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function detects the face in the image passed.
+By making use of the dlib HOG feature image_preprocessing and linear classifier for frontal face detection
+we are able to detect the face with less false-positive results and without a major time penalty.
+More Information dlib frontal_face detection: <a class="reference external" href="http://dlib.net/imaging.html#get_frontal_face_detector">http://dlib.net/imaging.html#get_frontal_face_detector</a></p>
+<p>A check will be done to see if a face is present in the image.
+If a face is not detected in the image the execution should log that the face was not found and continue
+with execution. This is due to the fact that face detection might not be critical to
+a function (like with text extraction) and rather be used to increase accuracy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – OpenCV image containing the face we need to detect.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>ValueError: If no face can be detected.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>list(int): This list contains the box coordinates for the region in which the face resides.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.face_manager.FaceDetector.extract_face">
+<code class="descname">extract_face</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/face_manager.html#FaceDetector.extract_face"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.face_manager.FaceDetector.extract_face" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function finds a face in the image passed and is optimised
+to align the face before being returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – Image containing the face we need to detect and extract.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>ValueError: If no face can be detected.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): An image of the aligned face.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.pipeline">
+<span id="hutts-verification-image-preprocessing-pipeline-module"></span><h2>hutts_verification.image_preprocessing.pipeline module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.pipeline" title="Permalink to this headline">¶</a></h2>
+<p>This is an object that handles the entire process of extracting data from an image
+from a high-level perspective.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.pipeline.Pipeline">
+<em class="property">class </em><code class="descname">Pipeline</code><span class="sig-paren">(</span><em>blur_manager=None</em>, <em>color_manager=None</em>, <em>face_detector=None</em>, <em>threshold_manager=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline.html#Pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The Pipeline will perform all necessary processing on the image and is built by the PipelineBuilder.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>BlurManager</strong><strong>)</strong> (<a class="reference internal" href="#module-hutts_verification.image_preprocessing.blur_manager" title="hutts_verification.image_preprocessing.blur_manager"><em>blur_manager</em></a>) – The BlurManager that is used in this pipeline.</li>
+<li><strong>(</strong><strong>ColorManager</strong><strong>)</strong> (<a class="reference internal" href="#module-hutts_verification.image_preprocessing.color_manager" title="hutts_verification.image_preprocessing.color_manager"><em>color_manager</em></a>) – The ColorManager that is used in this pipeline.</li>
+<li><strong>(</strong><strong>FaceDetector</strong><strong>)</strong> (<em>face_detector</em>) – The FaceDetector that is used in this pipeline.</li>
+<li><strong>(</strong><strong>ThresholdManager</strong><strong>)</strong> (<em>threshold_manager</em>) – The ThresholdManager that is used in this pipeline.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.pipeline.Pipeline.process_face_extraction">
+<code class="descname">process_face_extraction</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline.html#Pipeline.process_face_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline.Pipeline.process_face_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies all the processing needed to extract a face from a image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – Image to which processing should be applied to.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The processed image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.pipeline.Pipeline.process_text_extraction">
+<code class="descname">process_text_extraction</code><span class="sig-paren">(</span><em>useIO</em>, <em>image</em>, <em>remove_face=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline.html#Pipeline.process_text_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline.Pipeline.process_text_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies all the processing needed to extract text from a image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>boolean</strong><strong>)</strong> (<em>remove_face</em>) – Whether or not to write images to disk.</li>
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – Image that should be processed.</li>
+<li><strong>(</strong><strong>boolean</strong><strong>)</strong> – If the remove face flag is set to true, extra processes will
+be activated during the pre-processing phase to remove the face from the image.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The processed image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.pipeline_builder">
+<span id="hutts-verification-image-preprocessing-pipeline-builder-module"></span><h2>hutts_verification.image_preprocessing.pipeline_builder module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.pipeline_builder" title="Permalink to this headline">¶</a></h2>
+<p>The class that is responsible for creating a Pipeline. This class is the Builder
+of the Builder design pattern.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder">
+<em class="property">class </em><code class="descname">PipelineBuilder</code><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline_builder.html#PipelineBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The PipelineBuilder will assemble all the parts of the Pipeline.</p>
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.get_result">
+<code class="descname">get_result</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline_builder.html#PipelineBuilder.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the fully-assembled pipeline.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>(obj): The Pipeline.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_blur_manager">
+<code class="descname">set_blur_manager</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline_builder.html#PipelineBuilder.set_blur_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_blur_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function adds the specified blur manager to the pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>BlurManager</strong><strong>)</strong> (<em>value</em>) – BlurManager object to be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_color_manager">
+<code class="descname">set_color_manager</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline_builder.html#PipelineBuilder.set_color_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_color_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function adds the specified color manager to the pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>ColorManager</strong><strong>)</strong> (<em>value</em>) – ColorManager object to be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_face_detector">
+<code class="descname">set_face_detector</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline_builder.html#PipelineBuilder.set_face_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_face_detector" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function adds the specified face detector to the pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>FaceDetector</strong><strong>)</strong> (<em>value</em>) – FaceDetector object to be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_threshold_manager">
+<code class="descname">set_threshold_manager</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/pipeline_builder.html#PipelineBuilder.set_threshold_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.pipeline_builder.PipelineBuilder.set_threshold_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function adds the specified threshold manager to the pipeline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>ThresholdManager</strong><strong>)</strong> (<em>value</em>) – ThresholdManager object to be added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.template_matching">
+<span id="hutts-verification-image-preprocessing-template-matching-module"></span><h2>hutts_verification.image_preprocessing.template_matching module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.template_matching" title="Permalink to this headline">¶</a></h2>
+<p>Wraps the functionality required to dynamically deduce the type of identification
+documentation that has been provided in an image.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.template_matching.TemplateMatching">
+<em class="property">class </em><code class="descname">TemplateMatching</code><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/template_matching.html#TemplateMatching"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.template_matching.TemplateMatching" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The TemplateMatching class receives template images to identify the type of identification
+that is used in the image.
+Thus you provide it with templates and it will identify whether you used an ID card, ID book etc.</p>
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.template_matching.TemplateMatching.identify">
+<code class="descname">identify</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/template_matching.html#TemplateMatching.identify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.template_matching.TemplateMatching.identify" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function identifies the src image by searching for the templates provided.</p>
+<p>:param source (obj) : The image that needs to be identified.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(str) : Either type of the image or None if the type could not be identified.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing.thresholding_manager">
+<span id="hutts-verification-image-preprocessing-thresholding-manager-module"></span><h2>hutts_verification.image_preprocessing.thresholding_manager module<a class="headerlink" href="#module-hutts_verification.image_preprocessing.thresholding_manager" title="Permalink to this headline">¶</a></h2>
+<p>Wraps all the functions related to applying thresholding techniques to an image.</p>
+<dl class="class">
+<dt id="hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager">
+<em class="property">class </em><code class="descname">ThresholdingManager</code><span class="sig-paren">(</span><em>thresholding_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/thresholding_manager.html#ThresholdingManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The Thresholding manager is responsible for applying the different types of thresholding techniques.</p>
+<dl class="staticmethod">
+<dt id="hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager.adaptiveThresholding">
+<em class="property">static </em><code class="descname">adaptiveThresholding</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/thresholding_manager.html#ThresholdingManager.adaptiveThresholding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager.adaptiveThresholding" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies a simple adaptive thresholding to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – Image to which thresholding should be applied.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>TypeError: If a parameter is passed that is not of type Numpy array.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The image, with adaptive thresholding applied to it.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/thresholding_manager.html#ThresholdingManager.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This performs the thresholding based on the predefined technique.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> – The image to which the thresholding must be applied.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>NameError: If a thresholding type other than ‘adaptive’ or ‘otsu’ is provided.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The image, with the appropriate thresholding applied to it.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager.otsuThresholding">
+<em class="property">static </em><code class="descname">otsuThresholding</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/image_preprocessing/thresholding_manager.html#ThresholdingManager.otsuThresholding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.image_preprocessing.thresholding_manager.ThresholdingManager.otsuThresholding" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies a simple Binary Inverse Otsu thresholding to the image passed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image</em>) – Image to which thresholding should be applied.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>TypeError: If a parameter is passed that is not of type Numpy array.</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): The image, with otsu thresholding applied to it.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.image_preprocessing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hutts_verification.image_preprocessing" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hutts_verification.image_processing.html" class="btn btn-neutral float-right" title="hutts_verification.image_processing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hutts_verification.id_contexts.html" class="btn btn-neutral" title="hutts_verification.id_contexts package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+python\.id\_contexts package
+============================
+
+Submodules
+----------
+
+python\.id\_contexts\.id\_context module
+----------------------------------------
+
+.. automodule:: python.id_contexts.id_context
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.id\_contexts\.sa\_id module
+-----------------------------------
+
+.. automodule:: python.id_contexts.sa_id
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.id\_contexts\.sa\_id\_book module
+-----------------------------------------
+
+.. automodule:: python.id_contexts.sa_id_book
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.id\_contexts\.sa\_id\_book\_old module
+----------------------------------------------
+
+.. automodule:: python.id_contexts.sa_id_book_old
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.id\_contexts\.sa\_id\_card module
+-----------------------------------------
+
+.. automodule:: python.id_contexts.sa_id_card
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.id\_contexts\.up\_student\_card module
+----------------------------------------------
+
+.. automodule:: python.id_contexts.up_student_card
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: python.id_contexts
+    :members:
+    :undoc-members:
+    :show-inheritance:

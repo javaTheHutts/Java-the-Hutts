@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>id_contexts.up_student_card &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>id_contexts.up_student_card</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for id_contexts.up_student_card</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains the logic for University of Pretoria ID</span>
+<span class="sd">card context. It is mainly intended for demonstration purposes.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">id_contexts.id_context</span> <span class="k">import</span> <span class="n">IDContext</span><span class="p">,</span> <span class="n">FieldType</span><span class="p">,</span> <span class="n">LineType</span>
+<span class="kn">from</span> <span class="nn">hutts_utils.hutts_logger</span> <span class="k">import</span> <span class="n">logger</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Jan-Justin van Tonder&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;J.vanTonder@tuks.co.za&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<div class="viewcode-block" id="UPStudentCard"><a class="viewcode-back" href="../../apidocs/id_contexts.html#id_contexts.up_student_card.UPStudentCard">[docs]</a><span class="k">class</span> <span class="nc">UPStudentCard</span><span class="p">(</span><span class="n">IDContext</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class that represents an ID context for a University of Pretoria ID card.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialises the UPStudentCard object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Logging for debugging purposes.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initialising </span><span class="si">%s</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="c1"># Specify initial list of contexts for string image_processing when populating</span>
+        <span class="c1"># the ID information dictionary to send as output.</span>
+        <span class="n">match_contexts</span> <span class="o">=</span> <span class="p">[{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;identity_number&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">NUMERIC_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">UNTITLED_ADJACENT</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">TEXT_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">UNTITLED_ADJACENT</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">},</span> <span class="p">{</span>
+            <span class="s1">&#39;field&#39;</span><span class="p">:</span> <span class="s1">&#39;names&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;find&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;field_type&#39;</span><span class="p">:</span> <span class="n">FieldType</span><span class="o">.</span><span class="n">TEXT_ONLY</span><span class="p">,</span>
+            <span class="s1">&#39;to_uppercase&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;line_type&#39;</span><span class="p">:</span> <span class="n">LineType</span><span class="o">.</span><span class="n">TITLED_NEWLINE</span><span class="p">,</span>
+            <span class="s1">&#39;multi_line&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}]</span>
+        <span class="c1"># Initialise parent</span>
+        <span class="n">IDContext</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_contexts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_dictify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match_contexts</span><span class="p">,</span> <span class="n">id_string</span><span class="p">,</span> <span class="n">barcode_data</span><span class="p">,</span> <span class="n">fuzzy_min_ratio</span><span class="p">,</span> <span class="n">max_multi_line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for generating a dictionary object containing the relevant ID information,</span>
+<span class="sd">        such as names, surname, ID number, etc., from a given input string containing said relevant information.</span>
+<span class="sd">        In this particular ID context, the information is sparse and is mainly intended for demonstration purposes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            match_contexts (list): A list of dictionaries that contain the contextual information used in the process</span>
+<span class="sd">                of retrieving field values from the OCR output string - not particularly useful for this ID context.</span>
+<span class="sd">            id_string (str): A string containing some ID information.</span>
+<span class="sd">            barcode_data (dict, Optional): A dictionary object containing information extracted from a barcode.</span>
+<span class="sd">            fuzzy_min_ratio (float): The threshold ratio for a minimum, acceptable ratio of fuzziness when comparing</span>
+<span class="sd">                two strings.</span>
+<span class="sd">            max_multi_line (int): Specifies the maximum number of lines that is to be extracted from fields that are</span>
+<span class="sd">                noted as running onto multiple lines.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (dict): A dictionary object containing the relevant, extracted ID information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">id_info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">regexp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[0-9]{6,10}&#39;</span><span class="p">)</span>
+        <span class="c1"># Check if barcode data is available.</span>
+        <span class="k">if</span> <span class="n">barcode_data</span> <span class="ow">and</span> <span class="n">barcode_data</span><span class="p">[</span><span class="s1">&#39;identity_number&#39;</span><span class="p">]:</span>
+            <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;identity_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">barcode_data</span><span class="p">[</span><span class="s1">&#39;identity_number&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">line_index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">id_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)):</span>
+            <span class="n">is_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regexp</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^\d]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+            <span class="c1"># Check if ID number was already extracted from barcode data.</span>
+            <span class="k">if</span> <span class="n">is_match</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;identity_number&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">id_info</span><span class="p">:</span>
+                    <span class="c1"># Populate id_info with the student/staff number.</span>
+                    <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;identity_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[^\d]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                <span class="c1"># Retrieve some more information from the previous line.</span>
+                <span class="k">if</span> <span class="n">line_index</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="c1"># Split the line on spaces.</span>
+                        <span class="n">id_line</span> <span class="o">=</span> <span class="n">id_string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="n">line_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+                        <span class="c1"># Attempt to extrapolate sex.</span>
+                        <span class="n">sex</span> <span class="o">=</span> <span class="s1">&#39;M&#39;</span> <span class="k">if</span> <span class="n">id_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Mr&#39;</span> <span class="k">else</span> <span class="kc">None</span>
+                        <span class="n">sex</span> <span class="o">=</span> <span class="s1">&#39;F&#39;</span> <span class="k">if</span> <span class="n">id_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ms&#39;</span> <span class="k">else</span> <span class="n">sex</span>
+                        <span class="c1"># Attempt to get initials</span>
+                        <span class="n">id_line</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">initials</span> <span class="o">=</span> <span class="n">id_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="c1"># Re-combine the rest of the list to get the surname.</span>
+                        <span class="n">id_line</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">surname</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">id_line</span><span class="p">)</span>
+                        <span class="c1"># Populate the id_info list to be returned.</span>
+                        <span class="k">if</span> <span class="n">sex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sex</span>
+                        <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">initials</span>
+                        <span class="n">id_info</span><span class="p">[</span><span class="s1">&#39;surname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">surname</span>
+                    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                        <span class="c1"># Log error and return with what we have.</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Failed to extract some ID information...&#39;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">id_info</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">id_info</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

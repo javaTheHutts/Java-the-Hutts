@@ -1,0 +1,62 @@
+python\.image\_processing package
+=================================
+
+Submodules
+----------
+
+python\.image\_processing\.barcode\_manager module
+--------------------------------------------------
+
+.. automodule:: python.image_processing.barcode_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.image\_processing\.context\_manager module
+--------------------------------------------------
+
+.. automodule:: python.image_processing.context_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.image\_processing\.controllers module
+---------------------------------------------
+
+.. automodule:: python.image_processing.controllers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.image\_processing\.sample\_extract module
+-------------------------------------------------
+
+.. automodule:: python.image_processing.sample_extract
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.image\_processing\.simplification\_manager module
+---------------------------------------------------------
+
+.. automodule:: python.image_processing.simplification_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+python\.image\_processing\.text\_cleaner module
+-----------------------------------------------
+
+.. automodule:: python.image_processing.text_cleaner
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: python.image_processing
+    :members:
+    :undoc-members:
+    :show-inheritance:

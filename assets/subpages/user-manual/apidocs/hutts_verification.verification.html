@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hutts_verification.verification package &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../index.html"/>
+        <link rel="up" title="hutts_verification package" href="hutts_verification.html"/>
+        <link rel="next" title="Frequently Asked Questions" href="../faq.html"/>
+        <link rel="prev" title="hutts_verification.utils package" href="hutts_verification.utils.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Using the API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hutts_verification.html">hutts_verification package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hutts_verification.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.id_contexts.html">hutts_verification.id_contexts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.image_preprocessing.html">hutts_verification.image_preprocessing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.image_processing.html">hutts_verification.image_processing package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hutts_verification.utils.html">hutts_verification.utils package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hutts_verification.verification package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hutts_verification.html#module-hutts_verification">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">hutts_verification</a> &raquo;</li>
+        
+          <li><a href="hutts_verification.html">hutts_verification package</a> &raquo;</li>
+        
+      <li>hutts_verification.verification package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/apidocs/hutts_verification.verification.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hutts-verification-verification-package">
+<h1>hutts_verification.verification package<a class="headerlink" href="#hutts-verification-verification-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hutts_verification.verification.controllers">
+<span id="hutts-verification-verification-controllers-module"></span><h2>hutts_verification.verification.controllers module<a class="headerlink" href="#module-hutts_verification.verification.controllers" title="Permalink to this headline">¶</a></h2>
+<p>Handles all requests relevant to the verification service of the API.</p>
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.manage_text_extractor">
+<code class="descname">manage_text_extractor</code><span class="sig-paren">(</span><em>image_of_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#manage_text_extractor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.manage_text_extractor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function manages the text extraction from an ID images.
+Management includes preparing text extraction preferences and receiving extracted text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>image_of_id</em>) – An image of an ID that text must be extracted from.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>preferences (dict): Prepared list of preferences. May contain additional text extraction or logger preferences.</li>
+<li>extracted_text (json object): A collection of text extracted from the ID.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.manage_text_verification">
+<code class="descname">manage_text_verification</code><span class="sig-paren">(</span><em>preferences</em>, <em>extracted_text</em>, <em>entered_details</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#manage_text_verification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.manage_text_verification" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function manages the preparation before text verification and result of the text verification it self
+Management includes preparing logger functionality and controlling match percentages and messages.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>list</strong><strong>)</strong> (<em>preferences</em>) – A list of preferences containing details about logger functionality.</li>
+<li><strong>(</strong><strong>JSON object</strong><strong>)</strong> (<em>extracted_text</em>) – Contains text extracted from ID image.</li>
+<li><strong>(</strong><strong>dict</strong><strong>)</strong> (<em>entered_details</em>) – Dictionary containing information that needs to be verified.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(float): Value representing the accuracy with which the entered details matches that of the extracted text.</li>
+<li>(dict): Contains individual match percentages for different fields.</li>
+<li>(boolean): Indicates if text_verification passes based on the threshold value.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.match_faces">
+<code class="descname">match_faces</code><span class="sig-paren">(</span><em>image_of_id</em>, <em>face</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#match_faces"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.match_faces" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function receives two images that receive images of faces that need to be verified.
+It is expected that an image of an ID and an image of a Profile picture will be received.
+Even if the expected images are not received the function will still apply a best effort solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>face</em>) – An image of an ID that contains a face that needs to be verified.</li>
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> – A image of a face that needs to be verified.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>boolean: Whether the two faces match (the distance between them is above the threshold value).</li>
+<li>float: Return Euclidean distance between the vector representations of the two faces.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.receive_details">
+<code class="descname">receive_details</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#receive_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.receive_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function receives the details that need to be verified from the flask handler.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(dict): Details that need to be verified with that extracted from image.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.receive_faces">
+<code class="descname">receive_faces</code><span class="sig-paren">(</span><em>match_face=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#receive_faces"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.receive_faces" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function receives faces/ID from request flask handler.
+The function checks for multiple means of receiving the faces/ID. These include</p>
+<blockquote>
+<div><ul class="simple">
+<li>Receiving image by file path</li>
+<li>Receiving image by URL</li>
+<li>Receiving image by file Stream</li>
+</ul>
+</div></blockquote>
+<p>It is expected that an image of a face and an image of an ID will be sent.
+However, if the order is not followed that system will still be able to return the best effort result without
+loss of accuracy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>(</strong><strong>boolean</strong><strong>)</strong> (<em>match_face</em>) – Indicates if an additional profile of a face should be extracted.
+If an additional face should not be extracted simply return the ID image.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(obj): An image of a ID.</li>
+<li>(obj): An image of a face if match_face is set to True.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.verify_faces">
+<code class="descname">verify_faces</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#verify_faces"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.verify_faces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample function to return a match percentage of an ID face image and
+picture of face.</p>
+<p>URL: <a class="reference external" href="http://localhost:5000/verifyFaces">http://localhost:5000/verifyFaces</a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.verify_id">
+<code class="descname">verify_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#verify_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.verify_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample function to return a match percentage of an ID image and
+provided personal information and picture of face.</p>
+<p>URL: <a class="reference external" href="http://localhost:5000/verifyID">http://localhost:5000/verifyID</a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="hutts_verification.verification.controllers.verify_info">
+<code class="descname">verify_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/controllers.html#verify_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.controllers.verify_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample function to return a match percentage of an ID image and
+provided personal information.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.verification.face_verify">
+<span id="hutts-verification-verification-face-verify-module"></span><h2>hutts_verification.verification.face_verify module<a class="headerlink" href="#module-hutts_verification.verification.face_verify" title="Permalink to this headline">¶</a></h2>
+<p>A class that is used to extract and compare two images of faces and calculate the resulting match.</p>
+<dl class="class">
+<dt id="hutts_verification.verification.face_verify.FaceVerify">
+<em class="property">class </em><code class="descname">FaceVerify</code><span class="sig-paren">(</span><em>shape_predictor_path</em>, <em>face_recognition_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/face_verify.html#FaceVerify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.face_verify.FaceVerify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>The FaceVerify class is responsible for</p>
+<ol class="arabic simple">
+<li>Detecting the face.</li>
+<li>Generating a threshold value that determines the likeness of two individuals in an image.</li>
+</ol>
+<dl class="method">
+<dt id="hutts_verification.verification.face_verify.FaceVerify.verify">
+<code class="descname">verify</code><span class="sig-paren">(</span><em>face1</em>, <em>face2</em>, <em>threshold=0.55</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/face_verify.html#FaceVerify.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.face_verify.FaceVerify.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function determines a percentage value of how close the faces
+in the images passed are to each other if the determined value if below
+the threshold value passed by the user a boolean value of True is returned
+indicating that the faces in the images passed indeed match.</p>
+<p>The verify function makes use of the dlib library which guarantees 99.38%
+accuracy on the standard Labeled Faces in the Wild benchmark.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> (<em>face2</em>) – The first image containing the face that should be compared.</li>
+<li><strong>(</strong><strong>obj</strong><strong>)</strong> – The second image containing the face that should be compared.</li>
+<li><strong>(</strong><strong>float</strong><strong>)</strong> (<em>threshold</em>) – The threshold value determines at what distance the two images
+are considered the same. If a verify score is below the threshold value the faces are
+considered a match. The Labled Faces in the Wild benchmark recommend a default threshold
+of 0.6 but a threshold of 0.55 was decided on to ensure higher confidence in results.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(boolean): Represents if two face indeed match.</li>
+<li>(float): The Euclidean distance between the vector representations of the two faces.</li>
+</ul>
+</dd>
+<dt>Raises:</dt>
+<dd><ul class="first last simple">
+<li>ValueError: If no face can be detected then no faces can be matched and the operation should be aborted.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.verification.text_verify">
+<span id="hutts-verification-verification-text-verify-module"></span><h2>hutts_verification.verification.text_verify module<a class="headerlink" href="#module-hutts_verification.verification.text_verify" title="Permalink to this headline">¶</a></h2>
+<p>Contains the logic used to verify the extracted text from a form of ID.</p>
+<dl class="class">
+<dt id="hutts_verification.verification.text_verify.TextVerify">
+<em class="property">class </em><code class="descname">TextVerify</code><a class="reference internal" href="../_modules/hutts_verification/verification/text_verify.html#TextVerify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.text_verify.TextVerify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>This class is responsible for the verification of text that is extracted from an ID.</p>
+<dl class="method">
+<dt id="hutts_verification.verification.text_verify.TextVerify.validate_id_number">
+<code class="descname">validate_id_number</code><span class="sig-paren">(</span><em>id_number</em>, <em>valid_length=13</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/text_verify.html#TextVerify.validate_id_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.text_verify.TextVerify.validate_id_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines whether a given id number is valid or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>str</strong><strong>)</strong> (<em>id_number</em>) – The ID number that has to be validated.</li>
+<li><strong>(</strong><strong>int</strong><strong>)</strong> (<em>valid_length</em>) – Specifies the length of a given id number to be considered as valid.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li>(boolean): True if the id number is valid, False otherwise.</li>
+</ul>
+</dd>
+<dt>Raises:</dt>
+<dd>TypeError: If id_number is not a string containing only numeric characters.
+TypeError: If valid_length is not an integer.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hutts_verification.verification.text_verify.TextVerify.verify">
+<code class="descname">verify</code><span class="sig-paren">(</span><em>extracted</em>, <em>verifier</em>, <em>threshold=75.0</em>, <em>min_matches=4</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hutts_verification/verification/text_verify.html#TextVerify.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hutts_verification.verification.text_verify.TextVerify.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is responsible for the verification of text that is extracted from an ID and is passed in,
+along with information that is to be used to verify the extracted text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>(</strong><strong>dict</strong><strong>)</strong> (<em>verifier</em>) – The information that was extracted from an ID.</li>
+<li><strong>(</strong><strong>dict</strong><strong>)</strong> – The information against which the extracted data is to be verified.</li>
+<li><strong>(</strong><strong>float</strong><strong>)</strong> (<em>threshold</em>) – A percentage used to determine if the match percentage is accepted as verified.</li>
+<li><strong>(</strong><strong>int</strong><strong>)</strong> (<em>min_matches</em>) – The minimum number of matches needed to allow a positive match.</li>
+<li><strong>(</strong><strong>boolean</strong><strong>)</strong> (<em>verbose</em>) – Indicates whether or not to return all of the calculated match percentages.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>((bool, float) | dict): The first value returned is a bool that indicates whether or not the total</dt>
+<dd>percentage match is above the specified threshold value, while the second return value is the total
+percentage match value if verbose is False, or returns a dict of all the determined percentage match
+values if verbose is True.</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Raises:</dt>
+<dd>TypeError: If any parameter is not of the correct type.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hutts_verification.verification">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hutts_verification.verification" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../faq.html" class="btn btn-neutral float-right" title="Frequently Asked Questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hutts_verification.utils.html" class="btn btn-neutral" title="hutts_verification.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

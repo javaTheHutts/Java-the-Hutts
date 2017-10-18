@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hutts_verification.image_preprocessing.blur_manager &mdash; Hutts Verification 0.1 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/hutts-verification-icon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Hutts Verification 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hutts Verification
+          
+
+          
+            
+            <img src="../../../_static/hutts-verification.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Requirements and Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../server.html">Using the Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">Using the API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hutts Verification</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hutts_verification.image_preprocessing.blur_manager</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hutts_verification.image_preprocessing.blur_manager</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Wraps all the functionality required for applying blurring techniques to an image.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="n">__authors__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell, Nicolai van Niekerk&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2017, Java the Hutts&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;BSD&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Stephan Nell&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;nellstephanj@gmail.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+
+<div class="viewcode-block" id="BlurManager"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_preprocessing.html#hutts_verification.image_preprocessing.blur_manager.BlurManager">[docs]</a><span class="k">class</span> <span class="nc">BlurManager</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The blur is responsible for applying different blur techniques to the images passed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blur_type</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialise Blur Manager.</span>
+
+<span class="sd">        :param blur_type (str): Indicates the type of blur operation that should be applied to the image.</span>
+<span class="sd">        :param kernel_size (int tuple): Indicates the kernel size for blurring operations.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            - TypeError: If a none string value is passed for blur_type.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">blur_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;Bad type for arg blur_type - expected string. Received type &quot;</span><span class="si">%s</span><span class="s1">&quot;.&#39;</span> <span class="o">%</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">blur_type</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">blur_type</span> <span class="o">=</span> <span class="n">blur_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="n">kernel_size</span>
+
+<div class="viewcode-block" id="BlurManager.apply"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_preprocessing.html#hutts_verification.image_preprocessing.blur_manager.BlurManager.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This performs the blurring.</span>
+
+<span class="sd">        :param image: The image to be blurred.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            - NameError: If invalid blur type is provided i.e. Normal, Gaussian or Median.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (obj): The blurred OpenCV image.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">blur_type</span> <span class="o">==</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gaussianBlur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">blur_type</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">blur_type</span> <span class="o">==</span> <span class="s2">&quot;median&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;Invalid Blur Selection! Try &quot;normal&quot;, &quot;gaussian&quot; or &quot;median&quot; thresholding types.&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BlurManager.blur"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_preprocessing.html#hutts_verification.image_preprocessing.blur_manager.BlurManager.blur">[docs]</a>    <span class="k">def</span> <span class="nf">blur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">blur_kernel</span><span class="o">=</span><span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function applies basic blurring to the image passed.</span>
+
+<span class="sd">        :param image (obj): OpenCV image to which basic blurring should be applied to.</span>
+<span class="sd">        :param blur_kernel (int list): Represent the kernel dimension by which basic blurring should be applied to.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            - ValueError: If a blur_kernel with an invalid length is provided.</span>
+<span class="sd">            - TypeError: If a blur_kernel is not of type list.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (obj): A modified copy of the OpenCV image where basic blurring was applied to the image.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel type provided for normal blurring. Blur kernel supports list type&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel size - blur_kernel list can only contain 2 items.&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">kX</span><span class="p">,</span> <span class="n">kY</span><span class="p">)</span> <span class="ow">in</span> <span class="n">blur_kernel</span><span class="p">:</span>
+            <span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="n">kX</span><span class="p">,</span> <span class="n">kY</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">blurred</span></div>
+
+<div class="viewcode-block" id="BlurManager.gaussianBlur"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_preprocessing.html#hutts_verification.image_preprocessing.blur_manager.BlurManager.gaussianBlur">[docs]</a>    <span class="k">def</span> <span class="nf">gaussianBlur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">blur_kernel</span><span class="o">=</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function applies Gaussian blurring to the image passed.</span>
+
+<span class="sd">        :param image (obj): OpenCV image to which Gaussian blurring should be applied to.</span>
+<span class="sd">        :param blur_kernel (Integer list): Represent the kernel dimension by which basic blurring</span>
+<span class="sd">                should be applied to.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            - ValueError: If a blur_kernel with an invalid length is provided.</span>
+<span class="sd">            - TypeError: If a blur_kernel is not of type list.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            - (obj): A modified copy of the OpenCV image where Gaussian blurring was applied to the image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel type provided for gaussian blur. Blur kernel supports list type.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel size - blur_kernel list can only contain 2 items.&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">kX</span><span class="p">,</span> <span class="n">kY</span><span class="p">)</span> <span class="ow">in</span> <span class="n">blur_kernel</span><span class="p">:</span>
+            <span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="n">kX</span><span class="p">,</span> <span class="n">kY</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">blurred</span></div>
+
+<div class="viewcode-block" id="BlurManager.medianBlur"><a class="viewcode-back" href="../../../apidocs/hutts_verification.image_preprocessing.html#hutts_verification.image_preprocessing.blur_manager.BlurManager.medianBlur">[docs]</a>    <span class="k">def</span> <span class="nf">medianBlur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">blur_kernel</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function applies Median blurring to the image passed.</span>
+
+<span class="sd">        :param image (obj): OpenCV image to which Median blurring should be applied to.</span>
+<span class="sd">        :param blur_kernel (int list): Represent the kernel dimension by which median blurring should be applied to.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            - TypeError: If  a blur_kernel is not of type list.</span>
+<span class="sd">            - ValueError: If a blur_kernel with an invalid length is provided.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (obj): A modified copy of the image where Median blurring was applied to the image.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel type provided for median blur. Blur kernel supports list type&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">blur_kernel</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid kernel size only one integer value should be provided&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">blur_kernel</span><span class="p">:</span>
+            <span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">blurred</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Java the Hutts.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
