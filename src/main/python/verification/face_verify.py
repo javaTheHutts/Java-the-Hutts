@@ -104,7 +104,6 @@ class FaceVerify:
 
         # Any distance below our threshold of 0.55 is a very good match.
         # We map 0.55 to 85% and 0 to 100%.
-        print(threshold)
         if match_distance < threshold:
             match_distance = 1 - match_distance
             threshold = 1 - threshold + 0.05
