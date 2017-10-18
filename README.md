@@ -8,6 +8,10 @@
 
 Repository for the Java the Hutts team for COS301.
 
+<i>Our website, containing a tutorial video, a link to the live demo and our documentation, can be found at
+ <a href="https://javathehutts.github.io/Java-the-Hutts/">https://javathehutts.github.io/Java-the-Hutts/</a>
+</i>
+
 ## Setup of development environment
 You will need to install the following pacakges:
 
