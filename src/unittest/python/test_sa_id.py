@@ -7,7 +7,7 @@ Unit tests for the SA ID module.
 """
 
 import pytest
-from hutts_verification.id_contexts.sa_id_card import SAIDCard
+from id_contexts.sa_id_card import SAIDCard
 
 
 def test_validate_id_number_valid():

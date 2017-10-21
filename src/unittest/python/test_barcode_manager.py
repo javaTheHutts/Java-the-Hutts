@@ -9,12 +9,12 @@ import pytest
 import numpy as np
 import cv2
 import os
-from hutts_verification.image_processing.barcode_manager import BarCodeManager
+from image_processing.barcode_manager import BarCodeManager
 
 # blank image to test with Height set 1 Width set at 1
 blank_image = np.zeros((1, 1), dtype=np.uint8)
 
-TEMPLATE_DIR = "{base_path}/../../main/python/hutts_verification/image_preprocessing/templates/".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 test_image_colour = cv2.imread(TEMPLATE_DIR + "pp2.jpg")
 thanks_obama = cv2.imread(TEMPLATE_DIR + "obama.jpg")

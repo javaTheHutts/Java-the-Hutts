@@ -8,9 +8,9 @@ Unit tests for the Blur Manager
 import pytest
 import cv2
 import os
-from hutts_verification.image_preprocessing.blur_manager import BlurManager
+from image_preprocessing.blur_manager import BlurManager
 
-TEMPLATE_DIR = "{base_path}/../../main/python/hutts_verification/image_preprocessing/templates/".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
 test_image_colour = cv2.imread(TEMPLATE_DIR + "temp_flag.jpg")

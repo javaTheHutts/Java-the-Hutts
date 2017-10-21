@@ -9,17 +9,17 @@ All the images used are from public domain and are copyright free
 import pytest
 import cv2
 import os
-from hutts_verification.verification.face_verify import FaceVerify
-from hutts_verification.image_preprocessing.blur_manager import BlurManager
+from verification.face_verify import FaceVerify
+from image_preprocessing.blur_manager import BlurManager
 
 # Constants path to trained data for Shape Predictor.
-SHAPE_PREDICTOR_PATH = "{base}/../../main/python/hutts_verification/image_preprocessing/trained_data/shape_predictor_face_landmarks.dat".format(
+SHAPE_PREDICTOR_PATH = "{base}/../../main/python/image_preprocessing/trained_data/shape_predictor_face_landmarks.dat".format(
     base=os.path.abspath(os.path.dirname(__file__)))
 
-FACE_RECOGNITION_PATH = "{base}/../../main/python/hutts_verification/image_preprocessing/trained_data/dlib_face_recognition_resnet_model_v1.dat".format(
+FACE_RECOGNITION_PATH = "{base}/../../main/python/image_preprocessing/trained_data/dlib_face_recognition_resnet_model_v1.dat".format(
     base=os.path.abspath(os.path.dirname(__file__)))
 
-TEMPLATE_DIR = "{base_path}/../../main/python/hutts_verification/image_preprocessing/templates/".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
 test_image_colour = cv2.imread(TEMPLATE_DIR + "temp_flag.jpg")

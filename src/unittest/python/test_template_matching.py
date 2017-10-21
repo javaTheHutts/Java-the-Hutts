@@ -8,9 +8,9 @@ Unit tests for the Template Matching
 import pytest
 import cv2
 import os
-from hutts_verification.image_preprocessing.template_matching import TemplateMatching
+from image_preprocessing.template_matching import TemplateMatching
 
-TEMPLATE_DIR = "{base_path}/../../main/python/hutts_verification/image_preprocessing/templates/".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 student_card = cv2.imread(TEMPLATE_DIR + "pp2.jpg")
 id_book = cv2.imread(TEMPLATE_DIR + "temp_flag.jpg")

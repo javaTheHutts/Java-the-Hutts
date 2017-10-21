@@ -344,6 +344,3 @@ fabric.properties
 ### Editor specific
 .idea
 .vscode
-
-### Sphinx
-build/
