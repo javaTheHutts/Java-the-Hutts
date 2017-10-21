@@ -9,9 +9,9 @@ import pytest
 import cv2
 import os
 import numpy as np
-from hutts_utils.image_handling import grab_image
+from hutts_verification.utils.image_handling import grab_image
 
-TEMPLATE_DIR = "{base_path}/../../main/python/image_preprocessing/templates/".format(
+TEMPLATE_DIR = "{base_path}/../../main/python/hutts_verification/image_preprocessing/templates/".format(
     base_path=os.path.abspath(os.path.dirname(__file__)))
 
 test_image_colour = cv2.imread(TEMPLATE_DIR + "temp_flag.jpg")

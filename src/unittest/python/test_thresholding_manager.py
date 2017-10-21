@@ -7,7 +7,7 @@ Unit tests for the Thresholding Manager
 """
 import pytest
 import numpy as np
-from image_preprocessing.thresholding_manager import ThresholdingManager
+from hutts_verification.image_preprocessing.thresholding_manager import ThresholdingManager
 
 # blank image to test with Height set 1 Width set at 1
 blank_image = np.zeros((1, 1), dtype=np.uint8)
