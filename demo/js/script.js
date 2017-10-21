@@ -478,7 +478,8 @@ function ajax(url, data, successFunc, errorFunc) {
 		processData: false,
 		contentType: 'application/json',
 		success: successFunc,
-		error: errorFunc
+		error: errorFunc,
+		timeout: 180000
 	});
 }
 
