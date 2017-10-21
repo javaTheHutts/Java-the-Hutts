@@ -4,7 +4,7 @@ from pybuilder.utils import assert_can_execute
 from pybuilder.pluginhelper.external_command import ExternalCommandBuilder
 
 use_plugin('python.core')
-use_plugin('pypi:pybuilder_pytest')
+use_plugin('vcs:git+https://github.com/AlexeySanko/pybuilder_pytest.git', plugin_module_name="pybuilder_pytest")
 use_plugin('python.integrationtest')
 use_plugin('python.flake8')
 use_plugin('python.coverage')
@@ -23,6 +23,7 @@ def init(project):
     # filename pattern to use for unit testing files
     project.set_property("unittest_module_glob", "test_*")
     # extra arguments which will be passed to pytest
+    project.set_property_if_unset("pytest_extra_args", [])
     project.get_property("pytest_extra_args").append("-x")
     # filename pattern to use for integration testing files
     project.set_property("integrationtest_file_glob", "itest_*")
