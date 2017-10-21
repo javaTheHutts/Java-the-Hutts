@@ -14,10 +14,13 @@ from hutts_utils.hutts_logger import logger
 from hutts_utils.image_handling import grab_image
 from hutts_utils.pypath import correct_path
 from pathlib import Path
+from multiprocessing.pool import ThreadPool
 import os
 
 
 verify = Blueprint('verify', __name__)
+pool = ThreadPool(processes=1)
+THREAD_TIME_OUT = 7200
 
 # Constants path to trained data for Shape Predictor.
 CURRENT_LOCATION = os.path.abspath(os.path.dirname(__file__))
@@ -53,9 +56,14 @@ def verify_id():
     image_of_id, face = receive_faces(match_face=True)
     entered_details = receive_details()
 
-    is_match, distance = match_faces(image_of_id, face)
+    match_face_thread = pool.apply_async(match_faces, args=(image_of_id, face))
+
+    # is_match, distance = match_faces(image_of_id, face)
     extracted_text, preferences = manage_text_extractor(image_of_id)
     text_match_percentage, text_match, is_pass = manage_text_verification(preferences, extracted_text, entered_details)
+
+    logger.debug("Receiving match face thread results")
+    is_match, distance = match_face_thread.get(THREAD_TIME_OUT)
 
     logger.info("Preparing Results...")
     result = {
