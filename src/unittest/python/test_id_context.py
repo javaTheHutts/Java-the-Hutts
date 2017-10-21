@@ -7,7 +7,7 @@ Unit tests for the ID context module.
 """
 
 import pytest
-from id_contexts.sa_id_card import SAIDCard
+from hutts_verification.id_contexts.sa_id_card import SAIDCard
 
 
 def test_get_id_info_ignore_fields():

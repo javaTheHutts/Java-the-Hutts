@@ -6,7 +6,7 @@ Unit tests for the SA ID card module.
 ----------------------------------------------------------------------
 """
 
-from id_contexts.sa_id_card import SAIDCard
+from hutts_verification.id_contexts.sa_id_card import SAIDCard
 
 
 def test_get_id_info_empty_in_str():

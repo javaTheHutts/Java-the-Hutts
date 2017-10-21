@@ -4,10 +4,10 @@ Author(s): Nicolai van Niekerk, Justin van Tonder
 
 /* global $ */
 
-var SERVER_BASE_URL = "http://0.0.0.0:5000";
+var SERVER_BASE_URL = "http://localhost:5000";
 var PATH_TO_PIPELINE = "/home/minion/Desktop/output/";
 
-// Enum for pipleine type
+// Enum for pipeline type
 PipelineType = {
 	TEXT: 0,
 	PROFILE: 1
@@ -145,7 +145,7 @@ $(document).ready(function () {
 		// Check if inputs are valid
 		if (!verifyInputCheck()) return;
 
-		var formData = new FormData();
+		var formData = {};
 		var idPhoto = document.getElementById("id-photo-verify").files[0];
 		var userImage = document.getElementById("profile-photo").files[0];
 		var names = $("#names-verify").val();
@@ -157,23 +157,21 @@ $(document).ready(function () {
 		var gender = $("#sex-verify").val();
 		var dob = $("#date_of_birth-verify").val();
 
-		formData.append("id_img", idPhoto);
-		formData.append("face_img", userImage);
-		formData.append("names", names);
-		formData.append("surname", surname);
-		formData.append("idNumber", idNumber);
-		formData.append("nationality", nationality);
-		formData.append("cob", cob);
-		formData.append("status", status);
-		formData.append("gender", gender);
-		formData.append("dob", dob);
+		formData["names"] = names;
+		formData["surname"] = surname;
+		formData["idNumber"] = idNumber;
+		formData["nationality"] = nationality;
+		formData["cob"] = cob;
+		formData["status"] = status;
+		formData["gender"] = gender;
+		formData["dob"] = dob;
 
 		// Add preferences and ID type
 		addPreferences(formData);
 
 		// Toggle I/O
 		var io = $('#pipeline_switch').is(':checked');
-		formData.append('useIO', io);
+		formData['useIO'] = io;
 
 		// Clear circliful graphs
 		$('.circle-result').html('');
@@ -188,51 +186,63 @@ $(document).ready(function () {
 		$('#verify-result .modal-content .spinner').show();
 		var ditto = ellipses('#verify-ditto');
 
-		$.ajax({
-			type: "POST",
-			url: SERVER_BASE_URL + "/verifyID",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data) {
-				// Populate circular graphs
-				populateCircleGraphs(data);
+		var verify = function () {
+			if (formData["id_img"] && formData["face_img"]) {
+				var success = function (data) {
+					// Populate circular graphs
+					populateCircleGraphs(data);
 
-				// Hide loader and stop loader timer
-				$('#verify-result .modal-content .spinner').hide();
-				clearInterval(ditto);
+					// Hide loader and stop loader timer
+					$('#verify-result .modal-content .spinner').hide();
+					clearInterval(ditto);
 
-				// Populate and unhide pipeline
-				if($('#pipeline_switch').is(':checked')){
-					populatePipeline(PipelineType.TEXT, 8);
-					// populatePipeline(PipelineType.PROFILE, 6);
-					$('#text-pipeline').show(600);
-					// $('#profile-pipeline').show(600);
-				}
+					// Populate and unhide pipeline
+					if($('#pipeline_switch').is(':checked')){
+						populatePipeline(PipelineType.TEXT, 8);
+						// populatePipeline(PipelineType.PROFILE, 6);
+						$('#text-pipeline').show(600);
+						// $('#profile-pipeline').show(600);
+					}
 
-				// Show the view details button
-				$('.circle-results-wrapper, #verify-result.modal .modal-footer')
-				.show(500);
-				
-				// Populate the detailed results
-				populateDetailedResults(data);
+					// Show the view details button
+					$('.circle-results-wrapper, #verify-result.modal .modal-footer')
+					.show(500);
 
-				// Unhide the detailed results section
-				$('#detailed-results').show(600);
-				
-				// Populate the detailed results section
-				if (typeof data.text_match === 'object') {
-					// Show the verbose text verify results.
-					$('#text-verify-details-card').show(600);
-				}
-			},
-			error: function() {
-				$('#verify-result').modal('close');
-				$('#verify-result .modal-content .spinner').hide();
-				clearInterval(ditto);
-				$('#error').modal('open');
+					// Populate the detailed results
+					populateDetailedResults(data);
+
+					// Unhide the detailed results section
+					$('#detailed-results').show(600);
+
+					// Populate the detailed results section
+					if (typeof data.text_match === 'object') {
+						// Show the verbose text verify results.
+						$('#text-verify-details-card').show(600);
+					}
+
+				};
+				var error = function() {
+					$('#verify-result').modal('close');
+					$('#verify-result .modal-content .spinner').hide();
+					clearInterval(ditto);
+					$('#error').modal('open');
+				};
+				ajax(SERVER_BASE_URL + "/verifyID", JSON.stringify(formData), success, error);
 			}
-		});
+		}
+		var reader1 = new FileReader();
+		reader1.readAsDataURL(idPhoto);
+		reader1.onload = function() {
+			formData["id_img"] = reader1.result.toString();
+			verify();
+		};
+
+		var reader2 = new FileReader();
+		reader2.readAsDataURL(userImage);
+		reader2.onload = function() {
+			formData["face_img"] = reader2.result.toString();
+			verify();
+		};
 
 		// Open up result modal
 		$('#verify-result.modal .modal-footer').hide();
@@ -270,24 +280,22 @@ $(document).ready(function () {
 		var ditto = ellipses('#extract-ditto');
 		$('#extract-loader').modal('open');
 
-		var formData = new FormData();
+		var formData = {};
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
-		formData.append('idPhoto', idPhoto);
+		formData['idPhoto'] = idPhoto;
 
 		// Add preferences and ID type
 		addPreferences(formData);
 
 		// Toggle I/O
 		var io = $('#pipeline_switch').is(':checked');
-		//formData.append('useIO', io);
+		formData['useIO'] = io;
 
-		$.ajax({
-			type: "POST",
-			url: SERVER_BASE_URL + "/extractText",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data) {
+		var reader = new FileReader();
+		reader.readAsDataURL(idPhoto);
+		reader.onload = function() {
+			formData['idPhoto'] = reader.result.toString();
+			var success = function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
 				clearInterval(ditto);
@@ -309,14 +317,16 @@ $(document).ready(function () {
 					$('#text-pipeline').show(600);
 				}
 				$('#extract-loader').modal('close');
-			},
-			error: function() {
+			};
+
+			var error = function() {
 				// Hide loader
 				$('#extract-loader').modal('close');
 				clearInterval(ditto);
 				$('#error').modal('open');
-			}
-		});
+			};
+			ajax(SERVER_BASE_URL + "/extractText", JSON.stringify(formData), success, error);
+		};
 	});
 
 	// Extract profile
@@ -328,21 +338,21 @@ $(document).ready(function () {
 		var ditto = ellipses('#extract-ditto');
 		$('#extract-loader').modal('open');
 
-		var formData = new FormData();
+		var formData = {};
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
-		formData.append('idPhoto', idPhoto);
+		formData['idPhoto'] = idPhoto;
 
 		// Toggle I/O
 		var io = $('#pipeline_switch').is(':checked');
-		formData.append('useIO', io);
+		formData['useIO'] = io;
 
-		$.ajax({
-			type: "POST",
-			url: SERVER_BASE_URL + "/extractFace",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data) {
+		addPreferences(formData);
+
+		var reader = new FileReader();
+		reader.readAsDataURL(idPhoto);
+		reader.onload = function () {
+			formData['idPhoto'] = reader.result.toString();
+			var success = function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
 				clearInterval(ditto);
@@ -356,14 +366,17 @@ $(document).ready(function () {
 					// $('#profile-pipeline').show(600);
 				}
 				$('#extract-loader').modal('close');
-			},
-			error: function() {
+			};
+
+			var error = function() {
 				// Hide loader
 				$('#extract-loader').modal('close');
 				clearInterval(ditto);
 				$('#error').modal('open');
-			}
-		});
+			};
+
+			ajax(SERVER_BASE_URL + "/extractFace", JSON.stringify(formData), success, error);
+		};
 	});
 
 	// Extract all
@@ -375,24 +388,15 @@ $(document).ready(function () {
 		var ditto = ellipses('#extract-ditto');
 		$('#extract-loader').modal('open');
 
-		var formData = new FormData();
+		var formData = {};
 		var idPhoto = document.getElementById('id-photo-extract').files[0];
-		formData.append('idPhoto', idPhoto);
-
-		// Add preferences and ID type
-		addPreferences(formData);
-
-		// Toggle I/O
-		var io = $('#pipeline_switch').is(':checked');
-		formData.append('useIO', io);
-
-		$.ajax({
-			type: "POST",
-			url: SERVER_BASE_URL + "/extractAll",
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data) {
+		var reader = new FileReader();
+		reader.readAsDataURL(idPhoto);
+		reader.onload = function () {
+			formData['idPhoto'] = reader.result.toString();
+			var io = $('#pipeline_switch').is(':checked');
+			formData['useIO'] = io;
+			var success = function (data) {
 				// Hide pre-loader
 				$('.loader-overlay').hide(600);
 				clearInterval(ditto);
@@ -420,14 +424,19 @@ $(document).ready(function () {
 					// $('#profile-pipeline').show(600);
 				}
 				$('#extract-loader').modal('close');
-			},
-			error: function() {
+			};
+			var error = function() {
 				// Hide loader
 				$('#extract-loader').modal('close');
 				clearInterval(ditto);
 				$('#error').modal('open');
-			}
-		});
+			};
+			// Add preferences and ID type
+			addPreferences(formData);
+
+			ajax(SERVER_BASE_URL + "/extractAll", JSON.stringify(formData), success, error);
+		};
+
 	});
 
 	// Make sure you can only extract one channel
@@ -459,6 +468,19 @@ $(document).ready(function () {
 	if (!sessionStorage.getItem('disclaimer-seen')) $('#disclaimer').modal('open');
 
 });
+
+// Make an AJAX request
+function ajax(url, data, successFunc, errorFunc) {
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: data,
+		processData: false,
+		contentType: 'application/json',
+		success: successFunc,
+		error: errorFunc
+	});
+}
 
 // Show ID Image preview
 function readURL(input) {
@@ -595,30 +617,30 @@ function addPreferences(formData) {
 	// Add id type to preferences if selected
 	var idType = $('#id-type').val();
 	if(idType != 'default')
-		formData.append('id_type', idType);
+		formData['id_type'] = idType;
 
 	// Send preferences if auto settings is off
 	if (!$('#auto_settings').is(':checked')) {
-		formData.append('blur_technique', blurTechnique);
-		formData.append('threshold_technique', thresholdTechnique);
-		formData.append('remove_face', profileSwitch);
-		formData.append('remove_barcode', barcodeSwitch);
+		formData['blur_technique'] = blurTechnique;
+		formData['threshold_technique'] = thresholdTechnique;
+		formData['remove_face'] = profileSwitch;
+		formData['remove_barcode'] = barcodeSwitch;
 
 		if (extractBlue)
-			formData.append('color', "blue");
+			formData['color'] = "blue";
 		else if (extractGreen)
-			formData.append('color', "green");
+			formData['color'] = "green";
 		else if (extractRed)
-			formData.append('color', "red");
+			formData['color'] = "red";
 	}
 
 	// Verbose output for verification
 	var verboseVerify = $('#verbose_switch').is(':checked');
-	formData.append('verbose_verify', verboseVerify);
+	formData['verbose_verify'] = verboseVerify;
 
 	// Verification threshold
 	var verificationThreshold = parseFloat($('#verification-threshold')).toFixed(2);
-	formData.append('verification_threshold', verificationThreshold);
+	formData['verification_threshold'] = verificationThreshold;
 }
 
 function populateDetailedResults(data) {
