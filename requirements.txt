@@ -5,7 +5,7 @@ dlib==19.4.0
 flask==0.12.2
 Flask-Cors==3.0.3
 imutils==0.4.3
-pillow==4.2.1
+pillow==6.2.3
 pytesseract==0.1.7
 fuzzywuzzy==0.15.1
 python-levenshtein==0.12.0
