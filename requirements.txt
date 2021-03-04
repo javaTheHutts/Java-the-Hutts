@@ -2,7 +2,7 @@ numpy==1.13.1
 scipy==0.19.1
 scikit-image==0.13.0
 dlib==19.4.0
-flask==0.12.2
+flask==1.0
 Flask-Cors==3.0.3
 imutils==0.4.3
 pillow==8.1.1
