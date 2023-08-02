@@ -10,5 +10,5 @@ pytesseract==0.1.7
 fuzzywuzzy==0.15.1
 python-levenshtein==0.12.1
 colorlog==3.0.1
-Sphinx==3.0.4
+Sphinx==3.3.0
 sphinx-rtd-theme==0.2.4
