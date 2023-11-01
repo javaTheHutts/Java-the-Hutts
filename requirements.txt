@@ -12,3 +12,4 @@ python-levenshtein==0.12.1
 colorlog==3.0.1
 Sphinx==3.0.4
 sphinx-rtd-theme==0.2.4
+werkzeug>=3.0.1 # not directly required, pinned by Snyk to avoid a vulnerability
