@@ -3,7 +3,7 @@ scipy==0.19.1
 scikit-image==0.13.0
 dlib==19.4.0
 flask==1.0
-Flask-Cors==3.0.9
+Flask-Cors==6.0.0
 imutils==0.4.3
 pillow==8.1.1
 pytesseract==0.1.7
